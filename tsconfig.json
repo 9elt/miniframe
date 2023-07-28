@@ -1,0 +1,9 @@
+{
+  "include": ["./*"],
+  "compilerOptions": {
+    "target": "ES2015",
+    "outDir": "./cjs",
+    "allowJs": true,
+    "declaration": false
+  }
+}
