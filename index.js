@@ -90,7 +90,7 @@ function unsetProps(target, props) {
             unsetProps(target[k], valueOf(props[k]));
         }
         else {
-            setStaticProp(target, k, undefined);
+            setStaticProp(target, k, null);
         }
     }
 }
