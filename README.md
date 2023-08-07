@@ -11,11 +11,11 @@ Miniframe is meant to be used with vanilla JavaScript, on **small projects** tha
 **A simple counter that stops at 10**
 
 ```js
-import { state, render } from "@9elt/miniframe";
+import { State, render } from "@9elt/miniframe";
 
-const counter = state(0);
-const message = state("keep going!");
-const color = state("green");
+const counter = State.from(0);
+const message = State.from("keep going!");
+const color = State.from("green");
 
 const handleClick = () => {
   if (counter.value < 10 && ++counter.value === 10) {
@@ -54,7 +54,7 @@ document.body.prepend(rootElement);
 **Setting a state**
 
 ```js
-const counter = state(0);
+const counter = State.from(0);
 
 counter.value = counter.value + 1;
 counter.value++;
@@ -68,7 +68,7 @@ Under the hood, the `value` setter and the `set` method are the same, but the la
 **Setting an object state**
 
 ```js
-const object = state({ foo: "bar", bar: "foo" });
+const object = State.from({ foo: "bar", bar: "foo" });
 
 object.value = { ...object.value, bar: "changed" }; // works
 object.set(c => ({ ...c, bar: "changed" })); // works
@@ -81,12 +81,12 @@ Directly changing an object state property value will not trigger updates.
 **Manipulating a state**
 
 ```js
-const counter = state(0);
+const counter = State.from(0);
 const label = counter.as(v => "current count: " + v);
 
 label.value // "current count: 0"
 
-const object = state({ foo: "bar" });
+const object = State.from({ foo: "bar" });
 const foo = object.as(v => v.foo);
 
 foo.value // "bar"

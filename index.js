@@ -1,4 +1,4 @@
-export { createElement as render, state, isState, valueOf, typeOf };
+export { createElement as render, State, isState, valueOf, typeOf };
 
 const svgTagNames = ["animate", "animateMotion", "animateTransform", "circle", "clipPath", "defs", "desc", "ellipse", "feBlend", "feColorMatrix", "feComponentTransfer", "feComposite", "feConvolveMatrix", "feDiffuseLighting", "feDisplacementMap", "feDistantLight", "feDropShadow", "feFlood", "feFuncA", "feFuncB", "feFuncG", "feFuncR", "feGaussianBlur", "feImage", "feMerge", "feMergeNode", "feMorphology", "feOffset", "fePointLight", "feSpecularLighting", "feSpotLight", "feTile", "feTurbulence", "filter", "foreignObject", "g", "image", "line", "linearGradient", "marker", "mask", "metadata", "mpath", "path", "pattern", "polygon", "polyline", "radialGradient", "rect", "set", "stop", "svg", "switch", "symbol", "text", "textPath", "tspan", "use", "view"];
 const mathMlTagNames = ["annotation", "annotation-xml", "maction", "math", "merror", "mfrac", "mi", "mmultiscripts", "mn", "mo", "mover", "mpadded", "mphantom", "mprescripts", "mroot", "mrow", "ms", "mspace", "msqrt", "mstyle", "msub", "msubsup", "msup", "mtable", "mtd", "mtext", "mtr", "munder", "munderover", "semantics"];
@@ -140,16 +140,25 @@ function unsetStaticProp(target, k) {
     }
 }
 
-function state(value) {
-    return new State(value);
-}
-
 class State {
     #value;
     #subs;
     constructor(value) {
         this.#value = value;
         this.#subs = [];
+    }
+    static from(value) {
+        return new State(value);
+    }
+    static use(states) {
+        const state = new State({});
+        for (let k in states) {
+            state.value[k] = states[k].value;
+            states[k].sub(parent => state.set(
+                curr => Object.assign(curr, { [k]: parent })
+            ));
+        }
+        return state;
     }
     get value() {
         return this.#value;
