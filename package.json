@@ -1,7 +1,7 @@
 {
   "name": "@9elt/miniframe",
   "type": "module",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A small library to create state aware html elements using JavaScript objects",
   "main": "index.js",
   "types": "index.d.ts",

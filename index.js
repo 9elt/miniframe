@@ -1,19 +1,21 @@
 export { createElement as render, state, isState, valueOf, typeOf };
 
+const svgTagNames = ["animate", "animateMotion", "animateTransform", "circle", "clipPath", "defs", "desc", "ellipse", "feBlend", "feColorMatrix", "feComponentTransfer", "feComposite", "feConvolveMatrix", "feDiffuseLighting", "feDisplacementMap", "feDistantLight", "feDropShadow", "feFlood", "feFuncA", "feFuncB", "feFuncG", "feFuncR", "feGaussianBlur", "feImage", "feMerge", "feMergeNode", "feMorphology", "feOffset", "fePointLight", "feSpecularLighting", "feSpotLight", "feTile", "feTurbulence", "filter", "foreignObject", "g", "image", "line", "linearGradient", "marker", "mask", "metadata", "mpath", "path", "pattern", "polygon", "polyline", "radialGradient", "rect", "set", "stop", "svg", "switch", "symbol", "text", "textPath", "tspan", "use", "view"];
+const mathMlTagNames = ["annotation", "annotation-xml", "maction", "math", "merror", "mfrac", "mi", "mmultiscripts", "mn", "mo", "mover", "mpadded", "mphantom", "mprescripts", "mroot", "mrow", "ms", "mspace", "msqrt", "mstyle", "msub", "msubsup", "msup", "mtable", "mtd", "mtext", "mtr", "munder", "munderover", "semantics"];
 
 function createElement(props) {
-    let element = document.createElement(valueOf(valueOf(props).tagName));
+    let element = withNamespace(valueOf(valueOf(props).tagName));
     setProps(element, valueOf(props));
     if (isState(props)) {
         props.sub(value => {
-            let update = createElement(value);
+            const update = createElement(value);
             element.replaceWith(update);
             element = update;
         });
     }
     else if (isState(props.tagName)) {
         props.tagName.sub(value => {
-            let update = document.createElement(value);
+            const update = withNamespace(value);
             setProps(update, props);
             element.replaceWith(update);
             element = update;
@@ -22,11 +24,29 @@ function createElement(props) {
     return element;
 }
 
+function withNamespace(tagName) {
+    if (getNameSpace(tagName)) {
+        const element = document.createElementNS(getNameSpace(tagName), tagName);
+        element.requiresAttr = true;
+        return element;
+    }
+    return document.createElement(tagName);
+}
+
+function getNameSpace(tagName) {
+    if (svgTagNames.includes(tagName)) {
+        return "http://www.w3.org/2000/svg";
+    }
+    if (mathMlTagNames.includes(tagName)) {
+        return "http://www.w3.org/1998/Math/MathML";
+    }
+}
+
 function createTextNode(text) {
     let element = document.createTextNode(valueOf(text));
     if (isState(text)) {
         text.sub(value => {
-            let update = document.createTextNode(value);
+            const update = document.createTextNode(value);
             element.replaceWith(update);
             element = update;
         });
@@ -81,20 +101,6 @@ function setObjectProps(target, props, k) {
     }
 }
 
-function unsetProps(target, props) {
-    for (let k in props) {
-        if (k === "children" || k === "tagName") {
-            continue;
-        }
-        else if (typeOf(props[k]) === "object") {
-            unsetProps(target[k], valueOf(props[k]));
-        }
-        else {
-            setStaticProp(target, k, null);
-        }
-    }
-}
-
 function setPrimitiveProp(target, prop, k) {
     setStaticProp(target, k, valueOf(prop[k]));
     if (isState(prop[k])) {
@@ -104,10 +110,33 @@ function setPrimitiveProp(target, prop, k) {
 
 function setStaticProp(target, k, prop) {
     try {
-        target[k] = prop;
+        target.requiresAttr ? target.setAttribute(k, prop) : target[k] = prop;
     }
     catch (error) {
         console.warn("failed property assignment: " + k, error);
+    }
+}
+
+function unsetProps(target, props) {
+    for (let k in props) {
+        if (k === "children" || k === "tagName") {
+            continue;
+        }
+        else if (typeOf(props[k]) === "object") {
+            unsetProps(target[k], valueOf(props[k]));
+        }
+        else {
+            unsetStaticProp(target, k);
+        }
+    }
+}
+
+function unsetStaticProp(target, k) {
+    try {
+        target.requiresAttr ? target.removeAttribute(k) : target[k] = null;
+    }
+    catch (error) {
+        console.warn("failed property unassignment: " + k, error);
     }
 }
 
