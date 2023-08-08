@@ -110,7 +110,7 @@ function setPrimitiveProp(target, prop, k) {
 
 function setStaticProp(target, k, prop) {
     try {
-        target.requiresAttr ? target.setAttribute(k, prop) : target[k] = prop;
+        target.requiresAttr ? target.setAttribute(parseK(k), prop) : target[k] = prop;
     }
     catch (error) {
         console.warn("failed property assignment: " + k, error);
@@ -133,11 +133,15 @@ function unsetProps(target, props) {
 
 function unsetStaticProp(target, k) {
     try {
-        target.requiresAttr ? target.removeAttribute(k) : target[k] = null;
+        target.requiresAttr ? target.removeAttribute(parseK(k)) : target[k] = null;
     }
     catch (error) {
         console.warn("failed property unassignment: " + k, error);
     }
+}
+
+function parseK(k) {
+    return k === "className" ? "class" : k;
 }
 
 class State {
@@ -159,6 +163,11 @@ class State {
             ));
         }
         return state;
+    }
+    static flatten(from) {
+        const into = new State();
+        flatten(from, f => into.set(f));
+        return into;
     }
     get value() {
         return this.#value;
@@ -189,6 +198,50 @@ class State {
             }
         });
     }
+    toJSON() {
+        return JSON.stringify(this.value);
+    }
+}
+
+function flatten(from, set) {
+    const object = valueOf(from);
+    const setKey = initObj(set, object);
+    for (let k in object) {
+        if (typeOf(object[k]) === "object") {
+            flatten(object[k], f => setKey(set, k, f, true));
+        }
+        else {
+            setKey(set, k, valueOf(object[k]));
+            if (isState(object[k])) {
+                object[k].sub(v => setKey(set, k, v));
+            }
+        }
+    }
+    if (isState(from)) {
+        from.sub(from => {
+            set(() => undefined);
+            flatten(from, set);
+        });
+    }
+}
+
+function initObj(set, from) {
+    const isArray = Array.isArray(from);
+    set(c => c ?? (isArray ? new Array(from.length) : undefined));
+    return isArray ? setArr : setObj;
+}
+
+function setObj(set, key, value, isFn) {
+    set(c => Object.assign(c ?? {}, {
+        [key]: isFn ? value(c?.[key]) : value
+    }));
+}
+
+function setArr(set, key, value, isFn) {
+    set(c => {
+        c[key] = isFn ? value(c?.[key]) : value;
+        return c;
+    });
 }
 
 function isState(v) {
