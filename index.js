@@ -1,21 +1,16 @@
-export { createElement as render, State, isState, valueOf, typeOf };
-
-const svgTagNames = ["animate", "animateMotion", "animateTransform", "circle", "clipPath", "defs", "desc", "ellipse", "feBlend", "feColorMatrix", "feComponentTransfer", "feComposite", "feConvolveMatrix", "feDiffuseLighting", "feDisplacementMap", "feDistantLight", "feDropShadow", "feFlood", "feFuncA", "feFuncB", "feFuncG", "feFuncR", "feGaussianBlur", "feImage", "feMerge", "feMergeNode", "feMorphology", "feOffset", "fePointLight", "feSpecularLighting", "feSpotLight", "feTile", "feTurbulence", "filter", "foreignObject", "g", "image", "line", "linearGradient", "marker", "mask", "metadata", "mpath", "path", "pattern", "polygon", "polyline", "radialGradient", "rect", "set", "stop", "svg", "switch", "symbol", "text", "textPath", "tspan", "use", "view"];
-const mathMlTagNames = ["annotation", "annotation-xml", "maction", "math", "merror", "mfrac", "mi", "mmultiscripts", "mn", "mo", "mover", "mpadded", "mphantom", "mprescripts", "mroot", "mrow", "ms", "mspace", "msqrt", "mstyle", "msub", "msubsup", "msup", "mtable", "mtd", "mtext", "mtr", "munder", "munderover", "semantics"];
-
-function createElement(props) {
-    let element = withNamespace(valueOf(valueOf(props).tagName));
+function render(props) {
+    let element = createElement(valueOf(valueOf(props).tagName));
     setProps(element, valueOf(props));
     if (isState(props)) {
         props.sub(value => {
-            const update = createElement(value);
+            const update = render(value);
             element.replaceWith(update);
             element = update;
         });
     }
     else if (isState(props.tagName)) {
         props.tagName.sub(value => {
-            const update = withNamespace(value);
+            const update = createElement(value);
             setProps(update, props);
             element.replaceWith(update);
             element = update;
@@ -24,22 +19,10 @@ function createElement(props) {
     return element;
 }
 
-function withNamespace(tagName) {
-    if (getNameSpace(tagName)) {
-        const element = document.createElementNS(getNameSpace(tagName), tagName);
-        element.requiresAttr = true;
-        return element;
-    }
-    return document.createElement(tagName);
-}
-
-function getNameSpace(tagName) {
-    if (svgTagNames.includes(tagName)) {
-        return "http://www.w3.org/2000/svg";
-    }
-    if (mathMlTagNames.includes(tagName)) {
-        return "http://www.w3.org/1998/Math/MathML";
-    }
+function createElement(tagName) {
+    return namespaceMap[tagName]
+        ? document.createElementNS(namespaceMap[tagName], tagName)
+        : document.createElement(tagName);
 }
 
 function createTextNode(text) {
@@ -55,7 +38,7 @@ function createTextNode(text) {
 }
 
 function createNode(props) {
-    return typeOf(props) === "object" ? createElement(props) : createTextNode(props);
+    return typeOf(props) === "object" ? render(props) : createTextNode(props);
 }
 
 function createChildrenNodes(children) {
@@ -84,7 +67,7 @@ function setChildrenProps(target, { children }) {
     target.append(...nodes);
     if (isState(children)) {
         children.sub(value => {
-            nodes.forEach(el => el?.remove());
+            nodes.forEach(el => el.remove());
             nodes = createChildrenNodes(value);
             target.append(...nodes);
         });
@@ -110,7 +93,7 @@ function setPrimitiveProp(target, prop, k) {
 
 function setStaticProp(target, k, prop) {
     try {
-        target.requiresAttr ? target.setAttribute(parseK(k), prop) : target[k] = prop;
+        isAttr(target, prop) ? target.setAttribute(attrName(k), prop) : target[k] = prop;
     }
     catch (error) {
         console.warn("failed property assignment: " + k, error);
@@ -133,15 +116,21 @@ function unsetProps(target, props) {
 
 function unsetStaticProp(target, k) {
     try {
-        target.requiresAttr ? target.removeAttribute(parseK(k)) : target[k] = null;
+        isAttr(target) ? target.removeAttribute(attrName(k)) : target[k] = null;
     }
     catch (error) {
         console.warn("failed property unassignment: " + k, error);
     }
 }
 
-function parseK(k) {
-    return k === "className" ? "class" : k;
+function isAttr(target, prop) {
+    return target.namespaceURI
+        && (target.namespaceURI === SVG || target.namespaceURI === MATHML)
+        && (typeof prop === "string" || typeof prop === "undefined");
+}
+
+function attrName(name) {
+    return name === "className" ? "class" : name;
 }
 
 class State {
@@ -163,11 +152,6 @@ class State {
             ));
         }
         return state;
-    }
-    static flatten(from) {
-        const into = new State();
-        flatten(from, f => into.set(f));
-        return into;
     }
     get value() {
         return this.#value;
@@ -203,47 +187,6 @@ class State {
     }
 }
 
-function flatten(from, set) {
-    const object = valueOf(from);
-    const setKey = initObj(set, object);
-    for (let k in object) {
-        if (typeOf(object[k]) === "object") {
-            flatten(object[k], f => setKey(set, k, f, true));
-        }
-        else {
-            setKey(set, k, valueOf(object[k]));
-            if (isState(object[k])) {
-                object[k].sub(v => setKey(set, k, v));
-            }
-        }
-    }
-    if (isState(from)) {
-        from.sub(from => {
-            set(() => undefined);
-            flatten(from, set);
-        });
-    }
-}
-
-function initObj(set, from) {
-    const isArray = Array.isArray(from);
-    set(c => c ?? (isArray ? new Array(from.length) : undefined));
-    return isArray ? setArr : setObj;
-}
-
-function setObj(set, key, value, isFn) {
-    set(c => Object.assign(c ?? {}, {
-        [key]: isFn ? value(c?.[key]) : value
-    }));
-}
-
-function setArr(set, key, value, isFn) {
-    set(c => {
-        c[key] = isFn ? value(c?.[key]) : value;
-        return c;
-    });
-}
-
 function isState(v) {
     return v instanceof State;
 }
@@ -255,3 +198,100 @@ function valueOf(v) {
 function typeOf(v) {
     return typeof valueOf(v);
 }
+
+const SVG = "http://www.w3.org/2000/svg";
+const MATHML = "http://www.w3.org/2000/svg";
+
+const namespaceMap = {
+    "animate": SVG,
+    "animateMotion": SVG,
+    "animateTransform": SVG,
+    "circle": SVG,
+    "clipPath": SVG,
+    "defs": SVG,
+    "desc": SVG,
+    "ellipse": SVG,
+    "feBlend": SVG,
+    "feColorMatrix": SVG,
+    "feComponentTransfer": SVG,
+    "feComposite": SVG,
+    "feConvolveMatrix": SVG,
+    "feDiffuseLighting": SVG,
+    "feDisplacementMap": SVG,
+    "feDistantLight": SVG,
+    "feDropShadow": SVG,
+    "feFlood": SVG,
+    "feFuncA": SVG,
+    "feFuncB": SVG,
+    "feFuncG": SVG,
+    "feFuncR": SVG,
+    "feGaussianBlur": SVG,
+    "feImage": SVG,
+    "feMerge": SVG,
+    "feMergeNode": SVG,
+    "feMorphology": SVG,
+    "feOffset": SVG,
+    "fePointLight": SVG,
+    "feSpecularLighting": SVG,
+    "feSpotLight": SVG,
+    "feTile": SVG,
+    "feTurbulence": SVG,
+    "filter": SVG,
+    "foreignObject": SVG,
+    "g": SVG,
+    "image": SVG,
+    "line": SVG,
+    "linearGradient": SVG,
+    "marker": SVG,
+    "mask": SVG,
+    "metadata": SVG,
+    "mpath": SVG,
+    "path": SVG,
+    "pattern": SVG,
+    "polygon": SVG,
+    "polyline": SVG,
+    "radialGradient": SVG,
+    "rect": SVG,
+    "set": SVG,
+    "stop": SVG,
+    "svg": SVG,
+    "switch": SVG,
+    "symbol": SVG,
+    "text": SVG,
+    "textPath": SVG,
+    "tspan": SVG,
+    "use": SVG,
+    "view": SVG,
+    "annotation": MATHML,
+    "annotation-xml": MATHML,
+    "maction": MATHML,
+    "math": MATHML,
+    "merror": MATHML,
+    "mfrac": MATHML,
+    "mi": MATHML,
+    "mmultiscripts": MATHML,
+    "mn": MATHML,
+    "mo": MATHML,
+    "mover": MATHML,
+    "mpadded": MATHML,
+    "mphantom": MATHML,
+    "mprescripts": MATHML,
+    "mroot": MATHML,
+    "mrow": MATHML,
+    "ms": MATHML,
+    "mspace": MATHML,
+    "msqrt": MATHML,
+    "mstyle": MATHML,
+    "msub": MATHML,
+    "msubsup": MATHML,
+    "msup": MATHML,
+    "mtable": MATHML,
+    "mtd": MATHML,
+    "mtext": MATHML,
+    "mtr": MATHML,
+    "munder": MATHML,
+    "munderover": MATHML,
+    "semantics": MATHML
+};
+
+export { render, State };

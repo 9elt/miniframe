@@ -1,48 +1,46 @@
 /**
- * Create an html element
+ * Create a state aware html element
+ *
+ * ### example
+ * ```
+ * const text = State.from("hello world");
+ * 
+ * const element = render({
+ *     tagName: "p",
+ *     id: "paragraph",
+ *     children: [text]
+ * });
+ * ```
  */
-export function render<T extends TagNames>(props: Element<T>): TagNamesMap[T];
-/**
- * dynamic element object
- */
-export type Element<T extends TagNames = TagNames> = SpreadDynamic<CreateElement<T>>;
-/**
- * dynamic children array
- */
-export type Children = CreateElement<TagNames>[];
-/**
- * Can be a state
- */
-export type Dynamic<T> = T | State<T>;
-/**
- * value that cannot be a state
- */
-export type Static<T> = T extends State<infer U> ? U : T;
-/**
- * All html/xml tagnames
- */
+export function render<T extends TagNames, C extends Children>(props: ElementObject<T, C>): TagNamesMap[T];
+
+export type ElementObject<T extends TagNames = TagNames, C extends Children = Children> = SpreadDynamic<CreateElement<T, C>>;
+
 export type TagNames = keyof TagNamesMap;
-/**
- * Check if a value is a state
- */
-export function isState(value: any): boolean;
-/**
- * Get the inner value of a dynamic value
- */
-export function valueOf<T>(value: T): Static<T>;
-/**
- * Get the inner typeof of a dynamic value
- */
-export function typeOf(value: any): "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function";
-/**
- * The miniframe state
- */
+
+export type Dynamic<T> = T | State<T>;
+
+export type Static<T> = T extends State<infer U> ? U : T;
+
 export class State<T> {
     constructor(value: T);
+    /**
+     * Get and set the state current value
+     * 
+     * ### example
+     * ```
+     * const state = State.from(3);
+     * 
+     * state.value = 6;
+     * state.value++;
+     * state.value; // 7
+     * ```
+     */
     set value(arg: T);
     get value(): T;
     /**
      * Create a state
+     * 
      * ### example
      * ```
      * State.from(32);
@@ -54,43 +52,37 @@ export class State<T> {
     static from<T>(value: T): State<T>;
     /**
      * Group states into an object state
+     * 
      * ### example
      * ```
      * const n1 = State.from(2);
-     * const n2 = State.from(2);
+     * const n2 = State.from(3);
      * 
      * const m = State.use({ n1, n2 }).as(({ n1, n2 }) => n1 * n2);
      * 
-     * m.value; // 4
+     * m.value; // 6
      * ```
      */
     static use<T extends StatesGroup>(states: T): State<SpreadStatic<T>>;
     /**
-     * Convert an object containing states,
-     * into an object state of static values
-     * 
-     * `flatten` is very similar to the `use` method,
-     * however, it is a much more **expensive operation**,
-     * meant for objects that you don't control
-     */
-    static flatten<T extends object>(from: T): State<SpreadStatic<T>>;
-    /**
      * Set the state value in function of its current value
+     * 
      * ### example
      * ```
-     * const s = State.from({ foo: "bar" });
-     * s.set(c => ({ ...c, bar: "foo" }));
+     * const state = State.from({ foo: "bar" });
+     * state.set(c => ({ ...c, bar: "foo" }));
      * 
-     * s.value; // { foo: "bar", bar: "foo" }
+     * state.value; // { foo: "bar", bar: "foo" }
      * ```
      */
     set(f: (current: T) => T): void;
     /**
      * Create a children state
+     * 
      * ### example
      * ```
-     * const num = State.from(3);
-     * const str = num.as(v => v + "%");
+     * const n = State.from(3);
+     * const str = n.as(v => v + "%");
      * 
      * str.value; // "3%"
      * ```
@@ -98,14 +90,16 @@ export class State<T> {
     as<C>(f: (value: T) => C): State<C>;
     /**
      * Subscribe to a state
+     * 
      * ### example
      * ```
-     * const s = State.from(3);
-     * s.sub((curr, prev) => {
-     *     console.log("state changed, delta: " + (curr - prev))
+     * const state = State.from(3);
+     * 
+     * state.sub((curr, prev) => {
+     *     console.log("state changed, delta:", curr - prev);
      * });
      * 
-     * s.value *= 3;
+     * state.value *= 3;
      * // > state changed, delta: 6
      * ```
      */
@@ -116,17 +110,18 @@ export class State<T> {
  * private types
  */
 type TagNamesMap = HTMLElementTagNameMap & SVGElementTagNameMap & MathMLElementTagNameMap;
-type CreateElement<T extends TagNames> = {
+type CreateElement<T extends TagNames, C extends Children = Children> = {
     tagName: T;
 } & {
-    children?: Children;
+    children?: C;
 } & ElementProps<T>;
 type ElementProps<T extends TagNames> = {
     [P in ElementKeys<T>]?: Valid<TagNamesMap[T][P]>;
 };
+type Children = (CreateElement<TagNames> | string)[];
 type Valid<V> = IsObject<V> extends true
     ? V extends CSSStyleDeclaration ? Partial<V>
-    : { [key: string]: string | number } | string 
+    : { [key: string]: string | number } | string
     : V extends Function ? undefined : V;
 type ElementKeys<T extends TagNames> = Exclude<keyof TagNamesMap[T], InvalidProps>;
 type InvalidProps = "children" | "tagName" | `set${string}` | `add${string}` | `remove${string}`;

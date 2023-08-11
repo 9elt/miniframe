@@ -4,7 +4,7 @@ A small library to create state aware html elements using JavaScript objects.
 
 > this is a beta, don't use it in production
 
-Miniframe is meant to be used with vanilla JavaScript, on **small projects** that don't need a framework. In about 250 LOC, it provides a **simple and flexible** way to create and manage UIs.
+Miniframe is meant to be used with vanilla JavaScript, on **small projects** that don't need a framework. In about 300 LOC, it provides a **simple and flexible** way to create and manage UI elements.
 
 ## example
 
@@ -35,7 +35,7 @@ const rootElement = render({
     },
     {
       tagName: "p",
-      style: { color: color },
+      style: { color },
       children: [message]
     },
     {
