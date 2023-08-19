@@ -26,13 +26,9 @@ function createElement(tagName) {
 }
 
 function createTextNode(text) {
-    let element = document.createTextNode(valueOf(text));
+    const element = document.createTextNode(valueOf(text));
     if (isState(text)) {
-        text.sub(value => {
-            const update = document.createTextNode(value);
-            element.replaceWith(update);
-            element = update;
-        });
+        text.sub(value => element.textContent = value);
     }
     return element;
 }
@@ -91,12 +87,14 @@ function setPrimitiveProp(target, prop, k) {
     }
 }
 
-function setStaticProp(target, k, prop) {
+function setStaticProp(target, key, value) {
     try {
-        isAttr(target, prop) ? target.setAttribute(attrName(k), prop) : target[k] = prop;
+        isAttr(target, key, value)
+            ? target.setAttribute(attrName(key), value)
+            : target[key] = value;
     }
     catch (error) {
-        console.warn("failed property assignment: " + k, error);
+        console.warn("failed property assignment: " + key, error);
     }
 }
 
@@ -114,23 +112,26 @@ function unsetProps(target, props) {
     }
 }
 
-function unsetStaticProp(target, k) {
+function unsetStaticProp(target, key) {
     try {
-        isAttr(target) ? target.removeAttribute(attrName(k)) : target[k] = null;
+        isAttr(target, key)
+            ? target.removeAttribute(attrName(key))
+            : target[key] = null;
     }
     catch (error) {
-        console.warn("failed property unassignment: " + k, error);
+        console.warn("failed property unassignment: " + key, error);
     }
 }
 
-function isAttr(target, prop) {
-    return target.namespaceURI
-        && (target.namespaceURI === SVG || target.namespaceURI === MATHML)
-        && (typeof prop === "string" || typeof prop === "undefined");
+function isAttr(target, key, value) {
+    return target.hasAttribute
+        && (target.hasAttribute(attrName(key))
+            || ((target.namespaceURI === SVG || target.namespaceURI === MATHML)
+                && typeof value === "string"));
 }
 
-function attrName(name) {
-    return name === "className" ? "class" : name;
+function attrName(key) {
+    return key === "className" ? "class" : key;
 }
 
 class State {
@@ -200,7 +201,7 @@ function typeOf(v) {
 }
 
 const SVG = "http://www.w3.org/2000/svg";
-const MATHML = "http://www.w3.org/2000/svg";
+const MATHML = "http://www.w3.org/1998/Math/MathML";
 
 const namespaceMap = {
     "animate": SVG,

@@ -23,7 +23,6 @@ export type Dynamic<T> = T | State<T>;
 export type Static<T> = T extends State<infer U> ? U : T;
 
 export class State<T> {
-    constructor(value: T);
     /**
      * Get and set the state current value
      * 
@@ -51,16 +50,16 @@ export class State<T> {
      */
     static from<T>(value: T): State<T>;
     /**
-     * Group states into an object state
+     * Combine multiple states into a single object state
      * 
      * ### example
      * ```
      * const n1 = State.from(2);
      * const n2 = State.from(3);
      * 
-     * const m = State.use({ n1, n2 }).as(({ n1, n2 }) => n1 * n2);
+     * const group = State.use({ n1, n2 });
      * 
-     * m.value; // 6
+     * group.value; // { n1: 2, n2: 3 }
      * ```
      */
     static use<T extends StatesGroup>(states: T): State<SpreadStatic<T>>;

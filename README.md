@@ -8,7 +8,7 @@ Miniframe is meant to be used with vanilla JavaScript, on **small projects** tha
 
 ## example
 
-**A simple counter that stops at 10**
+### A simple counter that stops at 10
 
 ```js
 import { State, render } from "@9elt/miniframe";
@@ -51,45 +51,81 @@ document.body.prepend(rootElement);
 
 ## states
 
-**Setting a state**
+### create a state
 
 ```js
-const counter = State.from(0);
-
-counter.value = counter.value + 1;
-counter.value++;
-counter.set(value => value + 1);
-
-counter.value // 3
+const state = State.from(0);
 ```
 
-Under the hood, the `value` setter and the `set` method are the same, but the latter makes for cleaner syntax with objects.
-
-**Setting an object state**
+### set the state value
 
 ```js
-const object = State.from({ foo: "bar", bar: "foo" });
-
-object.value = { ...object.value, bar: "changed" }; // works
-object.set(c => ({ ...c, bar: "changed" })); // works
-
-object.value.bar = "changed": // DOES NOT work
+state.value = state.value + 1;
 ```
-
-Directly changing an object state property value will not trigger updates.
-
-**Manipulating a state**
 
 ```js
-const counter = State.from(0);
-const label = counter.as(v => "current count: " + v);
-
-label.value // "current count: 0"
-
-const object = State.from({ foo: "bar" });
-const foo = object.as(v => v.foo);
-
-foo.value // "bar"
+state.value++;
 ```
 
-The `as` method creates a child state subscribed to its parent updates. The parent won't be affected by its children updates.
+The `set` method sets the state value in function of the current one
+```js
+state.set(curr => curr + 1);
+```
+
+### access the state value
+
+```js
+state.value; // 3
+```
+
+### object states
+
+```js
+const state = State.from({ mini: "frame", foo: "bar" });
+```
+
+```js
+state.value = { ...state.value, foo: "foo" };
+```
+
+```js
+state.set(curr => ({ ...curr, foo: "foo" }));
+```
+
+Directly setting an object state property will modify the state value WITHOUT triggering updates
+```js
+state.value.foo = "foo"; // no updates
+```
+
+### manipulate a state
+
+The `as` method creates a child state
+```js
+const n = State.from(3);
+const str = n.as(v => v + "%");
+
+str.value; // "3%"
+```
+
+The `use` method combines multiple states into a single object state
+```js
+const n1 = State.from(2);
+const n2 = State.from(3);
+
+const group = State.use({ n1, n2 });
+
+group.value; // { n1: 2, n2: 3 }
+```
+
+### subscribe to a state
+
+```js
+const state = State.from(3);
+
+state.sub((curr, prev) => {
+  console.log("state changed, delta:", curr - prev);
+});
+
+state.value *= 3;
+// > state changed, delta: 6
+```
