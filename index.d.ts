@@ -14,6 +14,8 @@
  */
 export function render<T extends TagNames, C extends Children>(props: ElementObject<T, C>): TagNamesMap[T];
 
+export function useDOM(document: Document): void;
+
 export type ElementObject<T extends TagNames = TagNames, C extends Children = Children> = SpreadDynamic<CreateElement<T, C>>;
 
 export type TagNames = keyof TagNamesMap;

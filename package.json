@@ -1,7 +1,7 @@
 {
   "name": "@9elt/miniframe",
   "type": "module",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "A small library to create state aware html elements using JavaScript objects",
   "main": "index.js",
   "types": "index.d.ts",
@@ -10,7 +10,7 @@
     "require": "./cjs/index.js"
   },
   "scripts": {
-    "build": "tsc && echo '{\"type\": \"commonjs\"}'>./cjs/package.json",
+    "build": "bash scripts/build",
     "publish": "npm run build && npm publish"
   },
   "author": "Lorenzo Cicuttin",

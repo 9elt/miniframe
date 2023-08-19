@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cjs_package_json() {
+    echo '{ "type": "commonjs" }' >./cjs/package.json
+}
+
+cjs_module_exports() {
+    for filename in cjs/*.js; do
+        mod="$(sed 's/export/module.exports =/g' <"$filename")"
+        echo "$mod" >"$filename"
+    done
+}
+
+tsc && cjs_package_json && cjs_module_exports

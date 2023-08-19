@@ -49,6 +49,26 @@ const rootElement = render({
 document.body.prepend(rootElement);
 ```
 
+## usage with node.js
+
+To use with node.js, set a `Document` via the `useDOM` function
+
+```js
+const { JSDOM } = require("jsdom");
+const { render, useDOM } = require("@9elt/miniframe");
+
+const { document } = (new JSDOM('<!DOCTYPE html><body></body>')).window;
+
+useDOM(document);
+
+const rootElement = render({
+  tagName: "p",
+  children: ["Hello World"],
+});
+
+document.body.prepend(rootElement);
+```
+
 ## states
 
 ### create a state

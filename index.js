@@ -1,3 +1,9 @@
+const DOM = { document: typeof document !== "undefined" ? document : null };
+
+function useDOM(document) {
+    DOM.document = document;
+}
+
 function render(props) {
     let element = createElement(valueOf(valueOf(props).tagName));
     setProps(element, valueOf(props));
@@ -21,12 +27,12 @@ function render(props) {
 
 function createElement(tagName) {
     return namespaceMap[tagName]
-        ? document.createElementNS(namespaceMap[tagName], tagName)
-        : document.createElement(tagName);
+        ? DOM.document.createElementNS(namespaceMap[tagName], tagName)
+        : DOM.document.createElement(tagName);
 }
 
 function createTextNode(text) {
-    const element = document.createTextNode(valueOf(text));
+    const element = DOM.document.createTextNode(valueOf(text));
     if (isState(text)) {
         text.sub(value => element.textContent = value);
     }
@@ -295,4 +301,4 @@ const namespaceMap = {
     "semantics": MATHML
 };
 
-export { render, State };
+export { render, useDOM, State };
