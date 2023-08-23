@@ -1,3 +1,4 @@
 tests
-./index.js
-./index.d.ts
+index.js
+index.d.ts
+!dist/**/*
