@@ -144,27 +144,6 @@ const _start = performance.now();
 while (_iteration--) {
 tagNames.forEach(tagName => getNamespace(tagName));
 
-/*
-
-quick results:
-
-once x 201 tagNames (201 total)
-lookup | 12μs (std. 0μs o. 18%)
-regex | 12μs (std. 0μs o. 17%)
-
-10 times x 201 tagNames (2100 total)
-lookup (x10) | 116μs (std. 1μs o. 7%)
-regex (x10) | 121μs (std. 0μs o. 12%)
-
-100 times x 201 tagNames (20,1000 total)
-lookup | 832μs (std. 221μs o. 0%)
-regex | 945μs (std. 2μs o. 16%)
-
-1000 times x 201 tagNames (201,000 total)
-lookup | 6.29ms (std. 17μs o. 11%)
-regex | 9.45ms (std. 15μs o. 5%)
-
-*/
 };
 _results[_sample] = performance.now() - _start;
 }

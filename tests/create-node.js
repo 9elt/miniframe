@@ -71,30 +71,3 @@ if (tests[1]){
     console.error(tests[1], "tests failed");
     process.exit(1);
 }
-
-/*
-
-benchmarks
-
-*/
-
-const element = { tagName, id, style, children };
-
-// @jsbm { createNode }
-
-createNode(element, document);
-
-/*
-
-quick results:
-
-once
-createNode | 159μs (std. 30μs o. 4%)
-
-10 times
-createNode | 616μs (std. 68μs o. 17%)
-
-100 times
-createNode | 7.37ms (std. 2.18ms o. 2%)
-
-*/
