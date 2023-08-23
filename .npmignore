@@ -1,6 +1,7 @@
 node_modules
 package-lock.json
 tests
+scripts
 index.js
 index.d.ts
 !dist/**/*
