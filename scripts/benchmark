@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd tests 2>/dev/null || cd ../tests 2>/dev/null || exit 1
+
+for filename in *.js; do
+    if [[ "$filename" =~ "jsbm" ]]; then
+        name="\x1b[1m${filename//.jsbm.js/}\x1b[0m"
+        config="$(grep -E 'iterations:|samples:' "$filename" | sed ':a;N;$!ba;s/\n/ /g')"
+        echo -e "running benchmark $name | $config"
+        node "$filename"
+    fi
+done
