@@ -68,15 +68,16 @@ function createNodesList(props) {
 }
 
 function setObjectProps(target, props) {
-    for (let key in props) {
+    const propsStatic = vof(props);
+    for (let key in propsStatic) {
         if (key === "tagName")
             continue;
         else if (key === "children")
-            appendNodesList(target, props.children);
-        else if (tof(props[key]) === "object")
-            setObjectProps(target[key], props[key]);
+            appendNodesList(target, propsStatic.children);
+        else if (tof(propsStatic[key]) === "object")
+            setObjectProps(target[key], propsStatic[key]);
         else
-            setPrimitiveProp(target, props, key);
+            setPrimitiveProp(target, key, propsStatic[key]);
     }
     iss(props) && props.sub((curr, prev) => {
         unsetObjectProps(target, prev);
@@ -95,16 +96,16 @@ function unsetObjectProps(target, props) {
     }
 }
 
-function setPrimitiveProp(target, prop, key) {
+function setPrimitiveProp(target, key, value) {
     try {
-        isAttribute(target, key, vof(prop[key]))
-        ? target.setAttribute(attributeName(key), vof(prop[key]))
-        : target[key] = vof(prop[key]);
+        isAttribute(target, key, vof(value))
+        ? target.setAttribute(attributeName(key), vof(value))
+        : target[key] = vof(value);
     }
     catch (error) {
         console.warn("failed property assignment: " + key, error);
     }
-    iss(prop[key]) &&prop[key].sub(value => setPrimitiveProp(target, key, value));
+    iss(value) && value.sub(value => setPrimitiveProp(target, key, value));
 }
 
 function unsetPrimitiveProp(target, key) {
