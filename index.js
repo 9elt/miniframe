@@ -1,185 +1,174 @@
-const DOM = { document: typeof document !== "undefined" ? document : null };
+let DOM = typeof document === "undefined" ? undefined : document;
 
-function useDOM(document) {
-    DOM.document = document;
+const HTMLnamespace = "http://www.w3.org/1999/xhtml";
+const SVGnamespace = "http://www.w3.org/2000/svg";
+const MATHMLnamespace = "http://www.w3.org/1998/Math/MathML";
+
+const SVGRegex = /^(ani|cir|cli|def|des|el|f(e[A-Z]|il|ore)|ima|line|m(a(rke|sk)|pat|etad)|pat|pol|rad|re|s(to|v|w|y)|tex(?!(ta))|vie|ts|us|g$|set$)/;
+const MATHMLRegex = /^(ann|sem|m(?!(ai|ap|pat|ar|as|enu|et|ul)))/;
+
+export function createNode(props, dom) {
+    dom && (DOM = dom);
+    return tof(props) === "object"
+    ? createElement(props)
+    : createTextNode(props);
 }
 
-function render(props) {
-    let element = createElement(valueOf(valueOf(props).tagName));
-    setProps(element, valueOf(props));
-    if (isState(props)) {
-        props.sub(value => {
-            const update = render(value);
-            element.replaceWith(update);
-            element = update;
-        });
-    }
-    else if (isState(props.tagName)) {
-        props.tagName.sub(value => {
-            const update = createElement(value);
-            setProps(update, props);
-            element.replaceWith(update);
-            element = update;
-        });
-    }
-    return element;
+function getNamespace(tagName) {
+    return SVGRegex.test(tagName) ? SVGnamespace
+    : MATHMLRegex.test(tagName) ? MATHMLnamespace
+    : HTMLnamespace;
 }
 
-function createElement(tagName) {
-    return namespaceMap[tagName]
-        ? DOM.document.createElementNS(namespaceMap[tagName], tagName)
-        : DOM.document.createElement(tagName);
+function createElementNS(tagName) {
+    return DOM.createElementNS(getNamespace(tagName), tagName);
 }
 
 function createTextNode(text) {
-    const element = DOM.document.createTextNode(valueOf(text));
-    if (isState(text)) {
-        text.sub(value => element.textContent = value);
-    }
+    const element = DOM.createTextNode(vof(text));
+    iss(text) && text.sub(value => element.textContent = value);
     return element;
 }
 
-function createNode(props) {
-    return typeOf(props) === "object" ? render(props) : createTextNode(props);
+function createElement(props) {
+    let element = createElementNS(vof(vof(props).tagName));
+    setObjectProps(element, props);
+    if (iss(props))
+        props.sub(value => {
+            const update = createElement(value);
+            element.replaceWith(update);
+            element = update;
+        });
+    else if (iss(props.tagName))
+        props.tagName.sub(value => {
+            const update = createElementNS(value);
+            setObjectProps(update, props);
+            element.replaceWith(update);
+            element = update;
+        });
+    return element;
 }
 
-function createChildrenNodes(children) {
-    return children.map(child => createNode(child));
+function appendNodesList(parent, children) {
+    let nodes = createNodesList(vof(children));
+    parent.append(...nodes);
+    iss(children) && children.sub(value => {
+        let i = nodes.length;
+        while (i--) nodes[i].remove();
+        nodes = createNodesList(value);
+        parent.append(...nodes);
+    });
 }
 
-function setProps(target, props) {
-    for (let k in props) {
-        if (k === "tagName") {
+function createNodesList(props) {
+    let i = props.length;
+    const list = new Array(i);
+    while (i--) list[i] = createNode(props[i]);
+    return list;
+}
+
+function setObjectProps(target, props) {
+    for (let key in props) {
+        if (key === "tagName")
             continue;
-        }
-        else if (k === "children") {
-            setChildrenProps(target, props);
-        }
-        else if (typeOf(props[k]) === "object") {
-            setObjectProps(target, props, k);
-        }
-        else {
-            setPrimitiveProp(target, props, k);
-        }
+        else if (key === "children")
+            appendNodesList(target, props.children);
+        else if (tof(props[key]) === "object")
+            setObjectProps(target[key], props[key]);
+        else
+            setPrimitiveProp(target, props, key);
+    }
+    iss(props) && props.sub((curr, prev) => {
+        unsetObjectProps(target, prev);
+        setObjectProps(target, curr);
+    });
+}
+
+function unsetObjectProps(target, props) {
+    for (let key in props) {
+        if (key === "tagName" || key === "children")
+            continue;
+        else if (tof(props[key]) === "object")
+            unsetObjectProps(target[key], vof(props[key]));
+        else
+            unsetPrimitiveProp(target, key);
     }
 }
 
-function setChildrenProps(target, { children }) {
-    let nodes = createChildrenNodes(valueOf(children));
-    target.append(...nodes);
-    if (isState(children)) {
-        children.sub(value => {
-            nodes.forEach(el => el.remove());
-            nodes = createChildrenNodes(value);
-            target.append(...nodes);
-        });
-    }
-}
-
-function setObjectProps(target, props, k) {
-    setProps(target[k], valueOf(props[k]));
-    if (isState(props[k])) {
-        props[k].sub((value, prev) => {
-            unsetProps(target[k], prev);
-            setProps(target[k], value);
-        });
-    }
-}
-
-function setPrimitiveProp(target, prop, k) {
-    setStaticProp(target, k, valueOf(prop[k]));
-    if (isState(prop[k])) {
-        prop[k].sub(value => setStaticProp(target, k, value));
-    }
-}
-
-function setStaticProp(target, key, value) {
+function setPrimitiveProp(target, prop, key) {
     try {
-        isAttr(target, key, value)
-            ? target.setAttribute(attrName(key), value)
-            : target[key] = value;
+        isAttribute(target, key, vof(prop[key]))
+        ? target.setAttribute(attributeName(key), vof(prop[key]))
+        : target[key] = vof(prop[key]);
     }
     catch (error) {
         console.warn("failed property assignment: " + key, error);
     }
+    iss(prop[key]) &&prop[key].sub(value => setPrimitiveProp(target, key, value));
 }
 
-function unsetProps(target, props) {
-    for (let k in props) {
-        if (k === "children" || k === "tagName") {
-            continue;
-        }
-        else if (typeOf(props[k]) === "object") {
-            unsetProps(target[k], valueOf(props[k]));
-        }
-        else {
-            unsetStaticProp(target, k);
-        }
-    }
-}
-
-function unsetStaticProp(target, key) {
+function unsetPrimitiveProp(target, key) {
     try {
-        isAttr(target, key)
-            ? target.removeAttribute(attrName(key))
-            : target[key] = null;
+        isAttribute(target, key)
+        ? target.removeAttribute(attributeName(key))
+        : target[key] = null;
     }
     catch (error) {
         console.warn("failed property unassignment: " + key, error);
     }
 }
 
-function isAttr(target, key, value) {
+function isAttribute(target, key, value) {
     return target.hasAttribute
-        && (target.hasAttribute(attrName(key))
-            || ((target.namespaceURI === SVG || target.namespaceURI === MATHML)
-                && typeof value === "string"));
+        && (target.hasAttribute(attributeName(key))
+        || (target.namespaceURI !== HTMLnamespace && typeof value === "string"));
 }
 
-function attrName(key) {
+function attributeName(key) {
     return key === "className" ? "class" : key;
 }
 
-class State {
-    #value;
-    #subs;
+export class State {
+    __value;
+    __subs;
     constructor(value) {
-        this.#value = value;
-        this.#subs = [];
+        this.__value = value;
+        this.__subs = [];
     }
     static from(value) {
         return new State(value);
     }
     static use(states) {
         const state = new State({});
-        for (let k in states) {
-            state.value[k] = states[k].value;
-            states[k].sub(parent => state.set(
-                curr => Object.assign(curr, { [k]: parent })
+        for (let key in states) {
+            state.value[key] = states[key].value;
+            states[key].sub(parent => state.set(
+                curr => Object.assign(curr, { [key]: parent })
             ));
         }
         return state;
     }
     get value() {
-        return this.#value;
+        return this.__value;
     }
     set value(value) {
-        this.#dispatch(value, this.#value);
-        this.#value = value;
+        this.__dispatch(value, this.__value);
+        this.__value = value;
     }
     set(f) {
-        this.value = f(this.#value);
+        this.value = f(this.__value);
     }
     as(f) {
-        let childState = new State(f(this.#value));
+        let childState = new State(f(this.__value));
         this.sub(v => childState.value = f(v));
         return childState;
     }
     sub(f) {
-        this.#subs.push(f);
+        this.__subs.push(f);
+        return 1;
     }
-    #dispatch(curr, prev) {
-        this.#subs = this.#subs.filter(f => {
+    __dispatch(curr, prev) {
+        this.__subs = this.__subs.filter(f => {
             try {
                 f(curr, prev);
                 return true;
@@ -194,111 +183,14 @@ class State {
     }
 }
 
-function isState(v) {
+function iss(v) {
     return v instanceof State;
 }
 
-function valueOf(v) {
-    return isState(v) ? v.value : v;
+function vof(v) {
+    return v instanceof State ? v.value : v;
 }
 
-function typeOf(v) {
-    return typeof valueOf(v);
+function tof(v) {
+    return typeof vof(v);
 }
-
-const SVG = "http://www.w3.org/2000/svg";
-const MATHML = "http://www.w3.org/1998/Math/MathML";
-
-const namespaceMap = {
-    "animate": SVG,
-    "animateMotion": SVG,
-    "animateTransform": SVG,
-    "circle": SVG,
-    "clipPath": SVG,
-    "defs": SVG,
-    "desc": SVG,
-    "ellipse": SVG,
-    "feBlend": SVG,
-    "feColorMatrix": SVG,
-    "feComponentTransfer": SVG,
-    "feComposite": SVG,
-    "feConvolveMatrix": SVG,
-    "feDiffuseLighting": SVG,
-    "feDisplacementMap": SVG,
-    "feDistantLight": SVG,
-    "feDropShadow": SVG,
-    "feFlood": SVG,
-    "feFuncA": SVG,
-    "feFuncB": SVG,
-    "feFuncG": SVG,
-    "feFuncR": SVG,
-    "feGaussianBlur": SVG,
-    "feImage": SVG,
-    "feMerge": SVG,
-    "feMergeNode": SVG,
-    "feMorphology": SVG,
-    "feOffset": SVG,
-    "fePointLight": SVG,
-    "feSpecularLighting": SVG,
-    "feSpotLight": SVG,
-    "feTile": SVG,
-    "feTurbulence": SVG,
-    "filter": SVG,
-    "foreignObject": SVG,
-    "g": SVG,
-    "image": SVG,
-    "line": SVG,
-    "linearGradient": SVG,
-    "marker": SVG,
-    "mask": SVG,
-    "metadata": SVG,
-    "mpath": SVG,
-    "path": SVG,
-    "pattern": SVG,
-    "polygon": SVG,
-    "polyline": SVG,
-    "radialGradient": SVG,
-    "rect": SVG,
-    "set": SVG,
-    "stop": SVG,
-    "svg": SVG,
-    "switch": SVG,
-    "symbol": SVG,
-    "text": SVG,
-    "textPath": SVG,
-    "tspan": SVG,
-    "use": SVG,
-    "view": SVG,
-    "annotation": MATHML,
-    "annotation-xml": MATHML,
-    "maction": MATHML,
-    "math": MATHML,
-    "merror": MATHML,
-    "mfrac": MATHML,
-    "mi": MATHML,
-    "mmultiscripts": MATHML,
-    "mn": MATHML,
-    "mo": MATHML,
-    "mover": MATHML,
-    "mpadded": MATHML,
-    "mphantom": MATHML,
-    "mprescripts": MATHML,
-    "mroot": MATHML,
-    "mrow": MATHML,
-    "ms": MATHML,
-    "mspace": MATHML,
-    "msqrt": MATHML,
-    "mstyle": MATHML,
-    "msub": MATHML,
-    "msubsup": MATHML,
-    "msup": MATHML,
-    "mtable": MATHML,
-    "mtd": MATHML,
-    "mtext": MATHML,
-    "mtr": MATHML,
-    "munder": MATHML,
-    "munderover": MATHML,
-    "semantics": MATHML
-};
-
-export { render, useDOM, State };

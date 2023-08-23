@@ -5,16 +5,14 @@
  * ```
  * const text = State.from("hello world");
  * 
- * const element = render({
+ * const element = createNode({
  *     tagName: "p",
  *     id: "paragraph",
  *     children: [text]
  * });
  * ```
  */
-export function render<T extends TagNames, C extends Children>(props: ElementObject<T, C>): TagNamesMap[T];
-
-export function useDOM(document: Document): void;
+export function createNode<T extends TagNames, C extends Children>(props: ElementObject<T, C>, document?: Document): TagNamesMap[T];
 
 export type ElementObject<T extends TagNames = TagNames, C extends Children = Children> = SpreadDynamic<CreateElement<T, C>>;
 
@@ -78,7 +76,7 @@ export class State<T> {
      */
     set(f: (current: T) => T): void;
     /**
-     * Create a children state
+     * Create a child state
      * 
      * ### example
      * ```
@@ -90,7 +88,7 @@ export class State<T> {
      */
     as<C>(f: (value: T) => C): State<C>;
     /**
-     * Subscribe to a state
+     * Subscribe a callback to state updates
      * 
      * ### example
      * ```

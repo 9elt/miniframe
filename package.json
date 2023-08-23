@@ -1,17 +1,18 @@
 {
   "name": "@9elt/miniframe",
-  "type": "module",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A small library to create state aware html elements using JavaScript objects",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
   "exports": {
-    "import": "./index.js",
-    "require": "./cjs/index.js"
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js"
   },
   "scripts": {
-    "build": "bash scripts/build",
-    "publish": "npm run build && npm publish"
+    "build:cjs": "tsc -p tsconfig.cjs.json && cp index.d.ts dist/cjs",
+    "build:esm": "tsc -p tsconfig.esm.json && cp index.d.ts dist/esm && echo '{\"type\":\"module\"}' >dist/esm/package.json",
+    "build": "rm -rf dist && npm run build:cjs && npm run build:esm",
+    "pub": "npm run build && npm publish"
   },
   "author": "Lorenzo Cicuttin",
   "license": "MIT",

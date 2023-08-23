@@ -4,14 +4,14 @@ A small library to create state aware html elements using JavaScript objects.
 
 > this is a beta, don't use it in production
 
-Miniframe is meant to be used with vanilla JavaScript, on **small projects** that don't need a framework. In about 300 LOC, it provides a **simple and flexible** way to create and manage UI elements.
+Miniframe is meant to be used with vanilla JavaScript, on **small projects** that don't need a framework. In about 200 LOC, it provides a **simple and flexible** way to create and manage UI elements.
 
 ## example
 
-### A simple counter that stops at 10
+A simple counter that stops at 10
 
 ```js
-import { State, render } from "@9elt/miniframe";
+import { State, createNode } from "@9elt/miniframe";
 
 const counter = State.from(0);
 const message = State.from("keep going!");
@@ -24,7 +24,7 @@ const handleClick = () => {
   }
 }
 
-const rootElement = render({
+const rootElement = createNode({
   tagName: "div",
   id: "root",
   style: { textAlign: "center" },
@@ -49,103 +49,47 @@ const rootElement = render({
 document.body.prepend(rootElement);
 ```
 
-## usage with node.js
+## node.js
 
-To use with node.js, set a `Document` via the `useDOM` function
+In node.js, provide a `Document` to the `createNode` function
 
 ```js
+const { createNode } = require("@9elt/miniframe");
 const { JSDOM } = require("jsdom");
-const { render, useDOM } = require("@9elt/miniframe");
 
-const { document } = (new JSDOM('<!DOCTYPE html><body></body>')).window;
+const document = (new JSDOM('<!DOCTYPE html><body></body>')).window.document;
 
-useDOM(document);
-
-const rootElement = render({
-  tagName: "p",
-  children: ["Hello World"],
-});
+const rootElement = createNode({ tagName: "p" }, document);
 
 document.body.prepend(rootElement);
 ```
 
 ## states
 
-### create a state
+The `State` class interface
+
+|name|description|
+|-|-|
+|*static* **`from`**|create a state|
+|*static* **`use`**|combine multiple states into a single object state|
+|*get* **`value`**|get the state current value|
+|*set* **`value`**|set the state current value|
+|**`set`**|set the state value in function of its current value|
+|**`as`**|create a child state|
+|**`sub`**|subscribe a callback to state updates|
+
+#### A note on object states
+
+Directly setting an object state property will modify the state value, but won't dispatch updates.
 
 ```js
-const state = State.from(0);
-```
-
-### set the state value
-
-```js
-state.value = state.value + 1;
-```
-
-```js
-state.value++;
-```
-
-The `set` method sets the state value in function of the current one
-```js
-state.set(curr => curr + 1);
-```
-
-### access the state value
-
-```js
-state.value; // 3
-```
-
-### object states
-
-```js
-const state = State.from({ mini: "frame", foo: "bar" });
+state.value = { ...state.value, foo: "bar" }; // OK
 ```
 
 ```js
-state.value = { ...state.value, foo: "foo" };
+state.set(curr => ({ ...curr, foo: "bar" })); // OK
 ```
 
 ```js
-state.set(curr => ({ ...curr, foo: "foo" }));
-```
-
-Directly setting an object state property will modify the state value WITHOUT triggering updates
-```js
-state.value.foo = "foo"; // no updates
-```
-
-### manipulate a state
-
-The `as` method creates a child state
-```js
-const n = State.from(3);
-const str = n.as(v => v + "%");
-
-str.value; // "3%"
-```
-
-The `use` method combines multiple states into a single object state
-```js
-const n1 = State.from(2);
-const n2 = State.from(3);
-
-const group = State.use({ n1, n2 });
-
-group.value; // { n1: 2, n2: 3 }
-```
-
-### subscribe to a state
-
-```js
-const state = State.from(3);
-
-state.sub((curr, prev) => {
-  console.log("state changed, delta:", curr - prev);
-});
-
-state.value *= 3;
-// > state changed, delta: 6
+state.value.foo = "bar"; // no updates
 ```

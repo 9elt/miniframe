@@ -2,7 +2,8 @@
   "include": ["./*"],
   "compilerOptions": {
     "target": "ES2015",
-    "outDir": "./cjs",
+    "module": "NodeNext",
+    "outDir": "./dist/cjs",
     "allowJs": true,
     "declaration": false
   }
