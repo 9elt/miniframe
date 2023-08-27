@@ -63,7 +63,7 @@ function appendNodesList(parent, children) {
 function createNodesList(props) {
     let i = props.length;
     const list = new Array(i);
-    while (i--) list[i] = createNode(props[i]);
+    while (i--) list[i] = createNode(props[i] || "");
     return list;
 }
 
@@ -73,9 +73,11 @@ function setObjectProps(target, props) {
         if (key === "tagName")
             continue;
         else if (key === "children")
-            appendNodesList(target, propsStatic.children);
+            vof(propsStatic[key])
+            && appendNodesList(target, propsStatic[key]);
         else if (tof(propsStatic[key]) === "object")
-            setObjectProps(target[key], propsStatic[key]);
+            vof(propsStatic[key])
+            && setObjectProps(target[key], propsStatic[key]);
         else
             setPrimitiveProp(target, key, propsStatic[key]);
     }
@@ -98,7 +100,7 @@ function unsetObjectProps(target, props) {
 
 function setPrimitiveProp(target, key, value) {
     try {
-        isAttribute(target, key, vof(value))
+        isAttribute(target, vof(value))
         ? target.setAttribute(attributeName(key), vof(value))
         : target[key] = vof(value);
     }
@@ -110,7 +112,7 @@ function setPrimitiveProp(target, key, value) {
 
 function unsetPrimitiveProp(target, key) {
     try {
-        isAttribute(target, key)
+        isAttribute(target)
         ? target.removeAttribute(attributeName(key))
         : target[key] = null;
     }
@@ -119,10 +121,10 @@ function unsetPrimitiveProp(target, key) {
     }
 }
 
-function isAttribute(target, key, value) {
+function isAttribute(target, value) {
     return target.hasAttribute
-        && (target.hasAttribute(attributeName(key))
-        || (target.namespaceURI !== HTMLnamespace && typeof value === "string"));
+    && (target.namespaceURI !== HTMLnamespace
+    && (typeof value === "string" || typeof value === "undefined"));
 }
 
 function attributeName(key) {
