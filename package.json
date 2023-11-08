@@ -1,6 +1,6 @@
 {
   "name": "@9elt/miniframe",
-  "version": "0.4.6",
+  "version": "0.5.0",
   "description": "A small library to create state aware html elements using JavaScript objects",
   "main": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",

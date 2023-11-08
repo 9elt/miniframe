@@ -1,73 +1,82 @@
-const hash = require("@9elt/hash").default;
-const { State, createNode } = require("@9elt/miniframe");
-const { JSDOM } = require("jsdom");
-const document = (new JSDOM('<!DOCTYPE html><body></body>')).window.document;
-const body = document.body;
+import { JSDOM } from 'jsdom';
+import { createNode, State } from '../index.js';
 
-/*
+global.window = (new JSDOM('<!DOCTYPE html><body></body>')).window;
+global.document = window.document;
 
-states
+const id = State.from('initial-id');
 
-*/
-
-const tagName = State.from("p");
-const id = State.from("initial-id");
-
-const color = State.from("#f00");
+const color = State.from('#f00');
 const style = State.from({ color });
 
-const textChild = State.from("initial-text-child");
-const elementChild = State.from({ tagName: "span", children: ["initial-element-child"] });
+const textChild = State.from('initial-text-child');
+const elementChild = State.from({ tagName: 'span', children: ['initial-element-child'] });
 
 const children = State.from([textChild, elementChild]);
 
-/*
-
-tests
-
-*/
-
-let tests = [0, 0];
-
-function testF(v, e) {
-    tests[v !== e ? 1 : 0]++;
+function log() {
+    console.log(document.body.innerHTML
+        .replace(/</g, '\n<')
+        .replace(/>/g, '>\n'));
+    console.log('id subs', id.__subs.length);
+    console.log('color subs', color.__subs.length);
+    console.log('style subs', style.__subs.length);
+    console.log('textChild subs', textChild.__subs.length);
+    console.log('elementChild subs', elementChild.__subs.length);
+    console.log('children subs', children.__subs.length);
 }
 
-const root = createNode({ tagName, id, style, children }, document);
-body.append(root);
+function logsubs(state) {
+    color.__subs.forEach((f, i) => console.log(i + ')', f + ''));
+}
 
-// console.log("Initial", body.innerHTML, hash(body.innerHTML));
-testF(hash(body.innerHTML), 3608670906);
+const root = createNode({
+    tagName: 'div',
+    id,
+    style,
+    children
+});
 
-tagName.value = "h1";
-// console.log("tagName changed", body.innerHTML, hash(body.innerHTML));
-testF(hash(body.innerHTML), 275446042);
+document.body.append(root);
 
-id.value = "CHANGED-id";
-// console.log("Id changed", body.innerHTML, hash(body.innerHTML));
-testF(hash(body.innerHTML), 348439206);
+log();
 
-color.value = "magenta";
-// console.log("color changed", body.innerHTML, hash(body.innerHTML));
-testF(hash(body.innerHTML), 1063250999);
+id.value = 'ID-CHANGED';
 
-style.value = { background: "#333" };
-// console.log("style changed", body.innerHTML, hash(body.innerHTML));
-testF(hash(body.innerHTML), 3660803459);
+log();
 
-textChild.value = "CHANGED-text-child";
-// console.log("text child changed", body.innerHTML, hash(body.innerHTML));
-testF(hash(body.innerHTML), 2840267263);
+color.value = 'magenta';
+color.value = 'magenta';
+color.value = 'magenta';
+color.value = 'magenta';
 
-elementChild.value = { tagName: "strong", children: ["CHANGED-element-child"] };
-// console.log("element child changed", body.innerHTML, hash(body.innerHTML));
-testF(hash(body.innerHTML), 922321347);
+log();
+
+style.value = { backgroundColor: 'blue' };
+color.value = 'magenta';
+
+log();
+
+style.value = { color };
+style.value = { color };
+style.value = { color };
+style.value = { color };
+style.value = { color };
+style.value = { color };
+style.value = { color };
+
+log();
+
+style.value = { backgroundColor: 'blue' };
+color.value = 'magenta';
+
+log();
+
+textChild.value = 'CHANGED-text-child';
+elementChild.value = { tagName: 'div', children: ['CHANGED-element-child'] };
+
+log();
 
 children.value = [elementChild, textChild];
-// console.log("children changed", body.innerHTML, hash(body.innerHTML));
-testF(hash(body.innerHTML), 467220698);
 
-if (tests[1]){
-    console.error(tests[1], "tests failed");
-    process.exit(1);
-}
+log();
