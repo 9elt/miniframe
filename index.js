@@ -17,7 +17,7 @@ function __createNode(D_props) {
         node.replaceWith(update);
         node = update;
     }) && D_props.value : D_props;
-    if (!props)
+    if (!props && props !== 0)
         return node = window.document.createTextNode('');
     if (props instanceof window.Node)
         return node = props;
@@ -30,7 +30,7 @@ function __createNode(D_props) {
 
 function setElement(on, from) {
     for (const key in from)
-        if (/namespaceURI|tagName/.test(key))
+        if (key === 'namespaceURI' || key === 'tagName')
             continue;
         else if (key === 'children')
             setNodeList(on, from[key]);
