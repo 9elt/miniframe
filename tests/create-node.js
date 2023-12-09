@@ -18,16 +18,12 @@ function log() {
     console.log(document.body.innerHTML
         .replace(/</g, '\n<')
         .replace(/>/g, '>\n'));
-    console.log('id subs', id.__subs.length);
-    console.log('color subs', color.__subs.length);
-    console.log('style subs', style.__subs.length);
-    console.log('textChild subs', textChild.__subs.length);
-    console.log('elementChild subs', elementChild.__subs.length);
-    console.log('children subs', children.__subs.length);
-}
-
-function logsubs(state) {
-    color.__subs.forEach((f, i) => console.log(i + ')', f + ''));
+    console.log('id subs', id._s.length);
+    console.log('color subs', color._s.length);
+    console.log('style subs', style._s.length);
+    console.log('textChild subs', textChild._s.length);
+    console.log('elementChild subs', elementChild._s.length);
+    console.log('children subs', children._s.length);
 }
 
 const root = createNode({
