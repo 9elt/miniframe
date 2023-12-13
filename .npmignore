@@ -1,7 +1,6 @@
 node_modules
 package-lock.json
-tests
-tests.js
+test.js
 scripts
 index.js
 index.d.ts
