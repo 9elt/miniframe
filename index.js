@@ -17,12 +17,12 @@ function __createNode(D_props) {
         node.replaceWith(update);
         node = update;
     }) && D_props.value : D_props;
-    if (!props && props !== 0)
+    if (typeof props === 'string' || typeof props === 'number')
+        return node = window.document.createTextNode(props);
+    if (!props)
         return node = window.document.createTextNode('');
     if (props instanceof window.Node)
         return node = props;
-    if (typeof props === 'string' || typeof props === 'number')
-        return node = window.document.createTextNode(props);
     node = window.document.createElementNS(props.namespaceURI || 'http://www.w3.org/1999/xhtml', props.tagName);
     setElement(node, props);
     return node;
