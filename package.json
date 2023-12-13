@@ -9,11 +9,11 @@
     "require": "./dist/cjs/index.js"
   },
   "scripts": {
-    "test": "bun tests.js",
+    "test": "bun test.js",
     "build:cjs": "tsc -p tsconfig.cjs.json && cp index.d.ts dist/cjs",
     "build:esm": "tsc -p tsconfig.esm.json && cp index.d.ts dist/esm && echo '{\"type\":\"module\"}' >dist/esm/package.json",
     "build": "rm -rf dist && npm run build:cjs && npm run build:esm",
-    "pub": "npm run test && npm run build && npm publish"
+    "pub": "npm run build && npm run test && npm publish"
   },
   "author": "Lorenzo Cicuttin",
   "license": "MIT",
