@@ -1,6 +1,6 @@
 # Miniframe
 
-All you need to create UIs with states, in 200 loc
+All you need to create UIs with states, in 153 loc
 
 > this is a beta, don't use it in production
 
