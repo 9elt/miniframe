@@ -31,20 +31,20 @@ states
 
 */
 
-const id = State.from('0');
+const id = new State('0');
 
-const color = State.from('#000');
+const color = new State('#000');
 
-const style = State.from({ color });
+const style = new State({ color });
 
-const textNode = State.from('0');
+const textNode = new State('0');
 
-const element = State.from({
+const element = new State({
     tagName: 'span',
     children: ['0']
 });
 
-const children = State.from([
+const children = new State([
     textNode,
     element
 ]);

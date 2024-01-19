@@ -1,6 +1,6 @@
 # Miniframe
 
-All you need to create UIs with states, in 200 loc
+Everything you need to create UIs with states, in 200 loc
 
 > this is a beta, don't use it in production
 
@@ -11,7 +11,7 @@ A simple counter that stops at 10
 ```js
 import { State, createNode } from "@9elt/miniframe";
 
-const counter = State.from(0);
+const counter = new State(0);
 
 const root = createNode({
     tagName: "div",
@@ -20,7 +20,7 @@ const root = createNode({
     children: [
         {
             tagName: "p",
-            children: [counter.as(c => "current count: " + c)]
+            children: ["current count: ", counter]
         },
         {
             tagName: "p",

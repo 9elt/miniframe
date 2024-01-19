@@ -22,15 +22,18 @@ export type Dynamic<T> = T | State<T>;
 export type Static<T> = T extends State<infer U> ? U : T;
 
 export class State<T> {
-    set value(arg: T);
+    constructor(value: T);
+    set value(value: T);
     get value(): T;
-    static from<T>(value: T): State<T>;
     static use<T extends StatesGroup>(states: T): State<SpreadStatic<T>>;
     set(f: (current: T) => T): void;
     as<C>(f: (value: T) => C): State<C>;
-    sub(f: (current: T, previous: T) => void): number;
+    sub(f: Sub<T>): Sub<T>;
+    unsub(f: Sub<T>): void;
     #private;
 }
+
+type Sub<T> = (current: T, previous: T) => void;
 
 type TagNamesNS<NS extends NamespaceURI> = keyof NamespaceMap[NS];
 
@@ -59,8 +62,8 @@ type Valid<Name, V> = IsObject<V> extends true
 type ExtractKeys<E extends Element> = Exclude<keyof E, Mask>;
 
 type Mask =
-    | 'tagName'
-    | 'classList'
+    | `tagName`
+    | `classList`
     | `baseUri`
     | `focus`
     | `${string}ttribute${string}`

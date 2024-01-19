@@ -1,33 +1,30 @@
 {
-  "name": "@9elt/miniframe",
-  "version": "0.6.5",
-  "description": "A small library to create state aware html elements using JavaScript objects",
-  "main": "./dist/esm/index.js",
-  "types": "./dist/esm/index.d.ts",
-  "exports": {
-    "import": "./dist/esm/index.js",
-    "require": "./dist/cjs/index.js"
-  },
-  "scripts": {
-    "test": "bun test.js",
-    "build:cjs": "tsc -p tsconfig.cjs.json && cp index.d.ts dist/cjs",
-    "build:esm": "tsc -p tsconfig.esm.json && cp index.d.ts dist/esm && echo '{\"type\":\"module\"}' >dist/esm/package.json",
-    "build": "rm -rf dist && npm run build:cjs && npm run build:esm",
-    "pub": "npm run build && npm run test && npm publish"
-  },
-  "author": "Lorenzo Cicuttin",
-  "license": "MIT",
-  "keywords": [
-    "miniframe",
-    "state",
-    "createElement",
-    "vanilla-js"
-  ],
-  "readme": "./README.md",
-  "homepage": "https://github.com/9elt/miniframe#readme",
-  "repository": "github:9elt/miniframe",
-  "devDependencies": {
-    "@9elt/hash": "^1.0.0",
-    "jsdom": "^22.1.0"
-  }
+    "name": "@9elt/miniframe",
+    "version": "0.7.0",
+    "description": "Everything you need to create UIs with states, in 200 loc",
+    "main": "./dist/esm/index.js",
+    "types": "./dist/esm/index.d.ts",
+    "exports": {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/cjs/index.js"
+    },
+    "scripts": {
+        "test": "bun test.js",
+        "build:cjs": "tsc -p tsconfig.cjs.json && cp index.d.ts dist/cjs",
+        "build:esm": "tsc -p tsconfig.esm.json && cp index.d.ts dist/esm && echo '{\"type\":\"module\"}' >dist/esm/package.json",
+        "build": "rm -rf dist && npm run build:cjs && npm run build:esm",
+        "pub": "npm run build && npm run test && npm publish"
+    },
+    "author": "Lorenzo Cicuttin",
+    "license": "MIT",
+    "keywords": [
+        "state",
+        "createNode"
+    ],
+    "readme": "./README.md",
+    "homepage": "https://github.com/9elt/miniframe#readme",
+    "repository": "github:9elt/miniframe",
+    "devDependencies": {
+        "jsdom": "^22.1.0"
+    }
 }
