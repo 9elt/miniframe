@@ -133,8 +133,8 @@ function setPrimitive(on, key, from) {
 }
 
 function check__pref__tref(on, from) {
-    if ('__pref' in on ? !on.__pref.isConnected : !on.isConnected
-        || (from && '__tref' in on && on.__tref !== from))
+    if (('__pref' in on ? !on.__pref.isConnected : !on.isConnected)
+        || (typeof from !== 'undefined' && '__tref' in on && on.__tref !== from))
 
         // state subs are unsubscribed when they throw an exception
         throw 1;
