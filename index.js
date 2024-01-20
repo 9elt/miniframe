@@ -16,7 +16,7 @@ function __createNode(D_props) {
     let node;
 
     // this is a common pattern
-    // const y = x instanceof State ? x.sub(curr_x => ...) && x.value : x;
+    // const x = D_x instanceof State ? D_x.sub(curr => ...) && D_x.value : D_x;
     const props = D_props instanceof State ? D_props.sub(curr => {
         check__pref__tref(node);
 
@@ -40,12 +40,27 @@ function __createNode(D_props) {
         return node = props;
 
     node = window.document.createElementNS(props.namespaceURI || 'http://www.w3.org/1999/xhtml', props.tagName);
-    setElement(node, props);
+    copyObject(node, props);
 
     return node;
 }
 
-function setElement(on, from) {
+function copyObject(on, D_from) {
+    // D_from can be state only on recursive calls
+    const from = D_from instanceof State ? D_from.sub((curr, prev) => {
+        for (const key in prev)
+            setPrimitive(on, key, null);
+
+        check__pref__tref(on);
+
+        // the target reference (__tref) is used to check
+        // if the target remains the same during state updates
+        on.__tref = curr;
+
+        copyObject(on, curr);
+
+    }) && (on.__tref = D_from.value) : D_from;
+
     for (const key in from)
         if (key === 'namespaceURI' || key === 'tagName')
             continue;
@@ -59,29 +74,10 @@ function setElement(on, from) {
             // parent connection during state updates
             on[key].__pref = on;
 
-            setObject(on[key], from[key]);
+            copyObject(on[key], from[key]);
         }
         else
             setPrimitive(on, key, from);
-}
-
-function setObject(on, D_from) {
-    const props = D_from instanceof State ? D_from.sub((curr, prev) => {
-        for (const key in prev)
-            setPrimitive(on, key, null);
-
-        check__pref__tref(on);
-
-        // the target reference (__tref) is used to check
-        // if the target remains the same during state updates
-        on.__tref = curr;
-
-        setObject(on, curr);
-
-    }) && (on.__tref = D_from.value) : D_from;
-
-    for (const key in props)
-        setPrimitive(on, key, props);
 }
 
 function setNodeList(parent, D_children) {
