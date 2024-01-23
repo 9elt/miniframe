@@ -68,7 +68,8 @@ function copyObject(on, D_from) {
         else if (key === 'children')
             setNodeList(on, from[key]);
 
-        else if (typeof (from[key] instanceof State ? from[key].value : from[key]) === 'object') {
+        else if (typeof (from[key] instanceof State ? from[key].value : from[key]) === 'object'
+            && !on.__pref) {
 
             // the parent reference (__pref) is used to check the
             // parent connection during state updates
