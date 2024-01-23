@@ -1,4 +1,4 @@
-import { MiniframeElement, State, createNode } from "./index";
+import { MiniframeElement, State, createNode } from './index';
 import { JSDOM } from 'jsdom';
 
 declare var global: any;
@@ -7,15 +7,17 @@ declare var process: any;
 global.window = (new JSDOM('<!DOCTYPE html><body></body>')).window;
 global.document = window.document;
 
+let failed = 0;
+
 /*
 
-types
+html elements
 
 */
 
 const divTest: MiniframeElement = {
     tagName: 'div',
-    className: 'class',
+    className: '0',
     children: [{
         tagName: 'p',
         children: [
@@ -47,49 +49,31 @@ const divTest: MiniframeElement = {
     }],
 };
 
-createNode(divTest);
+set(createNode(divTest));
 
-const svgTest: MiniframeElement<"http://www.w3.org/2000/svg", "svg"> = {
-    tagName: 'svg',
-    namespaceURI: "http://www.w3.org/2000/svg",
-    style: {},
-    viewBox: '0 0 64 64',
-    children: [{
-        tagName: "path",
-        namespaceURI: "http://www.w3.org/2000/svg",
-        d: "M0,0 64,0 64,64 0,64z",
-    }]
-};
-
-createNode(svgTest);
+test('<div class="0"><p>0000<span></span><span></span>00</p></div>');
 
 /*
 
-functionality
+svg elements
 
 */
 
-let failed = 0;
+const svgTest: MiniframeElement<'http://www.w3.org/2000/svg', 'svg'> = {
+    tagName: 'svg',
+    namespaceURI: 'http://www.w3.org/2000/svg',
+    style: {},
+    viewBox: '0 0 64 64',
+    children: [{
+        tagName: 'path',
+        namespaceURI: 'http://www.w3.org/2000/svg',
+        d: 'M0,0 0,64z',
+    }]
+};
 
-function test(expected: string, subs: any) {
-    const HTML = window.document.body.innerHTML;
-    if (HTML !== expected)
-        ++failed && console.log(
-            '\ntest failed',
-            '\n  expected -> ', expected,
-            '\n  got -> ', HTML,
-            '\n'
-        );
-    const states = { id, color, style, textNode, element, children };
-    for (let id in subs)
-        if (subs[id] !== states[id]._s.length)
-            ++failed && console.log(
-                '\ntest failed',
-                '\n  expected ', id, 'subs -> ', subs[id],
-                '\n  got -> ', states[id]._s.length,
-                '\n'
-            );
-}
+set(createNode(svgTest));
+
+test('<svg viewBox="0 0 64 64"><path d="M0,0 0,64z"></path></svg>');
 
 /*
 
@@ -121,15 +105,7 @@ createNode
 
 */
 
-window.document.body.append(
-    createNode({ tagName: 'div', id, style, children })
-);
-
-/*
-
-tests
-
-*/
+set(createNode({ tagName: 'div', id, style, children }));
 
 test('<div id="0" style="color: rgb(0, 0, 0);">0<span>0</span></div>', {
     id: 1,
@@ -252,4 +228,36 @@ result
 if (failed) {
     console.log('\n' + failed, 'tests have failed\n');
     process.exit(1);
+}
+
+/*
+
+utility
+
+*/
+
+function test(expected: string, subs?: any) {
+    const HTML = document.body.innerHTML;
+    if (HTML !== expected)
+        ++failed && console.log(
+            '\ntest failed',
+            '\n  expected -> ', expected,
+            '\n  got -> ', HTML,
+            '\n'
+        );
+    if (subs) {
+        const states = { id, color, style, textNode, element, children };
+        for (let id in subs)
+            if (subs[id] !== states[id]._s.length)
+                ++failed && console.log(
+                    '\ntest failed',
+                    '\n  expected ', id, 'subs -> ', subs[id],
+                    '\n  got -> ', states[id]._s.length,
+                    '\n'
+                );
+    }
+}
+
+function set(node: Node) {
+    document.body.replaceChildren(node);
 }
