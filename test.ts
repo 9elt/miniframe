@@ -1,5 +1,5 @@
-import { MiniframeElement, State, createNode } from './index';
 import { JSDOM } from 'jsdom';
+import { State, createNode, type MiniframeElement } from './index';
 
 declare var global: any;
 declare var process: any;
@@ -9,13 +9,15 @@ global.document = window.document;
 
 let failed = 0;
 
+
 /*
 
 html elements
 
 */
 
-const divTest: MiniframeElement = {
+
+const htmlTest: MiniframeElement = {
     tagName: 'div',
     className: '0',
     children: [{
@@ -49,9 +51,12 @@ const divTest: MiniframeElement = {
     }],
 };
 
-set(createNode(divTest));
+
+setBody(createNode(htmlTest));
+
 
 test('<div class="0"><p>0000<span></span><span></span>00</p></div>');
+
 
 /*
 
@@ -59,10 +64,11 @@ svg elements
 
 */
 
+
 const svgTest: MiniframeElement<'http://www.w3.org/2000/svg', 'svg'> = {
     tagName: 'svg',
     namespaceURI: 'http://www.w3.org/2000/svg',
-    style: {},
+    style: { fill: '#fff' },
     viewBox: '0 0 64 64',
     children: [{
         tagName: 'path',
@@ -71,15 +77,19 @@ const svgTest: MiniframeElement<'http://www.w3.org/2000/svg', 'svg'> = {
     }]
 };
 
-set(createNode(svgTest));
 
-test('<svg viewBox="0 0 64 64"><path d="M0,0 0,64z"></path></svg>');
+setBody(createNode(svgTest));
+
+
+test('<svg style="fill: #fff;" viewBox="0 0 64 64"><path d="M0,0 0,64z"></path></svg>');
+
 
 /*
 
 states
 
 */
+
 
 const id = new State('0');
 
@@ -99,13 +109,11 @@ const children = new State([
     element
 ]);
 
-/*
+const statesTest = { tagName: 'div', id, style, children };
 
-createNode
 
-*/
+setBody(createNode(statesTest));
 
-set(createNode({ tagName: 'div', id, style, children }));
 
 test('<div id="0" style="color: rgb(0, 0, 0);">0<span>0</span></div>', {
     id: 1,
@@ -219,22 +227,26 @@ test('<div id="1" style="background: none;"><b>1</b>1</div>', {
     children: 1,
 });
 
+
 /*
 
 result
 
 */
 
+
 if (failed) {
     console.log('\n' + failed, 'tests have failed\n');
     process.exit(1);
 }
+
 
 /*
 
 utility
 
 */
+
 
 function test(expected: string, subs?: any) {
     const HTML = document.body.innerHTML;
@@ -258,6 +270,6 @@ function test(expected: string, subs?: any) {
     }
 }
 
-function set(node: Node) {
+function setBody(node: Node) {
     document.body.replaceChildren(node);
 }
