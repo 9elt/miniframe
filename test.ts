@@ -1,4 +1,4 @@
-import { MiniframeElement, createNode } from "./index";
+import { MiniframeElement, State, createNode } from "./index";
 
 const divTest: MiniframeElement = {
     tagName: 'div',
@@ -6,12 +6,30 @@ const divTest: MiniframeElement = {
     children: [{
         tagName: 'p',
         children: [
+
             '0',
+            new State('0'),
+
             0,
-            null,
-            false,
-            undefined,
+            new State(0),
+
             document.createElement('span'),
+            new State(document.createElement('span')),
+
+            document.createTextNode('0'),
+            new State(document.createTextNode('0')),
+
+            // the following children are all allowed and
+            // result in an empty text node
+
+            null,
+            new State(null),
+
+            false,
+            new State(false),
+
+            undefined,
+            new State(undefined),
         ],
     }],
 };

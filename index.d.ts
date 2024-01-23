@@ -104,4 +104,4 @@ type IsObject<T> = T extends Function ? false
 
 type StringLike = string | number;
 
-type Nullable = null | undefined;
+type Nullable = null | undefined | false;
