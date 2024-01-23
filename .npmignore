@@ -5,4 +5,5 @@ test.ts
 scripts
 index.js
 index.d.ts
+tsconfig*
 !dist/**/*

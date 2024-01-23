@@ -17,7 +17,7 @@ html elements
 */
 
 
-const htmlTest: MiniframeElement = {
+const htmlDivTest: MiniframeElement = {
     tagName: 'div',
     className: '0',
     children: [{
@@ -51,8 +51,31 @@ const htmlTest: MiniframeElement = {
     }],
 };
 
+const htmlDivTypeCastTest: MiniframeElement<'http://www.w3.org/1999/xhtml', 'div'> = htmlDivTest;
 
-setBody(createNode(htmlTest));
+
+const htmlLinkTest: MiniframeElement = {
+    tagName: 'a',
+    href: '/',
+    children: ['...'],
+};
+
+const htmlLinkTypeCastTest: MiniframeElement<'http://www.w3.org/1999/xhtml', 'a'> = htmlLinkTest;
+
+
+const htmlFormTest: MiniframeElement = {
+    tagName: 'form',
+    onsubmit: () => { },
+    children: [{
+        tagName: 'input',
+        oninput: () => { },
+    }]
+};
+
+const htmlFromTypeCastTest: MiniframeElement<'http://www.w3.org/1999/xhtml', 'form'> = htmlFormTest;
+
+
+setBody(createNode(htmlDivTest));
 
 
 test('<div class="0"><p>0000<span></span><span></span>00</p></div>');
@@ -75,6 +98,12 @@ const svgTest: MiniframeElement<'http://www.w3.org/2000/svg', 'svg'> = {
         namespaceURI: 'http://www.w3.org/2000/svg',
         d: 'M0,0 0,64z',
     }]
+};
+
+const svgPathTest: MiniframeElement<'http://www.w3.org/2000/svg', 'path'> = {
+    tagName: 'path',
+    namespaceURI: 'http://www.w3.org/2000/svg',
+    d: 'M0,0 0,64z',
 };
 
 
@@ -109,7 +138,7 @@ const children = new State([
     element
 ]);
 
-const statesTest = { tagName: 'div', id, style, children };
+const statesTest: MiniframeElement = { tagName: 'div', id, style, children };
 
 
 setBody(createNode(statesTest));
@@ -150,6 +179,7 @@ style.value = { color };
 style.value = { color };
 style.value = { color };
 
+// @ts-ignore
 style.value = { background: 'none' };
 
 test('<div id="1" style="background: none;">0<span>0</span></div>', {
