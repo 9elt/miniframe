@@ -1,0 +1,9 @@
+{
+    "include": [
+        "./test.ts"
+    ],
+    "compilerOptions": {
+        "target": "ES2015",
+        "noEmit": true
+    }
+}

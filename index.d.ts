@@ -30,7 +30,6 @@ export class State<T> {
     as<C>(f: (value: T) => C): State<C>;
     sub(f: Sub<T>): Sub<T>;
     unsub(f: Sub<T>): void;
-    #private;
 }
 
 type Sub<T> = (current: T, previous: T) => void;
