@@ -1,6 +1,6 @@
 {
     "include": [
-        "./test.ts"
+        "./tests/**/*"
     ],
     "compilerOptions": {
         "target": "ES2015",
