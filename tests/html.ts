@@ -2,13 +2,16 @@ import { State, createNode, type MiniElement, type MiniHTMLElement } from '../in
 import { assert, done, use } from './util';
 
 
-const miniframeDiv = {
+const miniframeDiv: MiniElement<'div'> = {
     // `tagName` and `namespaceURI` need to be costant
     // and cannot just have type of `string`
     tagName: 'div' as const,
     className: new State('0'),
     style: new State({
         color: new State('#fff'),
+    }),
+    dataset: new State({
+        test: new State("0"),
     }),
     children: [{
         tagName: 'div' as const,
@@ -62,7 +65,7 @@ const htmlDiv3: HTMLDivElement = createNode(miniframeDiv3);
 
 use(htmlDiv);
 
-assert('<div class="0" style="color: rgb(255, 255, 255);"><div>0000</div></div>');
+assert('<div class="0" style="color: rgb(255, 255, 255);" data-__pref="[object HTMLDivElement]" data-__tref="[object Object]" data-test="0"><div>0000</div></div>');
 
 done();
 

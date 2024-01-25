@@ -134,8 +134,14 @@ type RemovePropsMask =
     | `replace${string}`;
 
 type Value<V> =
-    V extends CSSStyleDeclaration ? SpreadDynamic<Partial<V>> :
+    IsCurlyObject<V> extends true ? SpreadDynamic<Partial<V>> :
     Dynamic<V>;
+
+type IsCurlyObject<T> =
+    T extends Function ? false :
+    T extends Array<any> ? false :
+    T extends object ? true :
+    false;
 
 type StateGroup = { [key: string]: State<any> };
 
