@@ -2,7 +2,7 @@ import { State, createNode, type MiniElement, type MiniHTMLElement } from '../in
 import { assert, done, use } from './util';
 
 
-const miniframeDiv: MiniElement<'div'> = {
+const miniframeDiv = {
     // `tagName` and `namespaceURI` need to be costant
     // and cannot just have type of `string`
     tagName: 'div' as const,
