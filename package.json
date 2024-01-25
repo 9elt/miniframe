@@ -1,6 +1,6 @@
 {
     "name": "@9elt/miniframe",
-    "version": "0.8.1",
+    "version": "0.8.2",
     "description": "Everything you need to create UIs with states, in 200 loc",
     "main": "./dist/esm/index.js",
     "types": "./dist/esm/index.d.ts",

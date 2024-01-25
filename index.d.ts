@@ -1,32 +1,32 @@
-export function createNode<T extends Tags>(props: MiniElement<T>): InferElement<T>;
+export function createNode<T extends HTMLTags>(props: MiniElement<T>): HTMLMap[T];
+
+export function createNode<T extends SVGTags>(props: MiniElement<T>): SVGMap[T];
+
+export function createNode<T extends MathMLTags>(props: MiniElement<T>): MathMLMap[T];
 
 export function createNode(props: MiniElement): Element;
+
+export function createNode(props: Dynamic<Stringish | Falsish>): Text;
 
 export type MiniElement<T extends Tags | 1 = 1> =
     T extends Tags ? NamedMiniElement<T> :
     AnyMiniElement;
 
-export type InferElement<T extends Tags> =
-    T extends HTMLTags ? HTMLMap[T] :
-    T extends SVGTags ? SVGMap[T] :
-    T extends MathMLTags ? MathMLMap[T] :
-    never;
-
 export type MiniHTMLElement<T extends HTMLTags | 1 = 1> =
     T extends HTMLTags ? NamedMiniHTMLElement<T> :
     AnyMiniHTMLElement;
-
-export type HTMLChild = Node | AnyMiniElement | Stringish | Falsish;
 
 export type MiniSVGElement<T extends SVGTags | 1 = 1> =
     T extends SVGTags ? NamedMiniSVGElement<T> :
     AnyMiniSVGElement;
 
-export type SVGChild = Node | AnyMiniSVGElement | Stringish | Falsish;
-
 export type MiniMathMLElement<T extends MathMLTags | 1 = 1> =
     T extends MathMLTags ? NamedMiniMathMLElement<T> :
     AnyMiniMathMLElement;
+
+export type SVGChild = Node | AnyMiniSVGElement | Stringish | Falsish;
+
+export type HTMLChild = Node | AnyMiniElement | Stringish | Falsish;
 
 export type MathMLChild = Node | AnyMiniMathMLElement | Stringish | Falsish;
 
@@ -37,21 +37,22 @@ export class State<T> {
     static use<T extends StateGroup>(states: T): State<SpreadStatic<T>>;
     set(f: (current: T) => T): void;
     as<C>(f: (value: T) => C): State<C>;
-    sub<F extends Sub<T> | AsyncSub<T>>(f: F): F;
-    unsub(f: Sub<T>): void;
+    sub(f: Sub<T>): Sub<T>;
+    sub(f: AsyncSub<T>): AsyncSub<T>;
+    unsub(f: Sub<T> | AsyncSub<T>): void;
 }
 
 export type Dynamic<T> = T | State<T>;
 
-export type SpreadDynamic<T> = T extends object
-    ? Dynamic<{ [K in keyof T]: SpreadDynamic<T[K]> }>
-    : Dynamic<T>;
+export type SpreadDynamic<T> =
+    T extends object ? Dynamic<{ [K in keyof T]: SpreadDynamic<T[K]> }> :
+    Dynamic<T>;
 
 export type Static<T> = T extends State<infer U> ? U : T;
 
-export type SpreadStatic<T> = Static<T> extends object
-    ? { [K in keyof Static<T>]: SpreadStatic<Static<T>[K]> }
-    : Static<T>;
+export type SpreadStatic<T> =
+    Static<T> extends object ? { [K in keyof Static<T>]: SpreadStatic<Static<T>[K]> } :
+    Static<T>;
 
 export type Sub<T> = (current: T, previous: T) => void;
 
@@ -71,11 +72,11 @@ type NamedMiniElement<T extends Tags> =
     T extends MathMLTags ? NamedMiniMathMLElement<T> :
     never;
 
-type NamedMiniHTMLElement<T extends HTMLTags> = {
+type NamedMiniHTMLElement<T extends HTMLTags> = ElementProps<HTMLMap[T]> & {
     tagName: T;
     namespaceURI?: "http://www.w3.org/1999/xhtml";
     children?: Dynamic<Dynamic<HTMLChild>[]>;
-} & ElementProps<HTMLMap[T]>;
+};
 
 type NamedMiniSVGElement<T extends SVGTags> = Record<string, any> & {
     tagName: T;
