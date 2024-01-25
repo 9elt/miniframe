@@ -2,28 +2,28 @@ import { State, createNode, type MiniElement, type MiniSVGElement } from '../ind
 import { assert, done, use } from './util';
 
 
-const miniframeSvg: MiniElement<'svg'> = {
+const miniframeSvg = {
     // `tagName` and `namespaceURI` need to be costant
     // and cannot just have type of `string`
     tagName: 'svg' as const,
     // `namespaceURI` needs to be explicit
     // for SVG and MathML elements
     namespaceURI: 'http://www.w3.org/2000/svg' as const,
-    className: new State('0'),
+    className: new State("0"),
     children: [
         {
             tagName: 'path' as const,
             namespaceURI: 'http://www.w3.org/2000/svg' as const,
             d: 'M0,0Z',
         },
-        {
+        new State({
             tagName: 'rect' as const,
             namespaceURI: 'http://www.w3.org/2000/svg' as const,
             x: '0',
             y: '0',
             width: '64',
             height: '64',
-        },
+        }),
     ],
 };
 

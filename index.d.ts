@@ -75,18 +75,17 @@ type NamedMiniHTMLElement<T extends HTMLTags> = {
     children?: Dynamic<Dynamic<HTMLChild>[]>;
 } & ElementProps<HTMLMap[T]>;
 
-type NamedMiniSVGElement<T extends SVGTags> = {
+type NamedMiniSVGElement<T extends SVGTags> = Record<string, any> & {
     tagName: T;
     namespaceURI: "http://www.w3.org/2000/svg";
     children?: Dynamic<Dynamic<SVGChild>[]>;
-    // } & ElementProps<SVGMap[T]>;
-} & LaxElementProps;
+};
 
-type NamedMiniMathMLElement<T extends MathMLTags> = {
+type NamedMiniMathMLElement<T extends MathMLTags> = Record<string, any> & {
     tagName: T;
     namespaceURI: "http://www.w3.org/1998/Math/MathML";
     children?: Dynamic<Dynamic<MathMLChild>[]>;
-} & ElementProps<MathMLMap[T]>;
+};
 
 type Tags = HTMLTags | SVGTags | MathMLTags;
 
@@ -103,8 +102,6 @@ type SVGMap = SVGElementTagNameMap;
 type MathMLMap = MathMLElementTagNameMap;
 
 type ElementProps<E extends Element> = { [P in ValidKeys<E>]?: Value<E[P]>; };
-
-type LaxElementProps = { [K: string]: Dynamic<Stringish | Falsish> };
 
 type ValidKeys<E extends Element> = Exclude<keyof E, RemovePropsMask>;
 
