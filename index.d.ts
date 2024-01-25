@@ -1,8 +1,8 @@
-export function createNode<T extends HTMLTags>(props: Dynamic<MiniElement<T>>): HTMLMap[T];
+export function createNode<T extends HTMLTags>(props: Dynamic<MiniHTMLElement<T>>): HTMLMap[T];
 
-export function createNode<T extends SVGTags>(props: Dynamic<MiniElement<T>>): SVGMap[T];
+export function createNode<T extends SVGTags>(props: Dynamic<MiniSVGElement<T>>): SVGMap[T];
 
-export function createNode<T extends MathMLTags>(props: Dynamic<MiniElement<T>>): MathMLMap[T];
+export function createNode<T extends MathMLTags>(props: Dynamic<MiniMathMLElement<T>>): MathMLMap[T];
 
 export function createNode(props: Dynamic<MiniElement>): Element;
 
