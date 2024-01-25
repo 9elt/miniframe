@@ -1,12 +1,17 @@
-import { State, createNode, type MiniframeElement } from '../index';
+import { State, createNode, type MiniElement, type MiniHTMLElement } from '../index';
 import { assert, done, use } from './util';
 
 
-const htmlDivTest: MiniframeElement = {
-    tagName: 'div',
-    className: '0',
+const miniframeDiv = {
+    // `tagName` and `namespaceURI` need to be costant
+    // and cannot just have type of `string`
+    tagName: 'div' as const,
+    className: new State('0'),
+    style: new State({
+        color: new State('#fff'),
+    }),
     children: [{
-        tagName: 'p',
+        tagName: 'div' as const,
         children: [
 
             '0',
@@ -27,8 +32,9 @@ const htmlDivTest: MiniframeElement = {
             null,
             new State(null),
 
-            false,
-            new State(false),
+            // `false` is allowed, but not `true`
+            false as const,
+            new State(false as const),
 
             undefined,
             new State(undefined),
@@ -36,33 +42,29 @@ const htmlDivTest: MiniframeElement = {
     }],
 };
 
-
-use(createNode(htmlDivTest));
-
-
-assert('<div class="0"><p>0000<span></span><span></span>00</p></div>');
+const htmlDiv: HTMLDivElement = createNode(miniframeDiv);
 
 
-const htmlDivTypeCastTest: MiniframeElement<'http://www.w3.org/1999/xhtml', 'div'> = htmlDivTest;
+const miniframeDiv1: MiniElement = preventInference<MiniElement>(miniframeDiv);
 
-const htmlLinkTest: MiniframeElement = {
-    tagName: 'a',
-    href: '/',
-    children: ['...'],
-};
+const htmlDiv1: Element = createNode(miniframeDiv1);
 
-const htmlLinkTypeCastTest: MiniframeElement<'http://www.w3.org/1999/xhtml', 'a'> = htmlLinkTest;
 
-const htmlFormTest: MiniframeElement = {
-    tagName: 'form',
-    onsubmit: () => { },
-    children: [{
-        tagName: 'input',
-        oninput: () => { },
-    }]
-};
+const miniframeDiv2: MiniElement<'div'> = miniframeDiv;
 
-const htmlFromTypeCastTest: MiniframeElement<'http://www.w3.org/1999/xhtml', 'form'> = htmlFormTest;
+const htmlDiv2: HTMLDivElement = createNode(miniframeDiv2);
 
+
+const miniframeDiv3: MiniHTMLElement<'div'> = miniframeDiv;
+
+const htmlDiv3: HTMLDivElement = createNode(miniframeDiv3);
+
+
+use(htmlDiv);
+
+assert('<div class="0" style="color: rgb(255, 255, 255);"><div>0000</div></div>');
 
 done();
+
+
+function preventInference<T>(v: T) { return v; }

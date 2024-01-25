@@ -1,41 +1,55 @@
-import { createNode, type MiniframeElement } from '../index';
+import { State, createNode, type MiniElement, type MiniSVGElement } from '../index';
 import { assert, done, use } from './util';
 
 
-const svgTest: MiniframeElement<'http://www.w3.org/2000/svg', 'svg'> = {
-    tagName: 'svg',
-    namespaceURI: 'http://www.w3.org/2000/svg',
-    style: { fill: '#fff' },
-    viewBox: '0 0 64 64',
-    children: [{
-        tagName: 'path',
-        namespaceURI: 'http://www.w3.org/2000/svg',
-        d: 'M0,0 0,64z',
-    }]
+const miniframeSvg: MiniElement<'svg'> = {
+    // `tagName` and `namespaceURI` need to be costant
+    // and cannot just have type of `string`
+    tagName: 'svg' as const,
+    // `namespaceURI` needs to be explicit
+    // for SVG and MathML elements
+    namespaceURI: 'http://www.w3.org/2000/svg' as const,
+    className: new State('0'),
+    children: [
+        {
+            tagName: 'path' as const,
+            namespaceURI: 'http://www.w3.org/2000/svg' as const,
+            d: 'M0,0Z',
+        },
+        {
+            tagName: 'rect' as const,
+            namespaceURI: 'http://www.w3.org/2000/svg' as const,
+            x: '0',
+            y: '0',
+            width: '64',
+            height: '64',
+        },
+    ],
 };
 
-
-use(createNode(svgTest));
-
-
-assert('<svg style="fill: #fff;" viewBox="0 0 64 64"><path d="M0,0 0,64z"></path></svg>');
+const htmlSvg: SVGSVGElement = createNode(miniframeSvg);
 
 
-const inferCorrectNamespaceTagNameType: MiniframeElement = {
-    tagName: 'path',
-    namespaceURI: 'http://www.w3.org/2000/svg',
-};
+const miniframeSvg1: MiniElement = preventInference<MiniElement>(miniframeSvg);
 
-const inferCorrectTagNameType: MiniframeElement<'http://www.w3.org/2000/svg'> = {
-    tagName: 'path',
-    namespaceURI: 'http://www.w3.org/2000/svg',
-};
+const htmlSvg1: Element = createNode(miniframeSvg1);
 
-const pathDAddtribute: MiniframeElement<'http://www.w3.org/2000/svg', 'path'> = {
-    tagName: 'path',
-    namespaceURI: 'http://www.w3.org/2000/svg',
-    d: 'M0,0 0,64z',
-};
 
+const miniframeSvg2: MiniElement<'svg'> = miniframeSvg;
+
+const htmlSvg2: SVGSVGElement = createNode(miniframeSvg2);
+
+
+const miniframeSvg3: MiniSVGElement<'svg'> = miniframeSvg;
+
+const htmlSvg3: SVGSVGElement = createNode(miniframeSvg3);
+
+
+use(htmlSvg);
+
+assert('<svg class="0"><path d="M0,0Z"></path><rect x="0" y="0" width="64" height="64"></rect></svg>');
 
 done();
+
+
+function preventInference<T>(v: T) { return v; }

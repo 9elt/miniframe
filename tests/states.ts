@@ -1,4 +1,4 @@
-import { State, createNode, type MiniframeElement } from '../index';
+import { State, createNode, type MiniElement } from '../index';
 import { assert, done, subs, use } from './util';
 
 
@@ -10,17 +10,16 @@ const style: State<{ color: State<'#000' | '#fff'> } | { background: 'none' }> =
 
 const textNode: State<'0' | '1'> = new State('0');
 
-const element: State<{ tagName: 'span' | 'b', children: string[] }> = new State({ tagName: 'span', children: ['0'] });
+const element: State<MiniElement> = new State({ tagName: 'span', children: ['0'] });
 
-const children = new State([textNode, element]);
+const children: State<(State<string> | State<MiniElement>)[]> = new State([textNode, element]);
 
 const states = { id, color, style, textNode, element, children };
 
-const root: MiniframeElement = { tagName: 'div', id, style, children };
+const root = createNode({ tagName: 'div', id, style, children });
 
 
-use(createNode(root));
-
+use(root);
 
 assert('<div id="0" style="color: rgb(0, 0, 0);">0<span>0</span></div>');
 

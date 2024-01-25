@@ -1,66 +1,114 @@
-export function createNode<
-    NS extends NamespaceURI = "http://www.w3.org/1999/xhtml",
-    TN extends TagNamesNS<NS> = TagNamesNS<NS>
->(
-    props: MiniframeElement<NS, TN>
-): NamespaceMap[NS][TN];
+export function createNode<T extends Tags>(props: MiniElement<T>): InferElement<T>;
 
-export type MiniframeElement<
-    NS extends NamespaceURI = "http://www.w3.org/1999/xhtml",
-    TN extends TagNamesNS<NS> = TagNamesNS<NS>
-> = {
-    tagName: TN;
-    namespaceURI?: NS;
-    children?: Dynamic<
-        Dynamic<Node | MiniframeElement | StringLike | Nullable>[]
-    >;
-} &
-    ElementProps<NamespaceMap[NS][TN]>;
+export function createNode(props: MiniElement): Element;
 
-export type Dynamic<T> = T | State<T>;
+export type MiniElement<T extends Tags | 1 = 1> =
+    T extends Tags ? NamedMiniElement<T> :
+    AnyMiniElement;
 
-export type Static<T> = T extends State<infer U> ? U : T;
+export type InferElement<T extends Tags> =
+    T extends HTMLTags ? HTMLMap[T] :
+    T extends SVGTags ? SVGMap[T] :
+    T extends MathMLTags ? MathMLMap[T] :
+    never;
+
+export type MiniHTMLElement<T extends HTMLTags | 1 = 1> =
+    T extends HTMLTags ? NamedMiniHTMLElement<T> :
+    AnyMiniHTMLElement;
+
+export type HTMLChild = Node | AnyMiniElement | Stringish | Falsish;
+
+export type MiniSVGElement<T extends SVGTags | 1 = 1> =
+    T extends SVGTags ? NamedMiniSVGElement<T> :
+    AnyMiniSVGElement;
+
+export type SVGChild = Node | AnyMiniSVGElement | Stringish | Falsish;
+
+export type MiniMathMLElement<T extends MathMLTags | 1 = 1> =
+    T extends MathMLTags ? NamedMiniMathMLElement<T> :
+    AnyMiniMathMLElement;
+
+export type MathMLChild = Node | AnyMiniMathMLElement | Stringish | Falsish;
 
 export class State<T> {
     constructor(value: T);
     set value(value: T);
     get value(): T;
-    static use<T extends StatesGroup>(states: T): State<SpreadStatic<T>>;
+    static use<T extends StateGroup>(states: T): State<SpreadStatic<T>>;
     set(f: (current: T) => T): void;
     as<C>(f: (value: T) => C): State<C>;
     sub(f: Sub<T>): Sub<T>;
     unsub(f: Sub<T>): void;
 }
 
-type Sub<T> = (current: T, previous: T) => void;
+export type Dynamic<T> = T | State<T>;
 
-type TagNamesNS<NS extends NamespaceURI> = keyof NamespaceMap[NS];
+export type SpreadDynamic<T> = T extends object
+    ? Dynamic<{ [K in keyof T]: SpreadDynamic<T[K]> }>
+    : Dynamic<T>;
 
-type NamespaceURI = keyof NamespaceMap;
+export type Static<T> = T extends State<infer U> ? U : T;
 
-type NamespaceMap = {
-    "http://www.w3.org/1999/xhtml": HTMLElementTagNameMap;
-    "http://www.w3.org/2000/svg": SVGElementTagNameMap;
-    "http://www.w3.org/1998/Math/MathML": MathMLElementTagNameMap;
-};
+export type SpreadStatic<T> = Static<T> extends object
+    ? { [K in keyof Static<T>]: SpreadStatic<Static<T>[K]> }
+    : Static<T>;
 
-type ElementProps<E> = E extends Element
-    ? { [P in ExtractKeys<E>]?: Valid<P, E[P]>; }
-    : {};
+export type Sub<T> = (current: T, previous: T) => void;
 
-type Valid<Name, V> = IsObject<V> extends true
-    ? V extends CSSStyleDeclaration
-    ? Partial<SpreadDynamic<V>>
-    : { [key: string]: string | number } | string
-    : V extends Function
-    ? Name extends `on${string}`
-    ? Dynamic<V>
-    : never
-    : Dynamic<V>;
+type AnyMiniElement = AnyMiniHTMLElement | AnyMiniSVGElement | AnyMiniMathMLElement;
 
-type ExtractKeys<E extends Element> = Exclude<keyof E, Mask>;
+type AnyMiniHTMLElement = { [T in HTMLTags]: NamedMiniHTMLElement<T>; }[HTMLTags];
 
-type Mask =
+type AnyMiniSVGElement = { [T in SVGTags]: NamedMiniSVGElement<T>; }[SVGTags];
+
+type AnyMiniMathMLElement = { [T in MathMLTags]: NamedMiniMathMLElement<T>; }[MathMLTags];
+
+type NamedMiniElement<T extends Tags> =
+    T extends HTMLTags ? NamedMiniHTMLElement<T> :
+    T extends SVGTags ? NamedMiniSVGElement<T> :
+    T extends MathMLTags ? NamedMiniMathMLElement<T> :
+    never;
+
+type NamedMiniHTMLElement<T extends HTMLTags> = {
+    tagName: T;
+    namespaceURI?: "http://www.w3.org/1999/xhtml";
+    children?: Dynamic<Dynamic<HTMLChild>[]>;
+} & ElementProps<HTMLMap[T]>;
+
+type NamedMiniSVGElement<T extends SVGTags> = {
+    tagName: T;
+    namespaceURI: "http://www.w3.org/2000/svg";
+    children?: Dynamic<Dynamic<SVGChild>[]>;
+    // } & ElementProps<SVGMap[T]>;
+} & LaxElementProps;
+
+type NamedMiniMathMLElement<T extends MathMLTags> = {
+    tagName: T;
+    namespaceURI: "http://www.w3.org/1998/Math/MathML";
+    children?: Dynamic<Dynamic<MathMLChild>[]>;
+} & ElementProps<MathMLMap[T]>;
+
+type Tags = HTMLTags | SVGTags | MathMLTags;
+
+type HTMLTags = keyof HTMLMap;
+
+type SVGTags = keyof SVGMap;
+
+type MathMLTags = keyof MathMLMap;
+
+type HTMLMap = HTMLElementTagNameMap;
+
+type SVGMap = SVGElementTagNameMap;
+
+type MathMLMap = MathMLElementTagNameMap;
+
+type ElementProps<E extends Element> = { [P in ValidKeys<E>]?: Value<E[P]>; };
+
+type LaxElementProps = { [K: string]: Dynamic<Stringish | Falsish> };
+
+type ValidKeys<E extends Element> = Exclude<keyof E, RemovePropsMask>;
+
+type RemovePropsMask =
     | `tagName`
     | `classList`
     | `baseUri`
@@ -85,23 +133,15 @@ type Mask =
     | `request${string}`
     | `lookup${string}`
     | `compare${string}`
-    | `dispatch${string}`;
+    | `dispatch${string}`
+    | `replace${string}`;
 
-type StatesGroup = { [key: string]: State<any> };
+type Value<V> =
+    V extends CSSStyleDeclaration ? SpreadDynamic<Partial<V>> :
+    Dynamic<V>;
 
-type SpreadDynamic<T> = T extends object
-    ? Dynamic<{ [K in keyof T]: SpreadDynamic<T[K]> }>
-    : Dynamic<T>;
+type StateGroup = { [key: string]: State<any> };
 
-type SpreadStatic<T> = IsObject<Static<T>> extends true
-    ? { [K in (keyof Static<T>)]: SpreadStatic<Static<T>[K]> }
-    : Static<T>;
+type Stringish = string | number;
 
-type IsObject<T> = T extends Function ? false
-    : T extends Array<any> ? false
-    : T extends object ? true
-    : false;
-
-type StringLike = string | number;
-
-type Nullable = null | undefined | false;
+type Falsish = null | undefined | false;
