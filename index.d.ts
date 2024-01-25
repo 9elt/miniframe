@@ -37,7 +37,7 @@ export class State<T> {
     static use<T extends StateGroup>(states: T): State<SpreadStatic<T>>;
     set(f: (current: T) => T): void;
     as<C>(f: (value: T) => C): State<C>;
-    sub(f: Sub<T>): Sub<T>;
+    sub<F extends Sub<T> | AsyncSub<T>>(f: F): F;
     unsub(f: Sub<T>): void;
 }
 
@@ -54,6 +54,8 @@ export type SpreadStatic<T> = Static<T> extends object
     : Static<T>;
 
 export type Sub<T> = (current: T, previous: T) => void;
+
+export type AsyncSub<T> = (current: T, previous: T) => Promise<void>;
 
 type AnyMiniElement = AnyMiniHTMLElement | AnyMiniSVGElement | AnyMiniMathMLElement;
 
