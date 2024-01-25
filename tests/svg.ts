@@ -47,7 +47,10 @@ const htmlSvg3: SVGSVGElement = createNode(miniframeSvg3);
 
 use(htmlSvg);
 
-assert('<svg class="0"><path d="M0,0Z"></path><rect x="0" y="0" width="64" height="64"></rect></svg>');
+assert(`<svg class="0">\
+<path d="M0,0Z"></path>\
+<rect x="0" y="0" width="64" height="64"></rect>\
+</svg>`);
 
 done();
 

@@ -34,19 +34,31 @@ use(root);
 const button = document.querySelector('button');
 
 
-assert('<div id="root" style="text-align: center;"><p>current count: 0</p><p style="color: green;">keep going</p><button>increment</button></div>');
+assert(`<div id="root" style="text-align: center;">\
+<p>current count: 0</p>\
+<p style="color: green;">keep going</p>\
+<button>increment</button>\
+</div>`);
 
 
 button.click();
 
 
-assert('<div id="root" style="text-align: center;"><p>current count: 1</p><p style="color: green;">keep going</p><button>increment</button></div>');
+assert(`<div id="root" style="text-align: center;">\
+<p>current count: 1</p>\
+<p style="color: green;">keep going</p>\
+<button>increment</button>\
+</div>`);
 
 
 for (let i = 0; i < 9; i++)
     button.click();
 
 
-assert('<div id="root" style="text-align: center;"><p>current count: 10</p><p style="color: red;">stop!</p><button disabled="">increment</button></div>');
+assert(`<div id="root" style="text-align: center;">\
+<p>current count: 10</p>\
+<p style="color: red;">stop!</p>\
+<button disabled="">increment</button>\
+</div>`);
 
 done();

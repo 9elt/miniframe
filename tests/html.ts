@@ -65,7 +65,14 @@ const htmlDiv3: HTMLDivElement = createNode(miniframeDiv3);
 
 use(htmlDiv);
 
-assert('<div class="0" style="color: rgb(255, 255, 255);" data-__pref="[object HTMLDivElement]" data-__tref="[object Object]" data-test="0"><div>0000</div></div>');
+assert(`<div \
+class="0" \
+style="color: rgb(255, 255, 255);" \
+data-__pref="[object HTMLDivElement]" \
+data-__tref="[object Object]" \
+data-test="0">\
+<div>0000</div>\
+</div>`);
 
 done();
 
