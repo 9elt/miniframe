@@ -1,6 +1,6 @@
 # Miniframe
 
-Everything you need to create UIs with states, in 200 loc
+Everything you need to create nodes with states, in 200 loc
 
 > this is a beta, don't use it in production
 

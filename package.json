@@ -1,7 +1,7 @@
 {
     "name": "@9elt/miniframe",
-    "version": "0.8.4",
-    "description": "Everything you need to create UIs with states, in 200 loc",
+    "version": "0.8.5",
+    "description": "Everything you need to create nodes with states, in 200 loc",
     "main": "./dist/esm/index.js",
     "types": "./dist/esm/index.d.ts",
     "exports": {
@@ -9,7 +9,9 @@
         "require": "./dist/cjs/index.js"
     },
     "scripts": {
-        "test": "for f in tests/*.ts; do bun \"$f\"; done && tsc",
+        "test:js": "for f in tests/*.ts; do bun \"$f\"; done",
+        "test:ts": "tsc",
+        "test": "npm run test:js && npm run test:ts",
         "build:cjs": "tsc -p tsconfig.cjs.json && cp index.d.ts dist/cjs",
         "build:esm": "tsc -p tsconfig.esm.json && cp index.d.ts dist/esm && echo '{\"type\":\"module\"}' >dist/esm/package.json",
         "build": "rm -rf dist && npm run build:cjs && npm run build:esm",

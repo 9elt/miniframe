@@ -30,16 +30,13 @@ const miniframeSvg = {
 
 const htmlSvg: SVGSVGElement = createNode(miniframeSvg);
 
-
 const miniframeSvg1: MiniElement = preventInference<MiniElement>(miniframeSvg);
 
 const htmlSvg1: Element = createNode(miniframeSvg1);
 
-
 const miniframeSvg2: MiniElement<'svg'> = miniframeSvg;
 
 const htmlSvg2: SVGSVGElement = createNode(miniframeSvg2);
-
 
 const miniframeSvg3: MiniSVGElement<'svg'> = miniframeSvg;
 

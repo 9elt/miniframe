@@ -47,16 +47,13 @@ const miniframeDiv = {
 
 const htmlDiv: HTMLDivElement = createNode(miniframeDiv);
 
-
 const miniframeDiv1: MiniElement = preventInference<MiniElement>(miniframeDiv);
 
 const htmlDiv1: Element = createNode(miniframeDiv1);
 
-
 const miniframeDiv2: MiniElement<'div'> = miniframeDiv;
 
 const htmlDiv2: HTMLDivElement = createNode(miniframeDiv2);
-
 
 const miniframeDiv3: MiniHTMLElement<'div'> = miniframeDiv;
 
