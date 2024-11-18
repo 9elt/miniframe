@@ -32,13 +32,12 @@ export type MathMLChild = Node | AnyMiniMathMLElement | Stringish | Falsish;
 
 export class State<T> {
     constructor(value: T);
-    set value(value: T);
-    get value(): T;
+    value: T;
     static use<T extends StateGroup>(states: T): State<SpreadStatic<T>>;
     set(f: (current: T) => T): void;
-    as<C>(f: (value: T) => C): State<C>;
-    sub(f: Sub<T>): Sub<T>;
-    sub(f: AsyncSub<T>): AsyncSub<T>;
+    as<C>(f: (value: T) => C, collector?: Sub<any>[]): State<C>;
+    sub(f: Sub<T>, collector?: Sub<any>[]): Sub<T>;
+    sub(f: AsyncSub<T>, collector?: Sub<any>[]): AsyncSub<T>;
     unsub(f: Sub<T> | AsyncSub<T>): void;
 }
 

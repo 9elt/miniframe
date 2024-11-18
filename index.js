@@ -169,13 +169,14 @@ export class State {
     set(f) {
         this.value = f(this._v);
     }
-    as(f) {
+    as(f, collector) {
         const child = new State(f(this._v));
-        this.sub(curr => child.value = f(curr));
+        this.sub(curr => { child.value = f(curr); }, collector);
         return child;
     }
-    sub(f) {
+    sub(f, collector) {
         this._s.push(f);
+        collector && collector.push(f);
         return f;
     }
     unsub(f) {
@@ -184,16 +185,16 @@ export class State {
     _d(curr, prev) {
         const s = new Array(this._s.length);
 
-        let len = 0;
+        let length = 0;
         for (let i = 0; i < this._s.length; i++) {
             try {
                 this._s[i](curr, prev);
-                s[len++] = this._s[i];
+                s[length++] = this._s[i];
             }
             catch { }
         }
 
-        s.length = len;
+        s.length = length;
         this._s = s;
     }
 }
