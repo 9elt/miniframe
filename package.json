@@ -1,6 +1,6 @@
 {
     "name": "@9elt/miniframe",
-    "version": "0.9.0",
+    "version": "0.9.1",
     "description": "Everything you need to create nodes with states, in 200 LOC",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -9,7 +9,8 @@
             "import": "./dist/esm/index.js",
             "require": "./dist/index.js"
         },
-        "./jsx-runtime": "./jsx-runtime.js"
+        "./jsx-runtime": "./jsx-runtime.js",
+        "./jsx-dev-runtime": "./jsx-runtime.js"
     },
     "scripts": {
         "test:js": "for f in tests/*.ts; do bun \"$f\"; done",
