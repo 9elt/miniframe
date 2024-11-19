@@ -3,6 +3,8 @@ package-lock.json
 bun.lockb
 index.js
 index.d.ts
+lib.dom.d.ts
 tsconfig*
 tests
+scripts
 !dist/**/*

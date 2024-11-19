@@ -1,15 +1,22 @@
 {
     "name": "@9elt/miniframe",
-    "version": "0.8.5",
-    "description": "Everything you need to create nodes with states, in 200 loc",
+    "version": "0.9.0",
+    "description": "Everything you need to create nodes with states, in 200 LOC",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/esm/index.js",
+            "require": "./dist/index.js"
+        },
+        "./jsx-runtime": "./jsx-runtime.js"
+    },
     "scripts": {
         "test:js": "for f in tests/*.ts; do bun \"$f\"; done",
         "test:ts": "tsc",
         "test": "npm run test:js && npm run test:ts",
         "build": "sh scripts/build.sh",
-        "generate:types": "bun scripts/generate.types.js >index.d.ts",
+        "generate:types": "bun scripts/generate.types.ts >index.d.ts",
         "pub": "npm run build && npm run test && npm publish"
     },
     "author": "Lorenzo Cicuttin",

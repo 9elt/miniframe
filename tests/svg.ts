@@ -1,4 +1,4 @@
-import { State, createNode, type MiniElement, type MiniSVGElement } from '../index';
+import { State, createNode, type Mini } from '../index';
 import { assert, done, use } from './util';
 
 
@@ -30,15 +30,15 @@ const miniframeSvg = {
 
 const htmlSvg: SVGSVGElement = createNode(miniframeSvg);
 
-const miniframeSvg1: MiniElement = preventInference<MiniElement>(miniframeSvg);
+const miniframeSvg1: Mini.Element = preventInference<Mini.Element>(miniframeSvg);
 
 const htmlSvg1: Element = createNode(miniframeSvg1);
 
-const miniframeSvg2: MiniElement<'svg'> = miniframeSvg;
+const miniframeSvg2: Mini.SVGSVGElement = miniframeSvg;
 
 const htmlSvg2: SVGSVGElement = createNode(miniframeSvg2);
 
-const miniframeSvg3: MiniSVGElement<'svg'> = miniframeSvg;
+const miniframeSvg3: Mini.SVGSVGElement = miniframeSvg;
 
 const htmlSvg3: SVGSVGElement = createNode(miniframeSvg3);
 

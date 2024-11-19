@@ -3,7 +3,7 @@ let TMP;
 export function createNode(D_props) {
     const node = __createNode(D_props);
 
-    // parent connection is used to handle state subscribers
+    // NOTE: parent connection is used to handle state subscribers
     // the node is temporarily appended to an element
     // to prevent subs being removed before the user appends
     // the node himself
@@ -15,7 +15,7 @@ export function createNode(D_props) {
 function __createNode(D_props) {
     let node;
 
-    // this is a common pattern
+    // NOTE: this is a common pattern
     // const x = D_x instanceof State ? D_x.sub(curr => ...) && D_x.value : D_x;
     const props = D_props instanceof State ? D_props.sub(curr => {
         check__pref__tref(node);
@@ -49,7 +49,7 @@ function __createNode(D_props) {
 }
 
 function copyObject(on, D_from) {
-    // D_from can be state only on recursive calls
+    // NOTE: D_from can be state only on recursive calls
     const from = D_from instanceof State ? D_from.sub((curr, prev) => {
         for (const key in prev) {
             setPrimitive(on, key, null);
@@ -57,7 +57,7 @@ function copyObject(on, D_from) {
 
         check__pref__tref(on);
 
-        // the target reference (__tref) is used to check
+        // NOTE: the target reference (__tref) is used to check
         // if the target remains the same during state updates
         on.__tref = curr;
 
@@ -74,7 +74,7 @@ function copyObject(on, D_from) {
         else if (typeof (from[key] instanceof State ? from[key].value : from[key]) === 'object'
             && !on.__pref) {
 
-            // the parent reference (__pref) is used to check the
+            // NOTE: the parent reference (__pref) is used to check the
             // parent connection during state updates
             on[key].__pref = on;
 
@@ -114,7 +114,7 @@ function setPrimitive(on, key, from) {
     }) && D_value.value : D_value;
 
     try {
-        // SVG and MathML elements require properties
+        // NOTE: SVG and MathML elements require properties
         // to be set via the setAttribute api
         on instanceof window.Node
             && on.namespaceURI !== 'http://www.w3.org/1999/xhtml'
@@ -137,7 +137,7 @@ function check__pref__tref(on, from) {
     if (('__pref' in on ? !on.__pref.isConnected : !on.isConnected)
         || (typeof from !== 'undefined' && '__tref' in on && on.__tref !== from)) {
 
-        // state subs are unsubscribed when they throw an exception
+        // NOTE: state subs are unsubscribed when they throw an exception
         throw 1;
     }
 }

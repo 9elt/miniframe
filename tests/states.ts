@@ -1,4 +1,4 @@
-import { State, createNode, type MiniElement } from '../index';
+import { Mini, State, createNode } from '../index';
 import { assert, done, subs, use } from './util';
 
 
@@ -10,9 +10,9 @@ const style: State<{ color: State<'#000' | '#fff'> } | { background: 'none' }> =
 
 const textNode: State<'0' | '1'> = new State('0');
 
-const element: State<MiniElement> = new State({ tagName: 'span', children: ['0'] });
+const element: State<Mini.Element> = new State({ tagName: 'span', children: ['0'] });
 
-const children: State<(State<string> | State<MiniElement>)[]> = new State([textNode, element]);
+const children: State<(State<string> | State<Mini.Element>)[]> = new State([textNode, element]);
 
 const states = { id, color, style, textNode, element, children };
 

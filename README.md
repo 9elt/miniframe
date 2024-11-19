@@ -2,7 +2,6 @@
 
 Everything you need to create nodes with states, in 200 LOC
 
-> [!WARNING]  
 > This is a beta, do not use in production!
 
 ## usage

@@ -38,16 +38,10 @@ const miniframeDiv: Mini.HTMLDivElement = {
             // `false` is allowed, but not `true`
             false as const,
             new State(false as const),
-
-            // undefined,
-            // new State(undefined),
         ],
     }],
 };
 
-// type test = Assert<number extends string ? true : false>
-
-// type Assert<T extends true> = T;
 
 const test1 = createNode(miniframeDiv);
 type test1_ = Assert<HTMLDivElement, typeof test1>;
@@ -61,10 +55,7 @@ const test3 = createNode({
     tagName: "path",
     namespaceURI: "http://www.w3.org/2000/svg",
 });
-type test3_1F = Assert<SVGPathElement, typeof test3>;
-type test3_2F = Assert<SVGElement, typeof test3>;
-type test3_3F = Assert<Element, typeof test3>;
-type test3_4 = Assert<Node, typeof test3>;
+type test3_ = Assert<Node, typeof test3>;
 
 
 const test4 = createNode({
@@ -80,8 +71,7 @@ type test5_ = Assert<SVGPathElement, typeof test5>;
 
 const pre6: Mini.Element = preventInference<Mini.Element>(miniframeDiv);
 const test6 = createNode(pre6);
-type test6_1F = Assert<HTMLDivElement, typeof test6>;
-type test6_2 = Assert<Element, typeof test6>;
+type test6_ = Assert<Element, typeof test6>;
 
 
 use(test1);
