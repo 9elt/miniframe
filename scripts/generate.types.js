@@ -1,13 +1,11 @@
-const data = await Bun.file("lib.dom.d.ts").text();
-
-const lines = data.split("\n");
+const dataLines = (await Bun.file("lib.dom.d.ts").text()).split("\n");
 
 let i = 0;
 let target = null;
 
 const map = {};
 
-for (const line of lines) {
+for (const line of dataLines) {
     if (line.startsWith("interface")) {
         const [_, name, extend, ...data] = line.split(" ");
 
@@ -92,7 +90,7 @@ for (const line of lines) {
     }
 }
 
-const use = [];
+let use = [];
 
 function collect(key) {
     !use.includes(key) && use.push(key);
@@ -137,7 +135,11 @@ for (const key in map.MathMLElementTagNameMap.value) {
 function rename(i) {
     // return i.startsWith("HTML") ? i.replace("HTML", "Mini") :
     //     "Mini" + i;
-    return map[i] ? ("Mini_" + i) : i;
+    return map[i] ? ("Mini." + i) : i;
+}
+
+function unrename(i) {
+    return i.replace("Mini.", "");
 }
 
 function available(i) {
@@ -147,8 +149,9 @@ function available(i) {
 const basenode = `string | number | false | null`;
 
 let result = "";
+let resultJSX = "";
 
-let anyElement = "type MiniElement =";
+let anyElement = "type Mini.Element =";
 let tagNameMap = {};
 
 use.sort((a, b) => {
@@ -172,8 +175,12 @@ for (const i of use) {
     let mi = rename(i);
 
     let body = interf.extends.length
-        ? `interface ${mi} extends ${interf.extends.filter(available).map(rename).join(", ")} {`
-        : `interface ${mi} {`;
+        // ? `interface ${mi} extends ${interf.extends.filter(available).map(rename).join(", ")} {`
+        // : `interface ${mi} {`;
+        ? `    interface ${i} extends ${interf.extends.filter(available).join(", ")} {`
+        : `    interface ${i} {`;
+
+    let bodyJSX = body;
 
     const tagNames = [];
     let namespaceURI = "";
@@ -201,7 +208,11 @@ for (const i of use) {
         }
     }
 
-    if (tagNames.length > 0) {
+    if (tagNames.length > 0
+        || i === "HTMLElement"
+        || i === "SVGElement"
+        || i === "MathMLElement"
+    ) {
         anyElement += `\n    | ${mi}`;
         if (i === "HTMLElement") {
             const allTagNames = Object.keys(map.HTMLElementTagNameMap.value);
@@ -220,9 +231,12 @@ for (const i of use) {
         }
         if (namespaceURI) {
             body += `\n    namespaceURI: "${namespaceURI}";`;
+            bodyJSX += `\n    namespaceURI: "${namespaceURI}";`;
         }
-        body += `\n    children?: MiniNode[];`;
+        body += `\n    children?: MiniChildren;`;
         body += `\n    dataset?: MiniDataset;`;
+
+        bodyJSX += `\n    children?: MiniNode | MiniChildren;`;
 
         for (const tagName of tagNames) {
             if (tagNameMap[tagName]) {
@@ -241,6 +255,7 @@ for (const i of use) {
             ___value + ` | State<${___value}>`;
 
         body += `\n    ${key}?: ${value};`;
+        bodyJSX += `\n    ${key}?: ${value};`;
     }
 
     if (body.charAt(body.length - 1) !== "{") {
@@ -248,24 +263,46 @@ for (const i of use) {
     }
     body += "}\n";
 
+    if (bodyJSX.charAt(bodyJSX.length - 1) !== "{") {
+        body += "\n";
+    }
+    bodyJSX += "}\n";
+
     result += "\n" + body;
+    resultJSX += "\n" + bodyJSX;
 }
 anyElement += ";";
 
-let _resultMap = "export type MiniResult<T extends TagNames> =";
-let _tagNameMap = "export type MiniProps = {";
+let _resultMap = `export type DOMNode<P> =
+    P extends State<infer U> ? DOMNode<U> :
+    P extends Node ? P :`;
+
+function rename2(i) {
+    return i.replace("Mini.", "MiniX.");
+}
+
+let _tagNameMap = "export interface IntrinsicElements {";
 for (const tagName in tagNameMap) {
     const values = tagNameMap[tagName];
-    _tagNameMap += `\n    ${tagName}: ${values.join(" | ")};`;
+    _tagNameMap += `\n    ${tagName}: ${values.map(unrename).join(" | ")};`;
     for (const value of values) {
-        const line = `\n    MiniProps[T] extends ${value} ? ${value.replace("Mini_", "")} :`;
-        if (!_resultMap.includes(line)) {
-            _resultMap += line;
+        if (value !== rename("HTMLElement") && value !== rename("SVGElement") && value !== rename("MathMLElement")) {
+            const line = `\n    P extends ${value} ? ${unrename(value)} :`;
+            if (!_resultMap.includes(line)) {
+                _resultMap += line;
+            }
         }
     }
 }
 _tagNameMap += "\n}";
-_resultMap += "\n    never;";
+
+_resultMap += `
+    P extends Mini.HTMLElement ? HTMLElement :
+    P extends Mini.SVGElement ? SVGElement :
+    P extends Mini.MathMLElement ? MathMLElement :
+    P extends Mini.Element ? Element :
+    P extends string | number | false | null ? Text :
+    Node;`;
 
 console.log(`\
 type StateGroup = Record<string, State<any>>;
@@ -274,31 +311,38 @@ type StaticGroup<T extends StateGroup> = State<{
     [K in keyof T]: T[K] extends State<infer U> ? U : never;
 }>;
 
-export type Sub<T> = (current: T, previous: T) => void | Promise<void>;
+export type Sub<T> = (current: T, previous: T) => void;
+export type AsyncSub<T> = (current: T, previous: T) => Promise<void>;
+export type AnySub<T> = Sub<T> | AsyncSub<T>;
 
 export class State<T> {
     constructor(value: T);
     value: T;
     static use<T extends StateGroup>(states: T): StaticGroup<T>;
-    as<C>(f: (value: T) => C, collector?: Sub<any>[]): State<C>;
     set(f: (current: T) => T): void;
-    sub(f: Sub<T>, collector?: Sub<any>[]): Sub<T>;
+    as<C>(f: (value: T) => C, collector?: AnySub<any>[]): State<C>;
+    sub(f: Sub<T>, collector?: AnySub<any>[]): Sub<T>;
+    sub(f: AsyncSub<T>, collector?: AnySub<any>[]): AsyncSub<T>;
     unsub(f: Sub<T>): void;
 }
 
-export function createNode<T extends TagNames>(props: MiniProps[T]): MiniResult<T>;
-
-export function createNode(props: ${basenode} | State<${basenode}>): Text;
-
-export type TagNames = keyof MiniProps;
-`)
-console.log(_tagNameMap);
-console.log("\n" + _resultMap);
-console.log("\n" + anyElement);
+export function createNode<P>(props: P): DOMNode<P>;
+`);
+console.log(_resultMap);
+// console.log(_resultMap);
+// console.log("\n" + anyElement);
+//
+const miniNode = `
+| Mini.HTMLElement
+| Mini.SVGElement
+| Mini.MathMLElement
+| Node
+| ${basenode}
+`
 console.log(`
 export type MiniChildren = MiniNode[] | State<MiniNode[]>;
 
-export type MiniNode = MiniElement | Node | ${basenode} | State<MiniElement | Node | ${basenode}>;
+export type MiniNode = ${miniNode} | State<${miniNode}>;
 
 export type MiniDataset = {
     [key: string]: ${basenode} | State<${basenode}>;
@@ -306,7 +350,16 @@ export type MiniDataset = {
     [key: string]: ${basenode} | State<${basenode}>;
 }>;
 `);
-console.log(result.trim());
+console.log(`export declare namespace Mini {
+${result.trim()}
+}
+
+export declare namespace MiniX {
+${_tagNameMap}
+
+${resultJSX.trim()}
+}
+`);
 
 // console.log(use.join("\n"));
 

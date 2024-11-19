@@ -1,6 +1,6 @@
 import { State } from ".";
 
-function jsx(tagName, props) {
+function jsx(key, props) {
     props ||= {};
 
     if (props.children) {
@@ -12,12 +12,11 @@ function jsx(tagName, props) {
                     : [props.children];
     }
 
-    if (typeof tagName === "function") {
-        return tagName(props);
+    if (typeof key === "function") {
+        return key(props);
     }
 
-    props.tagName = tagName;
-
+    props.tagName = key;
     return props;
 }
 
@@ -26,4 +25,3 @@ function Fragment(props) {
 }
 
 export { Fragment, jsx, jsx as jsxDEV, jsx as jsxs };
-

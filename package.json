@@ -2,19 +2,14 @@
     "name": "@9elt/miniframe",
     "version": "0.8.5",
     "description": "Everything you need to create nodes with states, in 200 loc",
-    "main": "./dist/esm/index.js",
-    "types": "./dist/esm/index.d.ts",
-    "exports": {
-        "import": "./dist/esm/index.js",
-        "require": "./dist/cjs/index.js"
-    },
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "scripts": {
         "test:js": "for f in tests/*.ts; do bun \"$f\"; done",
         "test:ts": "tsc",
         "test": "npm run test:js && npm run test:ts",
-        "build:cjs": "tsc -p tsconfig.cjs.json && cp index.d.ts dist/cjs",
-        "build:esm": "tsc -p tsconfig.esm.json && cp index.d.ts dist/esm && echo '{\"type\":\"module\"}' >dist/esm/package.json",
-        "build": "rm -rf dist && npm run build:cjs && npm run build:esm",
+        "build": "sh scripts/build.sh",
+        "generate:types": "bun scripts/generate.types.js >index.d.ts",
         "pub": "npm run build && npm run test && npm publish"
     },
     "author": "Lorenzo Cicuttin",

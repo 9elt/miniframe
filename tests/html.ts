@@ -1,7 +1,9 @@
-import { MiniElement, State, createNode } from '../index';
+import { Mini, State, createNode } from '../index';
 import { assert, done, use } from './util';
 
-const miniframeDiv: MiniElement = {
+type Assert<A, B extends A> = true;
+
+const miniframeDiv: Mini.HTMLDivElement = {
     // `tagName` and `namespaceURI` need to be costant
     // and cannot just have type of `string`
     tagName: 'div',
@@ -37,19 +39,52 @@ const miniframeDiv: MiniElement = {
             false as const,
             new State(false as const),
 
-            undefined,
-            new State(undefined),
+            // undefined,
+            // new State(undefined),
         ],
     }],
 };
 
-const htmlDiv: HTMLDivElement = createNode(miniframeDiv);
+// type test = Assert<number extends string ? true : false>
 
-const miniframeDiv1: MiniElement = preventInference<MiniElement>(miniframeDiv);
+// type Assert<T extends true> = T;
 
-const htmlDiv1: HTMLDivElement = createNode(miniframeDiv1);
+const test1 = createNode(miniframeDiv);
+type test1_ = Assert<HTMLDivElement, typeof test1>;
 
-use(htmlDiv);
+
+const test2 = createNode(new State(miniframeDiv));
+type test2_ = Assert<HTMLDivElement, typeof test2>;
+
+
+const test3 = createNode({
+    tagName: "path",
+    namespaceURI: "http://www.w3.org/2000/svg",
+});
+type test3_1F = Assert<SVGPathElement, typeof test3>;
+type test3_2F = Assert<SVGElement, typeof test3>;
+type test3_3F = Assert<Element, typeof test3>;
+type test3_4 = Assert<Node, typeof test3>;
+
+
+const test4 = createNode({
+    tagName: "path",
+    namespaceURI: "http://www.w3.org/2000/svg",
+} as const);
+type test4_ = Assert<SVGPathElement, typeof test4>;
+
+
+const test5 = createNode(document.createElementNS("http://www.w3.org/2000/svg", "path"))
+type test5_ = Assert<SVGPathElement, typeof test5>;
+
+
+const pre6: Mini.Element = preventInference<Mini.Element>(miniframeDiv);
+const test6 = createNode(pre6);
+type test6_1F = Assert<HTMLDivElement, typeof test6>;
+type test6_2 = Assert<Element, typeof test6>;
+
+
+use(test1);
 
 assert(`<div \
 class="0" \

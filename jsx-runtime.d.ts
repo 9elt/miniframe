@@ -1,42 +1,30 @@
-import type { MiniElement } from ".";
+import type { Mini, MiniNode, MiniX } from ".";
 
-type Tags =
-    | keyof HTMLElementTagNameMap
-    | keyof SVGElementTagNameMap
-    | keyof MathMLElementTagNameMap;
+type TagNames = keyof MiniX.IntrinsicElements;
+type Fn = ((props: any) => any);
 
-type Child =
-    | MiniElement
-    | HTMLElement
-    | SVGElement
-    | MathMLElement
-    | string
-    | null
-    | false;
+export function jsx<T extends TagNames | Fn>(
+    key: T,
+    props: T extends TagNames ? MiniX.IntrinsicElements[T] : T extends Fn ? Parameters<T>[0] : never
+): Mini.Element;
 
-export function jsx(
-    tagName: Tags | Function,
-    props: Partial<MiniElement> & { children?: Child[] }
-): MiniElement;
+export function jsxs<T extends TagNames | Fn>(
+    key: T,
+    props: T extends TagNames ? MiniX.IntrinsicElements[T] : T extends Fn ? Parameters<T>[0] : never
+): Mini.Element;
 
-export function jsxDEV(
-    tagName: Tags | Function,
-    props: Partial<MiniElement> & { children?: Child[] }
-): MiniElement;
-
-export function jsxs(
-    tagName: Tags | Function,
-    props: Partial<MiniElement> & { children?: Child[] }
-): MiniElement;
+export function jsxDEV<T extends TagNames | Fn>(
+    key: T,
+    props: T extends TagNames ? MiniX.IntrinsicElements[T] : T extends Fn ? Parameters<T>[0] : never
+): Mini.Element;
 
 export function Fragment(
-    props: Partial<MiniElement> & { children?: Child[] }
-): MiniElement;
+    props: Partial<Mini.Element> & { children?: MiniNode[] }
+): Mini.Element;
 
 export declare namespace JSX {
-    interface IntrinsicElements {
-        [element: string]: any;
-    }
+    interface IntrinsicElements extends MiniX.IntrinsicElements { }
+    interface Element extends Mini.HTMLElement { }
     interface ElementChildrenAttribute {
         children: any;
     }
