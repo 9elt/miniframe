@@ -60,8 +60,17 @@ for (const line of dataLines) {
             && !name.startsWith("(")
             && !name.startsWith("new ")
             && !name.startsWith("[")
-            && (name === "readonly style" || !name.startsWith("readonly "))
+            && (
+                name === "readonly style"
+                // || (
+                //     target.includes("SVG")
+                //     && !/^readonly [A-Z]/.test(name)
+                // )
+                || !name.startsWith("readonly ")
+            )
         ) {
+            name = name.replace("readonly ", "").trim();
+
             const raw = value;
             const _value = [];
 
@@ -117,17 +126,28 @@ function collect(key) {
     }
 }
 
+const allTagNames = [];
+
 for (const key in map.HTMLElementTagNameMap.value) {
+    if (!allTagNames.includes(key)) {
+        allTagNames.push(key);
+    }
     const elemInterf = map.HTMLElementTagNameMap.value[key];
     collect(elemInterf[0]);
 }
 
 for (const key in map.SVGElementTagNameMap.value) {
+    if (!allTagNames.includes(key)) {
+        allTagNames.push(key);
+    }
     const elemInterf = map.SVGElementTagNameMap.value[key];
     collect(elemInterf[0]);
 }
 
 for (const key in map.MathMLElementTagNameMap.value) {
+    if (!allTagNames.includes(key)) {
+        allTagNames.push(key);
+    }
     const elemInterf = map.MathMLElementTagNameMap.value[key];
     collect(elemInterf[0]);
 }
@@ -189,6 +209,7 @@ for (const i of use) {
         const elemInterf = map.HTMLElementTagNameMap.value[tagName][0];
         if (i === elemInterf) {
             tagNames.push(tagName);
+            namespaceURI = "http://www.w3.org/1999/xhtml";
         }
     }
 
@@ -206,6 +227,11 @@ for (const i of use) {
             tagNames.push(tagName);
             namespaceURI = "http://www.w3.org/1998/Math/MathML";
         }
+    }
+
+    if (i === "Element") {
+        body += `\n    tagName: ${allTagNames.join(" | ")};`;
+        body += `\n    namespaceURI?: "http://www.w3.org/1999/xhtml" | "http://www.w3.org/2000/svg" | "http://www.w3.org/1998/Math/MathML";`;
     }
 
     if (tagNames.length > 0
@@ -230,8 +256,11 @@ for (const i of use) {
             body += `\n    tagName: ${tagNames.join(" | ")};`;
         }
         if (namespaceURI) {
-            body += `\n    namespaceURI: "${namespaceURI}";`;
-            bodyJSX += `\n    namespaceURI: "${namespaceURI}";`;
+            let l = i.includes("HTML")
+                ? `\n    namespaceURI?: "${namespaceURI}";`
+                : `\n    namespaceURI: "${namespaceURI}";`;
+            body += l;
+            bodyJSX += l;
         }
         body += `\n    children?: MiniChildren;`;
         body += `\n    dataset?: MiniDataset;`;
@@ -256,6 +285,10 @@ for (const i of use) {
 
         body += `\n    ${key}?: ${value};`;
         bodyJSX += `\n    ${key}?: ${value};`;
+    }
+
+    if (i.includes("SVG") || i.includes("MathML")) {
+        bodyJSX += `\n    [key: string]: any;`;
     }
 
     if (body.charAt(body.length - 1) !== "{") {
@@ -333,9 +366,7 @@ console.log(_resultMap);
 // console.log("\n" + anyElement);
 //
 const miniNode = `
-| Mini.HTMLElement
-| Mini.SVGElement
-| Mini.MathMLElement
+| Mini.Element
 | Node
 | ${basenode}
 `

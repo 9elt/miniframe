@@ -24,7 +24,7 @@ export function Fragment(
 
 export declare namespace JSX {
     interface IntrinsicElements extends MiniX.IntrinsicElements { }
-    interface Element extends Mini.HTMLElement { }
+    interface Element extends Mini.Element { }
     interface ElementChildrenAttribute {
         children: any;
     }
