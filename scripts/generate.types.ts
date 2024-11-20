@@ -340,7 +340,7 @@ DOMNode += `
 
 IntrinsicElements += "\n}";
 
-const baseNode = `string | number | false | null`;
+const baseNode = `string | number | false | null | undefined`;
 
 const miniNode = `
 | Mini.Element
@@ -355,19 +355,18 @@ type StaticGroup<T extends StateGroup> = State<{
     [K in keyof T]: T[K] extends State<infer U> ? U : never;
 }>;
 
-export type Sub<T> = (current: T, previous: T) => void;
-export type AsyncSub<T> = (current: T, previous: T) => Promise<void>;
-export type AnySub<T> = Sub<T> | AsyncSub<T>;
+export type Sub<T> = (current: T, previous: T) => void | Promise<void>;
+
+export type Collector = Sub<any>[];
 
 export class State<T> {
     constructor(value: T);
     value: T;
     static use<T extends StateGroup>(states: T): StaticGroup<T>;
     set(f: (current: T) => T): void;
-    as<C>(f: (value: T) => C, collector?: AnySub<any>[]): State<C>;
-    sub(f: Sub<T>, collector?: AnySub<any>[]): Sub<T>;
-    sub(f: AsyncSub<T>, collector?: AnySub<any>[]): AsyncSub<T>;
-    unsub(f: Sub<T>): void;
+    as<C>(f: (value: T) => C, collector?: Collector): State<C>;
+    sub<F extends Sub<T>>(f: F, collector?: Collector): F;
+    unsub<F extends Sub<T>>(f: F): void;
 }
 
 export function createNode<P>(props: P): DOMNode<P>;

@@ -35,9 +35,11 @@ const miniframeDiv: Mini.HTMLDivElement = {
             null,
             new State(null),
 
-            // `false` is allowed, but not `true`
-            false as const,
-            new State(false as const),
+            false,
+            new State(false),
+
+            undefined,
+            new State(undefined),
         ],
     }],
 };
