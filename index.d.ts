@@ -152,7 +152,7 @@ export type DOMNode<P> =
     P extends Mini.SVGElement ? SVGElement :
     P extends Mini.MathMLElement ? MathMLElement :
     P extends Mini.Element ? Element :
-    P extends string | number | false | null ? Text :
+    P extends string | number | false | null | undefined ? Text :
     Node;
 
 export type MiniChildren = MiniNode[] | State<MiniNode[]>;
@@ -168,9 +168,9 @@ export type MiniNode =
     >;
 
 export type MiniDataset = {
-    [key: string]: string | number | false | null | undefined | State<string | number | false | null | undefined>;
+    [key: string]: string | number | undefined | State<string | number | undefined>;
 } | State<{
-    [key: string]: string | number | false | null | undefined | State<string | number | false | null | undefined>;
+    [key: string]: string | number | undefined | State<string | number | undefined>;
 }>;
 
 export declare namespace Mini {

@@ -300,6 +300,14 @@ for (const iName of allInterfaces) {
         ? " }\n" : "\n    }\n";
 }
 
+const baseNode = `string | number | false | null | undefined`;
+
+const miniNode = `
+| Mini.Element
+| Node
+| ${baseNode}
+`;
+
 let DOMNode = `export type DOMNode<P> =
     P extends State<infer U> ? DOMNode<U> :
     P extends Node ? P :`;
@@ -335,18 +343,10 @@ DOMNode += `
     P extends Mini.SVGElement ? SVGElement :
     P extends Mini.MathMLElement ? MathMLElement :
     P extends Mini.Element ? Element :
-    P extends string | number | false | null ? Text :
+    P extends ${baseNode} ? Text :
     Node;`;
 
 IntrinsicElements += "\n}";
-
-const baseNode = `string | number | false | null | undefined`;
-
-const miniNode = `
-| Mini.Element
-| Node
-| ${baseNode}
-`;
 
 console.log(`\
 type StateGroup = Record<string, State<any>>;
@@ -378,9 +378,9 @@ export type MiniChildren = MiniNode[] | State<MiniNode[]>;
 export type MiniNode = ${miniNode} | State<${miniNode}>;
 
 export type MiniDataset = {
-    [key: string]: ${baseNode} | State<${baseNode}>;
+    [key: string]: string | number | undefined | State<string | number | undefined>;
 } | State<{
-    [key: string]: ${baseNode} | State<${baseNode}>;
+    [key: string]: string | number | undefined | State<string | number | undefined>;
 }>;
 
 export declare namespace Mini {
