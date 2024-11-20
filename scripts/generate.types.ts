@@ -304,6 +304,7 @@ const baseNode = `string | number | false | null | undefined`;
 
 const miniNode = `
 | Mini.Element
+| Mini.Element[]
 | Node
 | ${baseNode}
 `;

@@ -159,10 +159,12 @@ export type MiniChildren = MiniNode[] | State<MiniNode[]>;
 
 export type MiniNode =
     | Mini.Element
+    | Mini.Element[]
     | Node
     | string | number | false | null | undefined
     | State<
         | Mini.Element
+        | Mini.Element[]
         | Node
         | string | number | false | null | undefined
     >;
