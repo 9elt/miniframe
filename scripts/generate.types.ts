@@ -278,6 +278,9 @@ for (const iName of allInterfaces) {
     }
 
     for (const key in interf.value) {
+        !interf.value[key].includes("undefined") &&
+            interf.value[key].push("undefined");
+
         const value = interf.value[key].join(" | ");
 
         const _line = `\n    ${key}?: ${value} | State<${value}>;`;

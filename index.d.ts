@@ -181,19 +181,19 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        charset?: string | State<string>;
-        coords?: string | State<string>;
-        download?: string | State<string>;
-        hreflang?: string | State<string>;
-        name?: string | State<string>;
-        ping?: string | State<string>;
-        referrerPolicy?: string | State<string>;
-        rel?: string | State<string>;
-        rev?: string | State<string>;
-        shape?: string | State<string>;
-        target?: string | State<string>;
-        text?: string | State<string>;
-        type?: string | State<string>;
+        charset?: string | undefined | State<string | undefined>;
+        coords?: string | undefined | State<string | undefined>;
+        download?: string | undefined | State<string | undefined>;
+        hreflang?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        ping?: string | undefined | State<string | undefined>;
+        referrerPolicy?: string | undefined | State<string | undefined>;
+        rel?: string | undefined | State<string | undefined>;
+        rev?: string | undefined | State<string | undefined>;
+        shape?: string | undefined | State<string | undefined>;
+        target?: string | undefined | State<string | undefined>;
+        text?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLElement extends Element, ElementCSSInlineStyle, ElementContentEditable, GlobalEventHandlers, HTMLOrSVGElement {
@@ -201,25 +201,25 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        accessKey?: string | State<string>;
-        autocapitalize?: string | State<string>;
-        dir?: string | State<string>;
-        draggable?: boolean | State<boolean>;
-        hidden?: boolean | State<boolean>;
-        inert?: boolean | State<boolean>;
-        innerText?: string | State<string>;
-        lang?: string | State<string>;
-        outerText?: string | State<string>;
-        popover?: string | null | State<string | null>;
-        spellcheck?: boolean | State<boolean>;
-        title?: string | State<string>;
-        translate?: boolean | State<boolean>;
+        accessKey?: string | undefined | State<string | undefined>;
+        autocapitalize?: string | undefined | State<string | undefined>;
+        dir?: string | undefined | State<string | undefined>;
+        draggable?: boolean | undefined | State<boolean | undefined>;
+        hidden?: boolean | undefined | State<boolean | undefined>;
+        inert?: boolean | undefined | State<boolean | undefined>;
+        innerText?: string | undefined | State<string | undefined>;
+        lang?: string | undefined | State<string | undefined>;
+        outerText?: string | undefined | State<string | undefined>;
+        popover?: string | null | undefined | State<string | null | undefined>;
+        spellcheck?: boolean | undefined | State<boolean | undefined>;
+        title?: string | undefined | State<string | undefined>;
+        translate?: boolean | undefined | State<boolean | undefined>;
     }
 
     interface HTMLOrSVGElement {
-        autofocus?: boolean | State<boolean>;
-        nonce?: string | State<string>;
-        tabIndex?: number | State<number>;
+        autofocus?: boolean | undefined | State<boolean | undefined>;
+        nonce?: string | undefined | State<string | undefined>;
+        tabIndex?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLAreaElement extends HTMLElement, HTMLHyperlinkElementUtils {
@@ -227,15 +227,15 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        alt?: string | State<string>;
-        coords?: string | State<string>;
-        download?: string | State<string>;
-        noHref?: boolean | State<boolean>;
-        ping?: string | State<string>;
-        referrerPolicy?: string | State<string>;
-        rel?: string | State<string>;
-        shape?: string | State<string>;
-        target?: string | State<string>;
+        alt?: string | undefined | State<string | undefined>;
+        coords?: string | undefined | State<string | undefined>;
+        download?: string | undefined | State<string | undefined>;
+        noHref?: boolean | undefined | State<boolean | undefined>;
+        ping?: string | undefined | State<string | undefined>;
+        referrerPolicy?: string | undefined | State<string | undefined>;
+        rel?: string | undefined | State<string | undefined>;
+        shape?: string | undefined | State<string | undefined>;
+        target?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLAudioElement extends HTMLMediaElement {
@@ -246,23 +246,23 @@ export declare namespace Mini {
     }
 
     interface HTMLMediaElement extends HTMLElement {
-        autoplay?: boolean | State<boolean>;
-        controls?: boolean | State<boolean>;
-        crossOrigin?: string | null | State<string | null>;
-        currentTime?: number | State<number>;
-        defaultMuted?: boolean | State<boolean>;
-        defaultPlaybackRate?: number | State<number>;
-        disableRemotePlayback?: boolean | State<boolean>;
-        loop?: boolean | State<boolean>;
-        muted?: boolean | State<boolean>;
-        onencrypted?: ((this: HTMLMediaElement, ev: MediaEncryptedEvent) => any) | null | State<((this: HTMLMediaElement, ev: MediaEncryptedEvent) => any) | null>;
-        onwaitingforkey?: ((this: HTMLMediaElement, ev: Event) => any) | null | State<((this: HTMLMediaElement, ev: Event) => any) | null>;
-        playbackRate?: number | State<number>;
-        preload?: "none" | "metadata" | "auto" | "" | State<"none" | "metadata" | "auto" | "">;
-        preservesPitch?: boolean | State<boolean>;
-        src?: string | State<string>;
-        srcObject?: MediaProvider | null | State<MediaProvider | null>;
-        volume?: number | State<number>;
+        autoplay?: boolean | undefined | State<boolean | undefined>;
+        controls?: boolean | undefined | State<boolean | undefined>;
+        crossOrigin?: string | null | undefined | State<string | null | undefined>;
+        currentTime?: number | undefined | State<number | undefined>;
+        defaultMuted?: boolean | undefined | State<boolean | undefined>;
+        defaultPlaybackRate?: number | undefined | State<number | undefined>;
+        disableRemotePlayback?: boolean | undefined | State<boolean | undefined>;
+        loop?: boolean | undefined | State<boolean | undefined>;
+        muted?: boolean | undefined | State<boolean | undefined>;
+        onencrypted?: ((this: HTMLMediaElement, ev: MediaEncryptedEvent) => any) | null | undefined | State<((this: HTMLMediaElement, ev: MediaEncryptedEvent) => any) | null | undefined>;
+        onwaitingforkey?: ((this: HTMLMediaElement, ev: Event) => any) | null | undefined | State<((this: HTMLMediaElement, ev: Event) => any) | null | undefined>;
+        playbackRate?: number | undefined | State<number | undefined>;
+        preload?: "none" | "metadata" | "auto" | "" | undefined | State<"none" | "metadata" | "auto" | "" | undefined>;
+        preservesPitch?: boolean | undefined | State<boolean | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        srcObject?: MediaProvider | null | undefined | State<MediaProvider | null | undefined>;
+        volume?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLBaseElement extends HTMLElement {
@@ -270,8 +270,8 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        href?: string | State<string>;
-        target?: string | State<string>;
+        href?: string | undefined | State<string | undefined>;
+        target?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLQuoteElement extends HTMLElement {
@@ -279,7 +279,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        cite?: string | State<string>;
+        cite?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLBodyElement extends HTMLElement, WindowEventHandlers {
@@ -287,12 +287,12 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        aLink?: string | State<string>;
-        background?: string | State<string>;
-        bgColor?: string | State<string>;
-        link?: string | State<string>;
-        text?: string | State<string>;
-        vLink?: string | State<string>;
+        aLink?: string | undefined | State<string | undefined>;
+        background?: string | undefined | State<string | undefined>;
+        bgColor?: string | undefined | State<string | undefined>;
+        link?: string | undefined | State<string | undefined>;
+        text?: string | undefined | State<string | undefined>;
+        vLink?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLBRElement extends HTMLElement {
@@ -300,7 +300,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        clear?: string | State<string>;
+        clear?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLButtonElement extends HTMLElement, PopoverInvokerElement {
@@ -308,15 +308,15 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        disabled?: boolean | State<boolean>;
-        formAction?: string | State<string>;
-        formEnctype?: string | State<string>;
-        formMethod?: string | State<string>;
-        formNoValidate?: boolean | State<boolean>;
-        formTarget?: string | State<string>;
-        name?: string | State<string>;
-        type?: "submit" | "reset" | "button" | State<"submit" | "reset" | "button">;
-        value?: string | State<string>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        formAction?: string | undefined | State<string | undefined>;
+        formEnctype?: string | undefined | State<string | undefined>;
+        formMethod?: string | undefined | State<string | undefined>;
+        formNoValidate?: boolean | undefined | State<boolean | undefined>;
+        formTarget?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        type?: "submit" | "reset" | "button" | undefined | State<"submit" | "reset" | "button" | undefined>;
+        value?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLCanvasElement extends HTMLElement {
@@ -324,8 +324,8 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        height?: number | State<number>;
-        width?: number | State<number>;
+        height?: number | undefined | State<number | undefined>;
+        width?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLTableCaptionElement extends HTMLElement {
@@ -333,7 +333,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTableColElement extends HTMLElement {
@@ -341,12 +341,12 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
-        ch?: string | State<string>;
-        chOff?: string | State<string>;
-        span?: number | State<number>;
-        vAlign?: string | State<string>;
-        width?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        ch?: string | undefined | State<string | undefined>;
+        chOff?: string | undefined | State<string | undefined>;
+        span?: number | undefined | State<number | undefined>;
+        vAlign?: string | undefined | State<string | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLDataElement extends HTMLElement {
@@ -354,7 +354,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        value?: string | State<string>;
+        value?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLDataListElement extends HTMLElement {
@@ -369,8 +369,8 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        cite?: string | State<string>;
-        dateTime?: string | State<string>;
+        cite?: string | undefined | State<string | undefined>;
+        dateTime?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLDetailsElement extends HTMLElement {
@@ -378,8 +378,8 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        name?: string | State<string>;
-        open?: boolean | State<boolean>;
+        name?: string | undefined | State<string | undefined>;
+        open?: boolean | undefined | State<boolean | undefined>;
     }
 
     interface HTMLDialogElement extends HTMLElement {
@@ -387,8 +387,8 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        open?: boolean | State<boolean>;
-        returnValue?: string | State<string>;
+        open?: boolean | undefined | State<boolean | undefined>;
+        returnValue?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLDivElement extends HTMLElement {
@@ -396,7 +396,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLDListElement extends HTMLElement {
@@ -404,7 +404,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        compact?: boolean | State<boolean>;
+        compact?: boolean | undefined | State<boolean | undefined>;
     }
 
     interface HTMLEmbedElement extends HTMLElement {
@@ -412,12 +412,12 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
-        height?: string | State<string>;
-        name?: string | State<string>;
-        src?: string | State<string>;
-        type?: string | State<string>;
-        width?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        height?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLFieldSetElement extends HTMLElement {
@@ -425,8 +425,8 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        disabled?: boolean | State<boolean>;
-        name?: string | State<string>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        name?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLFormElement extends HTMLElement {
@@ -434,16 +434,16 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        acceptCharset?: string | State<string>;
-        action?: string | State<string>;
-        autocomplete?: AutoFillBase | State<AutoFillBase>;
-        encoding?: string | State<string>;
-        enctype?: string | State<string>;
-        method?: string | State<string>;
-        name?: string | State<string>;
-        noValidate?: boolean | State<boolean>;
-        rel?: string | State<string>;
-        target?: string | State<string>;
+        acceptCharset?: string | undefined | State<string | undefined>;
+        action?: string | undefined | State<string | undefined>;
+        autocomplete?: AutoFillBase | undefined | State<AutoFillBase | undefined>;
+        encoding?: string | undefined | State<string | undefined>;
+        enctype?: string | undefined | State<string | undefined>;
+        method?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        noValidate?: boolean | undefined | State<boolean | undefined>;
+        rel?: string | undefined | State<string | undefined>;
+        target?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLHeadingElement extends HTMLElement {
@@ -451,7 +451,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLHeadElement extends HTMLElement {
@@ -466,11 +466,11 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
-        color?: string | State<string>;
-        noShade?: boolean | State<boolean>;
-        size?: string | State<string>;
-        width?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        color?: string | undefined | State<string | undefined>;
+        noShade?: boolean | undefined | State<boolean | undefined>;
+        size?: string | undefined | State<string | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLHtmlElement extends HTMLElement {
@@ -478,7 +478,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        version?: string | State<string>;
+        version?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLIFrameElement extends HTMLElement {
@@ -486,21 +486,21 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
-        allow?: string | State<string>;
-        allowFullscreen?: boolean | State<boolean>;
-        frameBorder?: string | State<string>;
-        height?: string | State<string>;
-        loading?: string | State<string>;
-        longDesc?: string | State<string>;
-        marginHeight?: string | State<string>;
-        marginWidth?: string | State<string>;
-        name?: string | State<string>;
-        referrerPolicy?: ReferrerPolicy | State<ReferrerPolicy>;
-        scrolling?: string | State<string>;
-        src?: string | State<string>;
-        srcdoc?: string | State<string>;
-        width?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        allow?: string | undefined | State<string | undefined>;
+        allowFullscreen?: boolean | undefined | State<boolean | undefined>;
+        frameBorder?: string | undefined | State<string | undefined>;
+        height?: string | undefined | State<string | undefined>;
+        loading?: string | undefined | State<string | undefined>;
+        longDesc?: string | undefined | State<string | undefined>;
+        marginHeight?: string | undefined | State<string | undefined>;
+        marginWidth?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        referrerPolicy?: ReferrerPolicy | undefined | State<ReferrerPolicy | undefined>;
+        scrolling?: string | undefined | State<string | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        srcdoc?: string | undefined | State<string | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLImageElement extends HTMLElement {
@@ -508,26 +508,26 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
-        alt?: string | State<string>;
-        border?: string | State<string>;
-        crossOrigin?: string | null | State<string | null>;
-        decoding?: "async" | "sync" | "auto" | State<"async" | "sync" | "auto">;
-        fetchPriority?: string | State<string>;
-        height?: number | State<number>;
-        hspace?: number | State<number>;
-        isMap?: boolean | State<boolean>;
-        loading?: "eager" | "lazy" | State<"eager" | "lazy">;
-        longDesc?: string | State<string>;
-        lowsrc?: string | State<string>;
-        name?: string | State<string>;
-        referrerPolicy?: string | State<string>;
-        sizes?: string | State<string>;
-        src?: string | State<string>;
-        srcset?: string | State<string>;
-        useMap?: string | State<string>;
-        vspace?: number | State<number>;
-        width?: number | State<number>;
+        align?: string | undefined | State<string | undefined>;
+        alt?: string | undefined | State<string | undefined>;
+        border?: string | undefined | State<string | undefined>;
+        crossOrigin?: string | null | undefined | State<string | null | undefined>;
+        decoding?: "async" | "sync" | "auto" | undefined | State<"async" | "sync" | "auto" | undefined>;
+        fetchPriority?: string | undefined | State<string | undefined>;
+        height?: number | undefined | State<number | undefined>;
+        hspace?: number | undefined | State<number | undefined>;
+        isMap?: boolean | undefined | State<boolean | undefined>;
+        loading?: "eager" | "lazy" | undefined | State<"eager" | "lazy" | undefined>;
+        longDesc?: string | undefined | State<string | undefined>;
+        lowsrc?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        referrerPolicy?: string | undefined | State<string | undefined>;
+        sizes?: string | undefined | State<string | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        srcset?: string | undefined | State<string | undefined>;
+        useMap?: string | undefined | State<string | undefined>;
+        vspace?: number | undefined | State<number | undefined>;
+        width?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLInputElement extends HTMLElement, PopoverInvokerElement {
@@ -535,47 +535,47 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        accept?: string | State<string>;
-        align?: string | State<string>;
-        alt?: string | State<string>;
-        autocomplete?: AutoFill | State<AutoFill>;
-        capture?: string | State<string>;
-        checked?: boolean | State<boolean>;
-        defaultChecked?: boolean | State<boolean>;
-        defaultValue?: string | State<string>;
-        dirName?: string | State<string>;
-        disabled?: boolean | State<boolean>;
-        files?: FileList | null | State<FileList | null>;
-        formAction?: string | State<string>;
-        formEnctype?: string | State<string>;
-        formMethod?: string | State<string>;
-        formNoValidate?: boolean | State<boolean>;
-        formTarget?: string | State<string>;
-        height?: number | State<number>;
-        indeterminate?: boolean | State<boolean>;
-        max?: string | State<string>;
-        maxLength?: number | State<number>;
-        min?: string | State<string>;
-        minLength?: number | State<number>;
-        multiple?: boolean | State<boolean>;
-        name?: string | State<string>;
-        pattern?: string | State<string>;
-        placeholder?: string | State<string>;
-        readOnly?: boolean | State<boolean>;
-        required?: boolean | State<boolean>;
-        selectionDirection?: "forward" | "backward" | "none" | null | State<"forward" | "backward" | "none" | null>;
-        selectionEnd?: number | null | State<number | null>;
-        selectionStart?: number | null | State<number | null>;
-        size?: number | State<number>;
-        src?: string | State<string>;
-        step?: string | State<string>;
-        type?: string | State<string>;
-        useMap?: string | State<string>;
-        value?: string | State<string>;
-        valueAsDate?: Date | null | State<Date | null>;
-        valueAsNumber?: number | State<number>;
-        webkitdirectory?: boolean | State<boolean>;
-        width?: number | State<number>;
+        accept?: string | undefined | State<string | undefined>;
+        align?: string | undefined | State<string | undefined>;
+        alt?: string | undefined | State<string | undefined>;
+        autocomplete?: AutoFill | undefined | State<AutoFill | undefined>;
+        capture?: string | undefined | State<string | undefined>;
+        checked?: boolean | undefined | State<boolean | undefined>;
+        defaultChecked?: boolean | undefined | State<boolean | undefined>;
+        defaultValue?: string | undefined | State<string | undefined>;
+        dirName?: string | undefined | State<string | undefined>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        files?: FileList | null | undefined | State<FileList | null | undefined>;
+        formAction?: string | undefined | State<string | undefined>;
+        formEnctype?: string | undefined | State<string | undefined>;
+        formMethod?: string | undefined | State<string | undefined>;
+        formNoValidate?: boolean | undefined | State<boolean | undefined>;
+        formTarget?: string | undefined | State<string | undefined>;
+        height?: number | undefined | State<number | undefined>;
+        indeterminate?: boolean | undefined | State<boolean | undefined>;
+        max?: string | undefined | State<string | undefined>;
+        maxLength?: number | undefined | State<number | undefined>;
+        min?: string | undefined | State<string | undefined>;
+        minLength?: number | undefined | State<number | undefined>;
+        multiple?: boolean | undefined | State<boolean | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        pattern?: string | undefined | State<string | undefined>;
+        placeholder?: string | undefined | State<string | undefined>;
+        readOnly?: boolean | undefined | State<boolean | undefined>;
+        required?: boolean | undefined | State<boolean | undefined>;
+        selectionDirection?: "forward" | "backward" | "none" | null | undefined | State<"forward" | "backward" | "none" | null | undefined>;
+        selectionEnd?: number | null | undefined | State<number | null | undefined>;
+        selectionStart?: number | null | undefined | State<number | null | undefined>;
+        size?: number | undefined | State<number | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        step?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
+        useMap?: string | undefined | State<string | undefined>;
+        value?: string | undefined | State<string | undefined>;
+        valueAsDate?: Date | null | undefined | State<Date | null | undefined>;
+        valueAsNumber?: number | undefined | State<number | undefined>;
+        webkitdirectory?: boolean | undefined | State<boolean | undefined>;
+        width?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLLabelElement extends HTMLElement {
@@ -583,7 +583,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        htmlFor?: string | State<string>;
+        htmlFor?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLLegendElement extends HTMLElement {
@@ -591,7 +591,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLLIElement extends HTMLElement {
@@ -599,8 +599,8 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        type?: string | State<string>;
-        value?: number | State<number>;
+        type?: string | undefined | State<string | undefined>;
+        value?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLLinkElement extends HTMLElement, LinkStyle {
@@ -608,22 +608,22 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        as?: string | State<string>;
-        charset?: string | State<string>;
-        crossOrigin?: string | null | State<string | null>;
-        disabled?: boolean | State<boolean>;
-        fetchPriority?: string | State<string>;
-        href?: string | State<string>;
-        hreflang?: string | State<string>;
-        imageSizes?: string | State<string>;
-        imageSrcset?: string | State<string>;
-        integrity?: string | State<string>;
-        media?: string | State<string>;
-        referrerPolicy?: string | State<string>;
-        rel?: string | State<string>;
-        rev?: string | State<string>;
-        target?: string | State<string>;
-        type?: string | State<string>;
+        as?: string | undefined | State<string | undefined>;
+        charset?: string | undefined | State<string | undefined>;
+        crossOrigin?: string | null | undefined | State<string | null | undefined>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        fetchPriority?: string | undefined | State<string | undefined>;
+        href?: string | undefined | State<string | undefined>;
+        hreflang?: string | undefined | State<string | undefined>;
+        imageSizes?: string | undefined | State<string | undefined>;
+        imageSrcset?: string | undefined | State<string | undefined>;
+        integrity?: string | undefined | State<string | undefined>;
+        media?: string | undefined | State<string | undefined>;
+        referrerPolicy?: string | undefined | State<string | undefined>;
+        rel?: string | undefined | State<string | undefined>;
+        rev?: string | undefined | State<string | undefined>;
+        target?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLMapElement extends HTMLElement {
@@ -631,7 +631,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        name?: string | State<string>;
+        name?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLMenuElement extends HTMLElement {
@@ -639,7 +639,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        compact?: boolean | State<boolean>;
+        compact?: boolean | undefined | State<boolean | undefined>;
     }
 
     interface HTMLMetaElement extends HTMLElement {
@@ -647,11 +647,11 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        content?: string | State<string>;
-        httpEquiv?: string | State<string>;
-        media?: string | State<string>;
-        name?: string | State<string>;
-        scheme?: string | State<string>;
+        content?: string | undefined | State<string | undefined>;
+        httpEquiv?: string | undefined | State<string | undefined>;
+        media?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        scheme?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLMeterElement extends HTMLElement {
@@ -659,12 +659,12 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        high?: number | State<number>;
-        low?: number | State<number>;
-        max?: number | State<number>;
-        min?: number | State<number>;
-        optimum?: number | State<number>;
-        value?: number | State<number>;
+        high?: number | undefined | State<number | undefined>;
+        low?: number | undefined | State<number | undefined>;
+        max?: number | undefined | State<number | undefined>;
+        min?: number | undefined | State<number | undefined>;
+        optimum?: number | undefined | State<number | undefined>;
+        value?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLObjectElement extends HTMLElement {
@@ -672,22 +672,22 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
-        archive?: string | State<string>;
-        border?: string | State<string>;
-        code?: string | State<string>;
-        codeBase?: string | State<string>;
-        codeType?: string | State<string>;
-        data?: string | State<string>;
-        declare?: boolean | State<boolean>;
-        height?: string | State<string>;
-        hspace?: number | State<number>;
-        name?: string | State<string>;
-        standby?: string | State<string>;
-        type?: string | State<string>;
-        useMap?: string | State<string>;
-        vspace?: number | State<number>;
-        width?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        archive?: string | undefined | State<string | undefined>;
+        border?: string | undefined | State<string | undefined>;
+        code?: string | undefined | State<string | undefined>;
+        codeBase?: string | undefined | State<string | undefined>;
+        codeType?: string | undefined | State<string | undefined>;
+        data?: string | undefined | State<string | undefined>;
+        declare?: boolean | undefined | State<boolean | undefined>;
+        height?: string | undefined | State<string | undefined>;
+        hspace?: number | undefined | State<number | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        standby?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
+        useMap?: string | undefined | State<string | undefined>;
+        vspace?: number | undefined | State<number | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLOListElement extends HTMLElement {
@@ -695,10 +695,10 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        compact?: boolean | State<boolean>;
-        reversed?: boolean | State<boolean>;
-        start?: number | State<number>;
-        type?: string | State<string>;
+        compact?: boolean | undefined | State<boolean | undefined>;
+        reversed?: boolean | undefined | State<boolean | undefined>;
+        start?: number | undefined | State<number | undefined>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLOptGroupElement extends HTMLElement {
@@ -706,8 +706,8 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        disabled?: boolean | State<boolean>;
-        label?: string | State<string>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        label?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLOptionElement extends HTMLElement {
@@ -715,12 +715,12 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        defaultSelected?: boolean | State<boolean>;
-        disabled?: boolean | State<boolean>;
-        label?: string | State<string>;
-        selected?: boolean | State<boolean>;
-        text?: string | State<string>;
-        value?: string | State<string>;
+        defaultSelected?: boolean | undefined | State<boolean | undefined>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        label?: string | undefined | State<string | undefined>;
+        selected?: boolean | undefined | State<boolean | undefined>;
+        text?: string | undefined | State<string | undefined>;
+        value?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLOutputElement extends HTMLElement {
@@ -728,9 +728,9 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        defaultValue?: string | State<string>;
-        name?: string | State<string>;
-        value?: string | State<string>;
+        defaultValue?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        value?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLParagraphElement extends HTMLElement {
@@ -738,7 +738,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLPictureElement extends HTMLElement {
@@ -753,7 +753,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        width?: number | State<number>;
+        width?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLProgressElement extends HTMLElement {
@@ -761,8 +761,8 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        max?: number | State<number>;
-        value?: number | State<number>;
+        max?: number | undefined | State<number | undefined>;
+        value?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLScriptElement extends HTMLElement {
@@ -770,19 +770,19 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        async?: boolean | State<boolean>;
-        charset?: string | State<string>;
-        crossOrigin?: string | null | State<string | null>;
-        defer?: boolean | State<boolean>;
-        event?: string | State<string>;
-        fetchPriority?: string | State<string>;
-        htmlFor?: string | State<string>;
-        integrity?: string | State<string>;
-        noModule?: boolean | State<boolean>;
-        referrerPolicy?: string | State<string>;
-        src?: string | State<string>;
-        text?: string | State<string>;
-        type?: string | State<string>;
+        async?: boolean | undefined | State<boolean | undefined>;
+        charset?: string | undefined | State<string | undefined>;
+        crossOrigin?: string | null | undefined | State<string | null | undefined>;
+        defer?: boolean | undefined | State<boolean | undefined>;
+        event?: string | undefined | State<string | undefined>;
+        fetchPriority?: string | undefined | State<string | undefined>;
+        htmlFor?: string | undefined | State<string | undefined>;
+        integrity?: string | undefined | State<string | undefined>;
+        noModule?: boolean | undefined | State<boolean | undefined>;
+        referrerPolicy?: string | undefined | State<string | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        text?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLSelectElement extends HTMLElement {
@@ -790,15 +790,15 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        autocomplete?: AutoFill | State<AutoFill>;
-        disabled?: boolean | State<boolean>;
-        length?: number | State<number>;
-        multiple?: boolean | State<boolean>;
-        name?: string | State<string>;
-        required?: boolean | State<boolean>;
-        selectedIndex?: number | State<number>;
-        size?: number | State<number>;
-        value?: string | State<string>;
+        autocomplete?: AutoFill | undefined | State<AutoFill | undefined>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        length?: number | undefined | State<number | undefined>;
+        multiple?: boolean | undefined | State<boolean | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        required?: boolean | undefined | State<boolean | undefined>;
+        selectedIndex?: number | undefined | State<number | undefined>;
+        size?: number | undefined | State<number | undefined>;
+        value?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLSlotElement extends HTMLElement {
@@ -806,7 +806,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        name?: string | State<string>;
+        name?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLSourceElement extends HTMLElement {
@@ -814,13 +814,13 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        height?: number | State<number>;
-        media?: string | State<string>;
-        sizes?: string | State<string>;
-        src?: string | State<string>;
-        srcset?: string | State<string>;
-        type?: string | State<string>;
-        width?: number | State<number>;
+        height?: number | undefined | State<number | undefined>;
+        media?: string | undefined | State<string | undefined>;
+        sizes?: string | undefined | State<string | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        srcset?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
+        width?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLSpanElement extends HTMLElement {
@@ -835,9 +835,9 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        disabled?: boolean | State<boolean>;
-        media?: string | State<string>;
-        type?: string | State<string>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        media?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTableElement extends HTMLElement {
@@ -845,18 +845,18 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
-        bgColor?: string | State<string>;
-        border?: string | State<string>;
-        caption?: HTMLTableCaptionElement | null | State<HTMLTableCaptionElement | null>;
-        cellPadding?: string | State<string>;
-        cellSpacing?: string | State<string>;
-        frame?: string | State<string>;
-        rules?: string | State<string>;
-        summary?: string | State<string>;
-        tFoot?: HTMLTableSectionElement | null | State<HTMLTableSectionElement | null>;
-        tHead?: HTMLTableSectionElement | null | State<HTMLTableSectionElement | null>;
-        width?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        bgColor?: string | undefined | State<string | undefined>;
+        border?: string | undefined | State<string | undefined>;
+        caption?: HTMLTableCaptionElement | null | undefined | State<HTMLTableCaptionElement | null | undefined>;
+        cellPadding?: string | undefined | State<string | undefined>;
+        cellSpacing?: string | undefined | State<string | undefined>;
+        frame?: string | undefined | State<string | undefined>;
+        rules?: string | undefined | State<string | undefined>;
+        summary?: string | undefined | State<string | undefined>;
+        tFoot?: HTMLTableSectionElement | null | undefined | State<HTMLTableSectionElement | null | undefined>;
+        tHead?: HTMLTableSectionElement | null | undefined | State<HTMLTableSectionElement | null | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTableSectionElement extends HTMLElement {
@@ -864,10 +864,10 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
-        ch?: string | State<string>;
-        chOff?: string | State<string>;
-        vAlign?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        ch?: string | undefined | State<string | undefined>;
+        chOff?: string | undefined | State<string | undefined>;
+        vAlign?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTableCellElement extends HTMLElement {
@@ -875,20 +875,20 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        abbr?: string | State<string>;
-        align?: string | State<string>;
-        axis?: string | State<string>;
-        bgColor?: string | State<string>;
-        ch?: string | State<string>;
-        chOff?: string | State<string>;
-        colSpan?: number | State<number>;
-        headers?: string | State<string>;
-        height?: string | State<string>;
-        noWrap?: boolean | State<boolean>;
-        rowSpan?: number | State<number>;
-        scope?: string | State<string>;
-        vAlign?: string | State<string>;
-        width?: string | State<string>;
+        abbr?: string | undefined | State<string | undefined>;
+        align?: string | undefined | State<string | undefined>;
+        axis?: string | undefined | State<string | undefined>;
+        bgColor?: string | undefined | State<string | undefined>;
+        ch?: string | undefined | State<string | undefined>;
+        chOff?: string | undefined | State<string | undefined>;
+        colSpan?: number | undefined | State<number | undefined>;
+        headers?: string | undefined | State<string | undefined>;
+        height?: string | undefined | State<string | undefined>;
+        noWrap?: boolean | undefined | State<boolean | undefined>;
+        rowSpan?: number | undefined | State<number | undefined>;
+        scope?: string | undefined | State<string | undefined>;
+        vAlign?: string | undefined | State<string | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTemplateElement extends HTMLElement {
@@ -896,7 +896,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        shadowRootMode?: string | State<string>;
+        shadowRootMode?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTextAreaElement extends HTMLElement {
@@ -904,23 +904,23 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        autocomplete?: AutoFill | State<AutoFill>;
-        cols?: number | State<number>;
-        defaultValue?: string | State<string>;
-        dirName?: string | State<string>;
-        disabled?: boolean | State<boolean>;
-        maxLength?: number | State<number>;
-        minLength?: number | State<number>;
-        name?: string | State<string>;
-        placeholder?: string | State<string>;
-        readOnly?: boolean | State<boolean>;
-        required?: boolean | State<boolean>;
-        rows?: number | State<number>;
-        selectionDirection?: "forward" | "backward" | "none" | State<"forward" | "backward" | "none">;
-        selectionEnd?: number | State<number>;
-        selectionStart?: number | State<number>;
-        value?: string | State<string>;
-        wrap?: string | State<string>;
+        autocomplete?: AutoFill | undefined | State<AutoFill | undefined>;
+        cols?: number | undefined | State<number | undefined>;
+        defaultValue?: string | undefined | State<string | undefined>;
+        dirName?: string | undefined | State<string | undefined>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        maxLength?: number | undefined | State<number | undefined>;
+        minLength?: number | undefined | State<number | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        placeholder?: string | undefined | State<string | undefined>;
+        readOnly?: boolean | undefined | State<boolean | undefined>;
+        required?: boolean | undefined | State<boolean | undefined>;
+        rows?: number | undefined | State<number | undefined>;
+        selectionDirection?: "forward" | "backward" | "none" | undefined | State<"forward" | "backward" | "none" | undefined>;
+        selectionEnd?: number | undefined | State<number | undefined>;
+        selectionStart?: number | undefined | State<number | undefined>;
+        value?: string | undefined | State<string | undefined>;
+        wrap?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTimeElement extends HTMLElement {
@@ -928,7 +928,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        dateTime?: string | State<string>;
+        dateTime?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTitleElement extends HTMLElement {
@@ -936,7 +936,7 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        text?: string | State<string>;
+        text?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTableRowElement extends HTMLElement {
@@ -944,11 +944,11 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        align?: string | State<string>;
-        bgColor?: string | State<string>;
-        ch?: string | State<string>;
-        chOff?: string | State<string>;
-        vAlign?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        bgColor?: string | undefined | State<string | undefined>;
+        ch?: string | undefined | State<string | undefined>;
+        chOff?: string | undefined | State<string | undefined>;
+        vAlign?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTrackElement extends HTMLElement {
@@ -956,11 +956,11 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        default?: boolean | State<boolean>;
-        kind?: string | State<string>;
-        label?: string | State<string>;
-        src?: string | State<string>;
-        srclang?: string | State<string>;
+        default?: boolean | undefined | State<boolean | undefined>;
+        kind?: string | undefined | State<string | undefined>;
+        label?: string | undefined | State<string | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        srclang?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLUListElement extends HTMLElement {
@@ -968,8 +968,8 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        compact?: boolean | State<boolean>;
-        type?: string | State<string>;
+        compact?: boolean | undefined | State<boolean | undefined>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLVideoElement extends HTMLMediaElement {
@@ -977,13 +977,13 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        disablePictureInPicture?: boolean | State<boolean>;
-        height?: number | State<number>;
-        onenterpictureinpicture?: ((this: HTMLVideoElement, ev: Event) => any) | null | State<((this: HTMLVideoElement, ev: Event) => any) | null>;
-        onleavepictureinpicture?: ((this: HTMLVideoElement, ev: Event) => any) | null | State<((this: HTMLVideoElement, ev: Event) => any) | null>;
-        playsInline?: boolean | State<boolean>;
-        poster?: string | State<string>;
-        width?: number | State<number>;
+        disablePictureInPicture?: boolean | undefined | State<boolean | undefined>;
+        height?: number | undefined | State<number | undefined>;
+        onenterpictureinpicture?: ((this: HTMLVideoElement, ev: Event) => any) | null | undefined | State<((this: HTMLVideoElement, ev: Event) => any) | null | undefined>;
+        onleavepictureinpicture?: ((this: HTMLVideoElement, ev: Event) => any) | null | undefined | State<((this: HTMLVideoElement, ev: Event) => any) | null | undefined>;
+        playsInline?: boolean | undefined | State<boolean | undefined>;
+        poster?: string | undefined | State<string | undefined>;
+        width?: number | undefined | State<number | undefined>;
     }
 
     interface SVGAElement extends SVGGraphicsElement, SVGURIReference {
@@ -991,7 +991,7 @@ export declare namespace Mini {
         namespaceURI: "http://www.w3.org/2000/svg";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        rel?: string | State<string>;
+        rel?: string | undefined | State<string | undefined>;
     }
 
     interface SVGGraphicsElement extends SVGElement, SVGTests { }
@@ -1266,7 +1266,7 @@ export declare namespace Mini {
         namespaceURI: "http://www.w3.org/2000/svg";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        crossOrigin?: string | null | State<string | null>;
+        crossOrigin?: string | null | undefined | State<string | null | undefined>;
     }
 
     interface SVGLineElement extends SVGGeometryElement {
@@ -1360,7 +1360,7 @@ export declare namespace Mini {
         namespaceURI: "http://www.w3.org/2000/svg";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        type?: string | State<string>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface SVGSetElement extends SVGAnimationElement {
@@ -1382,10 +1382,10 @@ export declare namespace Mini {
         namespaceURI: "http://www.w3.org/2000/svg";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        disabled?: boolean | State<boolean>;
-        media?: string | State<string>;
-        title?: string | State<string>;
-        type?: string | State<string>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        media?: string | undefined | State<string | undefined>;
+        title?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface SVGSVGElement extends SVGGraphicsElement, SVGFitToViewBox, WindowEventHandlers {
@@ -1393,7 +1393,7 @@ export declare namespace Mini {
         namespaceURI: "http://www.w3.org/2000/svg";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        currentScale?: number | State<number>;
+        currentScale?: number | undefined | State<number | undefined>;
     }
 
     interface SVGSwitchElement extends SVGGraphicsElement {
@@ -1468,63 +1468,63 @@ export declare namespace Mini {
         namespaceURI?: "http://www.w3.org/1999/xhtml" | "http://www.w3.org/2000/svg" | "http://www.w3.org/1998/Math/MathML";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        className?: string | State<string>;
-        id?: string | State<string>;
-        onfullscreenchange?: ((this: Element, ev: Event) => any) | null | State<((this: Element, ev: Event) => any) | null>;
-        onfullscreenerror?: ((this: Element, ev: Event) => any) | null | State<((this: Element, ev: Event) => any) | null>;
-        outerHTML?: string | State<string>;
-        scrollLeft?: number | State<number>;
-        scrollTop?: number | State<number>;
-        slot?: string | State<string>;
+        className?: string | undefined | State<string | undefined>;
+        id?: string | undefined | State<string | undefined>;
+        onfullscreenchange?: ((this: Element, ev: Event) => any) | null | undefined | State<((this: Element, ev: Event) => any) | null | undefined>;
+        onfullscreenerror?: ((this: Element, ev: Event) => any) | null | undefined | State<((this: Element, ev: Event) => any) | null | undefined>;
+        outerHTML?: string | undefined | State<string | undefined>;
+        scrollLeft?: number | undefined | State<number | undefined>;
+        scrollTop?: number | undefined | State<number | undefined>;
+        slot?: string | undefined | State<string | undefined>;
     }
 
     interface Node extends EventTarget {
-        nodeValue?: string | null | State<string | null>;
-        textContent?: string | null | State<string | null>;
+        nodeValue?: string | null | undefined | State<string | null | undefined>;
+        textContent?: string | null | undefined | State<string | null | undefined>;
     }
 
     interface EventTarget { }
 
     interface ARIAMixin {
-        ariaAtomic?: string | null | State<string | null>;
-        ariaAutoComplete?: string | null | State<string | null>;
-        ariaBusy?: string | null | State<string | null>;
-        ariaChecked?: string | null | State<string | null>;
-        ariaColCount?: string | null | State<string | null>;
-        ariaColIndex?: string | null | State<string | null>;
-        ariaColSpan?: string | null | State<string | null>;
-        ariaCurrent?: string | null | State<string | null>;
-        ariaDescription?: string | null | State<string | null>;
-        ariaDisabled?: string | null | State<string | null>;
-        ariaExpanded?: string | null | State<string | null>;
-        ariaHasPopup?: string | null | State<string | null>;
-        ariaHidden?: string | null | State<string | null>;
-        ariaInvalid?: string | null | State<string | null>;
-        ariaKeyShortcuts?: string | null | State<string | null>;
-        ariaLabel?: string | null | State<string | null>;
-        ariaLevel?: string | null | State<string | null>;
-        ariaLive?: string | null | State<string | null>;
-        ariaModal?: string | null | State<string | null>;
-        ariaMultiLine?: string | null | State<string | null>;
-        ariaMultiSelectable?: string | null | State<string | null>;
-        ariaOrientation?: string | null | State<string | null>;
-        ariaPlaceholder?: string | null | State<string | null>;
-        ariaPosInSet?: string | null | State<string | null>;
-        ariaPressed?: string | null | State<string | null>;
-        ariaReadOnly?: string | null | State<string | null>;
-        ariaRequired?: string | null | State<string | null>;
-        ariaRoleDescription?: string | null | State<string | null>;
-        ariaRowCount?: string | null | State<string | null>;
-        ariaRowIndex?: string | null | State<string | null>;
-        ariaRowSpan?: string | null | State<string | null>;
-        ariaSelected?: string | null | State<string | null>;
-        ariaSetSize?: string | null | State<string | null>;
-        ariaSort?: string | null | State<string | null>;
-        ariaValueMax?: string | null | State<string | null>;
-        ariaValueMin?: string | null | State<string | null>;
-        ariaValueNow?: string | null | State<string | null>;
-        ariaValueText?: string | null | State<string | null>;
-        role?: string | null | State<string | null>;
+        ariaAtomic?: string | null | undefined | State<string | null | undefined>;
+        ariaAutoComplete?: string | null | undefined | State<string | null | undefined>;
+        ariaBusy?: string | null | undefined | State<string | null | undefined>;
+        ariaChecked?: string | null | undefined | State<string | null | undefined>;
+        ariaColCount?: string | null | undefined | State<string | null | undefined>;
+        ariaColIndex?: string | null | undefined | State<string | null | undefined>;
+        ariaColSpan?: string | null | undefined | State<string | null | undefined>;
+        ariaCurrent?: string | null | undefined | State<string | null | undefined>;
+        ariaDescription?: string | null | undefined | State<string | null | undefined>;
+        ariaDisabled?: string | null | undefined | State<string | null | undefined>;
+        ariaExpanded?: string | null | undefined | State<string | null | undefined>;
+        ariaHasPopup?: string | null | undefined | State<string | null | undefined>;
+        ariaHidden?: string | null | undefined | State<string | null | undefined>;
+        ariaInvalid?: string | null | undefined | State<string | null | undefined>;
+        ariaKeyShortcuts?: string | null | undefined | State<string | null | undefined>;
+        ariaLabel?: string | null | undefined | State<string | null | undefined>;
+        ariaLevel?: string | null | undefined | State<string | null | undefined>;
+        ariaLive?: string | null | undefined | State<string | null | undefined>;
+        ariaModal?: string | null | undefined | State<string | null | undefined>;
+        ariaMultiLine?: string | null | undefined | State<string | null | undefined>;
+        ariaMultiSelectable?: string | null | undefined | State<string | null | undefined>;
+        ariaOrientation?: string | null | undefined | State<string | null | undefined>;
+        ariaPlaceholder?: string | null | undefined | State<string | null | undefined>;
+        ariaPosInSet?: string | null | undefined | State<string | null | undefined>;
+        ariaPressed?: string | null | undefined | State<string | null | undefined>;
+        ariaReadOnly?: string | null | undefined | State<string | null | undefined>;
+        ariaRequired?: string | null | undefined | State<string | null | undefined>;
+        ariaRoleDescription?: string | null | undefined | State<string | null | undefined>;
+        ariaRowCount?: string | null | undefined | State<string | null | undefined>;
+        ariaRowIndex?: string | null | undefined | State<string | null | undefined>;
+        ariaRowSpan?: string | null | undefined | State<string | null | undefined>;
+        ariaSelected?: string | null | undefined | State<string | null | undefined>;
+        ariaSetSize?: string | null | undefined | State<string | null | undefined>;
+        ariaSort?: string | null | undefined | State<string | null | undefined>;
+        ariaValueMax?: string | null | undefined | State<string | null | undefined>;
+        ariaValueMin?: string | null | undefined | State<string | null | undefined>;
+        ariaValueNow?: string | null | undefined | State<string | null | undefined>;
+        ariaValueText?: string | null | undefined | State<string | null | undefined>;
+        role?: string | null | undefined | State<string | null | undefined>;
     }
 
     interface Animatable { }
@@ -1532,7 +1532,7 @@ export declare namespace Mini {
     interface ChildNode extends Node { }
 
     interface InnerHTML {
-        innerHTML?: string | State<string>;
+        innerHTML?: string | undefined | State<string | undefined>;
     }
 
     interface NonDocumentTypeChildNode { }
@@ -1542,645 +1542,645 @@ export declare namespace Mini {
     interface Slottable { }
 
     interface ElementCSSInlineStyle {
-        style?: CSSStyleDeclaration | State<CSSStyleDeclaration>;
+        style?: CSSStyleDeclaration | undefined | State<CSSStyleDeclaration | undefined>;
     }
 
     interface CSSStyleDeclaration {
-        accentColor?: string | State<string>;
-        alignContent?: string | State<string>;
-        alignItems?: string | State<string>;
-        alignSelf?: string | State<string>;
-        alignmentBaseline?: string | State<string>;
-        all?: string | State<string>;
-        animation?: string | State<string>;
-        animationComposition?: string | State<string>;
-        animationDelay?: string | State<string>;
-        animationDirection?: string | State<string>;
-        animationDuration?: string | State<string>;
-        animationFillMode?: string | State<string>;
-        animationIterationCount?: string | State<string>;
-        animationName?: string | State<string>;
-        animationPlayState?: string | State<string>;
-        animationTimingFunction?: string | State<string>;
-        appearance?: string | State<string>;
-        aspectRatio?: string | State<string>;
-        backdropFilter?: string | State<string>;
-        backfaceVisibility?: string | State<string>;
-        background?: string | State<string>;
-        backgroundAttachment?: string | State<string>;
-        backgroundBlendMode?: string | State<string>;
-        backgroundClip?: string | State<string>;
-        backgroundColor?: string | State<string>;
-        backgroundImage?: string | State<string>;
-        backgroundOrigin?: string | State<string>;
-        backgroundPosition?: string | State<string>;
-        backgroundPositionX?: string | State<string>;
-        backgroundPositionY?: string | State<string>;
-        backgroundRepeat?: string | State<string>;
-        backgroundSize?: string | State<string>;
-        baselineShift?: string | State<string>;
-        baselineSource?: string | State<string>;
-        blockSize?: string | State<string>;
-        border?: string | State<string>;
-        borderBlock?: string | State<string>;
-        borderBlockColor?: string | State<string>;
-        borderBlockEnd?: string | State<string>;
-        borderBlockEndColor?: string | State<string>;
-        borderBlockEndStyle?: string | State<string>;
-        borderBlockEndWidth?: string | State<string>;
-        borderBlockStart?: string | State<string>;
-        borderBlockStartColor?: string | State<string>;
-        borderBlockStartStyle?: string | State<string>;
-        borderBlockStartWidth?: string | State<string>;
-        borderBlockStyle?: string | State<string>;
-        borderBlockWidth?: string | State<string>;
-        borderBottom?: string | State<string>;
-        borderBottomColor?: string | State<string>;
-        borderBottomLeftRadius?: string | State<string>;
-        borderBottomRightRadius?: string | State<string>;
-        borderBottomStyle?: string | State<string>;
-        borderBottomWidth?: string | State<string>;
-        borderCollapse?: string | State<string>;
-        borderColor?: string | State<string>;
-        borderEndEndRadius?: string | State<string>;
-        borderEndStartRadius?: string | State<string>;
-        borderImage?: string | State<string>;
-        borderImageOutset?: string | State<string>;
-        borderImageRepeat?: string | State<string>;
-        borderImageSlice?: string | State<string>;
-        borderImageSource?: string | State<string>;
-        borderImageWidth?: string | State<string>;
-        borderInline?: string | State<string>;
-        borderInlineColor?: string | State<string>;
-        borderInlineEnd?: string | State<string>;
-        borderInlineEndColor?: string | State<string>;
-        borderInlineEndStyle?: string | State<string>;
-        borderInlineEndWidth?: string | State<string>;
-        borderInlineStart?: string | State<string>;
-        borderInlineStartColor?: string | State<string>;
-        borderInlineStartStyle?: string | State<string>;
-        borderInlineStartWidth?: string | State<string>;
-        borderInlineStyle?: string | State<string>;
-        borderInlineWidth?: string | State<string>;
-        borderLeft?: string | State<string>;
-        borderLeftColor?: string | State<string>;
-        borderLeftStyle?: string | State<string>;
-        borderLeftWidth?: string | State<string>;
-        borderRadius?: string | State<string>;
-        borderRight?: string | State<string>;
-        borderRightColor?: string | State<string>;
-        borderRightStyle?: string | State<string>;
-        borderRightWidth?: string | State<string>;
-        borderSpacing?: string | State<string>;
-        borderStartEndRadius?: string | State<string>;
-        borderStartStartRadius?: string | State<string>;
-        borderStyle?: string | State<string>;
-        borderTop?: string | State<string>;
-        borderTopColor?: string | State<string>;
-        borderTopLeftRadius?: string | State<string>;
-        borderTopRightRadius?: string | State<string>;
-        borderTopStyle?: string | State<string>;
-        borderTopWidth?: string | State<string>;
-        borderWidth?: string | State<string>;
-        bottom?: string | State<string>;
-        boxShadow?: string | State<string>;
-        boxSizing?: string | State<string>;
-        breakAfter?: string | State<string>;
-        breakBefore?: string | State<string>;
-        breakInside?: string | State<string>;
-        captionSide?: string | State<string>;
-        caretColor?: string | State<string>;
-        clear?: string | State<string>;
-        clip?: string | State<string>;
-        clipPath?: string | State<string>;
-        clipRule?: string | State<string>;
-        color?: string | State<string>;
-        colorInterpolation?: string | State<string>;
-        colorInterpolationFilters?: string | State<string>;
-        colorScheme?: string | State<string>;
-        columnCount?: string | State<string>;
-        columnFill?: string | State<string>;
-        columnGap?: string | State<string>;
-        columnRule?: string | State<string>;
-        columnRuleColor?: string | State<string>;
-        columnRuleStyle?: string | State<string>;
-        columnRuleWidth?: string | State<string>;
-        columnSpan?: string | State<string>;
-        columnWidth?: string | State<string>;
-        columns?: string | State<string>;
-        contain?: string | State<string>;
-        containIntrinsicBlockSize?: string | State<string>;
-        containIntrinsicHeight?: string | State<string>;
-        containIntrinsicInlineSize?: string | State<string>;
-        containIntrinsicSize?: string | State<string>;
-        containIntrinsicWidth?: string | State<string>;
-        container?: string | State<string>;
-        containerName?: string | State<string>;
-        containerType?: string | State<string>;
-        content?: string | State<string>;
-        counterIncrement?: string | State<string>;
-        counterReset?: string | State<string>;
-        counterSet?: string | State<string>;
-        cssFloat?: string | State<string>;
-        cssText?: string | State<string>;
-        cursor?: string | State<string>;
-        cx?: string | State<string>;
-        cy?: string | State<string>;
-        d?: string | State<string>;
-        direction?: string | State<string>;
-        display?: string | State<string>;
-        dominantBaseline?: string | State<string>;
-        emptyCells?: string | State<string>;
-        fill?: string | State<string>;
-        fillOpacity?: string | State<string>;
-        fillRule?: string | State<string>;
-        filter?: string | State<string>;
-        flex?: string | State<string>;
-        flexBasis?: string | State<string>;
-        flexDirection?: string | State<string>;
-        flexFlow?: string | State<string>;
-        flexGrow?: string | State<string>;
-        flexShrink?: string | State<string>;
-        flexWrap?: string | State<string>;
-        float?: string | State<string>;
-        floodColor?: string | State<string>;
-        floodOpacity?: string | State<string>;
-        font?: string | State<string>;
-        fontFamily?: string | State<string>;
-        fontFeatureSettings?: string | State<string>;
-        fontKerning?: string | State<string>;
-        fontOpticalSizing?: string | State<string>;
-        fontPalette?: string | State<string>;
-        fontSize?: string | State<string>;
-        fontSizeAdjust?: string | State<string>;
-        fontStretch?: string | State<string>;
-        fontStyle?: string | State<string>;
-        fontSynthesis?: string | State<string>;
-        fontSynthesisSmallCaps?: string | State<string>;
-        fontSynthesisStyle?: string | State<string>;
-        fontSynthesisWeight?: string | State<string>;
-        fontVariant?: string | State<string>;
-        fontVariantAlternates?: string | State<string>;
-        fontVariantCaps?: string | State<string>;
-        fontVariantEastAsian?: string | State<string>;
-        fontVariantLigatures?: string | State<string>;
-        fontVariantNumeric?: string | State<string>;
-        fontVariantPosition?: string | State<string>;
-        fontVariationSettings?: string | State<string>;
-        fontWeight?: string | State<string>;
-        forcedColorAdjust?: string | State<string>;
-        gap?: string | State<string>;
-        grid?: string | State<string>;
-        gridArea?: string | State<string>;
-        gridAutoColumns?: string | State<string>;
-        gridAutoFlow?: string | State<string>;
-        gridAutoRows?: string | State<string>;
-        gridColumn?: string | State<string>;
-        gridColumnEnd?: string | State<string>;
-        gridColumnGap?: string | State<string>;
-        gridColumnStart?: string | State<string>;
-        gridGap?: string | State<string>;
-        gridRow?: string | State<string>;
-        gridRowEnd?: string | State<string>;
-        gridRowGap?: string | State<string>;
-        gridRowStart?: string | State<string>;
-        gridTemplate?: string | State<string>;
-        gridTemplateAreas?: string | State<string>;
-        gridTemplateColumns?: string | State<string>;
-        gridTemplateRows?: string | State<string>;
-        height?: string | State<string>;
-        hyphenateCharacter?: string | State<string>;
-        hyphens?: string | State<string>;
-        imageOrientation?: string | State<string>;
-        imageRendering?: string | State<string>;
-        inlineSize?: string | State<string>;
-        inset?: string | State<string>;
-        insetBlock?: string | State<string>;
-        insetBlockEnd?: string | State<string>;
-        insetBlockStart?: string | State<string>;
-        insetInline?: string | State<string>;
-        insetInlineEnd?: string | State<string>;
-        insetInlineStart?: string | State<string>;
-        isolation?: string | State<string>;
-        justifyContent?: string | State<string>;
-        justifyItems?: string | State<string>;
-        justifySelf?: string | State<string>;
-        left?: string | State<string>;
-        letterSpacing?: string | State<string>;
-        lightingColor?: string | State<string>;
-        lineBreak?: string | State<string>;
-        lineHeight?: string | State<string>;
-        listStyle?: string | State<string>;
-        listStyleImage?: string | State<string>;
-        listStylePosition?: string | State<string>;
-        listStyleType?: string | State<string>;
-        margin?: string | State<string>;
-        marginBlock?: string | State<string>;
-        marginBlockEnd?: string | State<string>;
-        marginBlockStart?: string | State<string>;
-        marginBottom?: string | State<string>;
-        marginInline?: string | State<string>;
-        marginInlineEnd?: string | State<string>;
-        marginInlineStart?: string | State<string>;
-        marginLeft?: string | State<string>;
-        marginRight?: string | State<string>;
-        marginTop?: string | State<string>;
-        marker?: string | State<string>;
-        markerEnd?: string | State<string>;
-        markerMid?: string | State<string>;
-        markerStart?: string | State<string>;
-        mask?: string | State<string>;
-        maskClip?: string | State<string>;
-        maskComposite?: string | State<string>;
-        maskImage?: string | State<string>;
-        maskMode?: string | State<string>;
-        maskOrigin?: string | State<string>;
-        maskPosition?: string | State<string>;
-        maskRepeat?: string | State<string>;
-        maskSize?: string | State<string>;
-        maskType?: string | State<string>;
-        mathDepth?: string | State<string>;
-        mathStyle?: string | State<string>;
-        maxBlockSize?: string | State<string>;
-        maxHeight?: string | State<string>;
-        maxInlineSize?: string | State<string>;
-        maxWidth?: string | State<string>;
-        minBlockSize?: string | State<string>;
-        minHeight?: string | State<string>;
-        minInlineSize?: string | State<string>;
-        minWidth?: string | State<string>;
-        mixBlendMode?: string | State<string>;
-        objectFit?: string | State<string>;
-        objectPosition?: string | State<string>;
-        offset?: string | State<string>;
-        offsetAnchor?: string | State<string>;
-        offsetDistance?: string | State<string>;
-        offsetPath?: string | State<string>;
-        offsetPosition?: string | State<string>;
-        offsetRotate?: string | State<string>;
-        opacity?: string | State<string>;
-        order?: string | State<string>;
-        orphans?: string | State<string>;
-        outline?: string | State<string>;
-        outlineColor?: string | State<string>;
-        outlineOffset?: string | State<string>;
-        outlineStyle?: string | State<string>;
-        outlineWidth?: string | State<string>;
-        overflow?: string | State<string>;
-        overflowAnchor?: string | State<string>;
-        overflowClipMargin?: string | State<string>;
-        overflowWrap?: string | State<string>;
-        overflowX?: string | State<string>;
-        overflowY?: string | State<string>;
-        overscrollBehavior?: string | State<string>;
-        overscrollBehaviorBlock?: string | State<string>;
-        overscrollBehaviorInline?: string | State<string>;
-        overscrollBehaviorX?: string | State<string>;
-        overscrollBehaviorY?: string | State<string>;
-        padding?: string | State<string>;
-        paddingBlock?: string | State<string>;
-        paddingBlockEnd?: string | State<string>;
-        paddingBlockStart?: string | State<string>;
-        paddingBottom?: string | State<string>;
-        paddingInline?: string | State<string>;
-        paddingInlineEnd?: string | State<string>;
-        paddingInlineStart?: string | State<string>;
-        paddingLeft?: string | State<string>;
-        paddingRight?: string | State<string>;
-        paddingTop?: string | State<string>;
-        page?: string | State<string>;
-        pageBreakAfter?: string | State<string>;
-        pageBreakBefore?: string | State<string>;
-        pageBreakInside?: string | State<string>;
-        paintOrder?: string | State<string>;
-        perspective?: string | State<string>;
-        perspectiveOrigin?: string | State<string>;
-        placeContent?: string | State<string>;
-        placeItems?: string | State<string>;
-        placeSelf?: string | State<string>;
-        pointerEvents?: string | State<string>;
-        position?: string | State<string>;
-        printColorAdjust?: string | State<string>;
-        quotes?: string | State<string>;
-        r?: string | State<string>;
-        resize?: string | State<string>;
-        right?: string | State<string>;
-        rotate?: string | State<string>;
-        rowGap?: string | State<string>;
-        rubyPosition?: string | State<string>;
-        rx?: string | State<string>;
-        ry?: string | State<string>;
-        scale?: string | State<string>;
-        scrollBehavior?: string | State<string>;
-        scrollMargin?: string | State<string>;
-        scrollMarginBlock?: string | State<string>;
-        scrollMarginBlockEnd?: string | State<string>;
-        scrollMarginBlockStart?: string | State<string>;
-        scrollMarginBottom?: string | State<string>;
-        scrollMarginInline?: string | State<string>;
-        scrollMarginInlineEnd?: string | State<string>;
-        scrollMarginInlineStart?: string | State<string>;
-        scrollMarginLeft?: string | State<string>;
-        scrollMarginRight?: string | State<string>;
-        scrollMarginTop?: string | State<string>;
-        scrollPadding?: string | State<string>;
-        scrollPaddingBlock?: string | State<string>;
-        scrollPaddingBlockEnd?: string | State<string>;
-        scrollPaddingBlockStart?: string | State<string>;
-        scrollPaddingBottom?: string | State<string>;
-        scrollPaddingInline?: string | State<string>;
-        scrollPaddingInlineEnd?: string | State<string>;
-        scrollPaddingInlineStart?: string | State<string>;
-        scrollPaddingLeft?: string | State<string>;
-        scrollPaddingRight?: string | State<string>;
-        scrollPaddingTop?: string | State<string>;
-        scrollSnapAlign?: string | State<string>;
-        scrollSnapStop?: string | State<string>;
-        scrollSnapType?: string | State<string>;
-        scrollbarColor?: string | State<string>;
-        scrollbarGutter?: string | State<string>;
-        scrollbarWidth?: string | State<string>;
-        shapeImageThreshold?: string | State<string>;
-        shapeMargin?: string | State<string>;
-        shapeOutside?: string | State<string>;
-        shapeRendering?: string | State<string>;
-        stopColor?: string | State<string>;
-        stopOpacity?: string | State<string>;
-        stroke?: string | State<string>;
-        strokeDasharray?: string | State<string>;
-        strokeDashoffset?: string | State<string>;
-        strokeLinecap?: string | State<string>;
-        strokeLinejoin?: string | State<string>;
-        strokeMiterlimit?: string | State<string>;
-        strokeOpacity?: string | State<string>;
-        strokeWidth?: string | State<string>;
-        tabSize?: string | State<string>;
-        tableLayout?: string | State<string>;
-        textAlign?: string | State<string>;
-        textAlignLast?: string | State<string>;
-        textAnchor?: string | State<string>;
-        textCombineUpright?: string | State<string>;
-        textDecoration?: string | State<string>;
-        textDecorationColor?: string | State<string>;
-        textDecorationLine?: string | State<string>;
-        textDecorationSkipInk?: string | State<string>;
-        textDecorationStyle?: string | State<string>;
-        textDecorationThickness?: string | State<string>;
-        textEmphasis?: string | State<string>;
-        textEmphasisColor?: string | State<string>;
-        textEmphasisPosition?: string | State<string>;
-        textEmphasisStyle?: string | State<string>;
-        textIndent?: string | State<string>;
-        textOrientation?: string | State<string>;
-        textOverflow?: string | State<string>;
-        textRendering?: string | State<string>;
-        textShadow?: string | State<string>;
-        textTransform?: string | State<string>;
-        textUnderlineOffset?: string | State<string>;
-        textUnderlinePosition?: string | State<string>;
-        textWrap?: string | State<string>;
-        top?: string | State<string>;
-        touchAction?: string | State<string>;
-        transform?: string | State<string>;
-        transformBox?: string | State<string>;
-        transformOrigin?: string | State<string>;
-        transformStyle?: string | State<string>;
-        transition?: string | State<string>;
-        transitionDelay?: string | State<string>;
-        transitionDuration?: string | State<string>;
-        transitionProperty?: string | State<string>;
-        transitionTimingFunction?: string | State<string>;
-        translate?: string | State<string>;
-        unicodeBidi?: string | State<string>;
-        userSelect?: string | State<string>;
-        vectorEffect?: string | State<string>;
-        verticalAlign?: string | State<string>;
-        visibility?: string | State<string>;
-        webkitAlignContent?: string | State<string>;
-        webkitAlignItems?: string | State<string>;
-        webkitAlignSelf?: string | State<string>;
-        webkitAnimation?: string | State<string>;
-        webkitAnimationDelay?: string | State<string>;
-        webkitAnimationDirection?: string | State<string>;
-        webkitAnimationDuration?: string | State<string>;
-        webkitAnimationFillMode?: string | State<string>;
-        webkitAnimationIterationCount?: string | State<string>;
-        webkitAnimationName?: string | State<string>;
-        webkitAnimationPlayState?: string | State<string>;
-        webkitAnimationTimingFunction?: string | State<string>;
-        webkitAppearance?: string | State<string>;
-        webkitBackfaceVisibility?: string | State<string>;
-        webkitBackgroundClip?: string | State<string>;
-        webkitBackgroundOrigin?: string | State<string>;
-        webkitBackgroundSize?: string | State<string>;
-        webkitBorderBottomLeftRadius?: string | State<string>;
-        webkitBorderBottomRightRadius?: string | State<string>;
-        webkitBorderRadius?: string | State<string>;
-        webkitBorderTopLeftRadius?: string | State<string>;
-        webkitBorderTopRightRadius?: string | State<string>;
-        webkitBoxAlign?: string | State<string>;
-        webkitBoxFlex?: string | State<string>;
-        webkitBoxOrdinalGroup?: string | State<string>;
-        webkitBoxOrient?: string | State<string>;
-        webkitBoxPack?: string | State<string>;
-        webkitBoxShadow?: string | State<string>;
-        webkitBoxSizing?: string | State<string>;
-        webkitFilter?: string | State<string>;
-        webkitFlex?: string | State<string>;
-        webkitFlexBasis?: string | State<string>;
-        webkitFlexDirection?: string | State<string>;
-        webkitFlexFlow?: string | State<string>;
-        webkitFlexGrow?: string | State<string>;
-        webkitFlexShrink?: string | State<string>;
-        webkitFlexWrap?: string | State<string>;
-        webkitJustifyContent?: string | State<string>;
-        webkitLineClamp?: string | State<string>;
-        webkitMask?: string | State<string>;
-        webkitMaskBoxImage?: string | State<string>;
-        webkitMaskBoxImageOutset?: string | State<string>;
-        webkitMaskBoxImageRepeat?: string | State<string>;
-        webkitMaskBoxImageSlice?: string | State<string>;
-        webkitMaskBoxImageSource?: string | State<string>;
-        webkitMaskBoxImageWidth?: string | State<string>;
-        webkitMaskClip?: string | State<string>;
-        webkitMaskComposite?: string | State<string>;
-        webkitMaskImage?: string | State<string>;
-        webkitMaskOrigin?: string | State<string>;
-        webkitMaskPosition?: string | State<string>;
-        webkitMaskRepeat?: string | State<string>;
-        webkitMaskSize?: string | State<string>;
-        webkitOrder?: string | State<string>;
-        webkitPerspective?: string | State<string>;
-        webkitPerspectiveOrigin?: string | State<string>;
-        webkitTextFillColor?: string | State<string>;
-        webkitTextSizeAdjust?: string | State<string>;
-        webkitTextStroke?: string | State<string>;
-        webkitTextStrokeColor?: string | State<string>;
-        webkitTextStrokeWidth?: string | State<string>;
-        webkitTransform?: string | State<string>;
-        webkitTransformOrigin?: string | State<string>;
-        webkitTransformStyle?: string | State<string>;
-        webkitTransition?: string | State<string>;
-        webkitTransitionDelay?: string | State<string>;
-        webkitTransitionDuration?: string | State<string>;
-        webkitTransitionProperty?: string | State<string>;
-        webkitTransitionTimingFunction?: string | State<string>;
-        webkitUserSelect?: string | State<string>;
-        whiteSpace?: string | State<string>;
-        widows?: string | State<string>;
-        width?: string | State<string>;
-        willChange?: string | State<string>;
-        wordBreak?: string | State<string>;
-        wordSpacing?: string | State<string>;
-        wordWrap?: string | State<string>;
-        writingMode?: string | State<string>;
-        x?: string | State<string>;
-        y?: string | State<string>;
-        zIndex?: string | State<string>;
+        accentColor?: string | undefined | State<string | undefined>;
+        alignContent?: string | undefined | State<string | undefined>;
+        alignItems?: string | undefined | State<string | undefined>;
+        alignSelf?: string | undefined | State<string | undefined>;
+        alignmentBaseline?: string | undefined | State<string | undefined>;
+        all?: string | undefined | State<string | undefined>;
+        animation?: string | undefined | State<string | undefined>;
+        animationComposition?: string | undefined | State<string | undefined>;
+        animationDelay?: string | undefined | State<string | undefined>;
+        animationDirection?: string | undefined | State<string | undefined>;
+        animationDuration?: string | undefined | State<string | undefined>;
+        animationFillMode?: string | undefined | State<string | undefined>;
+        animationIterationCount?: string | undefined | State<string | undefined>;
+        animationName?: string | undefined | State<string | undefined>;
+        animationPlayState?: string | undefined | State<string | undefined>;
+        animationTimingFunction?: string | undefined | State<string | undefined>;
+        appearance?: string | undefined | State<string | undefined>;
+        aspectRatio?: string | undefined | State<string | undefined>;
+        backdropFilter?: string | undefined | State<string | undefined>;
+        backfaceVisibility?: string | undefined | State<string | undefined>;
+        background?: string | undefined | State<string | undefined>;
+        backgroundAttachment?: string | undefined | State<string | undefined>;
+        backgroundBlendMode?: string | undefined | State<string | undefined>;
+        backgroundClip?: string | undefined | State<string | undefined>;
+        backgroundColor?: string | undefined | State<string | undefined>;
+        backgroundImage?: string | undefined | State<string | undefined>;
+        backgroundOrigin?: string | undefined | State<string | undefined>;
+        backgroundPosition?: string | undefined | State<string | undefined>;
+        backgroundPositionX?: string | undefined | State<string | undefined>;
+        backgroundPositionY?: string | undefined | State<string | undefined>;
+        backgroundRepeat?: string | undefined | State<string | undefined>;
+        backgroundSize?: string | undefined | State<string | undefined>;
+        baselineShift?: string | undefined | State<string | undefined>;
+        baselineSource?: string | undefined | State<string | undefined>;
+        blockSize?: string | undefined | State<string | undefined>;
+        border?: string | undefined | State<string | undefined>;
+        borderBlock?: string | undefined | State<string | undefined>;
+        borderBlockColor?: string | undefined | State<string | undefined>;
+        borderBlockEnd?: string | undefined | State<string | undefined>;
+        borderBlockEndColor?: string | undefined | State<string | undefined>;
+        borderBlockEndStyle?: string | undefined | State<string | undefined>;
+        borderBlockEndWidth?: string | undefined | State<string | undefined>;
+        borderBlockStart?: string | undefined | State<string | undefined>;
+        borderBlockStartColor?: string | undefined | State<string | undefined>;
+        borderBlockStartStyle?: string | undefined | State<string | undefined>;
+        borderBlockStartWidth?: string | undefined | State<string | undefined>;
+        borderBlockStyle?: string | undefined | State<string | undefined>;
+        borderBlockWidth?: string | undefined | State<string | undefined>;
+        borderBottom?: string | undefined | State<string | undefined>;
+        borderBottomColor?: string | undefined | State<string | undefined>;
+        borderBottomLeftRadius?: string | undefined | State<string | undefined>;
+        borderBottomRightRadius?: string | undefined | State<string | undefined>;
+        borderBottomStyle?: string | undefined | State<string | undefined>;
+        borderBottomWidth?: string | undefined | State<string | undefined>;
+        borderCollapse?: string | undefined | State<string | undefined>;
+        borderColor?: string | undefined | State<string | undefined>;
+        borderEndEndRadius?: string | undefined | State<string | undefined>;
+        borderEndStartRadius?: string | undefined | State<string | undefined>;
+        borderImage?: string | undefined | State<string | undefined>;
+        borderImageOutset?: string | undefined | State<string | undefined>;
+        borderImageRepeat?: string | undefined | State<string | undefined>;
+        borderImageSlice?: string | undefined | State<string | undefined>;
+        borderImageSource?: string | undefined | State<string | undefined>;
+        borderImageWidth?: string | undefined | State<string | undefined>;
+        borderInline?: string | undefined | State<string | undefined>;
+        borderInlineColor?: string | undefined | State<string | undefined>;
+        borderInlineEnd?: string | undefined | State<string | undefined>;
+        borderInlineEndColor?: string | undefined | State<string | undefined>;
+        borderInlineEndStyle?: string | undefined | State<string | undefined>;
+        borderInlineEndWidth?: string | undefined | State<string | undefined>;
+        borderInlineStart?: string | undefined | State<string | undefined>;
+        borderInlineStartColor?: string | undefined | State<string | undefined>;
+        borderInlineStartStyle?: string | undefined | State<string | undefined>;
+        borderInlineStartWidth?: string | undefined | State<string | undefined>;
+        borderInlineStyle?: string | undefined | State<string | undefined>;
+        borderInlineWidth?: string | undefined | State<string | undefined>;
+        borderLeft?: string | undefined | State<string | undefined>;
+        borderLeftColor?: string | undefined | State<string | undefined>;
+        borderLeftStyle?: string | undefined | State<string | undefined>;
+        borderLeftWidth?: string | undefined | State<string | undefined>;
+        borderRadius?: string | undefined | State<string | undefined>;
+        borderRight?: string | undefined | State<string | undefined>;
+        borderRightColor?: string | undefined | State<string | undefined>;
+        borderRightStyle?: string | undefined | State<string | undefined>;
+        borderRightWidth?: string | undefined | State<string | undefined>;
+        borderSpacing?: string | undefined | State<string | undefined>;
+        borderStartEndRadius?: string | undefined | State<string | undefined>;
+        borderStartStartRadius?: string | undefined | State<string | undefined>;
+        borderStyle?: string | undefined | State<string | undefined>;
+        borderTop?: string | undefined | State<string | undefined>;
+        borderTopColor?: string | undefined | State<string | undefined>;
+        borderTopLeftRadius?: string | undefined | State<string | undefined>;
+        borderTopRightRadius?: string | undefined | State<string | undefined>;
+        borderTopStyle?: string | undefined | State<string | undefined>;
+        borderTopWidth?: string | undefined | State<string | undefined>;
+        borderWidth?: string | undefined | State<string | undefined>;
+        bottom?: string | undefined | State<string | undefined>;
+        boxShadow?: string | undefined | State<string | undefined>;
+        boxSizing?: string | undefined | State<string | undefined>;
+        breakAfter?: string | undefined | State<string | undefined>;
+        breakBefore?: string | undefined | State<string | undefined>;
+        breakInside?: string | undefined | State<string | undefined>;
+        captionSide?: string | undefined | State<string | undefined>;
+        caretColor?: string | undefined | State<string | undefined>;
+        clear?: string | undefined | State<string | undefined>;
+        clip?: string | undefined | State<string | undefined>;
+        clipPath?: string | undefined | State<string | undefined>;
+        clipRule?: string | undefined | State<string | undefined>;
+        color?: string | undefined | State<string | undefined>;
+        colorInterpolation?: string | undefined | State<string | undefined>;
+        colorInterpolationFilters?: string | undefined | State<string | undefined>;
+        colorScheme?: string | undefined | State<string | undefined>;
+        columnCount?: string | undefined | State<string | undefined>;
+        columnFill?: string | undefined | State<string | undefined>;
+        columnGap?: string | undefined | State<string | undefined>;
+        columnRule?: string | undefined | State<string | undefined>;
+        columnRuleColor?: string | undefined | State<string | undefined>;
+        columnRuleStyle?: string | undefined | State<string | undefined>;
+        columnRuleWidth?: string | undefined | State<string | undefined>;
+        columnSpan?: string | undefined | State<string | undefined>;
+        columnWidth?: string | undefined | State<string | undefined>;
+        columns?: string | undefined | State<string | undefined>;
+        contain?: string | undefined | State<string | undefined>;
+        containIntrinsicBlockSize?: string | undefined | State<string | undefined>;
+        containIntrinsicHeight?: string | undefined | State<string | undefined>;
+        containIntrinsicInlineSize?: string | undefined | State<string | undefined>;
+        containIntrinsicSize?: string | undefined | State<string | undefined>;
+        containIntrinsicWidth?: string | undefined | State<string | undefined>;
+        container?: string | undefined | State<string | undefined>;
+        containerName?: string | undefined | State<string | undefined>;
+        containerType?: string | undefined | State<string | undefined>;
+        content?: string | undefined | State<string | undefined>;
+        counterIncrement?: string | undefined | State<string | undefined>;
+        counterReset?: string | undefined | State<string | undefined>;
+        counterSet?: string | undefined | State<string | undefined>;
+        cssFloat?: string | undefined | State<string | undefined>;
+        cssText?: string | undefined | State<string | undefined>;
+        cursor?: string | undefined | State<string | undefined>;
+        cx?: string | undefined | State<string | undefined>;
+        cy?: string | undefined | State<string | undefined>;
+        d?: string | undefined | State<string | undefined>;
+        direction?: string | undefined | State<string | undefined>;
+        display?: string | undefined | State<string | undefined>;
+        dominantBaseline?: string | undefined | State<string | undefined>;
+        emptyCells?: string | undefined | State<string | undefined>;
+        fill?: string | undefined | State<string | undefined>;
+        fillOpacity?: string | undefined | State<string | undefined>;
+        fillRule?: string | undefined | State<string | undefined>;
+        filter?: string | undefined | State<string | undefined>;
+        flex?: string | undefined | State<string | undefined>;
+        flexBasis?: string | undefined | State<string | undefined>;
+        flexDirection?: string | undefined | State<string | undefined>;
+        flexFlow?: string | undefined | State<string | undefined>;
+        flexGrow?: string | undefined | State<string | undefined>;
+        flexShrink?: string | undefined | State<string | undefined>;
+        flexWrap?: string | undefined | State<string | undefined>;
+        float?: string | undefined | State<string | undefined>;
+        floodColor?: string | undefined | State<string | undefined>;
+        floodOpacity?: string | undefined | State<string | undefined>;
+        font?: string | undefined | State<string | undefined>;
+        fontFamily?: string | undefined | State<string | undefined>;
+        fontFeatureSettings?: string | undefined | State<string | undefined>;
+        fontKerning?: string | undefined | State<string | undefined>;
+        fontOpticalSizing?: string | undefined | State<string | undefined>;
+        fontPalette?: string | undefined | State<string | undefined>;
+        fontSize?: string | undefined | State<string | undefined>;
+        fontSizeAdjust?: string | undefined | State<string | undefined>;
+        fontStretch?: string | undefined | State<string | undefined>;
+        fontStyle?: string | undefined | State<string | undefined>;
+        fontSynthesis?: string | undefined | State<string | undefined>;
+        fontSynthesisSmallCaps?: string | undefined | State<string | undefined>;
+        fontSynthesisStyle?: string | undefined | State<string | undefined>;
+        fontSynthesisWeight?: string | undefined | State<string | undefined>;
+        fontVariant?: string | undefined | State<string | undefined>;
+        fontVariantAlternates?: string | undefined | State<string | undefined>;
+        fontVariantCaps?: string | undefined | State<string | undefined>;
+        fontVariantEastAsian?: string | undefined | State<string | undefined>;
+        fontVariantLigatures?: string | undefined | State<string | undefined>;
+        fontVariantNumeric?: string | undefined | State<string | undefined>;
+        fontVariantPosition?: string | undefined | State<string | undefined>;
+        fontVariationSettings?: string | undefined | State<string | undefined>;
+        fontWeight?: string | undefined | State<string | undefined>;
+        forcedColorAdjust?: string | undefined | State<string | undefined>;
+        gap?: string | undefined | State<string | undefined>;
+        grid?: string | undefined | State<string | undefined>;
+        gridArea?: string | undefined | State<string | undefined>;
+        gridAutoColumns?: string | undefined | State<string | undefined>;
+        gridAutoFlow?: string | undefined | State<string | undefined>;
+        gridAutoRows?: string | undefined | State<string | undefined>;
+        gridColumn?: string | undefined | State<string | undefined>;
+        gridColumnEnd?: string | undefined | State<string | undefined>;
+        gridColumnGap?: string | undefined | State<string | undefined>;
+        gridColumnStart?: string | undefined | State<string | undefined>;
+        gridGap?: string | undefined | State<string | undefined>;
+        gridRow?: string | undefined | State<string | undefined>;
+        gridRowEnd?: string | undefined | State<string | undefined>;
+        gridRowGap?: string | undefined | State<string | undefined>;
+        gridRowStart?: string | undefined | State<string | undefined>;
+        gridTemplate?: string | undefined | State<string | undefined>;
+        gridTemplateAreas?: string | undefined | State<string | undefined>;
+        gridTemplateColumns?: string | undefined | State<string | undefined>;
+        gridTemplateRows?: string | undefined | State<string | undefined>;
+        height?: string | undefined | State<string | undefined>;
+        hyphenateCharacter?: string | undefined | State<string | undefined>;
+        hyphens?: string | undefined | State<string | undefined>;
+        imageOrientation?: string | undefined | State<string | undefined>;
+        imageRendering?: string | undefined | State<string | undefined>;
+        inlineSize?: string | undefined | State<string | undefined>;
+        inset?: string | undefined | State<string | undefined>;
+        insetBlock?: string | undefined | State<string | undefined>;
+        insetBlockEnd?: string | undefined | State<string | undefined>;
+        insetBlockStart?: string | undefined | State<string | undefined>;
+        insetInline?: string | undefined | State<string | undefined>;
+        insetInlineEnd?: string | undefined | State<string | undefined>;
+        insetInlineStart?: string | undefined | State<string | undefined>;
+        isolation?: string | undefined | State<string | undefined>;
+        justifyContent?: string | undefined | State<string | undefined>;
+        justifyItems?: string | undefined | State<string | undefined>;
+        justifySelf?: string | undefined | State<string | undefined>;
+        left?: string | undefined | State<string | undefined>;
+        letterSpacing?: string | undefined | State<string | undefined>;
+        lightingColor?: string | undefined | State<string | undefined>;
+        lineBreak?: string | undefined | State<string | undefined>;
+        lineHeight?: string | undefined | State<string | undefined>;
+        listStyle?: string | undefined | State<string | undefined>;
+        listStyleImage?: string | undefined | State<string | undefined>;
+        listStylePosition?: string | undefined | State<string | undefined>;
+        listStyleType?: string | undefined | State<string | undefined>;
+        margin?: string | undefined | State<string | undefined>;
+        marginBlock?: string | undefined | State<string | undefined>;
+        marginBlockEnd?: string | undefined | State<string | undefined>;
+        marginBlockStart?: string | undefined | State<string | undefined>;
+        marginBottom?: string | undefined | State<string | undefined>;
+        marginInline?: string | undefined | State<string | undefined>;
+        marginInlineEnd?: string | undefined | State<string | undefined>;
+        marginInlineStart?: string | undefined | State<string | undefined>;
+        marginLeft?: string | undefined | State<string | undefined>;
+        marginRight?: string | undefined | State<string | undefined>;
+        marginTop?: string | undefined | State<string | undefined>;
+        marker?: string | undefined | State<string | undefined>;
+        markerEnd?: string | undefined | State<string | undefined>;
+        markerMid?: string | undefined | State<string | undefined>;
+        markerStart?: string | undefined | State<string | undefined>;
+        mask?: string | undefined | State<string | undefined>;
+        maskClip?: string | undefined | State<string | undefined>;
+        maskComposite?: string | undefined | State<string | undefined>;
+        maskImage?: string | undefined | State<string | undefined>;
+        maskMode?: string | undefined | State<string | undefined>;
+        maskOrigin?: string | undefined | State<string | undefined>;
+        maskPosition?: string | undefined | State<string | undefined>;
+        maskRepeat?: string | undefined | State<string | undefined>;
+        maskSize?: string | undefined | State<string | undefined>;
+        maskType?: string | undefined | State<string | undefined>;
+        mathDepth?: string | undefined | State<string | undefined>;
+        mathStyle?: string | undefined | State<string | undefined>;
+        maxBlockSize?: string | undefined | State<string | undefined>;
+        maxHeight?: string | undefined | State<string | undefined>;
+        maxInlineSize?: string | undefined | State<string | undefined>;
+        maxWidth?: string | undefined | State<string | undefined>;
+        minBlockSize?: string | undefined | State<string | undefined>;
+        minHeight?: string | undefined | State<string | undefined>;
+        minInlineSize?: string | undefined | State<string | undefined>;
+        minWidth?: string | undefined | State<string | undefined>;
+        mixBlendMode?: string | undefined | State<string | undefined>;
+        objectFit?: string | undefined | State<string | undefined>;
+        objectPosition?: string | undefined | State<string | undefined>;
+        offset?: string | undefined | State<string | undefined>;
+        offsetAnchor?: string | undefined | State<string | undefined>;
+        offsetDistance?: string | undefined | State<string | undefined>;
+        offsetPath?: string | undefined | State<string | undefined>;
+        offsetPosition?: string | undefined | State<string | undefined>;
+        offsetRotate?: string | undefined | State<string | undefined>;
+        opacity?: string | undefined | State<string | undefined>;
+        order?: string | undefined | State<string | undefined>;
+        orphans?: string | undefined | State<string | undefined>;
+        outline?: string | undefined | State<string | undefined>;
+        outlineColor?: string | undefined | State<string | undefined>;
+        outlineOffset?: string | undefined | State<string | undefined>;
+        outlineStyle?: string | undefined | State<string | undefined>;
+        outlineWidth?: string | undefined | State<string | undefined>;
+        overflow?: string | undefined | State<string | undefined>;
+        overflowAnchor?: string | undefined | State<string | undefined>;
+        overflowClipMargin?: string | undefined | State<string | undefined>;
+        overflowWrap?: string | undefined | State<string | undefined>;
+        overflowX?: string | undefined | State<string | undefined>;
+        overflowY?: string | undefined | State<string | undefined>;
+        overscrollBehavior?: string | undefined | State<string | undefined>;
+        overscrollBehaviorBlock?: string | undefined | State<string | undefined>;
+        overscrollBehaviorInline?: string | undefined | State<string | undefined>;
+        overscrollBehaviorX?: string | undefined | State<string | undefined>;
+        overscrollBehaviorY?: string | undefined | State<string | undefined>;
+        padding?: string | undefined | State<string | undefined>;
+        paddingBlock?: string | undefined | State<string | undefined>;
+        paddingBlockEnd?: string | undefined | State<string | undefined>;
+        paddingBlockStart?: string | undefined | State<string | undefined>;
+        paddingBottom?: string | undefined | State<string | undefined>;
+        paddingInline?: string | undefined | State<string | undefined>;
+        paddingInlineEnd?: string | undefined | State<string | undefined>;
+        paddingInlineStart?: string | undefined | State<string | undefined>;
+        paddingLeft?: string | undefined | State<string | undefined>;
+        paddingRight?: string | undefined | State<string | undefined>;
+        paddingTop?: string | undefined | State<string | undefined>;
+        page?: string | undefined | State<string | undefined>;
+        pageBreakAfter?: string | undefined | State<string | undefined>;
+        pageBreakBefore?: string | undefined | State<string | undefined>;
+        pageBreakInside?: string | undefined | State<string | undefined>;
+        paintOrder?: string | undefined | State<string | undefined>;
+        perspective?: string | undefined | State<string | undefined>;
+        perspectiveOrigin?: string | undefined | State<string | undefined>;
+        placeContent?: string | undefined | State<string | undefined>;
+        placeItems?: string | undefined | State<string | undefined>;
+        placeSelf?: string | undefined | State<string | undefined>;
+        pointerEvents?: string | undefined | State<string | undefined>;
+        position?: string | undefined | State<string | undefined>;
+        printColorAdjust?: string | undefined | State<string | undefined>;
+        quotes?: string | undefined | State<string | undefined>;
+        r?: string | undefined | State<string | undefined>;
+        resize?: string | undefined | State<string | undefined>;
+        right?: string | undefined | State<string | undefined>;
+        rotate?: string | undefined | State<string | undefined>;
+        rowGap?: string | undefined | State<string | undefined>;
+        rubyPosition?: string | undefined | State<string | undefined>;
+        rx?: string | undefined | State<string | undefined>;
+        ry?: string | undefined | State<string | undefined>;
+        scale?: string | undefined | State<string | undefined>;
+        scrollBehavior?: string | undefined | State<string | undefined>;
+        scrollMargin?: string | undefined | State<string | undefined>;
+        scrollMarginBlock?: string | undefined | State<string | undefined>;
+        scrollMarginBlockEnd?: string | undefined | State<string | undefined>;
+        scrollMarginBlockStart?: string | undefined | State<string | undefined>;
+        scrollMarginBottom?: string | undefined | State<string | undefined>;
+        scrollMarginInline?: string | undefined | State<string | undefined>;
+        scrollMarginInlineEnd?: string | undefined | State<string | undefined>;
+        scrollMarginInlineStart?: string | undefined | State<string | undefined>;
+        scrollMarginLeft?: string | undefined | State<string | undefined>;
+        scrollMarginRight?: string | undefined | State<string | undefined>;
+        scrollMarginTop?: string | undefined | State<string | undefined>;
+        scrollPadding?: string | undefined | State<string | undefined>;
+        scrollPaddingBlock?: string | undefined | State<string | undefined>;
+        scrollPaddingBlockEnd?: string | undefined | State<string | undefined>;
+        scrollPaddingBlockStart?: string | undefined | State<string | undefined>;
+        scrollPaddingBottom?: string | undefined | State<string | undefined>;
+        scrollPaddingInline?: string | undefined | State<string | undefined>;
+        scrollPaddingInlineEnd?: string | undefined | State<string | undefined>;
+        scrollPaddingInlineStart?: string | undefined | State<string | undefined>;
+        scrollPaddingLeft?: string | undefined | State<string | undefined>;
+        scrollPaddingRight?: string | undefined | State<string | undefined>;
+        scrollPaddingTop?: string | undefined | State<string | undefined>;
+        scrollSnapAlign?: string | undefined | State<string | undefined>;
+        scrollSnapStop?: string | undefined | State<string | undefined>;
+        scrollSnapType?: string | undefined | State<string | undefined>;
+        scrollbarColor?: string | undefined | State<string | undefined>;
+        scrollbarGutter?: string | undefined | State<string | undefined>;
+        scrollbarWidth?: string | undefined | State<string | undefined>;
+        shapeImageThreshold?: string | undefined | State<string | undefined>;
+        shapeMargin?: string | undefined | State<string | undefined>;
+        shapeOutside?: string | undefined | State<string | undefined>;
+        shapeRendering?: string | undefined | State<string | undefined>;
+        stopColor?: string | undefined | State<string | undefined>;
+        stopOpacity?: string | undefined | State<string | undefined>;
+        stroke?: string | undefined | State<string | undefined>;
+        strokeDasharray?: string | undefined | State<string | undefined>;
+        strokeDashoffset?: string | undefined | State<string | undefined>;
+        strokeLinecap?: string | undefined | State<string | undefined>;
+        strokeLinejoin?: string | undefined | State<string | undefined>;
+        strokeMiterlimit?: string | undefined | State<string | undefined>;
+        strokeOpacity?: string | undefined | State<string | undefined>;
+        strokeWidth?: string | undefined | State<string | undefined>;
+        tabSize?: string | undefined | State<string | undefined>;
+        tableLayout?: string | undefined | State<string | undefined>;
+        textAlign?: string | undefined | State<string | undefined>;
+        textAlignLast?: string | undefined | State<string | undefined>;
+        textAnchor?: string | undefined | State<string | undefined>;
+        textCombineUpright?: string | undefined | State<string | undefined>;
+        textDecoration?: string | undefined | State<string | undefined>;
+        textDecorationColor?: string | undefined | State<string | undefined>;
+        textDecorationLine?: string | undefined | State<string | undefined>;
+        textDecorationSkipInk?: string | undefined | State<string | undefined>;
+        textDecorationStyle?: string | undefined | State<string | undefined>;
+        textDecorationThickness?: string | undefined | State<string | undefined>;
+        textEmphasis?: string | undefined | State<string | undefined>;
+        textEmphasisColor?: string | undefined | State<string | undefined>;
+        textEmphasisPosition?: string | undefined | State<string | undefined>;
+        textEmphasisStyle?: string | undefined | State<string | undefined>;
+        textIndent?: string | undefined | State<string | undefined>;
+        textOrientation?: string | undefined | State<string | undefined>;
+        textOverflow?: string | undefined | State<string | undefined>;
+        textRendering?: string | undefined | State<string | undefined>;
+        textShadow?: string | undefined | State<string | undefined>;
+        textTransform?: string | undefined | State<string | undefined>;
+        textUnderlineOffset?: string | undefined | State<string | undefined>;
+        textUnderlinePosition?: string | undefined | State<string | undefined>;
+        textWrap?: string | undefined | State<string | undefined>;
+        top?: string | undefined | State<string | undefined>;
+        touchAction?: string | undefined | State<string | undefined>;
+        transform?: string | undefined | State<string | undefined>;
+        transformBox?: string | undefined | State<string | undefined>;
+        transformOrigin?: string | undefined | State<string | undefined>;
+        transformStyle?: string | undefined | State<string | undefined>;
+        transition?: string | undefined | State<string | undefined>;
+        transitionDelay?: string | undefined | State<string | undefined>;
+        transitionDuration?: string | undefined | State<string | undefined>;
+        transitionProperty?: string | undefined | State<string | undefined>;
+        transitionTimingFunction?: string | undefined | State<string | undefined>;
+        translate?: string | undefined | State<string | undefined>;
+        unicodeBidi?: string | undefined | State<string | undefined>;
+        userSelect?: string | undefined | State<string | undefined>;
+        vectorEffect?: string | undefined | State<string | undefined>;
+        verticalAlign?: string | undefined | State<string | undefined>;
+        visibility?: string | undefined | State<string | undefined>;
+        webkitAlignContent?: string | undefined | State<string | undefined>;
+        webkitAlignItems?: string | undefined | State<string | undefined>;
+        webkitAlignSelf?: string | undefined | State<string | undefined>;
+        webkitAnimation?: string | undefined | State<string | undefined>;
+        webkitAnimationDelay?: string | undefined | State<string | undefined>;
+        webkitAnimationDirection?: string | undefined | State<string | undefined>;
+        webkitAnimationDuration?: string | undefined | State<string | undefined>;
+        webkitAnimationFillMode?: string | undefined | State<string | undefined>;
+        webkitAnimationIterationCount?: string | undefined | State<string | undefined>;
+        webkitAnimationName?: string | undefined | State<string | undefined>;
+        webkitAnimationPlayState?: string | undefined | State<string | undefined>;
+        webkitAnimationTimingFunction?: string | undefined | State<string | undefined>;
+        webkitAppearance?: string | undefined | State<string | undefined>;
+        webkitBackfaceVisibility?: string | undefined | State<string | undefined>;
+        webkitBackgroundClip?: string | undefined | State<string | undefined>;
+        webkitBackgroundOrigin?: string | undefined | State<string | undefined>;
+        webkitBackgroundSize?: string | undefined | State<string | undefined>;
+        webkitBorderBottomLeftRadius?: string | undefined | State<string | undefined>;
+        webkitBorderBottomRightRadius?: string | undefined | State<string | undefined>;
+        webkitBorderRadius?: string | undefined | State<string | undefined>;
+        webkitBorderTopLeftRadius?: string | undefined | State<string | undefined>;
+        webkitBorderTopRightRadius?: string | undefined | State<string | undefined>;
+        webkitBoxAlign?: string | undefined | State<string | undefined>;
+        webkitBoxFlex?: string | undefined | State<string | undefined>;
+        webkitBoxOrdinalGroup?: string | undefined | State<string | undefined>;
+        webkitBoxOrient?: string | undefined | State<string | undefined>;
+        webkitBoxPack?: string | undefined | State<string | undefined>;
+        webkitBoxShadow?: string | undefined | State<string | undefined>;
+        webkitBoxSizing?: string | undefined | State<string | undefined>;
+        webkitFilter?: string | undefined | State<string | undefined>;
+        webkitFlex?: string | undefined | State<string | undefined>;
+        webkitFlexBasis?: string | undefined | State<string | undefined>;
+        webkitFlexDirection?: string | undefined | State<string | undefined>;
+        webkitFlexFlow?: string | undefined | State<string | undefined>;
+        webkitFlexGrow?: string | undefined | State<string | undefined>;
+        webkitFlexShrink?: string | undefined | State<string | undefined>;
+        webkitFlexWrap?: string | undefined | State<string | undefined>;
+        webkitJustifyContent?: string | undefined | State<string | undefined>;
+        webkitLineClamp?: string | undefined | State<string | undefined>;
+        webkitMask?: string | undefined | State<string | undefined>;
+        webkitMaskBoxImage?: string | undefined | State<string | undefined>;
+        webkitMaskBoxImageOutset?: string | undefined | State<string | undefined>;
+        webkitMaskBoxImageRepeat?: string | undefined | State<string | undefined>;
+        webkitMaskBoxImageSlice?: string | undefined | State<string | undefined>;
+        webkitMaskBoxImageSource?: string | undefined | State<string | undefined>;
+        webkitMaskBoxImageWidth?: string | undefined | State<string | undefined>;
+        webkitMaskClip?: string | undefined | State<string | undefined>;
+        webkitMaskComposite?: string | undefined | State<string | undefined>;
+        webkitMaskImage?: string | undefined | State<string | undefined>;
+        webkitMaskOrigin?: string | undefined | State<string | undefined>;
+        webkitMaskPosition?: string | undefined | State<string | undefined>;
+        webkitMaskRepeat?: string | undefined | State<string | undefined>;
+        webkitMaskSize?: string | undefined | State<string | undefined>;
+        webkitOrder?: string | undefined | State<string | undefined>;
+        webkitPerspective?: string | undefined | State<string | undefined>;
+        webkitPerspectiveOrigin?: string | undefined | State<string | undefined>;
+        webkitTextFillColor?: string | undefined | State<string | undefined>;
+        webkitTextSizeAdjust?: string | undefined | State<string | undefined>;
+        webkitTextStroke?: string | undefined | State<string | undefined>;
+        webkitTextStrokeColor?: string | undefined | State<string | undefined>;
+        webkitTextStrokeWidth?: string | undefined | State<string | undefined>;
+        webkitTransform?: string | undefined | State<string | undefined>;
+        webkitTransformOrigin?: string | undefined | State<string | undefined>;
+        webkitTransformStyle?: string | undefined | State<string | undefined>;
+        webkitTransition?: string | undefined | State<string | undefined>;
+        webkitTransitionDelay?: string | undefined | State<string | undefined>;
+        webkitTransitionDuration?: string | undefined | State<string | undefined>;
+        webkitTransitionProperty?: string | undefined | State<string | undefined>;
+        webkitTransitionTimingFunction?: string | undefined | State<string | undefined>;
+        webkitUserSelect?: string | undefined | State<string | undefined>;
+        whiteSpace?: string | undefined | State<string | undefined>;
+        widows?: string | undefined | State<string | undefined>;
+        width?: string | undefined | State<string | undefined>;
+        willChange?: string | undefined | State<string | undefined>;
+        wordBreak?: string | undefined | State<string | undefined>;
+        wordSpacing?: string | undefined | State<string | undefined>;
+        wordWrap?: string | undefined | State<string | undefined>;
+        writingMode?: string | undefined | State<string | undefined>;
+        x?: string | undefined | State<string | undefined>;
+        y?: string | undefined | State<string | undefined>;
+        zIndex?: string | undefined | State<string | undefined>;
     }
 
     interface ElementContentEditable {
-        contentEditable?: string | State<string>;
-        enterKeyHint?: string | State<string>;
-        inputMode?: string | State<string>;
+        contentEditable?: string | undefined | State<string | undefined>;
+        enterKeyHint?: string | undefined | State<string | undefined>;
+        inputMode?: string | undefined | State<string | undefined>;
     }
 
     interface GlobalEventHandlers {
-        onabort?: ((this: GlobalEventHandlers, ev: UIEvent) => any) | null | State<((this: GlobalEventHandlers, ev: UIEvent) => any) | null>;
-        onanimationcancel?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null>;
-        onanimationend?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null>;
-        onanimationiteration?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null>;
-        onanimationstart?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null>;
-        onauxclick?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onbeforeinput?: ((this: GlobalEventHandlers, ev: InputEvent) => any) | null | State<((this: GlobalEventHandlers, ev: InputEvent) => any) | null>;
-        onbeforetoggle?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onblur?: ((this: GlobalEventHandlers, ev: FocusEvent) => any) | null | State<((this: GlobalEventHandlers, ev: FocusEvent) => any) | null>;
-        oncancel?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        oncanplay?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        oncanplaythrough?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onclick?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onclose?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        oncontextmenu?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        oncopy?: ((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | State<((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null>;
-        oncuechange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        oncut?: ((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | State<((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null>;
-        ondblclick?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        ondrag?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondragend?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondragenter?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondragleave?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondragover?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondragstart?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondrop?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondurationchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onemptied?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onended?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onerror?: OnErrorEventHandler | State<OnErrorEventHandler>;
-        onfocus?: ((this: GlobalEventHandlers, ev: FocusEvent) => any) | null | State<((this: GlobalEventHandlers, ev: FocusEvent) => any) | null>;
-        onformdata?: ((this: GlobalEventHandlers, ev: FormDataEvent) => any) | null | State<((this: GlobalEventHandlers, ev: FormDataEvent) => any) | null>;
-        ongotpointercapture?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        oninput?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        oninvalid?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onkeydown?: ((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | State<((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null>;
-        onkeypress?: ((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | State<((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null>;
-        onkeyup?: ((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | State<((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null>;
-        onload?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onloadeddata?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onloadedmetadata?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onloadstart?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onlostpointercapture?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onmousedown?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onmouseenter?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onmouseleave?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onmousemove?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onmouseout?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onmouseover?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onmouseup?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onpaste?: ((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | State<((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null>;
-        onpause?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onplay?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onplaying?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onpointercancel?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointerdown?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointerenter?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointerleave?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointermove?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointerout?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointerover?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointerup?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onprogress?: ((this: GlobalEventHandlers, ev: ProgressEvent) => any) | null | State<((this: GlobalEventHandlers, ev: ProgressEvent) => any) | null>;
-        onratechange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onreset?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onresize?: ((this: GlobalEventHandlers, ev: UIEvent) => any) | null | State<((this: GlobalEventHandlers, ev: UIEvent) => any) | null>;
-        onscroll?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onscrollend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onsecuritypolicyviolation?: ((this: GlobalEventHandlers, ev: SecurityPolicyViolationEvent) => any) | null | State<((this: GlobalEventHandlers, ev: SecurityPolicyViolationEvent) => any) | null>;
-        onseeked?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onseeking?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onselect?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onselectionchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onselectstart?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onslotchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onstalled?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onsubmit?: ((this: GlobalEventHandlers, ev: SubmitEvent) => any) | null | State<((this: GlobalEventHandlers, ev: SubmitEvent) => any) | null>;
-        onsuspend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        ontimeupdate?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        ontoggle?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
+        onabort?: ((this: GlobalEventHandlers, ev: UIEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: UIEvent) => any) | null | undefined>;
+        onanimationcancel?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined>;
+        onanimationend?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined>;
+        onanimationiteration?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined>;
+        onanimationstart?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined>;
+        onauxclick?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onbeforeinput?: ((this: GlobalEventHandlers, ev: InputEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: InputEvent) => any) | null | undefined>;
+        onbeforetoggle?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onblur?: ((this: GlobalEventHandlers, ev: FocusEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: FocusEvent) => any) | null | undefined>;
+        oncancel?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        oncanplay?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        oncanplaythrough?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onclick?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onclose?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        oncontextmenu?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        oncopy?: ((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | undefined>;
+        oncuechange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        oncut?: ((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | undefined>;
+        ondblclick?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        ondrag?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondragend?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondragenter?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondragleave?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondragover?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondragstart?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondrop?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondurationchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onemptied?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onended?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onerror?: OnErrorEventHandler | undefined | State<OnErrorEventHandler | undefined>;
+        onfocus?: ((this: GlobalEventHandlers, ev: FocusEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: FocusEvent) => any) | null | undefined>;
+        onformdata?: ((this: GlobalEventHandlers, ev: FormDataEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: FormDataEvent) => any) | null | undefined>;
+        ongotpointercapture?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        oninput?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        oninvalid?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onkeydown?: ((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | undefined>;
+        onkeypress?: ((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | undefined>;
+        onkeyup?: ((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | undefined>;
+        onload?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onloadeddata?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onloadedmetadata?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onloadstart?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onlostpointercapture?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onmousedown?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onmouseenter?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onmouseleave?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onmousemove?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onmouseout?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onmouseover?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onmouseup?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onpaste?: ((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | undefined>;
+        onpause?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onplay?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onplaying?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onpointercancel?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointerdown?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointerenter?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointerleave?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointermove?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointerout?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointerover?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointerup?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onprogress?: ((this: GlobalEventHandlers, ev: ProgressEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: ProgressEvent) => any) | null | undefined>;
+        onratechange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onreset?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onresize?: ((this: GlobalEventHandlers, ev: UIEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: UIEvent) => any) | null | undefined>;
+        onscroll?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onscrollend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onsecuritypolicyviolation?: ((this: GlobalEventHandlers, ev: SecurityPolicyViolationEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: SecurityPolicyViolationEvent) => any) | null | undefined>;
+        onseeked?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onseeking?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onselect?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onselectionchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onselectstart?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onslotchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onstalled?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onsubmit?: ((this: GlobalEventHandlers, ev: SubmitEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: SubmitEvent) => any) | null | undefined>;
+        onsuspend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        ontimeupdate?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        ontoggle?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
         ontouchcancel?: ((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined>;
         ontouchend?: ((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined>;
         ontouchmove?: ((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined>;
         ontouchstart?: ((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined>;
-        ontransitioncancel?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null>;
-        ontransitionend?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null>;
-        ontransitionrun?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null>;
-        ontransitionstart?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null>;
-        onvolumechange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onwaiting?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onwebkitanimationend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onwebkitanimationiteration?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onwebkitanimationstart?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onwebkittransitionend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onwheel?: ((this: GlobalEventHandlers, ev: WheelEvent) => any) | null | State<((this: GlobalEventHandlers, ev: WheelEvent) => any) | null>;
+        ontransitioncancel?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined>;
+        ontransitionend?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined>;
+        ontransitionrun?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined>;
+        ontransitionstart?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined>;
+        onvolumechange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onwaiting?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onwebkitanimationend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onwebkitanimationiteration?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onwebkitanimationstart?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onwebkittransitionend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onwheel?: ((this: GlobalEventHandlers, ev: WheelEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: WheelEvent) => any) | null | undefined>;
     }
 
     interface HTMLHyperlinkElementUtils {
-        hash?: string | State<string>;
-        host?: string | State<string>;
-        hostname?: string | State<string>;
-        href?: string | State<string>;
-        password?: string | State<string>;
-        pathname?: string | State<string>;
-        port?: string | State<string>;
-        protocol?: string | State<string>;
-        search?: string | State<string>;
-        username?: string | State<string>;
+        hash?: string | undefined | State<string | undefined>;
+        host?: string | undefined | State<string | undefined>;
+        hostname?: string | undefined | State<string | undefined>;
+        href?: string | undefined | State<string | undefined>;
+        password?: string | undefined | State<string | undefined>;
+        pathname?: string | undefined | State<string | undefined>;
+        port?: string | undefined | State<string | undefined>;
+        protocol?: string | undefined | State<string | undefined>;
+        search?: string | undefined | State<string | undefined>;
+        username?: string | undefined | State<string | undefined>;
     }
 
     interface WindowEventHandlers {
-        onafterprint?: ((this: WindowEventHandlers, ev: Event) => any) | null | State<((this: WindowEventHandlers, ev: Event) => any) | null>;
-        onbeforeprint?: ((this: WindowEventHandlers, ev: Event) => any) | null | State<((this: WindowEventHandlers, ev: Event) => any) | null>;
-        onbeforeunload?: ((this: WindowEventHandlers, ev: BeforeUnloadEvent) => any) | null | State<((this: WindowEventHandlers, ev: BeforeUnloadEvent) => any) | null>;
-        ongamepadconnected?: ((this: WindowEventHandlers, ev: GamepadEvent) => any) | null | State<((this: WindowEventHandlers, ev: GamepadEvent) => any) | null>;
-        ongamepaddisconnected?: ((this: WindowEventHandlers, ev: GamepadEvent) => any) | null | State<((this: WindowEventHandlers, ev: GamepadEvent) => any) | null>;
-        onhashchange?: ((this: WindowEventHandlers, ev: HashChangeEvent) => any) | null | State<((this: WindowEventHandlers, ev: HashChangeEvent) => any) | null>;
-        onlanguagechange?: ((this: WindowEventHandlers, ev: Event) => any) | null | State<((this: WindowEventHandlers, ev: Event) => any) | null>;
-        onmessage?: ((this: WindowEventHandlers, ev: MessageEvent) => any) | null | State<((this: WindowEventHandlers, ev: MessageEvent) => any) | null>;
-        onmessageerror?: ((this: WindowEventHandlers, ev: MessageEvent) => any) | null | State<((this: WindowEventHandlers, ev: MessageEvent) => any) | null>;
-        onoffline?: ((this: WindowEventHandlers, ev: Event) => any) | null | State<((this: WindowEventHandlers, ev: Event) => any) | null>;
-        ononline?: ((this: WindowEventHandlers, ev: Event) => any) | null | State<((this: WindowEventHandlers, ev: Event) => any) | null>;
-        onpagehide?: ((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null | State<((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null>;
-        onpageshow?: ((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null | State<((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null>;
-        onpopstate?: ((this: WindowEventHandlers, ev: PopStateEvent) => any) | null | State<((this: WindowEventHandlers, ev: PopStateEvent) => any) | null>;
-        onrejectionhandled?: ((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null | State<((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null>;
-        onstorage?: ((this: WindowEventHandlers, ev: StorageEvent) => any) | null | State<((this: WindowEventHandlers, ev: StorageEvent) => any) | null>;
-        onunhandledrejection?: ((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null | State<((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null>;
-        onunload?: ((this: WindowEventHandlers, ev: Event) => any) | null | State<((this: WindowEventHandlers, ev: Event) => any) | null>;
+        onafterprint?: ((this: WindowEventHandlers, ev: Event) => any) | null | undefined | State<((this: WindowEventHandlers, ev: Event) => any) | null | undefined>;
+        onbeforeprint?: ((this: WindowEventHandlers, ev: Event) => any) | null | undefined | State<((this: WindowEventHandlers, ev: Event) => any) | null | undefined>;
+        onbeforeunload?: ((this: WindowEventHandlers, ev: BeforeUnloadEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: BeforeUnloadEvent) => any) | null | undefined>;
+        ongamepadconnected?: ((this: WindowEventHandlers, ev: GamepadEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: GamepadEvent) => any) | null | undefined>;
+        ongamepaddisconnected?: ((this: WindowEventHandlers, ev: GamepadEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: GamepadEvent) => any) | null | undefined>;
+        onhashchange?: ((this: WindowEventHandlers, ev: HashChangeEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: HashChangeEvent) => any) | null | undefined>;
+        onlanguagechange?: ((this: WindowEventHandlers, ev: Event) => any) | null | undefined | State<((this: WindowEventHandlers, ev: Event) => any) | null | undefined>;
+        onmessage?: ((this: WindowEventHandlers, ev: MessageEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: MessageEvent) => any) | null | undefined>;
+        onmessageerror?: ((this: WindowEventHandlers, ev: MessageEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: MessageEvent) => any) | null | undefined>;
+        onoffline?: ((this: WindowEventHandlers, ev: Event) => any) | null | undefined | State<((this: WindowEventHandlers, ev: Event) => any) | null | undefined>;
+        ononline?: ((this: WindowEventHandlers, ev: Event) => any) | null | undefined | State<((this: WindowEventHandlers, ev: Event) => any) | null | undefined>;
+        onpagehide?: ((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null | undefined>;
+        onpageshow?: ((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null | undefined>;
+        onpopstate?: ((this: WindowEventHandlers, ev: PopStateEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: PopStateEvent) => any) | null | undefined>;
+        onrejectionhandled?: ((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null | undefined>;
+        onstorage?: ((this: WindowEventHandlers, ev: StorageEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: StorageEvent) => any) | null | undefined>;
+        onunhandledrejection?: ((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null | undefined>;
+        onunload?: ((this: WindowEventHandlers, ev: Event) => any) | null | undefined | State<((this: WindowEventHandlers, ev: Event) => any) | null | undefined>;
     }
 
     interface PopoverInvokerElement {
-        popoverTargetAction?: string | State<string>;
-        popoverTargetElement?: Element | null | State<Element | null>;
+        popoverTargetAction?: string | undefined | State<string | undefined>;
+        popoverTargetElement?: Element | null | undefined | State<Element | null | undefined>;
     }
 
     interface FileList { }
@@ -2406,58 +2406,58 @@ export declare namespace MiniX {
     interface HTMLAnchorElement extends HTMLElement, HTMLHyperlinkElementUtils {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        charset?: string | State<string>;
-        coords?: string | State<string>;
-        download?: string | State<string>;
-        hreflang?: string | State<string>;
-        name?: string | State<string>;
-        ping?: string | State<string>;
-        referrerPolicy?: string | State<string>;
-        rel?: string | State<string>;
-        rev?: string | State<string>;
-        shape?: string | State<string>;
-        target?: string | State<string>;
-        text?: string | State<string>;
-        type?: string | State<string>;
+        charset?: string | undefined | State<string | undefined>;
+        coords?: string | undefined | State<string | undefined>;
+        download?: string | undefined | State<string | undefined>;
+        hreflang?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        ping?: string | undefined | State<string | undefined>;
+        referrerPolicy?: string | undefined | State<string | undefined>;
+        rel?: string | undefined | State<string | undefined>;
+        rev?: string | undefined | State<string | undefined>;
+        shape?: string | undefined | State<string | undefined>;
+        target?: string | undefined | State<string | undefined>;
+        text?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLElement extends Element, ElementCSSInlineStyle, ElementContentEditable, GlobalEventHandlers, HTMLOrSVGElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        accessKey?: string | State<string>;
-        autocapitalize?: string | State<string>;
-        dir?: string | State<string>;
-        draggable?: boolean | State<boolean>;
-        hidden?: boolean | State<boolean>;
-        inert?: boolean | State<boolean>;
-        innerText?: string | State<string>;
-        lang?: string | State<string>;
-        outerText?: string | State<string>;
-        popover?: string | null | State<string | null>;
-        spellcheck?: boolean | State<boolean>;
-        title?: string | State<string>;
-        translate?: boolean | State<boolean>;
+        accessKey?: string | undefined | State<string | undefined>;
+        autocapitalize?: string | undefined | State<string | undefined>;
+        dir?: string | undefined | State<string | undefined>;
+        draggable?: boolean | undefined | State<boolean | undefined>;
+        hidden?: boolean | undefined | State<boolean | undefined>;
+        inert?: boolean | undefined | State<boolean | undefined>;
+        innerText?: string | undefined | State<string | undefined>;
+        lang?: string | undefined | State<string | undefined>;
+        outerText?: string | undefined | State<string | undefined>;
+        popover?: string | null | undefined | State<string | null | undefined>;
+        spellcheck?: boolean | undefined | State<boolean | undefined>;
+        title?: string | undefined | State<string | undefined>;
+        translate?: boolean | undefined | State<boolean | undefined>;
     }
 
     interface HTMLOrSVGElement {
-        autofocus?: boolean | State<boolean>;
-        nonce?: string | State<string>;
-        tabIndex?: number | State<number>;
+        autofocus?: boolean | undefined | State<boolean | undefined>;
+        nonce?: string | undefined | State<string | undefined>;
+        tabIndex?: number | undefined | State<number | undefined>;
         [key: string]: any;
     }
 
     interface HTMLAreaElement extends HTMLElement, HTMLHyperlinkElementUtils {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        alt?: string | State<string>;
-        coords?: string | State<string>;
-        download?: string | State<string>;
-        noHref?: boolean | State<boolean>;
-        ping?: string | State<string>;
-        referrerPolicy?: string | State<string>;
-        rel?: string | State<string>;
-        shape?: string | State<string>;
-        target?: string | State<string>;
+        alt?: string | undefined | State<string | undefined>;
+        coords?: string | undefined | State<string | undefined>;
+        download?: string | undefined | State<string | undefined>;
+        noHref?: boolean | undefined | State<boolean | undefined>;
+        ping?: string | undefined | State<string | undefined>;
+        referrerPolicy?: string | undefined | State<string | undefined>;
+        rel?: string | undefined | State<string | undefined>;
+        shape?: string | undefined | State<string | undefined>;
+        target?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLAudioElement extends HTMLMediaElement {
@@ -2466,97 +2466,97 @@ export declare namespace MiniX {
     }
 
     interface HTMLMediaElement extends HTMLElement {
-        autoplay?: boolean | State<boolean>;
-        controls?: boolean | State<boolean>;
-        crossOrigin?: string | null | State<string | null>;
-        currentTime?: number | State<number>;
-        defaultMuted?: boolean | State<boolean>;
-        defaultPlaybackRate?: number | State<number>;
-        disableRemotePlayback?: boolean | State<boolean>;
-        loop?: boolean | State<boolean>;
-        muted?: boolean | State<boolean>;
-        onencrypted?: ((this: HTMLMediaElement, ev: MediaEncryptedEvent) => any) | null | State<((this: HTMLMediaElement, ev: MediaEncryptedEvent) => any) | null>;
-        onwaitingforkey?: ((this: HTMLMediaElement, ev: Event) => any) | null | State<((this: HTMLMediaElement, ev: Event) => any) | null>;
-        playbackRate?: number | State<number>;
-        preload?: "none" | "metadata" | "auto" | "" | State<"none" | "metadata" | "auto" | "">;
-        preservesPitch?: boolean | State<boolean>;
-        src?: string | State<string>;
-        srcObject?: MediaProvider | null | State<MediaProvider | null>;
-        volume?: number | State<number>;
+        autoplay?: boolean | undefined | State<boolean | undefined>;
+        controls?: boolean | undefined | State<boolean | undefined>;
+        crossOrigin?: string | null | undefined | State<string | null | undefined>;
+        currentTime?: number | undefined | State<number | undefined>;
+        defaultMuted?: boolean | undefined | State<boolean | undefined>;
+        defaultPlaybackRate?: number | undefined | State<number | undefined>;
+        disableRemotePlayback?: boolean | undefined | State<boolean | undefined>;
+        loop?: boolean | undefined | State<boolean | undefined>;
+        muted?: boolean | undefined | State<boolean | undefined>;
+        onencrypted?: ((this: HTMLMediaElement, ev: MediaEncryptedEvent) => any) | null | undefined | State<((this: HTMLMediaElement, ev: MediaEncryptedEvent) => any) | null | undefined>;
+        onwaitingforkey?: ((this: HTMLMediaElement, ev: Event) => any) | null | undefined | State<((this: HTMLMediaElement, ev: Event) => any) | null | undefined>;
+        playbackRate?: number | undefined | State<number | undefined>;
+        preload?: "none" | "metadata" | "auto" | "" | undefined | State<"none" | "metadata" | "auto" | "" | undefined>;
+        preservesPitch?: boolean | undefined | State<boolean | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        srcObject?: MediaProvider | null | undefined | State<MediaProvider | null | undefined>;
+        volume?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLBaseElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        href?: string | State<string>;
-        target?: string | State<string>;
+        href?: string | undefined | State<string | undefined>;
+        target?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLQuoteElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        cite?: string | State<string>;
+        cite?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLBodyElement extends HTMLElement, WindowEventHandlers {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        aLink?: string | State<string>;
-        background?: string | State<string>;
-        bgColor?: string | State<string>;
-        link?: string | State<string>;
-        text?: string | State<string>;
-        vLink?: string | State<string>;
+        aLink?: string | undefined | State<string | undefined>;
+        background?: string | undefined | State<string | undefined>;
+        bgColor?: string | undefined | State<string | undefined>;
+        link?: string | undefined | State<string | undefined>;
+        text?: string | undefined | State<string | undefined>;
+        vLink?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLBRElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        clear?: string | State<string>;
+        clear?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLButtonElement extends HTMLElement, PopoverInvokerElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        disabled?: boolean | State<boolean>;
-        formAction?: string | State<string>;
-        formEnctype?: string | State<string>;
-        formMethod?: string | State<string>;
-        formNoValidate?: boolean | State<boolean>;
-        formTarget?: string | State<string>;
-        name?: string | State<string>;
-        type?: "submit" | "reset" | "button" | State<"submit" | "reset" | "button">;
-        value?: string | State<string>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        formAction?: string | undefined | State<string | undefined>;
+        formEnctype?: string | undefined | State<string | undefined>;
+        formMethod?: string | undefined | State<string | undefined>;
+        formNoValidate?: boolean | undefined | State<boolean | undefined>;
+        formTarget?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        type?: "submit" | "reset" | "button" | undefined | State<"submit" | "reset" | "button" | undefined>;
+        value?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLCanvasElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        height?: number | State<number>;
-        width?: number | State<number>;
+        height?: number | undefined | State<number | undefined>;
+        width?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLTableCaptionElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTableColElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
-        ch?: string | State<string>;
-        chOff?: string | State<string>;
-        span?: number | State<number>;
-        vAlign?: string | State<string>;
-        width?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        ch?: string | undefined | State<string | undefined>;
+        chOff?: string | undefined | State<string | undefined>;
+        span?: number | undefined | State<number | undefined>;
+        vAlign?: string | undefined | State<string | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLDataElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        value?: string | State<string>;
+        value?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLDataListElement extends HTMLElement {
@@ -2567,73 +2567,73 @@ export declare namespace MiniX {
     interface HTMLModElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        cite?: string | State<string>;
-        dateTime?: string | State<string>;
+        cite?: string | undefined | State<string | undefined>;
+        dateTime?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLDetailsElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        name?: string | State<string>;
-        open?: boolean | State<boolean>;
+        name?: string | undefined | State<string | undefined>;
+        open?: boolean | undefined | State<boolean | undefined>;
     }
 
     interface HTMLDialogElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        open?: boolean | State<boolean>;
-        returnValue?: string | State<string>;
+        open?: boolean | undefined | State<boolean | undefined>;
+        returnValue?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLDivElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLDListElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        compact?: boolean | State<boolean>;
+        compact?: boolean | undefined | State<boolean | undefined>;
     }
 
     interface HTMLEmbedElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
-        height?: string | State<string>;
-        name?: string | State<string>;
-        src?: string | State<string>;
-        type?: string | State<string>;
-        width?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        height?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLFieldSetElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        disabled?: boolean | State<boolean>;
-        name?: string | State<string>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        name?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLFormElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        acceptCharset?: string | State<string>;
-        action?: string | State<string>;
-        autocomplete?: AutoFillBase | State<AutoFillBase>;
-        encoding?: string | State<string>;
-        enctype?: string | State<string>;
-        method?: string | State<string>;
-        name?: string | State<string>;
-        noValidate?: boolean | State<boolean>;
-        rel?: string | State<string>;
-        target?: string | State<string>;
+        acceptCharset?: string | undefined | State<string | undefined>;
+        action?: string | undefined | State<string | undefined>;
+        autocomplete?: AutoFillBase | undefined | State<AutoFillBase | undefined>;
+        encoding?: string | undefined | State<string | undefined>;
+        enctype?: string | undefined | State<string | undefined>;
+        method?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        noValidate?: boolean | undefined | State<boolean | undefined>;
+        rel?: string | undefined | State<string | undefined>;
+        target?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLHeadingElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLHeadElement extends HTMLElement {
@@ -2644,243 +2644,243 @@ export declare namespace MiniX {
     interface HTMLHRElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
-        color?: string | State<string>;
-        noShade?: boolean | State<boolean>;
-        size?: string | State<string>;
-        width?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        color?: string | undefined | State<string | undefined>;
+        noShade?: boolean | undefined | State<boolean | undefined>;
+        size?: string | undefined | State<string | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLHtmlElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        version?: string | State<string>;
+        version?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLIFrameElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
-        allow?: string | State<string>;
-        allowFullscreen?: boolean | State<boolean>;
-        frameBorder?: string | State<string>;
-        height?: string | State<string>;
-        loading?: string | State<string>;
-        longDesc?: string | State<string>;
-        marginHeight?: string | State<string>;
-        marginWidth?: string | State<string>;
-        name?: string | State<string>;
-        referrerPolicy?: ReferrerPolicy | State<ReferrerPolicy>;
-        scrolling?: string | State<string>;
-        src?: string | State<string>;
-        srcdoc?: string | State<string>;
-        width?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        allow?: string | undefined | State<string | undefined>;
+        allowFullscreen?: boolean | undefined | State<boolean | undefined>;
+        frameBorder?: string | undefined | State<string | undefined>;
+        height?: string | undefined | State<string | undefined>;
+        loading?: string | undefined | State<string | undefined>;
+        longDesc?: string | undefined | State<string | undefined>;
+        marginHeight?: string | undefined | State<string | undefined>;
+        marginWidth?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        referrerPolicy?: ReferrerPolicy | undefined | State<ReferrerPolicy | undefined>;
+        scrolling?: string | undefined | State<string | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        srcdoc?: string | undefined | State<string | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLImageElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
-        alt?: string | State<string>;
-        border?: string | State<string>;
-        crossOrigin?: string | null | State<string | null>;
-        decoding?: "async" | "sync" | "auto" | State<"async" | "sync" | "auto">;
-        fetchPriority?: string | State<string>;
-        height?: number | State<number>;
-        hspace?: number | State<number>;
-        isMap?: boolean | State<boolean>;
-        loading?: "eager" | "lazy" | State<"eager" | "lazy">;
-        longDesc?: string | State<string>;
-        lowsrc?: string | State<string>;
-        name?: string | State<string>;
-        referrerPolicy?: string | State<string>;
-        sizes?: string | State<string>;
-        src?: string | State<string>;
-        srcset?: string | State<string>;
-        useMap?: string | State<string>;
-        vspace?: number | State<number>;
-        width?: number | State<number>;
+        align?: string | undefined | State<string | undefined>;
+        alt?: string | undefined | State<string | undefined>;
+        border?: string | undefined | State<string | undefined>;
+        crossOrigin?: string | null | undefined | State<string | null | undefined>;
+        decoding?: "async" | "sync" | "auto" | undefined | State<"async" | "sync" | "auto" | undefined>;
+        fetchPriority?: string | undefined | State<string | undefined>;
+        height?: number | undefined | State<number | undefined>;
+        hspace?: number | undefined | State<number | undefined>;
+        isMap?: boolean | undefined | State<boolean | undefined>;
+        loading?: "eager" | "lazy" | undefined | State<"eager" | "lazy" | undefined>;
+        longDesc?: string | undefined | State<string | undefined>;
+        lowsrc?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        referrerPolicy?: string | undefined | State<string | undefined>;
+        sizes?: string | undefined | State<string | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        srcset?: string | undefined | State<string | undefined>;
+        useMap?: string | undefined | State<string | undefined>;
+        vspace?: number | undefined | State<number | undefined>;
+        width?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLInputElement extends HTMLElement, PopoverInvokerElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        accept?: string | State<string>;
-        align?: string | State<string>;
-        alt?: string | State<string>;
-        autocomplete?: AutoFill | State<AutoFill>;
-        capture?: string | State<string>;
-        checked?: boolean | State<boolean>;
-        defaultChecked?: boolean | State<boolean>;
-        defaultValue?: string | State<string>;
-        dirName?: string | State<string>;
-        disabled?: boolean | State<boolean>;
-        files?: FileList | null | State<FileList | null>;
-        formAction?: string | State<string>;
-        formEnctype?: string | State<string>;
-        formMethod?: string | State<string>;
-        formNoValidate?: boolean | State<boolean>;
-        formTarget?: string | State<string>;
-        height?: number | State<number>;
-        indeterminate?: boolean | State<boolean>;
-        max?: string | State<string>;
-        maxLength?: number | State<number>;
-        min?: string | State<string>;
-        minLength?: number | State<number>;
-        multiple?: boolean | State<boolean>;
-        name?: string | State<string>;
-        pattern?: string | State<string>;
-        placeholder?: string | State<string>;
-        readOnly?: boolean | State<boolean>;
-        required?: boolean | State<boolean>;
-        selectionDirection?: "forward" | "backward" | "none" | null | State<"forward" | "backward" | "none" | null>;
-        selectionEnd?: number | null | State<number | null>;
-        selectionStart?: number | null | State<number | null>;
-        size?: number | State<number>;
-        src?: string | State<string>;
-        step?: string | State<string>;
-        type?: string | State<string>;
-        useMap?: string | State<string>;
-        value?: string | State<string>;
-        valueAsDate?: Date | null | State<Date | null>;
-        valueAsNumber?: number | State<number>;
-        webkitdirectory?: boolean | State<boolean>;
-        width?: number | State<number>;
+        accept?: string | undefined | State<string | undefined>;
+        align?: string | undefined | State<string | undefined>;
+        alt?: string | undefined | State<string | undefined>;
+        autocomplete?: AutoFill | undefined | State<AutoFill | undefined>;
+        capture?: string | undefined | State<string | undefined>;
+        checked?: boolean | undefined | State<boolean | undefined>;
+        defaultChecked?: boolean | undefined | State<boolean | undefined>;
+        defaultValue?: string | undefined | State<string | undefined>;
+        dirName?: string | undefined | State<string | undefined>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        files?: FileList | null | undefined | State<FileList | null | undefined>;
+        formAction?: string | undefined | State<string | undefined>;
+        formEnctype?: string | undefined | State<string | undefined>;
+        formMethod?: string | undefined | State<string | undefined>;
+        formNoValidate?: boolean | undefined | State<boolean | undefined>;
+        formTarget?: string | undefined | State<string | undefined>;
+        height?: number | undefined | State<number | undefined>;
+        indeterminate?: boolean | undefined | State<boolean | undefined>;
+        max?: string | undefined | State<string | undefined>;
+        maxLength?: number | undefined | State<number | undefined>;
+        min?: string | undefined | State<string | undefined>;
+        minLength?: number | undefined | State<number | undefined>;
+        multiple?: boolean | undefined | State<boolean | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        pattern?: string | undefined | State<string | undefined>;
+        placeholder?: string | undefined | State<string | undefined>;
+        readOnly?: boolean | undefined | State<boolean | undefined>;
+        required?: boolean | undefined | State<boolean | undefined>;
+        selectionDirection?: "forward" | "backward" | "none" | null | undefined | State<"forward" | "backward" | "none" | null | undefined>;
+        selectionEnd?: number | null | undefined | State<number | null | undefined>;
+        selectionStart?: number | null | undefined | State<number | null | undefined>;
+        size?: number | undefined | State<number | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        step?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
+        useMap?: string | undefined | State<string | undefined>;
+        value?: string | undefined | State<string | undefined>;
+        valueAsDate?: Date | null | undefined | State<Date | null | undefined>;
+        valueAsNumber?: number | undefined | State<number | undefined>;
+        webkitdirectory?: boolean | undefined | State<boolean | undefined>;
+        width?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLLabelElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        htmlFor?: string | State<string>;
+        htmlFor?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLLegendElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLLIElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        type?: string | State<string>;
-        value?: number | State<number>;
+        type?: string | undefined | State<string | undefined>;
+        value?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLLinkElement extends HTMLElement, LinkStyle {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        as?: string | State<string>;
-        charset?: string | State<string>;
-        crossOrigin?: string | null | State<string | null>;
-        disabled?: boolean | State<boolean>;
-        fetchPriority?: string | State<string>;
-        href?: string | State<string>;
-        hreflang?: string | State<string>;
-        imageSizes?: string | State<string>;
-        imageSrcset?: string | State<string>;
-        integrity?: string | State<string>;
-        media?: string | State<string>;
-        referrerPolicy?: string | State<string>;
-        rel?: string | State<string>;
-        rev?: string | State<string>;
-        target?: string | State<string>;
-        type?: string | State<string>;
+        as?: string | undefined | State<string | undefined>;
+        charset?: string | undefined | State<string | undefined>;
+        crossOrigin?: string | null | undefined | State<string | null | undefined>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        fetchPriority?: string | undefined | State<string | undefined>;
+        href?: string | undefined | State<string | undefined>;
+        hreflang?: string | undefined | State<string | undefined>;
+        imageSizes?: string | undefined | State<string | undefined>;
+        imageSrcset?: string | undefined | State<string | undefined>;
+        integrity?: string | undefined | State<string | undefined>;
+        media?: string | undefined | State<string | undefined>;
+        referrerPolicy?: string | undefined | State<string | undefined>;
+        rel?: string | undefined | State<string | undefined>;
+        rev?: string | undefined | State<string | undefined>;
+        target?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLMapElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        name?: string | State<string>;
+        name?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLMenuElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        compact?: boolean | State<boolean>;
+        compact?: boolean | undefined | State<boolean | undefined>;
     }
 
     interface HTMLMetaElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        content?: string | State<string>;
-        httpEquiv?: string | State<string>;
-        media?: string | State<string>;
-        name?: string | State<string>;
-        scheme?: string | State<string>;
+        content?: string | undefined | State<string | undefined>;
+        httpEquiv?: string | undefined | State<string | undefined>;
+        media?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        scheme?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLMeterElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        high?: number | State<number>;
-        low?: number | State<number>;
-        max?: number | State<number>;
-        min?: number | State<number>;
-        optimum?: number | State<number>;
-        value?: number | State<number>;
+        high?: number | undefined | State<number | undefined>;
+        low?: number | undefined | State<number | undefined>;
+        max?: number | undefined | State<number | undefined>;
+        min?: number | undefined | State<number | undefined>;
+        optimum?: number | undefined | State<number | undefined>;
+        value?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLObjectElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
-        archive?: string | State<string>;
-        border?: string | State<string>;
-        code?: string | State<string>;
-        codeBase?: string | State<string>;
-        codeType?: string | State<string>;
-        data?: string | State<string>;
-        declare?: boolean | State<boolean>;
-        height?: string | State<string>;
-        hspace?: number | State<number>;
-        name?: string | State<string>;
-        standby?: string | State<string>;
-        type?: string | State<string>;
-        useMap?: string | State<string>;
-        vspace?: number | State<number>;
-        width?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        archive?: string | undefined | State<string | undefined>;
+        border?: string | undefined | State<string | undefined>;
+        code?: string | undefined | State<string | undefined>;
+        codeBase?: string | undefined | State<string | undefined>;
+        codeType?: string | undefined | State<string | undefined>;
+        data?: string | undefined | State<string | undefined>;
+        declare?: boolean | undefined | State<boolean | undefined>;
+        height?: string | undefined | State<string | undefined>;
+        hspace?: number | undefined | State<number | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        standby?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
+        useMap?: string | undefined | State<string | undefined>;
+        vspace?: number | undefined | State<number | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLOListElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        compact?: boolean | State<boolean>;
-        reversed?: boolean | State<boolean>;
-        start?: number | State<number>;
-        type?: string | State<string>;
+        compact?: boolean | undefined | State<boolean | undefined>;
+        reversed?: boolean | undefined | State<boolean | undefined>;
+        start?: number | undefined | State<number | undefined>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLOptGroupElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        disabled?: boolean | State<boolean>;
-        label?: string | State<string>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        label?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLOptionElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        defaultSelected?: boolean | State<boolean>;
-        disabled?: boolean | State<boolean>;
-        label?: string | State<string>;
-        selected?: boolean | State<boolean>;
-        text?: string | State<string>;
-        value?: string | State<string>;
+        defaultSelected?: boolean | undefined | State<boolean | undefined>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        label?: string | undefined | State<string | undefined>;
+        selected?: boolean | undefined | State<boolean | undefined>;
+        text?: string | undefined | State<string | undefined>;
+        value?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLOutputElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        defaultValue?: string | State<string>;
-        name?: string | State<string>;
-        value?: string | State<string>;
+        defaultValue?: string | undefined | State<string | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        value?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLParagraphElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLPictureElement extends HTMLElement {
@@ -2891,64 +2891,64 @@ export declare namespace MiniX {
     interface HTMLPreElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        width?: number | State<number>;
+        width?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLProgressElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        max?: number | State<number>;
-        value?: number | State<number>;
+        max?: number | undefined | State<number | undefined>;
+        value?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLScriptElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        async?: boolean | State<boolean>;
-        charset?: string | State<string>;
-        crossOrigin?: string | null | State<string | null>;
-        defer?: boolean | State<boolean>;
-        event?: string | State<string>;
-        fetchPriority?: string | State<string>;
-        htmlFor?: string | State<string>;
-        integrity?: string | State<string>;
-        noModule?: boolean | State<boolean>;
-        referrerPolicy?: string | State<string>;
-        src?: string | State<string>;
-        text?: string | State<string>;
-        type?: string | State<string>;
+        async?: boolean | undefined | State<boolean | undefined>;
+        charset?: string | undefined | State<string | undefined>;
+        crossOrigin?: string | null | undefined | State<string | null | undefined>;
+        defer?: boolean | undefined | State<boolean | undefined>;
+        event?: string | undefined | State<string | undefined>;
+        fetchPriority?: string | undefined | State<string | undefined>;
+        htmlFor?: string | undefined | State<string | undefined>;
+        integrity?: string | undefined | State<string | undefined>;
+        noModule?: boolean | undefined | State<boolean | undefined>;
+        referrerPolicy?: string | undefined | State<string | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        text?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLSelectElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        autocomplete?: AutoFill | State<AutoFill>;
-        disabled?: boolean | State<boolean>;
-        length?: number | State<number>;
-        multiple?: boolean | State<boolean>;
-        name?: string | State<string>;
-        required?: boolean | State<boolean>;
-        selectedIndex?: number | State<number>;
-        size?: number | State<number>;
-        value?: string | State<string>;
+        autocomplete?: AutoFill | undefined | State<AutoFill | undefined>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        length?: number | undefined | State<number | undefined>;
+        multiple?: boolean | undefined | State<boolean | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        required?: boolean | undefined | State<boolean | undefined>;
+        selectedIndex?: number | undefined | State<number | undefined>;
+        size?: number | undefined | State<number | undefined>;
+        value?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLSlotElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        name?: string | State<string>;
+        name?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLSourceElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        height?: number | State<number>;
-        media?: string | State<string>;
-        sizes?: string | State<string>;
-        src?: string | State<string>;
-        srcset?: string | State<string>;
-        type?: string | State<string>;
-        width?: number | State<number>;
+        height?: number | undefined | State<number | undefined>;
+        media?: string | undefined | State<string | undefined>;
+        sizes?: string | undefined | State<string | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        srcset?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
+        width?: number | undefined | State<number | undefined>;
     }
 
     interface HTMLSpanElement extends HTMLElement {
@@ -2959,139 +2959,139 @@ export declare namespace MiniX {
     interface HTMLStyleElement extends HTMLElement, LinkStyle {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        disabled?: boolean | State<boolean>;
-        media?: string | State<string>;
-        type?: string | State<string>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        media?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTableElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
-        bgColor?: string | State<string>;
-        border?: string | State<string>;
-        caption?: HTMLTableCaptionElement | null | State<HTMLTableCaptionElement | null>;
-        cellPadding?: string | State<string>;
-        cellSpacing?: string | State<string>;
-        frame?: string | State<string>;
-        rules?: string | State<string>;
-        summary?: string | State<string>;
-        tFoot?: HTMLTableSectionElement | null | State<HTMLTableSectionElement | null>;
-        tHead?: HTMLTableSectionElement | null | State<HTMLTableSectionElement | null>;
-        width?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        bgColor?: string | undefined | State<string | undefined>;
+        border?: string | undefined | State<string | undefined>;
+        caption?: HTMLTableCaptionElement | null | undefined | State<HTMLTableCaptionElement | null | undefined>;
+        cellPadding?: string | undefined | State<string | undefined>;
+        cellSpacing?: string | undefined | State<string | undefined>;
+        frame?: string | undefined | State<string | undefined>;
+        rules?: string | undefined | State<string | undefined>;
+        summary?: string | undefined | State<string | undefined>;
+        tFoot?: HTMLTableSectionElement | null | undefined | State<HTMLTableSectionElement | null | undefined>;
+        tHead?: HTMLTableSectionElement | null | undefined | State<HTMLTableSectionElement | null | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTableSectionElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
-        ch?: string | State<string>;
-        chOff?: string | State<string>;
-        vAlign?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        ch?: string | undefined | State<string | undefined>;
+        chOff?: string | undefined | State<string | undefined>;
+        vAlign?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTableCellElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        abbr?: string | State<string>;
-        align?: string | State<string>;
-        axis?: string | State<string>;
-        bgColor?: string | State<string>;
-        ch?: string | State<string>;
-        chOff?: string | State<string>;
-        colSpan?: number | State<number>;
-        headers?: string | State<string>;
-        height?: string | State<string>;
-        noWrap?: boolean | State<boolean>;
-        rowSpan?: number | State<number>;
-        scope?: string | State<string>;
-        vAlign?: string | State<string>;
-        width?: string | State<string>;
+        abbr?: string | undefined | State<string | undefined>;
+        align?: string | undefined | State<string | undefined>;
+        axis?: string | undefined | State<string | undefined>;
+        bgColor?: string | undefined | State<string | undefined>;
+        ch?: string | undefined | State<string | undefined>;
+        chOff?: string | undefined | State<string | undefined>;
+        colSpan?: number | undefined | State<number | undefined>;
+        headers?: string | undefined | State<string | undefined>;
+        height?: string | undefined | State<string | undefined>;
+        noWrap?: boolean | undefined | State<boolean | undefined>;
+        rowSpan?: number | undefined | State<number | undefined>;
+        scope?: string | undefined | State<string | undefined>;
+        vAlign?: string | undefined | State<string | undefined>;
+        width?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTemplateElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        shadowRootMode?: string | State<string>;
+        shadowRootMode?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTextAreaElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        autocomplete?: AutoFill | State<AutoFill>;
-        cols?: number | State<number>;
-        defaultValue?: string | State<string>;
-        dirName?: string | State<string>;
-        disabled?: boolean | State<boolean>;
-        maxLength?: number | State<number>;
-        minLength?: number | State<number>;
-        name?: string | State<string>;
-        placeholder?: string | State<string>;
-        readOnly?: boolean | State<boolean>;
-        required?: boolean | State<boolean>;
-        rows?: number | State<number>;
-        selectionDirection?: "forward" | "backward" | "none" | State<"forward" | "backward" | "none">;
-        selectionEnd?: number | State<number>;
-        selectionStart?: number | State<number>;
-        value?: string | State<string>;
-        wrap?: string | State<string>;
+        autocomplete?: AutoFill | undefined | State<AutoFill | undefined>;
+        cols?: number | undefined | State<number | undefined>;
+        defaultValue?: string | undefined | State<string | undefined>;
+        dirName?: string | undefined | State<string | undefined>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        maxLength?: number | undefined | State<number | undefined>;
+        minLength?: number | undefined | State<number | undefined>;
+        name?: string | undefined | State<string | undefined>;
+        placeholder?: string | undefined | State<string | undefined>;
+        readOnly?: boolean | undefined | State<boolean | undefined>;
+        required?: boolean | undefined | State<boolean | undefined>;
+        rows?: number | undefined | State<number | undefined>;
+        selectionDirection?: "forward" | "backward" | "none" | undefined | State<"forward" | "backward" | "none" | undefined>;
+        selectionEnd?: number | undefined | State<number | undefined>;
+        selectionStart?: number | undefined | State<number | undefined>;
+        value?: string | undefined | State<string | undefined>;
+        wrap?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTimeElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        dateTime?: string | State<string>;
+        dateTime?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTitleElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        text?: string | State<string>;
+        text?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTableRowElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        align?: string | State<string>;
-        bgColor?: string | State<string>;
-        ch?: string | State<string>;
-        chOff?: string | State<string>;
-        vAlign?: string | State<string>;
+        align?: string | undefined | State<string | undefined>;
+        bgColor?: string | undefined | State<string | undefined>;
+        ch?: string | undefined | State<string | undefined>;
+        chOff?: string | undefined | State<string | undefined>;
+        vAlign?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLTrackElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        default?: boolean | State<boolean>;
-        kind?: string | State<string>;
-        label?: string | State<string>;
-        src?: string | State<string>;
-        srclang?: string | State<string>;
+        default?: boolean | undefined | State<boolean | undefined>;
+        kind?: string | undefined | State<string | undefined>;
+        label?: string | undefined | State<string | undefined>;
+        src?: string | undefined | State<string | undefined>;
+        srclang?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLUListElement extends HTMLElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        compact?: boolean | State<boolean>;
-        type?: string | State<string>;
+        compact?: boolean | undefined | State<boolean | undefined>;
+        type?: string | undefined | State<string | undefined>;
     }
 
     interface HTMLVideoElement extends HTMLMediaElement {
         namespaceURI?: "http://www.w3.org/1999/xhtml";
         children?: MiniNode | MiniChildren;
-        disablePictureInPicture?: boolean | State<boolean>;
-        height?: number | State<number>;
-        onenterpictureinpicture?: ((this: HTMLVideoElement, ev: Event) => any) | null | State<((this: HTMLVideoElement, ev: Event) => any) | null>;
-        onleavepictureinpicture?: ((this: HTMLVideoElement, ev: Event) => any) | null | State<((this: HTMLVideoElement, ev: Event) => any) | null>;
-        playsInline?: boolean | State<boolean>;
-        poster?: string | State<string>;
-        width?: number | State<number>;
+        disablePictureInPicture?: boolean | undefined | State<boolean | undefined>;
+        height?: number | undefined | State<number | undefined>;
+        onenterpictureinpicture?: ((this: HTMLVideoElement, ev: Event) => any) | null | undefined | State<((this: HTMLVideoElement, ev: Event) => any) | null | undefined>;
+        onleavepictureinpicture?: ((this: HTMLVideoElement, ev: Event) => any) | null | undefined | State<((this: HTMLVideoElement, ev: Event) => any) | null | undefined>;
+        playsInline?: boolean | undefined | State<boolean | undefined>;
+        poster?: string | undefined | State<string | undefined>;
+        width?: number | undefined | State<number | undefined>;
     }
 
     interface SVGAElement extends SVGGraphicsElement, SVGURIReference {
         namespaceURI: "http://www.w3.org/2000/svg";
         children?: MiniNode | MiniChildren;
-        rel?: string | State<string>;
+        rel?: string | undefined | State<string | undefined>;
         [key: string]: any;
     }
 
@@ -3336,7 +3336,7 @@ export declare namespace MiniX {
     interface SVGImageElement extends SVGGraphicsElement, SVGURIReference {
         namespaceURI: "http://www.w3.org/2000/svg";
         children?: MiniNode | MiniChildren;
-        crossOrigin?: string | null | State<string | null>;
+        crossOrigin?: string | null | undefined | State<string | null | undefined>;
         [key: string]: any;
     }
 
@@ -3419,7 +3419,7 @@ export declare namespace MiniX {
     interface SVGScriptElement extends SVGElement, SVGURIReference {
         namespaceURI: "http://www.w3.org/2000/svg";
         children?: MiniNode | MiniChildren;
-        type?: string | State<string>;
+        type?: string | undefined | State<string | undefined>;
         [key: string]: any;
     }
 
@@ -3438,17 +3438,17 @@ export declare namespace MiniX {
     interface SVGStyleElement extends SVGElement, LinkStyle {
         namespaceURI: "http://www.w3.org/2000/svg";
         children?: MiniNode | MiniChildren;
-        disabled?: boolean | State<boolean>;
-        media?: string | State<string>;
-        title?: string | State<string>;
-        type?: string | State<string>;
+        disabled?: boolean | undefined | State<boolean | undefined>;
+        media?: string | undefined | State<string | undefined>;
+        title?: string | undefined | State<string | undefined>;
+        type?: string | undefined | State<string | undefined>;
         [key: string]: any;
     }
 
     interface SVGSVGElement extends SVGGraphicsElement, SVGFitToViewBox, WindowEventHandlers {
         namespaceURI: "http://www.w3.org/2000/svg";
         children?: MiniNode | MiniChildren;
-        currentScale?: number | State<number>;
+        currentScale?: number | undefined | State<number | undefined>;
         [key: string]: any;
     }
 
@@ -3517,63 +3517,63 @@ export declare namespace MiniX {
     interface Element extends Node, ARIAMixin, Animatable, ChildNode, InnerHTML, NonDocumentTypeChildNode, ParentNode, Slottable {
         namespaceURI?: "http://www.w3.org/1999/xhtml" | "http://www.w3.org/2000/svg" | "http://www.w3.org/1998/Math/MathML";
         children?: MiniNode | MiniChildren;
-        className?: string | State<string>;
-        id?: string | State<string>;
-        onfullscreenchange?: ((this: Element, ev: Event) => any) | null | State<((this: Element, ev: Event) => any) | null>;
-        onfullscreenerror?: ((this: Element, ev: Event) => any) | null | State<((this: Element, ev: Event) => any) | null>;
-        outerHTML?: string | State<string>;
-        scrollLeft?: number | State<number>;
-        scrollTop?: number | State<number>;
-        slot?: string | State<string>;
+        className?: string | undefined | State<string | undefined>;
+        id?: string | undefined | State<string | undefined>;
+        onfullscreenchange?: ((this: Element, ev: Event) => any) | null | undefined | State<((this: Element, ev: Event) => any) | null | undefined>;
+        onfullscreenerror?: ((this: Element, ev: Event) => any) | null | undefined | State<((this: Element, ev: Event) => any) | null | undefined>;
+        outerHTML?: string | undefined | State<string | undefined>;
+        scrollLeft?: number | undefined | State<number | undefined>;
+        scrollTop?: number | undefined | State<number | undefined>;
+        slot?: string | undefined | State<string | undefined>;
     }
 
     interface Node extends EventTarget {
-        nodeValue?: string | null | State<string | null>;
-        textContent?: string | null | State<string | null>;
+        nodeValue?: string | null | undefined | State<string | null | undefined>;
+        textContent?: string | null | undefined | State<string | null | undefined>;
     }
 
     interface EventTarget { }
 
     interface ARIAMixin {
-        ariaAtomic?: string | null | State<string | null>;
-        ariaAutoComplete?: string | null | State<string | null>;
-        ariaBusy?: string | null | State<string | null>;
-        ariaChecked?: string | null | State<string | null>;
-        ariaColCount?: string | null | State<string | null>;
-        ariaColIndex?: string | null | State<string | null>;
-        ariaColSpan?: string | null | State<string | null>;
-        ariaCurrent?: string | null | State<string | null>;
-        ariaDescription?: string | null | State<string | null>;
-        ariaDisabled?: string | null | State<string | null>;
-        ariaExpanded?: string | null | State<string | null>;
-        ariaHasPopup?: string | null | State<string | null>;
-        ariaHidden?: string | null | State<string | null>;
-        ariaInvalid?: string | null | State<string | null>;
-        ariaKeyShortcuts?: string | null | State<string | null>;
-        ariaLabel?: string | null | State<string | null>;
-        ariaLevel?: string | null | State<string | null>;
-        ariaLive?: string | null | State<string | null>;
-        ariaModal?: string | null | State<string | null>;
-        ariaMultiLine?: string | null | State<string | null>;
-        ariaMultiSelectable?: string | null | State<string | null>;
-        ariaOrientation?: string | null | State<string | null>;
-        ariaPlaceholder?: string | null | State<string | null>;
-        ariaPosInSet?: string | null | State<string | null>;
-        ariaPressed?: string | null | State<string | null>;
-        ariaReadOnly?: string | null | State<string | null>;
-        ariaRequired?: string | null | State<string | null>;
-        ariaRoleDescription?: string | null | State<string | null>;
-        ariaRowCount?: string | null | State<string | null>;
-        ariaRowIndex?: string | null | State<string | null>;
-        ariaRowSpan?: string | null | State<string | null>;
-        ariaSelected?: string | null | State<string | null>;
-        ariaSetSize?: string | null | State<string | null>;
-        ariaSort?: string | null | State<string | null>;
-        ariaValueMax?: string | null | State<string | null>;
-        ariaValueMin?: string | null | State<string | null>;
-        ariaValueNow?: string | null | State<string | null>;
-        ariaValueText?: string | null | State<string | null>;
-        role?: string | null | State<string | null>;
+        ariaAtomic?: string | null | undefined | State<string | null | undefined>;
+        ariaAutoComplete?: string | null | undefined | State<string | null | undefined>;
+        ariaBusy?: string | null | undefined | State<string | null | undefined>;
+        ariaChecked?: string | null | undefined | State<string | null | undefined>;
+        ariaColCount?: string | null | undefined | State<string | null | undefined>;
+        ariaColIndex?: string | null | undefined | State<string | null | undefined>;
+        ariaColSpan?: string | null | undefined | State<string | null | undefined>;
+        ariaCurrent?: string | null | undefined | State<string | null | undefined>;
+        ariaDescription?: string | null | undefined | State<string | null | undefined>;
+        ariaDisabled?: string | null | undefined | State<string | null | undefined>;
+        ariaExpanded?: string | null | undefined | State<string | null | undefined>;
+        ariaHasPopup?: string | null | undefined | State<string | null | undefined>;
+        ariaHidden?: string | null | undefined | State<string | null | undefined>;
+        ariaInvalid?: string | null | undefined | State<string | null | undefined>;
+        ariaKeyShortcuts?: string | null | undefined | State<string | null | undefined>;
+        ariaLabel?: string | null | undefined | State<string | null | undefined>;
+        ariaLevel?: string | null | undefined | State<string | null | undefined>;
+        ariaLive?: string | null | undefined | State<string | null | undefined>;
+        ariaModal?: string | null | undefined | State<string | null | undefined>;
+        ariaMultiLine?: string | null | undefined | State<string | null | undefined>;
+        ariaMultiSelectable?: string | null | undefined | State<string | null | undefined>;
+        ariaOrientation?: string | null | undefined | State<string | null | undefined>;
+        ariaPlaceholder?: string | null | undefined | State<string | null | undefined>;
+        ariaPosInSet?: string | null | undefined | State<string | null | undefined>;
+        ariaPressed?: string | null | undefined | State<string | null | undefined>;
+        ariaReadOnly?: string | null | undefined | State<string | null | undefined>;
+        ariaRequired?: string | null | undefined | State<string | null | undefined>;
+        ariaRoleDescription?: string | null | undefined | State<string | null | undefined>;
+        ariaRowCount?: string | null | undefined | State<string | null | undefined>;
+        ariaRowIndex?: string | null | undefined | State<string | null | undefined>;
+        ariaRowSpan?: string | null | undefined | State<string | null | undefined>;
+        ariaSelected?: string | null | undefined | State<string | null | undefined>;
+        ariaSetSize?: string | null | undefined | State<string | null | undefined>;
+        ariaSort?: string | null | undefined | State<string | null | undefined>;
+        ariaValueMax?: string | null | undefined | State<string | null | undefined>;
+        ariaValueMin?: string | null | undefined | State<string | null | undefined>;
+        ariaValueNow?: string | null | undefined | State<string | null | undefined>;
+        ariaValueText?: string | null | undefined | State<string | null | undefined>;
+        role?: string | null | undefined | State<string | null | undefined>;
     }
 
     interface Animatable { }
@@ -3581,7 +3581,7 @@ export declare namespace MiniX {
     interface ChildNode extends Node { }
 
     interface InnerHTML {
-        innerHTML?: string | State<string>;
+        innerHTML?: string | undefined | State<string | undefined>;
     }
 
     interface NonDocumentTypeChildNode { }
@@ -3591,645 +3591,645 @@ export declare namespace MiniX {
     interface Slottable { }
 
     interface ElementCSSInlineStyle {
-        style?: CSSStyleDeclaration | State<CSSStyleDeclaration>;
+        style?: CSSStyleDeclaration | undefined | State<CSSStyleDeclaration | undefined>;
     }
 
     interface CSSStyleDeclaration {
-        accentColor?: string | State<string>;
-        alignContent?: string | State<string>;
-        alignItems?: string | State<string>;
-        alignSelf?: string | State<string>;
-        alignmentBaseline?: string | State<string>;
-        all?: string | State<string>;
-        animation?: string | State<string>;
-        animationComposition?: string | State<string>;
-        animationDelay?: string | State<string>;
-        animationDirection?: string | State<string>;
-        animationDuration?: string | State<string>;
-        animationFillMode?: string | State<string>;
-        animationIterationCount?: string | State<string>;
-        animationName?: string | State<string>;
-        animationPlayState?: string | State<string>;
-        animationTimingFunction?: string | State<string>;
-        appearance?: string | State<string>;
-        aspectRatio?: string | State<string>;
-        backdropFilter?: string | State<string>;
-        backfaceVisibility?: string | State<string>;
-        background?: string | State<string>;
-        backgroundAttachment?: string | State<string>;
-        backgroundBlendMode?: string | State<string>;
-        backgroundClip?: string | State<string>;
-        backgroundColor?: string | State<string>;
-        backgroundImage?: string | State<string>;
-        backgroundOrigin?: string | State<string>;
-        backgroundPosition?: string | State<string>;
-        backgroundPositionX?: string | State<string>;
-        backgroundPositionY?: string | State<string>;
-        backgroundRepeat?: string | State<string>;
-        backgroundSize?: string | State<string>;
-        baselineShift?: string | State<string>;
-        baselineSource?: string | State<string>;
-        blockSize?: string | State<string>;
-        border?: string | State<string>;
-        borderBlock?: string | State<string>;
-        borderBlockColor?: string | State<string>;
-        borderBlockEnd?: string | State<string>;
-        borderBlockEndColor?: string | State<string>;
-        borderBlockEndStyle?: string | State<string>;
-        borderBlockEndWidth?: string | State<string>;
-        borderBlockStart?: string | State<string>;
-        borderBlockStartColor?: string | State<string>;
-        borderBlockStartStyle?: string | State<string>;
-        borderBlockStartWidth?: string | State<string>;
-        borderBlockStyle?: string | State<string>;
-        borderBlockWidth?: string | State<string>;
-        borderBottom?: string | State<string>;
-        borderBottomColor?: string | State<string>;
-        borderBottomLeftRadius?: string | State<string>;
-        borderBottomRightRadius?: string | State<string>;
-        borderBottomStyle?: string | State<string>;
-        borderBottomWidth?: string | State<string>;
-        borderCollapse?: string | State<string>;
-        borderColor?: string | State<string>;
-        borderEndEndRadius?: string | State<string>;
-        borderEndStartRadius?: string | State<string>;
-        borderImage?: string | State<string>;
-        borderImageOutset?: string | State<string>;
-        borderImageRepeat?: string | State<string>;
-        borderImageSlice?: string | State<string>;
-        borderImageSource?: string | State<string>;
-        borderImageWidth?: string | State<string>;
-        borderInline?: string | State<string>;
-        borderInlineColor?: string | State<string>;
-        borderInlineEnd?: string | State<string>;
-        borderInlineEndColor?: string | State<string>;
-        borderInlineEndStyle?: string | State<string>;
-        borderInlineEndWidth?: string | State<string>;
-        borderInlineStart?: string | State<string>;
-        borderInlineStartColor?: string | State<string>;
-        borderInlineStartStyle?: string | State<string>;
-        borderInlineStartWidth?: string | State<string>;
-        borderInlineStyle?: string | State<string>;
-        borderInlineWidth?: string | State<string>;
-        borderLeft?: string | State<string>;
-        borderLeftColor?: string | State<string>;
-        borderLeftStyle?: string | State<string>;
-        borderLeftWidth?: string | State<string>;
-        borderRadius?: string | State<string>;
-        borderRight?: string | State<string>;
-        borderRightColor?: string | State<string>;
-        borderRightStyle?: string | State<string>;
-        borderRightWidth?: string | State<string>;
-        borderSpacing?: string | State<string>;
-        borderStartEndRadius?: string | State<string>;
-        borderStartStartRadius?: string | State<string>;
-        borderStyle?: string | State<string>;
-        borderTop?: string | State<string>;
-        borderTopColor?: string | State<string>;
-        borderTopLeftRadius?: string | State<string>;
-        borderTopRightRadius?: string | State<string>;
-        borderTopStyle?: string | State<string>;
-        borderTopWidth?: string | State<string>;
-        borderWidth?: string | State<string>;
-        bottom?: string | State<string>;
-        boxShadow?: string | State<string>;
-        boxSizing?: string | State<string>;
-        breakAfter?: string | State<string>;
-        breakBefore?: string | State<string>;
-        breakInside?: string | State<string>;
-        captionSide?: string | State<string>;
-        caretColor?: string | State<string>;
-        clear?: string | State<string>;
-        clip?: string | State<string>;
-        clipPath?: string | State<string>;
-        clipRule?: string | State<string>;
-        color?: string | State<string>;
-        colorInterpolation?: string | State<string>;
-        colorInterpolationFilters?: string | State<string>;
-        colorScheme?: string | State<string>;
-        columnCount?: string | State<string>;
-        columnFill?: string | State<string>;
-        columnGap?: string | State<string>;
-        columnRule?: string | State<string>;
-        columnRuleColor?: string | State<string>;
-        columnRuleStyle?: string | State<string>;
-        columnRuleWidth?: string | State<string>;
-        columnSpan?: string | State<string>;
-        columnWidth?: string | State<string>;
-        columns?: string | State<string>;
-        contain?: string | State<string>;
-        containIntrinsicBlockSize?: string | State<string>;
-        containIntrinsicHeight?: string | State<string>;
-        containIntrinsicInlineSize?: string | State<string>;
-        containIntrinsicSize?: string | State<string>;
-        containIntrinsicWidth?: string | State<string>;
-        container?: string | State<string>;
-        containerName?: string | State<string>;
-        containerType?: string | State<string>;
-        content?: string | State<string>;
-        counterIncrement?: string | State<string>;
-        counterReset?: string | State<string>;
-        counterSet?: string | State<string>;
-        cssFloat?: string | State<string>;
-        cssText?: string | State<string>;
-        cursor?: string | State<string>;
-        cx?: string | State<string>;
-        cy?: string | State<string>;
-        d?: string | State<string>;
-        direction?: string | State<string>;
-        display?: string | State<string>;
-        dominantBaseline?: string | State<string>;
-        emptyCells?: string | State<string>;
-        fill?: string | State<string>;
-        fillOpacity?: string | State<string>;
-        fillRule?: string | State<string>;
-        filter?: string | State<string>;
-        flex?: string | State<string>;
-        flexBasis?: string | State<string>;
-        flexDirection?: string | State<string>;
-        flexFlow?: string | State<string>;
-        flexGrow?: string | State<string>;
-        flexShrink?: string | State<string>;
-        flexWrap?: string | State<string>;
-        float?: string | State<string>;
-        floodColor?: string | State<string>;
-        floodOpacity?: string | State<string>;
-        font?: string | State<string>;
-        fontFamily?: string | State<string>;
-        fontFeatureSettings?: string | State<string>;
-        fontKerning?: string | State<string>;
-        fontOpticalSizing?: string | State<string>;
-        fontPalette?: string | State<string>;
-        fontSize?: string | State<string>;
-        fontSizeAdjust?: string | State<string>;
-        fontStretch?: string | State<string>;
-        fontStyle?: string | State<string>;
-        fontSynthesis?: string | State<string>;
-        fontSynthesisSmallCaps?: string | State<string>;
-        fontSynthesisStyle?: string | State<string>;
-        fontSynthesisWeight?: string | State<string>;
-        fontVariant?: string | State<string>;
-        fontVariantAlternates?: string | State<string>;
-        fontVariantCaps?: string | State<string>;
-        fontVariantEastAsian?: string | State<string>;
-        fontVariantLigatures?: string | State<string>;
-        fontVariantNumeric?: string | State<string>;
-        fontVariantPosition?: string | State<string>;
-        fontVariationSettings?: string | State<string>;
-        fontWeight?: string | State<string>;
-        forcedColorAdjust?: string | State<string>;
-        gap?: string | State<string>;
-        grid?: string | State<string>;
-        gridArea?: string | State<string>;
-        gridAutoColumns?: string | State<string>;
-        gridAutoFlow?: string | State<string>;
-        gridAutoRows?: string | State<string>;
-        gridColumn?: string | State<string>;
-        gridColumnEnd?: string | State<string>;
-        gridColumnGap?: string | State<string>;
-        gridColumnStart?: string | State<string>;
-        gridGap?: string | State<string>;
-        gridRow?: string | State<string>;
-        gridRowEnd?: string | State<string>;
-        gridRowGap?: string | State<string>;
-        gridRowStart?: string | State<string>;
-        gridTemplate?: string | State<string>;
-        gridTemplateAreas?: string | State<string>;
-        gridTemplateColumns?: string | State<string>;
-        gridTemplateRows?: string | State<string>;
-        height?: string | State<string>;
-        hyphenateCharacter?: string | State<string>;
-        hyphens?: string | State<string>;
-        imageOrientation?: string | State<string>;
-        imageRendering?: string | State<string>;
-        inlineSize?: string | State<string>;
-        inset?: string | State<string>;
-        insetBlock?: string | State<string>;
-        insetBlockEnd?: string | State<string>;
-        insetBlockStart?: string | State<string>;
-        insetInline?: string | State<string>;
-        insetInlineEnd?: string | State<string>;
-        insetInlineStart?: string | State<string>;
-        isolation?: string | State<string>;
-        justifyContent?: string | State<string>;
-        justifyItems?: string | State<string>;
-        justifySelf?: string | State<string>;
-        left?: string | State<string>;
-        letterSpacing?: string | State<string>;
-        lightingColor?: string | State<string>;
-        lineBreak?: string | State<string>;
-        lineHeight?: string | State<string>;
-        listStyle?: string | State<string>;
-        listStyleImage?: string | State<string>;
-        listStylePosition?: string | State<string>;
-        listStyleType?: string | State<string>;
-        margin?: string | State<string>;
-        marginBlock?: string | State<string>;
-        marginBlockEnd?: string | State<string>;
-        marginBlockStart?: string | State<string>;
-        marginBottom?: string | State<string>;
-        marginInline?: string | State<string>;
-        marginInlineEnd?: string | State<string>;
-        marginInlineStart?: string | State<string>;
-        marginLeft?: string | State<string>;
-        marginRight?: string | State<string>;
-        marginTop?: string | State<string>;
-        marker?: string | State<string>;
-        markerEnd?: string | State<string>;
-        markerMid?: string | State<string>;
-        markerStart?: string | State<string>;
-        mask?: string | State<string>;
-        maskClip?: string | State<string>;
-        maskComposite?: string | State<string>;
-        maskImage?: string | State<string>;
-        maskMode?: string | State<string>;
-        maskOrigin?: string | State<string>;
-        maskPosition?: string | State<string>;
-        maskRepeat?: string | State<string>;
-        maskSize?: string | State<string>;
-        maskType?: string | State<string>;
-        mathDepth?: string | State<string>;
-        mathStyle?: string | State<string>;
-        maxBlockSize?: string | State<string>;
-        maxHeight?: string | State<string>;
-        maxInlineSize?: string | State<string>;
-        maxWidth?: string | State<string>;
-        minBlockSize?: string | State<string>;
-        minHeight?: string | State<string>;
-        minInlineSize?: string | State<string>;
-        minWidth?: string | State<string>;
-        mixBlendMode?: string | State<string>;
-        objectFit?: string | State<string>;
-        objectPosition?: string | State<string>;
-        offset?: string | State<string>;
-        offsetAnchor?: string | State<string>;
-        offsetDistance?: string | State<string>;
-        offsetPath?: string | State<string>;
-        offsetPosition?: string | State<string>;
-        offsetRotate?: string | State<string>;
-        opacity?: string | State<string>;
-        order?: string | State<string>;
-        orphans?: string | State<string>;
-        outline?: string | State<string>;
-        outlineColor?: string | State<string>;
-        outlineOffset?: string | State<string>;
-        outlineStyle?: string | State<string>;
-        outlineWidth?: string | State<string>;
-        overflow?: string | State<string>;
-        overflowAnchor?: string | State<string>;
-        overflowClipMargin?: string | State<string>;
-        overflowWrap?: string | State<string>;
-        overflowX?: string | State<string>;
-        overflowY?: string | State<string>;
-        overscrollBehavior?: string | State<string>;
-        overscrollBehaviorBlock?: string | State<string>;
-        overscrollBehaviorInline?: string | State<string>;
-        overscrollBehaviorX?: string | State<string>;
-        overscrollBehaviorY?: string | State<string>;
-        padding?: string | State<string>;
-        paddingBlock?: string | State<string>;
-        paddingBlockEnd?: string | State<string>;
-        paddingBlockStart?: string | State<string>;
-        paddingBottom?: string | State<string>;
-        paddingInline?: string | State<string>;
-        paddingInlineEnd?: string | State<string>;
-        paddingInlineStart?: string | State<string>;
-        paddingLeft?: string | State<string>;
-        paddingRight?: string | State<string>;
-        paddingTop?: string | State<string>;
-        page?: string | State<string>;
-        pageBreakAfter?: string | State<string>;
-        pageBreakBefore?: string | State<string>;
-        pageBreakInside?: string | State<string>;
-        paintOrder?: string | State<string>;
-        perspective?: string | State<string>;
-        perspectiveOrigin?: string | State<string>;
-        placeContent?: string | State<string>;
-        placeItems?: string | State<string>;
-        placeSelf?: string | State<string>;
-        pointerEvents?: string | State<string>;
-        position?: string | State<string>;
-        printColorAdjust?: string | State<string>;
-        quotes?: string | State<string>;
-        r?: string | State<string>;
-        resize?: string | State<string>;
-        right?: string | State<string>;
-        rotate?: string | State<string>;
-        rowGap?: string | State<string>;
-        rubyPosition?: string | State<string>;
-        rx?: string | State<string>;
-        ry?: string | State<string>;
-        scale?: string | State<string>;
-        scrollBehavior?: string | State<string>;
-        scrollMargin?: string | State<string>;
-        scrollMarginBlock?: string | State<string>;
-        scrollMarginBlockEnd?: string | State<string>;
-        scrollMarginBlockStart?: string | State<string>;
-        scrollMarginBottom?: string | State<string>;
-        scrollMarginInline?: string | State<string>;
-        scrollMarginInlineEnd?: string | State<string>;
-        scrollMarginInlineStart?: string | State<string>;
-        scrollMarginLeft?: string | State<string>;
-        scrollMarginRight?: string | State<string>;
-        scrollMarginTop?: string | State<string>;
-        scrollPadding?: string | State<string>;
-        scrollPaddingBlock?: string | State<string>;
-        scrollPaddingBlockEnd?: string | State<string>;
-        scrollPaddingBlockStart?: string | State<string>;
-        scrollPaddingBottom?: string | State<string>;
-        scrollPaddingInline?: string | State<string>;
-        scrollPaddingInlineEnd?: string | State<string>;
-        scrollPaddingInlineStart?: string | State<string>;
-        scrollPaddingLeft?: string | State<string>;
-        scrollPaddingRight?: string | State<string>;
-        scrollPaddingTop?: string | State<string>;
-        scrollSnapAlign?: string | State<string>;
-        scrollSnapStop?: string | State<string>;
-        scrollSnapType?: string | State<string>;
-        scrollbarColor?: string | State<string>;
-        scrollbarGutter?: string | State<string>;
-        scrollbarWidth?: string | State<string>;
-        shapeImageThreshold?: string | State<string>;
-        shapeMargin?: string | State<string>;
-        shapeOutside?: string | State<string>;
-        shapeRendering?: string | State<string>;
-        stopColor?: string | State<string>;
-        stopOpacity?: string | State<string>;
-        stroke?: string | State<string>;
-        strokeDasharray?: string | State<string>;
-        strokeDashoffset?: string | State<string>;
-        strokeLinecap?: string | State<string>;
-        strokeLinejoin?: string | State<string>;
-        strokeMiterlimit?: string | State<string>;
-        strokeOpacity?: string | State<string>;
-        strokeWidth?: string | State<string>;
-        tabSize?: string | State<string>;
-        tableLayout?: string | State<string>;
-        textAlign?: string | State<string>;
-        textAlignLast?: string | State<string>;
-        textAnchor?: string | State<string>;
-        textCombineUpright?: string | State<string>;
-        textDecoration?: string | State<string>;
-        textDecorationColor?: string | State<string>;
-        textDecorationLine?: string | State<string>;
-        textDecorationSkipInk?: string | State<string>;
-        textDecorationStyle?: string | State<string>;
-        textDecorationThickness?: string | State<string>;
-        textEmphasis?: string | State<string>;
-        textEmphasisColor?: string | State<string>;
-        textEmphasisPosition?: string | State<string>;
-        textEmphasisStyle?: string | State<string>;
-        textIndent?: string | State<string>;
-        textOrientation?: string | State<string>;
-        textOverflow?: string | State<string>;
-        textRendering?: string | State<string>;
-        textShadow?: string | State<string>;
-        textTransform?: string | State<string>;
-        textUnderlineOffset?: string | State<string>;
-        textUnderlinePosition?: string | State<string>;
-        textWrap?: string | State<string>;
-        top?: string | State<string>;
-        touchAction?: string | State<string>;
-        transform?: string | State<string>;
-        transformBox?: string | State<string>;
-        transformOrigin?: string | State<string>;
-        transformStyle?: string | State<string>;
-        transition?: string | State<string>;
-        transitionDelay?: string | State<string>;
-        transitionDuration?: string | State<string>;
-        transitionProperty?: string | State<string>;
-        transitionTimingFunction?: string | State<string>;
-        translate?: string | State<string>;
-        unicodeBidi?: string | State<string>;
-        userSelect?: string | State<string>;
-        vectorEffect?: string | State<string>;
-        verticalAlign?: string | State<string>;
-        visibility?: string | State<string>;
-        webkitAlignContent?: string | State<string>;
-        webkitAlignItems?: string | State<string>;
-        webkitAlignSelf?: string | State<string>;
-        webkitAnimation?: string | State<string>;
-        webkitAnimationDelay?: string | State<string>;
-        webkitAnimationDirection?: string | State<string>;
-        webkitAnimationDuration?: string | State<string>;
-        webkitAnimationFillMode?: string | State<string>;
-        webkitAnimationIterationCount?: string | State<string>;
-        webkitAnimationName?: string | State<string>;
-        webkitAnimationPlayState?: string | State<string>;
-        webkitAnimationTimingFunction?: string | State<string>;
-        webkitAppearance?: string | State<string>;
-        webkitBackfaceVisibility?: string | State<string>;
-        webkitBackgroundClip?: string | State<string>;
-        webkitBackgroundOrigin?: string | State<string>;
-        webkitBackgroundSize?: string | State<string>;
-        webkitBorderBottomLeftRadius?: string | State<string>;
-        webkitBorderBottomRightRadius?: string | State<string>;
-        webkitBorderRadius?: string | State<string>;
-        webkitBorderTopLeftRadius?: string | State<string>;
-        webkitBorderTopRightRadius?: string | State<string>;
-        webkitBoxAlign?: string | State<string>;
-        webkitBoxFlex?: string | State<string>;
-        webkitBoxOrdinalGroup?: string | State<string>;
-        webkitBoxOrient?: string | State<string>;
-        webkitBoxPack?: string | State<string>;
-        webkitBoxShadow?: string | State<string>;
-        webkitBoxSizing?: string | State<string>;
-        webkitFilter?: string | State<string>;
-        webkitFlex?: string | State<string>;
-        webkitFlexBasis?: string | State<string>;
-        webkitFlexDirection?: string | State<string>;
-        webkitFlexFlow?: string | State<string>;
-        webkitFlexGrow?: string | State<string>;
-        webkitFlexShrink?: string | State<string>;
-        webkitFlexWrap?: string | State<string>;
-        webkitJustifyContent?: string | State<string>;
-        webkitLineClamp?: string | State<string>;
-        webkitMask?: string | State<string>;
-        webkitMaskBoxImage?: string | State<string>;
-        webkitMaskBoxImageOutset?: string | State<string>;
-        webkitMaskBoxImageRepeat?: string | State<string>;
-        webkitMaskBoxImageSlice?: string | State<string>;
-        webkitMaskBoxImageSource?: string | State<string>;
-        webkitMaskBoxImageWidth?: string | State<string>;
-        webkitMaskClip?: string | State<string>;
-        webkitMaskComposite?: string | State<string>;
-        webkitMaskImage?: string | State<string>;
-        webkitMaskOrigin?: string | State<string>;
-        webkitMaskPosition?: string | State<string>;
-        webkitMaskRepeat?: string | State<string>;
-        webkitMaskSize?: string | State<string>;
-        webkitOrder?: string | State<string>;
-        webkitPerspective?: string | State<string>;
-        webkitPerspectiveOrigin?: string | State<string>;
-        webkitTextFillColor?: string | State<string>;
-        webkitTextSizeAdjust?: string | State<string>;
-        webkitTextStroke?: string | State<string>;
-        webkitTextStrokeColor?: string | State<string>;
-        webkitTextStrokeWidth?: string | State<string>;
-        webkitTransform?: string | State<string>;
-        webkitTransformOrigin?: string | State<string>;
-        webkitTransformStyle?: string | State<string>;
-        webkitTransition?: string | State<string>;
-        webkitTransitionDelay?: string | State<string>;
-        webkitTransitionDuration?: string | State<string>;
-        webkitTransitionProperty?: string | State<string>;
-        webkitTransitionTimingFunction?: string | State<string>;
-        webkitUserSelect?: string | State<string>;
-        whiteSpace?: string | State<string>;
-        widows?: string | State<string>;
-        width?: string | State<string>;
-        willChange?: string | State<string>;
-        wordBreak?: string | State<string>;
-        wordSpacing?: string | State<string>;
-        wordWrap?: string | State<string>;
-        writingMode?: string | State<string>;
-        x?: string | State<string>;
-        y?: string | State<string>;
-        zIndex?: string | State<string>;
+        accentColor?: string | undefined | State<string | undefined>;
+        alignContent?: string | undefined | State<string | undefined>;
+        alignItems?: string | undefined | State<string | undefined>;
+        alignSelf?: string | undefined | State<string | undefined>;
+        alignmentBaseline?: string | undefined | State<string | undefined>;
+        all?: string | undefined | State<string | undefined>;
+        animation?: string | undefined | State<string | undefined>;
+        animationComposition?: string | undefined | State<string | undefined>;
+        animationDelay?: string | undefined | State<string | undefined>;
+        animationDirection?: string | undefined | State<string | undefined>;
+        animationDuration?: string | undefined | State<string | undefined>;
+        animationFillMode?: string | undefined | State<string | undefined>;
+        animationIterationCount?: string | undefined | State<string | undefined>;
+        animationName?: string | undefined | State<string | undefined>;
+        animationPlayState?: string | undefined | State<string | undefined>;
+        animationTimingFunction?: string | undefined | State<string | undefined>;
+        appearance?: string | undefined | State<string | undefined>;
+        aspectRatio?: string | undefined | State<string | undefined>;
+        backdropFilter?: string | undefined | State<string | undefined>;
+        backfaceVisibility?: string | undefined | State<string | undefined>;
+        background?: string | undefined | State<string | undefined>;
+        backgroundAttachment?: string | undefined | State<string | undefined>;
+        backgroundBlendMode?: string | undefined | State<string | undefined>;
+        backgroundClip?: string | undefined | State<string | undefined>;
+        backgroundColor?: string | undefined | State<string | undefined>;
+        backgroundImage?: string | undefined | State<string | undefined>;
+        backgroundOrigin?: string | undefined | State<string | undefined>;
+        backgroundPosition?: string | undefined | State<string | undefined>;
+        backgroundPositionX?: string | undefined | State<string | undefined>;
+        backgroundPositionY?: string | undefined | State<string | undefined>;
+        backgroundRepeat?: string | undefined | State<string | undefined>;
+        backgroundSize?: string | undefined | State<string | undefined>;
+        baselineShift?: string | undefined | State<string | undefined>;
+        baselineSource?: string | undefined | State<string | undefined>;
+        blockSize?: string | undefined | State<string | undefined>;
+        border?: string | undefined | State<string | undefined>;
+        borderBlock?: string | undefined | State<string | undefined>;
+        borderBlockColor?: string | undefined | State<string | undefined>;
+        borderBlockEnd?: string | undefined | State<string | undefined>;
+        borderBlockEndColor?: string | undefined | State<string | undefined>;
+        borderBlockEndStyle?: string | undefined | State<string | undefined>;
+        borderBlockEndWidth?: string | undefined | State<string | undefined>;
+        borderBlockStart?: string | undefined | State<string | undefined>;
+        borderBlockStartColor?: string | undefined | State<string | undefined>;
+        borderBlockStartStyle?: string | undefined | State<string | undefined>;
+        borderBlockStartWidth?: string | undefined | State<string | undefined>;
+        borderBlockStyle?: string | undefined | State<string | undefined>;
+        borderBlockWidth?: string | undefined | State<string | undefined>;
+        borderBottom?: string | undefined | State<string | undefined>;
+        borderBottomColor?: string | undefined | State<string | undefined>;
+        borderBottomLeftRadius?: string | undefined | State<string | undefined>;
+        borderBottomRightRadius?: string | undefined | State<string | undefined>;
+        borderBottomStyle?: string | undefined | State<string | undefined>;
+        borderBottomWidth?: string | undefined | State<string | undefined>;
+        borderCollapse?: string | undefined | State<string | undefined>;
+        borderColor?: string | undefined | State<string | undefined>;
+        borderEndEndRadius?: string | undefined | State<string | undefined>;
+        borderEndStartRadius?: string | undefined | State<string | undefined>;
+        borderImage?: string | undefined | State<string | undefined>;
+        borderImageOutset?: string | undefined | State<string | undefined>;
+        borderImageRepeat?: string | undefined | State<string | undefined>;
+        borderImageSlice?: string | undefined | State<string | undefined>;
+        borderImageSource?: string | undefined | State<string | undefined>;
+        borderImageWidth?: string | undefined | State<string | undefined>;
+        borderInline?: string | undefined | State<string | undefined>;
+        borderInlineColor?: string | undefined | State<string | undefined>;
+        borderInlineEnd?: string | undefined | State<string | undefined>;
+        borderInlineEndColor?: string | undefined | State<string | undefined>;
+        borderInlineEndStyle?: string | undefined | State<string | undefined>;
+        borderInlineEndWidth?: string | undefined | State<string | undefined>;
+        borderInlineStart?: string | undefined | State<string | undefined>;
+        borderInlineStartColor?: string | undefined | State<string | undefined>;
+        borderInlineStartStyle?: string | undefined | State<string | undefined>;
+        borderInlineStartWidth?: string | undefined | State<string | undefined>;
+        borderInlineStyle?: string | undefined | State<string | undefined>;
+        borderInlineWidth?: string | undefined | State<string | undefined>;
+        borderLeft?: string | undefined | State<string | undefined>;
+        borderLeftColor?: string | undefined | State<string | undefined>;
+        borderLeftStyle?: string | undefined | State<string | undefined>;
+        borderLeftWidth?: string | undefined | State<string | undefined>;
+        borderRadius?: string | undefined | State<string | undefined>;
+        borderRight?: string | undefined | State<string | undefined>;
+        borderRightColor?: string | undefined | State<string | undefined>;
+        borderRightStyle?: string | undefined | State<string | undefined>;
+        borderRightWidth?: string | undefined | State<string | undefined>;
+        borderSpacing?: string | undefined | State<string | undefined>;
+        borderStartEndRadius?: string | undefined | State<string | undefined>;
+        borderStartStartRadius?: string | undefined | State<string | undefined>;
+        borderStyle?: string | undefined | State<string | undefined>;
+        borderTop?: string | undefined | State<string | undefined>;
+        borderTopColor?: string | undefined | State<string | undefined>;
+        borderTopLeftRadius?: string | undefined | State<string | undefined>;
+        borderTopRightRadius?: string | undefined | State<string | undefined>;
+        borderTopStyle?: string | undefined | State<string | undefined>;
+        borderTopWidth?: string | undefined | State<string | undefined>;
+        borderWidth?: string | undefined | State<string | undefined>;
+        bottom?: string | undefined | State<string | undefined>;
+        boxShadow?: string | undefined | State<string | undefined>;
+        boxSizing?: string | undefined | State<string | undefined>;
+        breakAfter?: string | undefined | State<string | undefined>;
+        breakBefore?: string | undefined | State<string | undefined>;
+        breakInside?: string | undefined | State<string | undefined>;
+        captionSide?: string | undefined | State<string | undefined>;
+        caretColor?: string | undefined | State<string | undefined>;
+        clear?: string | undefined | State<string | undefined>;
+        clip?: string | undefined | State<string | undefined>;
+        clipPath?: string | undefined | State<string | undefined>;
+        clipRule?: string | undefined | State<string | undefined>;
+        color?: string | undefined | State<string | undefined>;
+        colorInterpolation?: string | undefined | State<string | undefined>;
+        colorInterpolationFilters?: string | undefined | State<string | undefined>;
+        colorScheme?: string | undefined | State<string | undefined>;
+        columnCount?: string | undefined | State<string | undefined>;
+        columnFill?: string | undefined | State<string | undefined>;
+        columnGap?: string | undefined | State<string | undefined>;
+        columnRule?: string | undefined | State<string | undefined>;
+        columnRuleColor?: string | undefined | State<string | undefined>;
+        columnRuleStyle?: string | undefined | State<string | undefined>;
+        columnRuleWidth?: string | undefined | State<string | undefined>;
+        columnSpan?: string | undefined | State<string | undefined>;
+        columnWidth?: string | undefined | State<string | undefined>;
+        columns?: string | undefined | State<string | undefined>;
+        contain?: string | undefined | State<string | undefined>;
+        containIntrinsicBlockSize?: string | undefined | State<string | undefined>;
+        containIntrinsicHeight?: string | undefined | State<string | undefined>;
+        containIntrinsicInlineSize?: string | undefined | State<string | undefined>;
+        containIntrinsicSize?: string | undefined | State<string | undefined>;
+        containIntrinsicWidth?: string | undefined | State<string | undefined>;
+        container?: string | undefined | State<string | undefined>;
+        containerName?: string | undefined | State<string | undefined>;
+        containerType?: string | undefined | State<string | undefined>;
+        content?: string | undefined | State<string | undefined>;
+        counterIncrement?: string | undefined | State<string | undefined>;
+        counterReset?: string | undefined | State<string | undefined>;
+        counterSet?: string | undefined | State<string | undefined>;
+        cssFloat?: string | undefined | State<string | undefined>;
+        cssText?: string | undefined | State<string | undefined>;
+        cursor?: string | undefined | State<string | undefined>;
+        cx?: string | undefined | State<string | undefined>;
+        cy?: string | undefined | State<string | undefined>;
+        d?: string | undefined | State<string | undefined>;
+        direction?: string | undefined | State<string | undefined>;
+        display?: string | undefined | State<string | undefined>;
+        dominantBaseline?: string | undefined | State<string | undefined>;
+        emptyCells?: string | undefined | State<string | undefined>;
+        fill?: string | undefined | State<string | undefined>;
+        fillOpacity?: string | undefined | State<string | undefined>;
+        fillRule?: string | undefined | State<string | undefined>;
+        filter?: string | undefined | State<string | undefined>;
+        flex?: string | undefined | State<string | undefined>;
+        flexBasis?: string | undefined | State<string | undefined>;
+        flexDirection?: string | undefined | State<string | undefined>;
+        flexFlow?: string | undefined | State<string | undefined>;
+        flexGrow?: string | undefined | State<string | undefined>;
+        flexShrink?: string | undefined | State<string | undefined>;
+        flexWrap?: string | undefined | State<string | undefined>;
+        float?: string | undefined | State<string | undefined>;
+        floodColor?: string | undefined | State<string | undefined>;
+        floodOpacity?: string | undefined | State<string | undefined>;
+        font?: string | undefined | State<string | undefined>;
+        fontFamily?: string | undefined | State<string | undefined>;
+        fontFeatureSettings?: string | undefined | State<string | undefined>;
+        fontKerning?: string | undefined | State<string | undefined>;
+        fontOpticalSizing?: string | undefined | State<string | undefined>;
+        fontPalette?: string | undefined | State<string | undefined>;
+        fontSize?: string | undefined | State<string | undefined>;
+        fontSizeAdjust?: string | undefined | State<string | undefined>;
+        fontStretch?: string | undefined | State<string | undefined>;
+        fontStyle?: string | undefined | State<string | undefined>;
+        fontSynthesis?: string | undefined | State<string | undefined>;
+        fontSynthesisSmallCaps?: string | undefined | State<string | undefined>;
+        fontSynthesisStyle?: string | undefined | State<string | undefined>;
+        fontSynthesisWeight?: string | undefined | State<string | undefined>;
+        fontVariant?: string | undefined | State<string | undefined>;
+        fontVariantAlternates?: string | undefined | State<string | undefined>;
+        fontVariantCaps?: string | undefined | State<string | undefined>;
+        fontVariantEastAsian?: string | undefined | State<string | undefined>;
+        fontVariantLigatures?: string | undefined | State<string | undefined>;
+        fontVariantNumeric?: string | undefined | State<string | undefined>;
+        fontVariantPosition?: string | undefined | State<string | undefined>;
+        fontVariationSettings?: string | undefined | State<string | undefined>;
+        fontWeight?: string | undefined | State<string | undefined>;
+        forcedColorAdjust?: string | undefined | State<string | undefined>;
+        gap?: string | undefined | State<string | undefined>;
+        grid?: string | undefined | State<string | undefined>;
+        gridArea?: string | undefined | State<string | undefined>;
+        gridAutoColumns?: string | undefined | State<string | undefined>;
+        gridAutoFlow?: string | undefined | State<string | undefined>;
+        gridAutoRows?: string | undefined | State<string | undefined>;
+        gridColumn?: string | undefined | State<string | undefined>;
+        gridColumnEnd?: string | undefined | State<string | undefined>;
+        gridColumnGap?: string | undefined | State<string | undefined>;
+        gridColumnStart?: string | undefined | State<string | undefined>;
+        gridGap?: string | undefined | State<string | undefined>;
+        gridRow?: string | undefined | State<string | undefined>;
+        gridRowEnd?: string | undefined | State<string | undefined>;
+        gridRowGap?: string | undefined | State<string | undefined>;
+        gridRowStart?: string | undefined | State<string | undefined>;
+        gridTemplate?: string | undefined | State<string | undefined>;
+        gridTemplateAreas?: string | undefined | State<string | undefined>;
+        gridTemplateColumns?: string | undefined | State<string | undefined>;
+        gridTemplateRows?: string | undefined | State<string | undefined>;
+        height?: string | undefined | State<string | undefined>;
+        hyphenateCharacter?: string | undefined | State<string | undefined>;
+        hyphens?: string | undefined | State<string | undefined>;
+        imageOrientation?: string | undefined | State<string | undefined>;
+        imageRendering?: string | undefined | State<string | undefined>;
+        inlineSize?: string | undefined | State<string | undefined>;
+        inset?: string | undefined | State<string | undefined>;
+        insetBlock?: string | undefined | State<string | undefined>;
+        insetBlockEnd?: string | undefined | State<string | undefined>;
+        insetBlockStart?: string | undefined | State<string | undefined>;
+        insetInline?: string | undefined | State<string | undefined>;
+        insetInlineEnd?: string | undefined | State<string | undefined>;
+        insetInlineStart?: string | undefined | State<string | undefined>;
+        isolation?: string | undefined | State<string | undefined>;
+        justifyContent?: string | undefined | State<string | undefined>;
+        justifyItems?: string | undefined | State<string | undefined>;
+        justifySelf?: string | undefined | State<string | undefined>;
+        left?: string | undefined | State<string | undefined>;
+        letterSpacing?: string | undefined | State<string | undefined>;
+        lightingColor?: string | undefined | State<string | undefined>;
+        lineBreak?: string | undefined | State<string | undefined>;
+        lineHeight?: string | undefined | State<string | undefined>;
+        listStyle?: string | undefined | State<string | undefined>;
+        listStyleImage?: string | undefined | State<string | undefined>;
+        listStylePosition?: string | undefined | State<string | undefined>;
+        listStyleType?: string | undefined | State<string | undefined>;
+        margin?: string | undefined | State<string | undefined>;
+        marginBlock?: string | undefined | State<string | undefined>;
+        marginBlockEnd?: string | undefined | State<string | undefined>;
+        marginBlockStart?: string | undefined | State<string | undefined>;
+        marginBottom?: string | undefined | State<string | undefined>;
+        marginInline?: string | undefined | State<string | undefined>;
+        marginInlineEnd?: string | undefined | State<string | undefined>;
+        marginInlineStart?: string | undefined | State<string | undefined>;
+        marginLeft?: string | undefined | State<string | undefined>;
+        marginRight?: string | undefined | State<string | undefined>;
+        marginTop?: string | undefined | State<string | undefined>;
+        marker?: string | undefined | State<string | undefined>;
+        markerEnd?: string | undefined | State<string | undefined>;
+        markerMid?: string | undefined | State<string | undefined>;
+        markerStart?: string | undefined | State<string | undefined>;
+        mask?: string | undefined | State<string | undefined>;
+        maskClip?: string | undefined | State<string | undefined>;
+        maskComposite?: string | undefined | State<string | undefined>;
+        maskImage?: string | undefined | State<string | undefined>;
+        maskMode?: string | undefined | State<string | undefined>;
+        maskOrigin?: string | undefined | State<string | undefined>;
+        maskPosition?: string | undefined | State<string | undefined>;
+        maskRepeat?: string | undefined | State<string | undefined>;
+        maskSize?: string | undefined | State<string | undefined>;
+        maskType?: string | undefined | State<string | undefined>;
+        mathDepth?: string | undefined | State<string | undefined>;
+        mathStyle?: string | undefined | State<string | undefined>;
+        maxBlockSize?: string | undefined | State<string | undefined>;
+        maxHeight?: string | undefined | State<string | undefined>;
+        maxInlineSize?: string | undefined | State<string | undefined>;
+        maxWidth?: string | undefined | State<string | undefined>;
+        minBlockSize?: string | undefined | State<string | undefined>;
+        minHeight?: string | undefined | State<string | undefined>;
+        minInlineSize?: string | undefined | State<string | undefined>;
+        minWidth?: string | undefined | State<string | undefined>;
+        mixBlendMode?: string | undefined | State<string | undefined>;
+        objectFit?: string | undefined | State<string | undefined>;
+        objectPosition?: string | undefined | State<string | undefined>;
+        offset?: string | undefined | State<string | undefined>;
+        offsetAnchor?: string | undefined | State<string | undefined>;
+        offsetDistance?: string | undefined | State<string | undefined>;
+        offsetPath?: string | undefined | State<string | undefined>;
+        offsetPosition?: string | undefined | State<string | undefined>;
+        offsetRotate?: string | undefined | State<string | undefined>;
+        opacity?: string | undefined | State<string | undefined>;
+        order?: string | undefined | State<string | undefined>;
+        orphans?: string | undefined | State<string | undefined>;
+        outline?: string | undefined | State<string | undefined>;
+        outlineColor?: string | undefined | State<string | undefined>;
+        outlineOffset?: string | undefined | State<string | undefined>;
+        outlineStyle?: string | undefined | State<string | undefined>;
+        outlineWidth?: string | undefined | State<string | undefined>;
+        overflow?: string | undefined | State<string | undefined>;
+        overflowAnchor?: string | undefined | State<string | undefined>;
+        overflowClipMargin?: string | undefined | State<string | undefined>;
+        overflowWrap?: string | undefined | State<string | undefined>;
+        overflowX?: string | undefined | State<string | undefined>;
+        overflowY?: string | undefined | State<string | undefined>;
+        overscrollBehavior?: string | undefined | State<string | undefined>;
+        overscrollBehaviorBlock?: string | undefined | State<string | undefined>;
+        overscrollBehaviorInline?: string | undefined | State<string | undefined>;
+        overscrollBehaviorX?: string | undefined | State<string | undefined>;
+        overscrollBehaviorY?: string | undefined | State<string | undefined>;
+        padding?: string | undefined | State<string | undefined>;
+        paddingBlock?: string | undefined | State<string | undefined>;
+        paddingBlockEnd?: string | undefined | State<string | undefined>;
+        paddingBlockStart?: string | undefined | State<string | undefined>;
+        paddingBottom?: string | undefined | State<string | undefined>;
+        paddingInline?: string | undefined | State<string | undefined>;
+        paddingInlineEnd?: string | undefined | State<string | undefined>;
+        paddingInlineStart?: string | undefined | State<string | undefined>;
+        paddingLeft?: string | undefined | State<string | undefined>;
+        paddingRight?: string | undefined | State<string | undefined>;
+        paddingTop?: string | undefined | State<string | undefined>;
+        page?: string | undefined | State<string | undefined>;
+        pageBreakAfter?: string | undefined | State<string | undefined>;
+        pageBreakBefore?: string | undefined | State<string | undefined>;
+        pageBreakInside?: string | undefined | State<string | undefined>;
+        paintOrder?: string | undefined | State<string | undefined>;
+        perspective?: string | undefined | State<string | undefined>;
+        perspectiveOrigin?: string | undefined | State<string | undefined>;
+        placeContent?: string | undefined | State<string | undefined>;
+        placeItems?: string | undefined | State<string | undefined>;
+        placeSelf?: string | undefined | State<string | undefined>;
+        pointerEvents?: string | undefined | State<string | undefined>;
+        position?: string | undefined | State<string | undefined>;
+        printColorAdjust?: string | undefined | State<string | undefined>;
+        quotes?: string | undefined | State<string | undefined>;
+        r?: string | undefined | State<string | undefined>;
+        resize?: string | undefined | State<string | undefined>;
+        right?: string | undefined | State<string | undefined>;
+        rotate?: string | undefined | State<string | undefined>;
+        rowGap?: string | undefined | State<string | undefined>;
+        rubyPosition?: string | undefined | State<string | undefined>;
+        rx?: string | undefined | State<string | undefined>;
+        ry?: string | undefined | State<string | undefined>;
+        scale?: string | undefined | State<string | undefined>;
+        scrollBehavior?: string | undefined | State<string | undefined>;
+        scrollMargin?: string | undefined | State<string | undefined>;
+        scrollMarginBlock?: string | undefined | State<string | undefined>;
+        scrollMarginBlockEnd?: string | undefined | State<string | undefined>;
+        scrollMarginBlockStart?: string | undefined | State<string | undefined>;
+        scrollMarginBottom?: string | undefined | State<string | undefined>;
+        scrollMarginInline?: string | undefined | State<string | undefined>;
+        scrollMarginInlineEnd?: string | undefined | State<string | undefined>;
+        scrollMarginInlineStart?: string | undefined | State<string | undefined>;
+        scrollMarginLeft?: string | undefined | State<string | undefined>;
+        scrollMarginRight?: string | undefined | State<string | undefined>;
+        scrollMarginTop?: string | undefined | State<string | undefined>;
+        scrollPadding?: string | undefined | State<string | undefined>;
+        scrollPaddingBlock?: string | undefined | State<string | undefined>;
+        scrollPaddingBlockEnd?: string | undefined | State<string | undefined>;
+        scrollPaddingBlockStart?: string | undefined | State<string | undefined>;
+        scrollPaddingBottom?: string | undefined | State<string | undefined>;
+        scrollPaddingInline?: string | undefined | State<string | undefined>;
+        scrollPaddingInlineEnd?: string | undefined | State<string | undefined>;
+        scrollPaddingInlineStart?: string | undefined | State<string | undefined>;
+        scrollPaddingLeft?: string | undefined | State<string | undefined>;
+        scrollPaddingRight?: string | undefined | State<string | undefined>;
+        scrollPaddingTop?: string | undefined | State<string | undefined>;
+        scrollSnapAlign?: string | undefined | State<string | undefined>;
+        scrollSnapStop?: string | undefined | State<string | undefined>;
+        scrollSnapType?: string | undefined | State<string | undefined>;
+        scrollbarColor?: string | undefined | State<string | undefined>;
+        scrollbarGutter?: string | undefined | State<string | undefined>;
+        scrollbarWidth?: string | undefined | State<string | undefined>;
+        shapeImageThreshold?: string | undefined | State<string | undefined>;
+        shapeMargin?: string | undefined | State<string | undefined>;
+        shapeOutside?: string | undefined | State<string | undefined>;
+        shapeRendering?: string | undefined | State<string | undefined>;
+        stopColor?: string | undefined | State<string | undefined>;
+        stopOpacity?: string | undefined | State<string | undefined>;
+        stroke?: string | undefined | State<string | undefined>;
+        strokeDasharray?: string | undefined | State<string | undefined>;
+        strokeDashoffset?: string | undefined | State<string | undefined>;
+        strokeLinecap?: string | undefined | State<string | undefined>;
+        strokeLinejoin?: string | undefined | State<string | undefined>;
+        strokeMiterlimit?: string | undefined | State<string | undefined>;
+        strokeOpacity?: string | undefined | State<string | undefined>;
+        strokeWidth?: string | undefined | State<string | undefined>;
+        tabSize?: string | undefined | State<string | undefined>;
+        tableLayout?: string | undefined | State<string | undefined>;
+        textAlign?: string | undefined | State<string | undefined>;
+        textAlignLast?: string | undefined | State<string | undefined>;
+        textAnchor?: string | undefined | State<string | undefined>;
+        textCombineUpright?: string | undefined | State<string | undefined>;
+        textDecoration?: string | undefined | State<string | undefined>;
+        textDecorationColor?: string | undefined | State<string | undefined>;
+        textDecorationLine?: string | undefined | State<string | undefined>;
+        textDecorationSkipInk?: string | undefined | State<string | undefined>;
+        textDecorationStyle?: string | undefined | State<string | undefined>;
+        textDecorationThickness?: string | undefined | State<string | undefined>;
+        textEmphasis?: string | undefined | State<string | undefined>;
+        textEmphasisColor?: string | undefined | State<string | undefined>;
+        textEmphasisPosition?: string | undefined | State<string | undefined>;
+        textEmphasisStyle?: string | undefined | State<string | undefined>;
+        textIndent?: string | undefined | State<string | undefined>;
+        textOrientation?: string | undefined | State<string | undefined>;
+        textOverflow?: string | undefined | State<string | undefined>;
+        textRendering?: string | undefined | State<string | undefined>;
+        textShadow?: string | undefined | State<string | undefined>;
+        textTransform?: string | undefined | State<string | undefined>;
+        textUnderlineOffset?: string | undefined | State<string | undefined>;
+        textUnderlinePosition?: string | undefined | State<string | undefined>;
+        textWrap?: string | undefined | State<string | undefined>;
+        top?: string | undefined | State<string | undefined>;
+        touchAction?: string | undefined | State<string | undefined>;
+        transform?: string | undefined | State<string | undefined>;
+        transformBox?: string | undefined | State<string | undefined>;
+        transformOrigin?: string | undefined | State<string | undefined>;
+        transformStyle?: string | undefined | State<string | undefined>;
+        transition?: string | undefined | State<string | undefined>;
+        transitionDelay?: string | undefined | State<string | undefined>;
+        transitionDuration?: string | undefined | State<string | undefined>;
+        transitionProperty?: string | undefined | State<string | undefined>;
+        transitionTimingFunction?: string | undefined | State<string | undefined>;
+        translate?: string | undefined | State<string | undefined>;
+        unicodeBidi?: string | undefined | State<string | undefined>;
+        userSelect?: string | undefined | State<string | undefined>;
+        vectorEffect?: string | undefined | State<string | undefined>;
+        verticalAlign?: string | undefined | State<string | undefined>;
+        visibility?: string | undefined | State<string | undefined>;
+        webkitAlignContent?: string | undefined | State<string | undefined>;
+        webkitAlignItems?: string | undefined | State<string | undefined>;
+        webkitAlignSelf?: string | undefined | State<string | undefined>;
+        webkitAnimation?: string | undefined | State<string | undefined>;
+        webkitAnimationDelay?: string | undefined | State<string | undefined>;
+        webkitAnimationDirection?: string | undefined | State<string | undefined>;
+        webkitAnimationDuration?: string | undefined | State<string | undefined>;
+        webkitAnimationFillMode?: string | undefined | State<string | undefined>;
+        webkitAnimationIterationCount?: string | undefined | State<string | undefined>;
+        webkitAnimationName?: string | undefined | State<string | undefined>;
+        webkitAnimationPlayState?: string | undefined | State<string | undefined>;
+        webkitAnimationTimingFunction?: string | undefined | State<string | undefined>;
+        webkitAppearance?: string | undefined | State<string | undefined>;
+        webkitBackfaceVisibility?: string | undefined | State<string | undefined>;
+        webkitBackgroundClip?: string | undefined | State<string | undefined>;
+        webkitBackgroundOrigin?: string | undefined | State<string | undefined>;
+        webkitBackgroundSize?: string | undefined | State<string | undefined>;
+        webkitBorderBottomLeftRadius?: string | undefined | State<string | undefined>;
+        webkitBorderBottomRightRadius?: string | undefined | State<string | undefined>;
+        webkitBorderRadius?: string | undefined | State<string | undefined>;
+        webkitBorderTopLeftRadius?: string | undefined | State<string | undefined>;
+        webkitBorderTopRightRadius?: string | undefined | State<string | undefined>;
+        webkitBoxAlign?: string | undefined | State<string | undefined>;
+        webkitBoxFlex?: string | undefined | State<string | undefined>;
+        webkitBoxOrdinalGroup?: string | undefined | State<string | undefined>;
+        webkitBoxOrient?: string | undefined | State<string | undefined>;
+        webkitBoxPack?: string | undefined | State<string | undefined>;
+        webkitBoxShadow?: string | undefined | State<string | undefined>;
+        webkitBoxSizing?: string | undefined | State<string | undefined>;
+        webkitFilter?: string | undefined | State<string | undefined>;
+        webkitFlex?: string | undefined | State<string | undefined>;
+        webkitFlexBasis?: string | undefined | State<string | undefined>;
+        webkitFlexDirection?: string | undefined | State<string | undefined>;
+        webkitFlexFlow?: string | undefined | State<string | undefined>;
+        webkitFlexGrow?: string | undefined | State<string | undefined>;
+        webkitFlexShrink?: string | undefined | State<string | undefined>;
+        webkitFlexWrap?: string | undefined | State<string | undefined>;
+        webkitJustifyContent?: string | undefined | State<string | undefined>;
+        webkitLineClamp?: string | undefined | State<string | undefined>;
+        webkitMask?: string | undefined | State<string | undefined>;
+        webkitMaskBoxImage?: string | undefined | State<string | undefined>;
+        webkitMaskBoxImageOutset?: string | undefined | State<string | undefined>;
+        webkitMaskBoxImageRepeat?: string | undefined | State<string | undefined>;
+        webkitMaskBoxImageSlice?: string | undefined | State<string | undefined>;
+        webkitMaskBoxImageSource?: string | undefined | State<string | undefined>;
+        webkitMaskBoxImageWidth?: string | undefined | State<string | undefined>;
+        webkitMaskClip?: string | undefined | State<string | undefined>;
+        webkitMaskComposite?: string | undefined | State<string | undefined>;
+        webkitMaskImage?: string | undefined | State<string | undefined>;
+        webkitMaskOrigin?: string | undefined | State<string | undefined>;
+        webkitMaskPosition?: string | undefined | State<string | undefined>;
+        webkitMaskRepeat?: string | undefined | State<string | undefined>;
+        webkitMaskSize?: string | undefined | State<string | undefined>;
+        webkitOrder?: string | undefined | State<string | undefined>;
+        webkitPerspective?: string | undefined | State<string | undefined>;
+        webkitPerspectiveOrigin?: string | undefined | State<string | undefined>;
+        webkitTextFillColor?: string | undefined | State<string | undefined>;
+        webkitTextSizeAdjust?: string | undefined | State<string | undefined>;
+        webkitTextStroke?: string | undefined | State<string | undefined>;
+        webkitTextStrokeColor?: string | undefined | State<string | undefined>;
+        webkitTextStrokeWidth?: string | undefined | State<string | undefined>;
+        webkitTransform?: string | undefined | State<string | undefined>;
+        webkitTransformOrigin?: string | undefined | State<string | undefined>;
+        webkitTransformStyle?: string | undefined | State<string | undefined>;
+        webkitTransition?: string | undefined | State<string | undefined>;
+        webkitTransitionDelay?: string | undefined | State<string | undefined>;
+        webkitTransitionDuration?: string | undefined | State<string | undefined>;
+        webkitTransitionProperty?: string | undefined | State<string | undefined>;
+        webkitTransitionTimingFunction?: string | undefined | State<string | undefined>;
+        webkitUserSelect?: string | undefined | State<string | undefined>;
+        whiteSpace?: string | undefined | State<string | undefined>;
+        widows?: string | undefined | State<string | undefined>;
+        width?: string | undefined | State<string | undefined>;
+        willChange?: string | undefined | State<string | undefined>;
+        wordBreak?: string | undefined | State<string | undefined>;
+        wordSpacing?: string | undefined | State<string | undefined>;
+        wordWrap?: string | undefined | State<string | undefined>;
+        writingMode?: string | undefined | State<string | undefined>;
+        x?: string | undefined | State<string | undefined>;
+        y?: string | undefined | State<string | undefined>;
+        zIndex?: string | undefined | State<string | undefined>;
     }
 
     interface ElementContentEditable {
-        contentEditable?: string | State<string>;
-        enterKeyHint?: string | State<string>;
-        inputMode?: string | State<string>;
+        contentEditable?: string | undefined | State<string | undefined>;
+        enterKeyHint?: string | undefined | State<string | undefined>;
+        inputMode?: string | undefined | State<string | undefined>;
     }
 
     interface GlobalEventHandlers {
-        onabort?: ((this: GlobalEventHandlers, ev: UIEvent) => any) | null | State<((this: GlobalEventHandlers, ev: UIEvent) => any) | null>;
-        onanimationcancel?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null>;
-        onanimationend?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null>;
-        onanimationiteration?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null>;
-        onanimationstart?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null>;
-        onauxclick?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onbeforeinput?: ((this: GlobalEventHandlers, ev: InputEvent) => any) | null | State<((this: GlobalEventHandlers, ev: InputEvent) => any) | null>;
-        onbeforetoggle?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onblur?: ((this: GlobalEventHandlers, ev: FocusEvent) => any) | null | State<((this: GlobalEventHandlers, ev: FocusEvent) => any) | null>;
-        oncancel?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        oncanplay?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        oncanplaythrough?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onclick?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onclose?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        oncontextmenu?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        oncopy?: ((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | State<((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null>;
-        oncuechange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        oncut?: ((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | State<((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null>;
-        ondblclick?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        ondrag?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondragend?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondragenter?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondragleave?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondragover?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondragstart?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondrop?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null>;
-        ondurationchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onemptied?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onended?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onerror?: OnErrorEventHandler | State<OnErrorEventHandler>;
-        onfocus?: ((this: GlobalEventHandlers, ev: FocusEvent) => any) | null | State<((this: GlobalEventHandlers, ev: FocusEvent) => any) | null>;
-        onformdata?: ((this: GlobalEventHandlers, ev: FormDataEvent) => any) | null | State<((this: GlobalEventHandlers, ev: FormDataEvent) => any) | null>;
-        ongotpointercapture?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        oninput?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        oninvalid?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onkeydown?: ((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | State<((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null>;
-        onkeypress?: ((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | State<((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null>;
-        onkeyup?: ((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | State<((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null>;
-        onload?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onloadeddata?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onloadedmetadata?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onloadstart?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onlostpointercapture?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onmousedown?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onmouseenter?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onmouseleave?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onmousemove?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onmouseout?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onmouseover?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onmouseup?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null>;
-        onpaste?: ((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | State<((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null>;
-        onpause?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onplay?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onplaying?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onpointercancel?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointerdown?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointerenter?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointerleave?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointermove?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointerout?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointerover?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onpointerup?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null>;
-        onprogress?: ((this: GlobalEventHandlers, ev: ProgressEvent) => any) | null | State<((this: GlobalEventHandlers, ev: ProgressEvent) => any) | null>;
-        onratechange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onreset?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onresize?: ((this: GlobalEventHandlers, ev: UIEvent) => any) | null | State<((this: GlobalEventHandlers, ev: UIEvent) => any) | null>;
-        onscroll?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onscrollend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onsecuritypolicyviolation?: ((this: GlobalEventHandlers, ev: SecurityPolicyViolationEvent) => any) | null | State<((this: GlobalEventHandlers, ev: SecurityPolicyViolationEvent) => any) | null>;
-        onseeked?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onseeking?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onselect?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onselectionchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onselectstart?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onslotchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onstalled?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onsubmit?: ((this: GlobalEventHandlers, ev: SubmitEvent) => any) | null | State<((this: GlobalEventHandlers, ev: SubmitEvent) => any) | null>;
-        onsuspend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        ontimeupdate?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        ontoggle?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
+        onabort?: ((this: GlobalEventHandlers, ev: UIEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: UIEvent) => any) | null | undefined>;
+        onanimationcancel?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined>;
+        onanimationend?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined>;
+        onanimationiteration?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined>;
+        onanimationstart?: ((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: AnimationEvent) => any) | null | undefined>;
+        onauxclick?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onbeforeinput?: ((this: GlobalEventHandlers, ev: InputEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: InputEvent) => any) | null | undefined>;
+        onbeforetoggle?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onblur?: ((this: GlobalEventHandlers, ev: FocusEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: FocusEvent) => any) | null | undefined>;
+        oncancel?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        oncanplay?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        oncanplaythrough?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onclick?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onclose?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        oncontextmenu?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        oncopy?: ((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | undefined>;
+        oncuechange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        oncut?: ((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | undefined>;
+        ondblclick?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        ondrag?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondragend?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondragenter?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondragleave?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondragover?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondragstart?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondrop?: ((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: DragEvent) => any) | null | undefined>;
+        ondurationchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onemptied?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onended?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onerror?: OnErrorEventHandler | undefined | State<OnErrorEventHandler | undefined>;
+        onfocus?: ((this: GlobalEventHandlers, ev: FocusEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: FocusEvent) => any) | null | undefined>;
+        onformdata?: ((this: GlobalEventHandlers, ev: FormDataEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: FormDataEvent) => any) | null | undefined>;
+        ongotpointercapture?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        oninput?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        oninvalid?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onkeydown?: ((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | undefined>;
+        onkeypress?: ((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | undefined>;
+        onkeyup?: ((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: KeyboardEvent) => any) | null | undefined>;
+        onload?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onloadeddata?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onloadedmetadata?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onloadstart?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onlostpointercapture?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onmousedown?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onmouseenter?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onmouseleave?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onmousemove?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onmouseout?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onmouseover?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onmouseup?: ((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: MouseEvent) => any) | null | undefined>;
+        onpaste?: ((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: ClipboardEvent) => any) | null | undefined>;
+        onpause?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onplay?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onplaying?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onpointercancel?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointerdown?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointerenter?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointerleave?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointermove?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointerout?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointerover?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onpointerup?: ((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: PointerEvent) => any) | null | undefined>;
+        onprogress?: ((this: GlobalEventHandlers, ev: ProgressEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: ProgressEvent) => any) | null | undefined>;
+        onratechange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onreset?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onresize?: ((this: GlobalEventHandlers, ev: UIEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: UIEvent) => any) | null | undefined>;
+        onscroll?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onscrollend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onsecuritypolicyviolation?: ((this: GlobalEventHandlers, ev: SecurityPolicyViolationEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: SecurityPolicyViolationEvent) => any) | null | undefined>;
+        onseeked?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onseeking?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onselect?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onselectionchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onselectstart?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onslotchange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onstalled?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onsubmit?: ((this: GlobalEventHandlers, ev: SubmitEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: SubmitEvent) => any) | null | undefined>;
+        onsuspend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        ontimeupdate?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        ontoggle?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
         ontouchcancel?: ((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined>;
         ontouchend?: ((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined>;
         ontouchmove?: ((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined>;
         ontouchstart?: ((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TouchEvent) => any) | null | undefined>;
-        ontransitioncancel?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null>;
-        ontransitionend?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null>;
-        ontransitionrun?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null>;
-        ontransitionstart?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null>;
-        onvolumechange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onwaiting?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onwebkitanimationend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onwebkitanimationiteration?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onwebkitanimationstart?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onwebkittransitionend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | State<((this: GlobalEventHandlers, ev: Event) => any) | null>;
-        onwheel?: ((this: GlobalEventHandlers, ev: WheelEvent) => any) | null | State<((this: GlobalEventHandlers, ev: WheelEvent) => any) | null>;
+        ontransitioncancel?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined>;
+        ontransitionend?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined>;
+        ontransitionrun?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined>;
+        ontransitionstart?: ((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: TransitionEvent) => any) | null | undefined>;
+        onvolumechange?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onwaiting?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onwebkitanimationend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onwebkitanimationiteration?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onwebkitanimationstart?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onwebkittransitionend?: ((this: GlobalEventHandlers, ev: Event) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: Event) => any) | null | undefined>;
+        onwheel?: ((this: GlobalEventHandlers, ev: WheelEvent) => any) | null | undefined | State<((this: GlobalEventHandlers, ev: WheelEvent) => any) | null | undefined>;
     }
 
     interface HTMLHyperlinkElementUtils {
-        hash?: string | State<string>;
-        host?: string | State<string>;
-        hostname?: string | State<string>;
-        href?: string | State<string>;
-        password?: string | State<string>;
-        pathname?: string | State<string>;
-        port?: string | State<string>;
-        protocol?: string | State<string>;
-        search?: string | State<string>;
-        username?: string | State<string>;
+        hash?: string | undefined | State<string | undefined>;
+        host?: string | undefined | State<string | undefined>;
+        hostname?: string | undefined | State<string | undefined>;
+        href?: string | undefined | State<string | undefined>;
+        password?: string | undefined | State<string | undefined>;
+        pathname?: string | undefined | State<string | undefined>;
+        port?: string | undefined | State<string | undefined>;
+        protocol?: string | undefined | State<string | undefined>;
+        search?: string | undefined | State<string | undefined>;
+        username?: string | undefined | State<string | undefined>;
     }
 
     interface WindowEventHandlers {
-        onafterprint?: ((this: WindowEventHandlers, ev: Event) => any) | null | State<((this: WindowEventHandlers, ev: Event) => any) | null>;
-        onbeforeprint?: ((this: WindowEventHandlers, ev: Event) => any) | null | State<((this: WindowEventHandlers, ev: Event) => any) | null>;
-        onbeforeunload?: ((this: WindowEventHandlers, ev: BeforeUnloadEvent) => any) | null | State<((this: WindowEventHandlers, ev: BeforeUnloadEvent) => any) | null>;
-        ongamepadconnected?: ((this: WindowEventHandlers, ev: GamepadEvent) => any) | null | State<((this: WindowEventHandlers, ev: GamepadEvent) => any) | null>;
-        ongamepaddisconnected?: ((this: WindowEventHandlers, ev: GamepadEvent) => any) | null | State<((this: WindowEventHandlers, ev: GamepadEvent) => any) | null>;
-        onhashchange?: ((this: WindowEventHandlers, ev: HashChangeEvent) => any) | null | State<((this: WindowEventHandlers, ev: HashChangeEvent) => any) | null>;
-        onlanguagechange?: ((this: WindowEventHandlers, ev: Event) => any) | null | State<((this: WindowEventHandlers, ev: Event) => any) | null>;
-        onmessage?: ((this: WindowEventHandlers, ev: MessageEvent) => any) | null | State<((this: WindowEventHandlers, ev: MessageEvent) => any) | null>;
-        onmessageerror?: ((this: WindowEventHandlers, ev: MessageEvent) => any) | null | State<((this: WindowEventHandlers, ev: MessageEvent) => any) | null>;
-        onoffline?: ((this: WindowEventHandlers, ev: Event) => any) | null | State<((this: WindowEventHandlers, ev: Event) => any) | null>;
-        ononline?: ((this: WindowEventHandlers, ev: Event) => any) | null | State<((this: WindowEventHandlers, ev: Event) => any) | null>;
-        onpagehide?: ((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null | State<((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null>;
-        onpageshow?: ((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null | State<((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null>;
-        onpopstate?: ((this: WindowEventHandlers, ev: PopStateEvent) => any) | null | State<((this: WindowEventHandlers, ev: PopStateEvent) => any) | null>;
-        onrejectionhandled?: ((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null | State<((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null>;
-        onstorage?: ((this: WindowEventHandlers, ev: StorageEvent) => any) | null | State<((this: WindowEventHandlers, ev: StorageEvent) => any) | null>;
-        onunhandledrejection?: ((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null | State<((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null>;
-        onunload?: ((this: WindowEventHandlers, ev: Event) => any) | null | State<((this: WindowEventHandlers, ev: Event) => any) | null>;
+        onafterprint?: ((this: WindowEventHandlers, ev: Event) => any) | null | undefined | State<((this: WindowEventHandlers, ev: Event) => any) | null | undefined>;
+        onbeforeprint?: ((this: WindowEventHandlers, ev: Event) => any) | null | undefined | State<((this: WindowEventHandlers, ev: Event) => any) | null | undefined>;
+        onbeforeunload?: ((this: WindowEventHandlers, ev: BeforeUnloadEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: BeforeUnloadEvent) => any) | null | undefined>;
+        ongamepadconnected?: ((this: WindowEventHandlers, ev: GamepadEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: GamepadEvent) => any) | null | undefined>;
+        ongamepaddisconnected?: ((this: WindowEventHandlers, ev: GamepadEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: GamepadEvent) => any) | null | undefined>;
+        onhashchange?: ((this: WindowEventHandlers, ev: HashChangeEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: HashChangeEvent) => any) | null | undefined>;
+        onlanguagechange?: ((this: WindowEventHandlers, ev: Event) => any) | null | undefined | State<((this: WindowEventHandlers, ev: Event) => any) | null | undefined>;
+        onmessage?: ((this: WindowEventHandlers, ev: MessageEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: MessageEvent) => any) | null | undefined>;
+        onmessageerror?: ((this: WindowEventHandlers, ev: MessageEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: MessageEvent) => any) | null | undefined>;
+        onoffline?: ((this: WindowEventHandlers, ev: Event) => any) | null | undefined | State<((this: WindowEventHandlers, ev: Event) => any) | null | undefined>;
+        ononline?: ((this: WindowEventHandlers, ev: Event) => any) | null | undefined | State<((this: WindowEventHandlers, ev: Event) => any) | null | undefined>;
+        onpagehide?: ((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null | undefined>;
+        onpageshow?: ((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null | undefined>;
+        onpopstate?: ((this: WindowEventHandlers, ev: PopStateEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: PopStateEvent) => any) | null | undefined>;
+        onrejectionhandled?: ((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null | undefined>;
+        onstorage?: ((this: WindowEventHandlers, ev: StorageEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: StorageEvent) => any) | null | undefined>;
+        onunhandledrejection?: ((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null | undefined | State<((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null | undefined>;
+        onunload?: ((this: WindowEventHandlers, ev: Event) => any) | null | undefined | State<((this: WindowEventHandlers, ev: Event) => any) | null | undefined>;
     }
 
     interface PopoverInvokerElement {
-        popoverTargetAction?: string | State<string>;
-        popoverTargetElement?: Element | null | State<Element | null>;
+        popoverTargetAction?: string | undefined | State<string | undefined>;
+        popoverTargetElement?: Element | null | undefined | State<Element | null | undefined>;
     }
 
     interface FileList { }
