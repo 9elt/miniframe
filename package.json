@@ -1,6 +1,6 @@
 {
     "name": "@9elt/miniframe",
-    "version": "0.9.6",
+    "version": "0.9.7",
     "description": "Everything you need to create nodes with states, in 200 LOC",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
