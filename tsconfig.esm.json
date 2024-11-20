@@ -1,6 +1,7 @@
 {
     "include": [
-        "./index.js"
+        "./index.js",
+        "./jsx-runtime.js"
     ],
     "compilerOptions": {
         "target": "ES2015",

@@ -4,12 +4,13 @@ function jsx(key, props) {
     props ||= {};
 
     if (props.children) {
-        props.children =
-            props.children instanceof State
+        props.children = props.children instanceof State
+            ? Array.isArray(props.children.value)
                 ? props.children
-                : Array.isArray(props.children)
-                    ? props.children.flat()
-                    : [props.children];
+                : [props.children]
+            : Array.isArray(props.children)
+                ? props.children.flat()
+                : [props.children];
     }
 
     if (typeof key === "function") {
