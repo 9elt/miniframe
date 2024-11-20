@@ -6,7 +6,7 @@
     "compilerOptions": {
         "target": "ES2015",
         "module": "NodeNext",
-        "outDir": "./dist",
+        "outDir": "./dist/cjs",
         "allowJs": true,
         "removeComments": true,
         "declaration": false

@@ -7,15 +7,15 @@
     "exports": {
         ".": {
             "import": "./dist/esm/index.js",
-            "require": "./dist/index.js"
+            "require": "./dist/cjs/index.js"
         },
         "./jsx-runtime": {
             "import": "./dist/esm/jsx-runtime.js",
-            "require": "./dist/jsx-runtime.js"
+            "require": "./dist/cjs/jsx-runtime.js"
         },
         "./jsx-dev-runtime": {
             "import": "./dist/esm/jsx-runtime.js",
-            "require": "./dist/jsx-runtime.js"
+            "require": "./dist/cjs/jsx-runtime.js"
         }
     },
     "scripts": {
