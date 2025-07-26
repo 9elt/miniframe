@@ -96,6 +96,10 @@ function setNodeList(parent, D_children) {
 }
 
 function createNodeList(props) {
+    if (props && !Array.isArray(props)) {
+        props = [props];
+    }
+
     const list = new Array(props && props.length || 0);
 
     for (let i = 0; i < list.length; i++) {

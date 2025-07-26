@@ -10,7 +10,7 @@ const style: State<{ color: State<'#000' | '#fff'> } | { background: 'none' }> =
 
 const textNode: State<'0' | '1'> = new State('0');
 
-const element: State<Mini.Element> = new State({ tagName: 'span', children: ['0'] });
+const element: State<Mini.Element> = new State({ tagName: 'span', children: '0' });
 
 const children: State<(State<string> | State<Mini.Element>)[]> = new State([textNode, element]);
 

@@ -155,7 +155,7 @@ export type DOMNode<P> =
     P extends string | number | false | null | undefined ? Text :
     Node;
 
-export type MiniChildren = MiniNode[] | State<MiniNode[]>;
+export type MiniChildren = MiniNode | State<MiniNode> | MiniNode[] | State<MiniNode[]>;
 
 export type MiniNode =
     | Mini.Element

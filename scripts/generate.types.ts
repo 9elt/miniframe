@@ -377,7 +377,7 @@ export function createNode<P>(props: P): DOMNode<P>;
 
 ${DOMNode}
 
-export type MiniChildren = MiniNode[] | State<MiniNode[]>;
+export type MiniChildren = MiniNode | State<MiniNode> | MiniNode[] | State<MiniNode[]>;
 
 export type MiniNode = ${miniNode} | State<${miniNode}>;
 

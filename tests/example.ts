@@ -18,13 +18,13 @@ const root = createNode({
             style: {
                 color: counter.as(c => c < 10 ? 'green' : 'red')
             },
-            children: [counter.as(c => c < 10 ? 'keep going' : 'stop!')]
+            children: counter.as(c => c < 10 ? 'keep going' : 'stop!')
         },
         {
             tagName: "button",
             onclick: () => counter.value++,
             disabled: counter.as(c => c === 10),
-            children: ["increment"],
+            children: "increment",
         }
     ]
 });
@@ -32,7 +32,7 @@ const root = createNode({
 
 use(root);
 
-const button = document.querySelector('button');
+const button = document.querySelector('button')!;
 
 
 assert(`<div id="root" style="text-align: center;">\
