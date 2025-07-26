@@ -96,7 +96,7 @@ function setNodeList(parent, D_children) {
 }
 
 function createNodeList(props) {
-    if (props && !Array.isArray(props)) {
+    if (props !== undefined && !Array.isArray(props)) {
         props = [props];
     }
 
