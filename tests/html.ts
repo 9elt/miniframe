@@ -81,8 +81,8 @@ use(test1);
 assert(`<div \
 class="0" \
 style="color: rgb(255, 255, 255);" \
-data-__pref="[object HTMLDivElement]" \
-data-__tref="[object Object]" \
+data-parent-ref="[object HTMLDivElement]" \
+data-target-ref="[object Object]" \
 data-test="0">\
 <div>0000</div>\
 </div>`);

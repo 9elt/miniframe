@@ -1,5 +1,7 @@
-let TMP;
+// NOTE: throwing this will unsubscribe a sub from a state
+export const UNSUBSCRIBE = {};
 
+let TMP;
 export function createNode(D_props) {
     const node = __createNode(D_props);
 
@@ -18,7 +20,7 @@ function __createNode(D_props) {
     // NOTE: this is a common pattern
     // const x = D_x instanceof State ? D_x.sub(curr => ...) && D_x.value : D_x;
     const props = D_props instanceof State ? D_props.sub(curr => {
-        check__pref__tref(node);
+        checkParentRefTargetRef(node);
 
         if (node instanceof window.Text
             && (typeof curr === 'string' || typeof curr === 'number')) {
@@ -53,14 +55,14 @@ function copyObject(on, D_from) {
             setPrimitive(on, key, null);
         }
 
-        check__pref__tref(on);
+        checkParentRefTargetRef(on);
 
-        // NOTE: the target reference (__tref) is used to check
+        // NOTE: the target reference (targetRef) is used to check
         // if the target remains the same during state updates
-        on.__tref = curr;
+        on.targetRef = curr;
 
         copyObject(on, curr);
-    }) && (on.__tref = D_from.value) : D_from;
+    }) && (on.targetRef = D_from.value) : D_from;
 
     for (const key in from)
         if (key === 'namespaceURI' || key === 'tagName') {
@@ -70,11 +72,11 @@ function copyObject(on, D_from) {
             setNodeList(on, from[key]);
         }
         else if (typeof (from[key] instanceof State ? from[key].value : from[key]) === 'object'
-            && !on.__pref) {
+            && !on.parentRef) {
 
-            // NOTE: the parent reference (__pref) is used to check the
+            // NOTE: the parent reference (parentRef) is used to check the
             // parent connection during state updates
-            on[key].__pref = on;
+            on[key].parentRef = on;
 
             copyObject(on[key], from[key]);
         }
@@ -86,7 +88,7 @@ function copyObject(on, D_from) {
 function setNodeList(parent, D_children) {
     parent.append(...createNodeList(
         D_children instanceof State ? D_children.sub(current => {
-            check__pref__tref(parent);
+            checkParentRefTargetRef(parent);
             parent.replaceChildren(...createNodeList(current));
 
         }) && D_children.value : D_children
@@ -111,7 +113,7 @@ function setPrimitive(on, key, from) {
     const D_value = from && from[key];
 
     const value = D_value instanceof State ? D_value.sub(curr => {
-        check__pref__tref(on, from);
+        checkParentRefTargetRef(on, from);
         setPrimitive(on, key, { [key]: curr });
     }) && D_value.value : D_value;
 
@@ -131,16 +133,15 @@ function setPrimitive(on, key, from) {
             : on[key] = value;
     }
     catch (err) {
-        console.warn(`failed ${on}.${key} = ${D_value}`, err);
+        console.warn(`Failed ${on}.${key} = ${D_value}`, err);
     }
 }
 
-function check__pref__tref(on, from) {
-    if (('__pref' in on ? !on.__pref.isConnected : !on.isConnected)
-        || (typeof from !== 'undefined' && '__tref' in on && on.__tref !== from)) {
+function checkParentRefTargetRef(on, from) {
+    if (('parentRef' in on ? !on.parentRef.isConnected : !on.isConnected)
+        || (from !== undefined && 'targetRef' in on && on.targetRef !== from)) {
 
-        // NOTE: state subs are unsubscribed when they throw an exception
-        throw 1;
+        throw UNSUBSCRIBE;
     }
 }
 
@@ -171,7 +172,12 @@ export class State {
                 this.$[i](value, this._);
                 this.$[length++] = this.$[i];
             }
-            catch { }
+            catch (err) {
+                if (err !== UNSUBSCRIBE) {
+                    console.error("Unexpected subscriber error:", this, err);
+                    this.$[length++] = this.$[i];
+                }
+            }
         }
         this.$.length = length;
         this._ = value;

@@ -1,3 +1,5 @@
+export const UNSUBSCRIBE: unknown;
+
 type StateGroup = Record<string, State<any>>;
 
 type StaticGroup<T extends StateGroup> = State<{
