@@ -1,11 +1,8 @@
 function jsx(key, props) {
-    props ||= {};
-
     if (typeof key === "function") {
         return key(props);
     }
-
-    props.tagName = key;
+    (props || (props = {})).tagName = key;
     return props;
 }
 

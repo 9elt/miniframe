@@ -59,12 +59,10 @@ function copyObject(on, D_from) {
 
         // NOTE: the target reference (targetRef) is used to check
         // if the target remains the same during state updates
-        on.targetRef = curr;
-
-        copyObject(on, curr);
+        copyObject(on, on.targetRef = curr);
     }) && (on.targetRef = D_from.value) : D_from;
 
-    for (const key in from)
+    for (const key in from) {
         if (key === 'namespaceURI' || key === 'tagName') {
             continue;
         }
@@ -83,6 +81,7 @@ function copyObject(on, D_from) {
         else {
             setPrimitive(on, key, from);
         }
+    }
 }
 
 function setNodeList(parent, D_children) {
