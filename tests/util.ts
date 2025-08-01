@@ -24,12 +24,12 @@ export function assert(expectedHtml: string) {
 export function subs<S extends { [key: string]: State<any> }>(states: S, subs: { [K in keyof S]: number }) {
     for (let id in subs)
         // @ts-ignore
-        if (subs[id] !== states[id]._s.length)
+        if (subs[id] !== states[id].$.length)
             ++failed && console.log(
                 '\ntest failed',
                 '\n  expected ', id, 'subs -> ', subs[id],
                 // @ts-ignore
-                '\n  got -> ', states[id]._s.length,
+                '\n  got -> ', states[id].$.length,
                 '\n'
             );
 }

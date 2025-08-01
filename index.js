@@ -25,9 +25,7 @@ function __createNode(D_props) {
             return node.textContent = curr;
         }
 
-        const update = __createNode(curr);
-        node.replaceWith(update);
-        node = update;
+        node.replaceWith(node = __createNode(curr));
     }) && D_props.value : D_props;
 
     if (typeof props === 'string' || typeof props === 'number') {
@@ -147,58 +145,57 @@ function check__pref__tref(on, from) {
 }
 
 export class State {
-    _v;
-    _s;
+    _;
+    $;
     constructor(value) {
-        this._v = value;
-        this._s = [];
+        this._ = value;
+        this.$ = [];
     }
     static use(states) {
         const group = new State({});
-
         for (const key in states) {
             group.value[key] = states[key].value;
-            states[key].sub(current => group.value = Object.assign(group.value, { [key]: current }));
+            states[key].sub(current =>
+                group.value = Object.assign(group.value, { [key]: current })
+            );
         }
-
         return group;
     }
     get value() {
-        return this._v;
+        return this._;
     }
     set value(value) {
-        this._d(value, this._v);
-        this._v = value;
+        let length = 0;
+        for (let i = 0; i < this.$.length; i++) {
+            try {
+                this.$[i](value, this._);
+                this.$[length++] = this.$[i];
+            }
+            catch { }
+        }
+        this.$.length = length;
+        this._ = value;
     }
     set(f) {
-        this.value = f(this._v);
+        this.value = f(this._);
     }
     as(f, collector) {
-        const child = new State(f(this._v));
-        this.sub(curr => { child.value = f(curr); }, collector);
+        const child = new State(f(this._));
+        this.sub(curr => { child.value = f(curr) }, collector);
         return child;
     }
     sub(f, collector) {
-        this._s.push(f);
+        this.$.push(f);
         collector && collector.push(f);
         return f;
     }
     unsub(f) {
-        this._s = this._s.filter(s => s !== f);
-    }
-    _d(curr, prev) {
-        const s = new Array(this._s.length);
-
         let length = 0;
-        for (let i = 0; i < this._s.length; i++) {
-            try {
-                this._s[i](curr, prev);
-                s[length++] = this._s[i];
+        for (let i = 0; i < this.$.length; i++) {
+            if (this.$[i] !== f) {
+                this.$[length++] = this.$[i];
             }
-            catch { }
         }
-
-        s.length = length;
-        this._s = s;
+        this.$.length = length;
     }
 }
