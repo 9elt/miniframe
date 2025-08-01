@@ -173,7 +173,10 @@ export class State {
             }
             catch (err) {
                 if (err !== UNSUBSCRIBE) {
-                    console.error("Unexpected subscriber error:", this, err);
+                    console.error(
+                        'Subscriber error:', err, 'on:', this, 'calling:',
+                        this.$[i], 'setting:', value, 'over:', this._
+                    );
                     this.$[length++] = this.$[i];
                 }
             }
