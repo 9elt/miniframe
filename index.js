@@ -1,120 +1,145 @@
-// NOTE: throwing this will unsubscribe a sub from a state
-export const UNSUBSCRIBE = {};
-
-let TMP;
 export function createNode(D_props) {
-    const node = __createNode(D_props);
-
-    // NOTE: parent connection is used to handle state subscribers
-    // the node is temporarily appended to an element
-    // to prevent subs being removed before the user appends
-    // the node himself
-    (TMP || (TMP = window.document.createElement('div'))).append(node);
-
+    const tree = stateTree();
+    const node = _createNode(D_props, tree);
+    node.tree = tree;
     return node;
 }
 
-function __createNode(D_props) {
+function clearStateTree(tree, root) {
+    if (root !== undefined && tree.state) {
+        tree.subs.forEach((sub) => tree.state.unsub(sub));
+        tree.subs = [];
+        if (tree.state._parent) {
+            tree.state._parent.unsub(tree.state._parentF);
+        }
+    }
+    tree.children.forEach(clearStateTree);
+    tree.children = [];
+}
+
+function stateTree(state) {
+    return {
+        state,
+        subs: [],
+        children: [],
+    };
+}
+
+function _createNode(D_props, tree) {
     let node;
-
-    // NOTE: this is a common pattern
-    // const x = D_x instanceof State ? D_x.sub(curr => ...) && D_x.value : D_x;
-    const props = D_props instanceof State ? D_props.sub(curr => {
-        checkParentRefTargetRef(node);
-
-        if (node instanceof window.Text
-            && (typeof curr === 'string' || typeof curr === 'number')) {
-            return node.textContent = curr;
-        }
-
-        node.replaceWith(node = __createNode(curr));
-    }) && D_props.value : D_props;
-
-    if (typeof props === 'string' || typeof props === 'number') {
-        return node = window.document.createTextNode(props);
-    }
-
-    if (!props) {
-        return node = window.document.createTextNode('');
-    }
-
-    if (props instanceof window.Node) {
-        return node = props;
-    }
-
-    node = window.document.createElementNS(props.namespaceURI || 'http://www.w3.org/1999/xhtml', props.tagName);
-    copyObject(node, props);
-
-    return node;
+    // NOTE: Common pattern for accessing and handling state inline:
+    // let leaf;
+    // const x = D_x instanceof State
+    //           ^^^ D_ stands for Dynamic
+    //     ? tree.children.push(leaf = stateTree(D_x)) && leaf.subs.push(
+    //                     ^^^^^^^^^                           ^^^^ Connect below subscriber
+    //                     Only create and add leaf to the tree if D_x is a State
+    //          D_x.sub((curr) => { /* handle D_x change */ })
+    //              ^^^ Add subscriber to handle D_x change
+    //     ) && D_x.value
+    //              ^^^^^ Access the static value
+    //     : D_x
+    //       ^^^ D_x was already static
+    let leaf;
+    const props = D_props instanceof State
+        ? tree.children.push(leaf = stateTree(D_props)) && leaf.subs.push(
+            D_props.sub(curr => {
+                clearStateTree(leaf);
+                if (node instanceof window.Text
+                    && (typeof curr === 'string' || typeof curr === 'number')) {
+                    return node.textContent = curr;
+                }
+                node.replaceWith(node = _createNode(curr, leaf));
+            })
+        ) && D_props.value
+        : D_props;
+    return (node = (
+        typeof props === 'string' || typeof props === 'number'
+            ? window.document.createTextNode(props)
+            : !props
+                ? window.document.createTextNode('')
+                : props instanceof window.Node
+                    ? props
+                    : copyObject(node = window.document.createElementNS(
+                        props.namespaceURI || 'http://www.w3.org/1999/xhtml',
+                        props.tagName
+                    ), props, leaf || tree)
+    ));
 }
 
-function copyObject(on, D_from) {
-    // NOTE: D_from can be state only on recursive calls
-    const from = D_from instanceof State ? D_from.sub((curr, prev) => {
-        for (const key in prev) {
-            setPrimitive(on, key, null);
-        }
-
-        checkParentRefTargetRef(on);
-
-        // NOTE: the target reference (targetRef) is used to check
-        // if the target remains the same during state updates
-        copyObject(on, on.targetRef = curr);
-    }) && (on.targetRef = D_from.value) : D_from;
-
+function copyObject(on, D_from, tree) {
+    let leaf;
+    const from = D_from instanceof State
+        ? tree.children.push(leaf = stateTree(D_from)) && leaf.subs.push(
+            D_from.sub((curr, prev) => {
+                for (const key in prev) {
+                    setPrimitive(on, key, null);
+                }
+                clearStateTree(leaf);
+                copyObject(on, curr, leaf);
+            })
+        ) && D_from.value
+        : D_from;
     for (const key in from) {
         if (key === 'namespaceURI' || key === 'tagName') {
             continue;
         }
         else if (key === 'children') {
-            setNodeList(on, from[key]);
+            setNodeList(on, from[key], leaf || tree);
         }
-        else if (typeof (from[key] instanceof State ? from[key].value : from[key]) === 'object'
-            && !on.parentRef) {
-
-            // NOTE: the parent reference (parentRef) is used to check the
-            // parent connection during state updates
-            on[key].parentRef = on;
-
-            copyObject(on[key], from[key]);
+        else if (
+            typeof (
+                from[key] instanceof State ? from[key].value : from[key]
+            ) === 'object'
+        ) {
+            copyObject(on[key], from[key], leaf || tree);
         }
         else {
-            setPrimitive(on, key, from);
+            setPrimitive(on, key, from, leaf || tree);
         }
     }
+    return on;
 }
 
-function setNodeList(parent, D_children) {
-    parent.append(...createNodeList(
-        D_children instanceof State ? D_children.sub(current => {
-            checkParentRefTargetRef(parent);
-            parent.replaceChildren(...createNodeList(current));
-
-        }) && D_children.value : D_children
-    ));
+function setNodeList(parent, D_children, tree) {
+    let leaf;
+    parent.append(
+        ...createNodeList(
+            D_children instanceof State
+                ? (tree.children.push(leaf = stateTree(D_children))) && leaf.subs.push(
+                    D_children.sub(current => {
+                        clearStateTree(leaf);
+                        parent.replaceChildren(...createNodeList(current, leaf));
+                    })
+                ) && D_children.value
+                : D_children,
+            leaf || tree
+        )
+    );
 }
 
-function createNodeList(props) {
+function createNodeList(props, tree) {
     if (props !== undefined && !Array.isArray(props)) {
         props = [props];
     }
 
     const list = new Array(props && props.length || 0);
-
     for (let i = 0; i < list.length; i++) {
-        list[i] = __createNode(props[i]);
+        list[i] = _createNode(props[i], tree);
     }
 
     return list;
 }
 
-function setPrimitive(on, key, from) {
+function setPrimitive(on, key, from, tree) {
     const D_value = from && from[key];
 
-    const value = D_value instanceof State ? D_value.sub(curr => {
-        checkParentRefTargetRef(on, from);
-        setPrimitive(on, key, { [key]: curr });
-    }) && D_value.value : D_value;
+    let leaf;
+    const value = D_value instanceof State
+        ? tree.children.push(leaf = stateTree(D_value)) && leaf.subs.push(
+            D_value.sub(curr => { setPrimitive(on, key, { [key]: curr }) })
+        ) && D_value.value
+        : D_value;
 
     try {
         // NOTE: SVG and MathML elements require properties
@@ -136,20 +161,12 @@ function setPrimitive(on, key, from) {
     }
 }
 
-function checkParentRefTargetRef(on, from) {
-    if (('parentRef' in on ? !on.parentRef.isConnected : !on.isConnected)
-        || (from !== undefined && 'targetRef' in on && on.targetRef !== from)) {
-
-        throw UNSUBSCRIBE;
-    }
-}
-
 export class State {
-    _;
-    $;
+    _value;
+    _subs;
     constructor(value) {
-        this._ = value;
-        this.$ = [];
+        this._value = value;
+        this._subs = [];
     }
     static use(states) {
         const group = new State({});
@@ -162,48 +179,50 @@ export class State {
         return group;
     }
     get value() {
-        return this._;
+        return this._value;
     }
     set value(value) {
-        let length = 0;
-        for (let i = 0; i < this.$.length; i++) {
+        for (let i = 0; i < this._subs.length; i++) {
             try {
-                this.$[i](value, this._);
-                this.$[length++] = this.$[i];
+                this._subs[i](value, this._value);
             }
             catch (err) {
-                if (err !== UNSUBSCRIBE) {
-                    console.error(
-                        'Subscriber error:', err, 'on:', this, 'calling:',
-                        this.$[i], 'setting:', value, 'over:', this._
-                    );
-                    this.$[length++] = this.$[i];
-                }
+                console.error(
+                    'Subscriber error:', err,
+                    'on:', this,
+                    'calling:', this._subs[i],
+                    'setting:', value,
+                    'over:', this._value
+                );
             }
         }
-        this.$.length = length;
-        this._ = value;
+        this._value = value;
     }
     set(f) {
-        this.value = f(this._);
+        this.value = f(this._value);
     }
-    as(f, collector) {
-        const child = new State(f(this._));
-        this.sub(curr => { child.value = f(curr) }, collector);
+    as(f) {
+        const child = new State(f(this._value));
+        this.sub(curr => { child.value = f(curr) });
         return child;
     }
-    sub(f, collector) {
-        this.$.push(f);
-        collector && collector.push(f);
+    to(f) {
+        const child = new State(f(this._value));
+        child._parent = this;
+        child._parentF = this.sub(curr => { child.value = f(curr) });
+        return child;
+    }
+    sub(f) {
+        this._subs.push(f);
         return f;
     }
     unsub(f) {
         let length = 0;
-        for (let i = 0; i < this.$.length; i++) {
-            if (this.$[i] !== f) {
-                this.$[length++] = this.$[i];
+        for (let i = 0; i < this._subs.length; i++) {
+            if (this._subs[i] !== f) {
+                this._subs[length++] = this._subs[i];
             }
         }
-        this.$.length = length;
+        this._subs.length = length;
     }
 }
