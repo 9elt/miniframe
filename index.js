@@ -5,7 +5,7 @@ export function createNode(D_props) {
     return node;
 }
 
-function clearStateTree(tree, root) {
+export function clearStateTree(tree, root) {
     if (root !== undefined && tree.state) {
         tree.subs.forEach((sub) => tree.state.unsub(sub));
         tree.subs = [];
@@ -17,12 +17,63 @@ function clearStateTree(tree, root) {
     tree.children = [];
 }
 
-function stateTree(state) {
+function stateTree(state, parent) {
     return {
         state,
         subs: [],
+        parent,
         children: [],
     };
+}
+
+function cloneAsNeeded(state, tree) {
+    // NOTE: Derived states, the ones created from State.to, need to be unsubscribed
+    // when the upper state changes. However they may also be used at higher levers than
+    // the above one. The solution is to clone instances that appear in lower levels
+    // e.g.
+    // {
+    //    state: SomeState1,
+    //    children: [
+    //        { state: DerivedStateOriginal },
+    //                 ^^^^^^^^^^^^ Original, first and higher level occurrence of the
+    //                              derived state
+    //        { state: DerivedStateOriginal },
+    //                 ^^^^^^^^^^^^ The original can be re-used on the same level
+    //        {
+    //            state: SomeState2,
+    //            children: [
+    //                { state: DerivedStateClone1 },
+    //                         ^^^^^^^^^^^^ The derived state is cloned, only the clone
+    //                                      is unsubscribed when SomeState2 changes
+    //                { state: DerivedStateClone1 },
+    //                         ^^^^^^^^^^^^ The same clone can be re-used on the same level
+    //            ]
+    //        },
+    //    ]
+    // }
+    if (!state._parent) {
+        return state;
+    }
+    for (let i = 0; i < tree.children.length; i++) {
+        const sib = tree.children[i].state;
+        // NOTE: State already cloned previously for this level
+        if (sib._parent === state._parent && sib._parentT === state._parentT) {
+            return sib;
+        }
+    }
+    let leaf = tree;
+    while ((leaf = leaf.parent)) {
+        if (leaf.state === state) {
+            return state._parent.to(state._parentT);
+        }
+        for (let i = 0; i < leaf.children.length; i++) {
+            const sibling = leaf.children[i];
+            if (sibling !== tree && sibling.state === state) {
+                return state._parent.to(state._parentT);
+            }
+        }
+    }
+    return state;
 }
 
 function _createNode(D_props, tree) {
@@ -31,9 +82,11 @@ function _createNode(D_props, tree) {
     // let leaf;
     // const x = D_x instanceof State
     //           ^^^ D_ stands for Dynamic
-    //     ? tree.children.push(leaf = stateTree(D_x)) && leaf.subs.push(
-    //                     ^^^^^^^^^                           ^^^^ Connect below subscriber
+    //     ? tree.children.push(leaf = stateTree(D_x = cloneAsNeeded(D_x, tree), tree))
+    //                     ^^^^^^^^^^^           ^^^^^ Clone already used derivate states
     //                     Only create and add leaf to the tree if D_x is a State
+    //     && leaf.subs.push(
+    //             ^^^^ Connect below subscriber
     //          D_x.sub((curr) => { /* handle D_x change */ })
     //              ^^^ Add subscriber to handle D_x change
     //     ) && D_x.value
@@ -42,7 +95,8 @@ function _createNode(D_props, tree) {
     //       ^^^ D_x was already static
     let leaf;
     const props = D_props instanceof State
-        ? tree.children.push(leaf = stateTree(D_props)) && leaf.subs.push(
+        ? tree.children.push(leaf = stateTree(D_props = cloneAsNeeded(D_props, tree), tree))
+        && leaf.subs.push(
             D_props.sub(curr => {
                 clearStateTree(leaf);
                 if (node instanceof window.Text
@@ -51,7 +105,8 @@ function _createNode(D_props, tree) {
                 }
                 node.replaceWith(node = _createNode(curr, leaf));
             })
-        ) && D_props.value
+        )
+        && D_props.value
         : D_props;
     return (node = (
         typeof props === 'string' || typeof props === 'number'
@@ -70,7 +125,8 @@ function _createNode(D_props, tree) {
 function copyObject(on, D_from, tree) {
     let leaf;
     const from = D_from instanceof State
-        ? tree.children.push(leaf = stateTree(D_from)) && leaf.subs.push(
+        ? tree.children.push(leaf = stateTree(D_from = cloneAsNeeded(D_from, tree), tree))
+        && leaf.subs.push(
             D_from.sub((curr, prev) => {
                 for (const key in prev) {
                     setPrimitive(on, key, null);
@@ -78,7 +134,8 @@ function copyObject(on, D_from, tree) {
                 clearStateTree(leaf);
                 copyObject(on, curr, leaf);
             })
-        ) && D_from.value
+        )
+        && D_from.value
         : D_from;
     for (const key in from) {
         if (key === 'namespaceURI' || key === 'tagName') {
@@ -106,12 +163,14 @@ function setNodeList(parent, D_children, tree) {
     parent.append(
         ...createNodeList(
             D_children instanceof State
-                ? (tree.children.push(leaf = stateTree(D_children))) && leaf.subs.push(
+                ? (tree.children.push(leaf = stateTree(D_children = cloneAsNeeded(D_children, tree), tree)))
+                && leaf.subs.push(
                     D_children.sub(current => {
                         clearStateTree(leaf);
                         parent.replaceChildren(...createNodeList(current, leaf));
                     })
-                ) && D_children.value
+                )
+                && D_children.value
                 : D_children,
             leaf || tree
         )
@@ -132,13 +191,15 @@ function createNodeList(props, tree) {
 }
 
 function setPrimitive(on, key, from, tree) {
-    const D_value = from && from[key];
+    let D_value = from && from[key];
 
     let leaf;
     const value = D_value instanceof State
-        ? tree.children.push(leaf = stateTree(D_value)) && leaf.subs.push(
+        ? tree.children.push(leaf = stateTree(D_value = cloneAsNeeded(D_value, tree), tree))
+        && leaf.subs.push(
             D_value.sub(curr => { setPrimitive(on, key, { [key]: curr }) })
-        ) && D_value.value
+        )
+        && D_value.value
         : D_value;
 
     try {
@@ -209,6 +270,7 @@ export class State {
     to(f) {
         const child = new State(f(this._value));
         child._parent = this;
+        child._parentT = f;
         child._parentF = this.sub(curr => { child.value = f(curr) });
         return child;
     }
