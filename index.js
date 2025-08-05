@@ -28,7 +28,7 @@ function stateTree(state, parent) {
 
 function cloneAsNeeded(state, tree) {
     // NOTE: Derived states, the ones created from State.to, need to be unsubscribed
-    // when the upper state changes. However they may also be used at higher levers than
+    // when the upper state changes. However they may also be used at higher levels than
     // the above one. The solution is to clone instances that appear in lower levels
     // e.g.
     // {
@@ -56,19 +56,17 @@ function cloneAsNeeded(state, tree) {
     }
     for (let i = 0; i < tree.children.length; i++) {
         const sib = tree.children[i].state;
-        // NOTE: State already cloned previously for this level
+        // NOTE: Derived State already cloned previously for the current level
         if (sib._parent === state._parent && sib._parentT === state._parentT) {
             return sib;
         }
     }
     let leaf = tree;
     while ((leaf = leaf.parent)) {
-        if (leaf.state === state) {
-            return state._parent.to(state._parentT);
-        }
         for (let i = 0; i < leaf.children.length; i++) {
-            const sibling = leaf.children[i];
-            if (sibling !== tree && sibling.state === state) {
+            const sib = leaf.children[i];
+            // NOTE: Clone derived state from upper level
+            if (sib !== tree && sib.state === state) {
                 return state._parent.to(state._parentT);
             }
         }
@@ -83,14 +81,15 @@ function _createNode(D_props, tree) {
     // const x = D_x instanceof State
     //           ^^^ D_ stands for Dynamic
     //     ? tree.children.push(leaf = stateTree(D_x = cloneAsNeeded(D_x, tree), tree))
-    //                     ^^^^^^^^^^^           ^^^^^ Clone already used derivate states
+    //                     ^^^^^^^^^^^           ^^^^^ D_x is replaced with a clone if needed
     //                     Only create and add leaf to the tree if D_x is a State
     //     && leaf.subs.push(
     //             ^^^^ Connect below subscriber
     //          D_x.sub((curr) => { /* handle D_x change */ })
     //              ^^^ Add subscriber to handle D_x change
-    //     ) && D_x.value
-    //              ^^^^^ Access the static value
+    //     )
+    //     && D_x.value
+    //            ^^^^^ Access the static value
     //     : D_x
     //       ^^^ D_x was already static
     let leaf;
@@ -181,18 +180,15 @@ function createNodeList(props, tree) {
     if (props !== undefined && !Array.isArray(props)) {
         props = [props];
     }
-
     const list = new Array(props && props.length || 0);
     for (let i = 0; i < list.length; i++) {
         list[i] = _createNode(props[i], tree);
     }
-
     return list;
 }
 
 function setPrimitive(on, key, from, tree) {
     let D_value = from && from[key];
-
     let leaf;
     const value = D_value instanceof State
         ? tree.children.push(leaf = stateTree(D_value = cloneAsNeeded(D_value, tree), tree))
@@ -201,7 +197,6 @@ function setPrimitive(on, key, from, tree) {
         )
         && D_value.value
         : D_value;
-
     try {
         // NOTE: SVG and MathML elements require properties
         // to be set via the setAttribute api
