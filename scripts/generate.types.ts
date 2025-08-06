@@ -359,6 +359,8 @@ type StaticGroup<T extends StateGroup> = State<{
     [K in keyof T]: T[K] extends State<infer U> ? U : never;
 }>;
 
+type NotProvided = { NOT_PROVIDED: 0 };
+
 export type Sub<T> = (current: T, previous: T) => void | Promise<void>;
 
 export class State<T> {
@@ -368,6 +370,7 @@ export class State<T> {
     persist(): State<T>;
     set(f: (current: T) => T): void;
     as<C>(f: (value: T) => C): State<C>;
+    asyncAs<C, I, L = NotProvided>(f: ((value: T) => Promise<C>), init: I, loading?: L): (L extends NotProvided ? State<I | C> : State<C | I | L>);
     sub<F extends Sub<T>>(f: F): F;
     unsub<F extends Sub<T>>(f: F): void;
 }

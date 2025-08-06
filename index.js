@@ -1,3 +1,5 @@
+const NOT_PROVIDED = {};
+
 export function createNode(D_props) {
     const tree = stateTree();
     const node = _createNode(D_props, tree);
@@ -303,6 +305,22 @@ export class State {
         child._parent = this;
         child._parentT = f;
         child._parentF = this.sub(curr => { child.value = f(curr) });
+        child._cleanUp = this._cleanUp;
+        return child;
+    }
+    asyncAs(f, init, loading = NOT_PROVIDED) {
+        const child = new State(init);
+        f(this._value).then((value) => child.value = value);
+        child._parent = this;
+        child._parentT = f;
+        child._parentF = this.sub(curr => {
+            // NOTE: Loading is not a necessary state, if not provided
+            // the previous value is kept until the new value is available
+            if (loading !== NOT_PROVIDED) {
+                child.value = loading;
+            }
+            f(curr).then((value) => child.value = value);
+        });
         child._cleanUp = this._cleanUp;
         return child;
     }
