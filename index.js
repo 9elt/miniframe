@@ -5,6 +5,10 @@ export function createNode(D_props) {
     return node;
 }
 
+/**
+ * @param {Leaf} tree
+ * @param {number | undefined} root
+ */
 export function clearStateTree(tree, root) {
     if (root !== undefined && tree.state) {
         tree.subs.forEach((sub) => tree.state.unsub(sub));
@@ -12,11 +16,25 @@ export function clearStateTree(tree, root) {
         if (tree.state._parent) {
             tree.state._parent.unsub(tree.state._parentF);
         }
+        if (tree.state._cleanUp) {
+            tree.state._cleanUp.forEach(f => f());
+        }
     }
     tree.children.forEach(clearStateTree);
     tree.children = [];
 }
 
+/**
+ * @typedef {{
+ *     state: State;
+ *     subs: Function[];
+ *     parent: Leaf;
+ *     children: Leaf[];
+ * }} Leaf
+ * @param {State} state
+ * @param {Leaf} parent
+ * @returns {Leaf}
+ */
 function stateTree(state, parent) {
     return {
         state,
@@ -26,6 +44,11 @@ function stateTree(state, parent) {
     };
 }
 
+/**
+ * @param {State} state
+ * @param {Leaf} tree
+ * @returns {State}
+ */
 function cloneAsNeeded(state, tree) {
     // NOTE: Derived states, the ones created from State.to, need to be unsubscribed
     // when the upper state changes. However they may also be used at higher levels than
@@ -67,13 +90,17 @@ function cloneAsNeeded(state, tree) {
             const sib = leaf.children[i];
             // NOTE: Clone derived state from upper level
             if (sib !== tree && sib.state === state) {
-                return state._parent.to(state._parentT);
+                return state._parent.as(state._parentT);
             }
         }
     }
     return state;
 }
 
+/**
+ * @param {Leaf} tree
+ * @returns {Node}
+ */
 function _createNode(D_props, tree) {
     let node;
     // NOTE: Common pattern for accessing and handling state inline:
@@ -121,6 +148,9 @@ function _createNode(D_props, tree) {
     ));
 }
 
+/**
+ * @param {Leaf} tree
+ */
 function copyObject(on, D_from, tree) {
     let leaf;
     const from = D_from instanceof State
@@ -157,6 +187,9 @@ function copyObject(on, D_from, tree) {
     return on;
 }
 
+/**
+ * @param {Leaf} tree
+ */
 function setNodeList(parent, D_children, tree) {
     let leaf;
     parent.append(
@@ -176,6 +209,9 @@ function setNodeList(parent, D_children, tree) {
     );
 }
 
+/**
+ * @param {Leaf} tree
+ */
 function createNodeList(props, tree) {
     if (props !== undefined && !Array.isArray(props)) {
         props = [props];
@@ -187,6 +223,9 @@ function createNodeList(props, tree) {
     return list;
 }
 
+/**
+ * @param {Leaf} tree
+ */
 function setPrimitive(on, key, from, tree) {
     let D_value = from && from[key];
     let leaf;
@@ -226,11 +265,13 @@ export class State {
     }
     static use(states) {
         const group = new State({});
+        group._cleanUp = [];
         for (const key in states) {
             group.value[key] = states[key].value;
-            states[key].sub(current =>
+            const f = states[key].sub(current =>
                 group.value = Object.assign(group.value, { [key]: current })
             );
+            group._cleanUp.push(() => states[key].unsub(f));
         }
         return group;
     }
@@ -259,15 +300,18 @@ export class State {
     }
     as(f) {
         const child = new State(f(this._value));
-        this.sub(curr => { child.value = f(curr) });
-        return child;
-    }
-    to(f) {
-        const child = new State(f(this._value));
         child._parent = this;
         child._parentT = f;
         child._parentF = this.sub(curr => { child.value = f(curr) });
+        child._cleanUp = this._cleanUp;
         return child;
+    }
+    persist() {
+        delete this._parent;
+        delete this._parentT;
+        delete this._parentF;
+        delete this._cleanUp;
+        return this;
     }
     sub(f) {
         this._subs.push(f);

@@ -10,65 +10,14 @@ export class State<T> {
     constructor(value: T);
     value: T;
     static use<T extends StateGroup>(states: T): StaticGroup<T>;
+    persist(): State<T>;
     set(f: (current: T) => T): void;
-    /**
-     * Same as State.to but to be used for states used in different scopes
-     *
-     * ```ts
-     * const name = new State("Hello, World!");
-     * const nameUpperCase = name.as((name) => name.toUpperCase());
-     *
-     * function Component() {
-     *     return (
-     *         <div>
-     *             <p>{nameUpperCase}</p>
-     *         </div>
-     *     );
-     * }
-     *
-     * function OtherComponent() {
-     *     return (
-     *         <div>
-     *             <p>{nameUpperCase}</p>
-     *         </div>
-     *     );
-     * }
-     * ```
-     */
     as<C>(f: (value: T) => C): State<C>;
-    /**
-     * Same as State.as but to be used in one scope
-     *
-     * ```ts
-     * const name = new State("Hello, World!");
-     *
-     * function Component() {
-     *     return (<div>{state.to((name) => name.toUpperCase())}</div>);
-     * }
-     * ```
-     *
-     * ```ts
-     * const name = new State("Hello, World!");
-     *
-     * function Component() {
-     *     const nameUpperCase = name.to((name) => name.toUpperCase());
-     *
-     *     return (
-     *         <div>
-     *             <p>{nameUpperCase}</p>
-     *             <p>{nameUpperCase}</p>
-     *         </div>
-     *     );
-     * }
-     * ```
-     */
-    to<C>(f: (value: T) => C): State<C>;
     sub<F extends Sub<T>>(f: F): F;
     unsub<F extends Sub<T>>(f: F): void;
 }
 
 export function createNode<P>(props: P): DOMNode<P>;
-export function clearStateTree(tree: any): void;
 
 export type DOMNode<P> =
     P extends State<infer U> ? DOMNode<U> :
