@@ -3,9 +3,47 @@ const NOT_PROVIDED = {};
 export function createNode(D_props) {
     const tree = stateTree();
     const node = _createNode(D_props, tree);
+    // NOTE: The entire State tree is exposed to the user
     node.tree = tree;
     return node;
 }
+
+// NOTE: Every property of the createNode props can be a State,
+// also states can contain other states, for example:
+//
+// const color = new State("red");
+//
+// const style = new State({ color: color });
+//
+// createNode({ tagName: "div", style: style });
+//
+// createNode will use State subscribers to modify the DOM when
+// a State changes. However these need to be unsubscribed when
+// the parent State changes:
+//
+// style.value = { backgroundColor: color, color: "black" };
+//
+// In this case color subscriber modifying the style.color property
+// needs to be removed, and a new subscriber for the style.backgroundColor
+// property created.
+//
+// In order to do so we need to keep track of States and their relations
+// in a State tree:
+//
+//                   state;subs
+//                    children
+//                       ^
+//                       |
+//      parent: The state on which it depends
+//
+//              state: The node State
+//
+//      subs: The subscribers that need to be
+//           removed when parent changes
+//
+//           children: dependant States
+//                       |
+//                      ...
 
 /**
  * @param {Leaf} tree
@@ -15,6 +53,7 @@ export function clearStateTree(tree, root) {
     if (root !== undefined && tree.state) {
         tree.subs.forEach((sub) => tree.state.unsub(sub));
         tree.subs = [];
+        // NOTE: Special cases for derived States (see State.use and State.as)
         if (tree.state._parent) {
             tree.state._parent.unsub(tree.state._parentF);
         }
@@ -250,7 +289,7 @@ function setPrimitive(on, key, from, tree) {
                 ? on.removeAttribute(key === 'className' ? 'class' : key)
                 : on.setAttribute(key === 'className' ? 'class' : key, value)
 
-            // assignment for html elements
+            // NOTE: Assignment for html elements
             : on[key] = value;
     }
     catch (err) {
@@ -265,6 +304,17 @@ export class State {
         this._value = value;
         this._subs = [];
     }
+    // NOTE: State.use it is used to group States together, it is
+    // useful when a block needs to receive updates from multiple State
+    //
+    // {
+    //     tagName: "div",
+    //     children: State.use({ page, user }).as(({ page, user }) => [
+    //         ...
+    //     ]),
+    // }
+    //
+    // See State.as for issues and limitations
     static use(states) {
         const group = new State({});
         group._cleanUp = [];
@@ -300,6 +350,66 @@ export class State {
     set(f) {
         this.value = f(this._value);
     }
+    // NOTE: State.as creates a child State with its value mutated by f,
+    // it is used to format State values:
+    //
+    // const ms = new State(3000);
+    // const seconds = ms.as((ms) => ms / 1000);
+    //
+    // seconds.value // 3
+    //
+    // ms.value = 5000;
+    // seconds.value // 5
+    //
+    // When this is used inside a nested State can create some issues:
+    // (the same issues and solutions apply for State.use as well)
+    //
+    // const state1 = new State();
+    // const state2 = new State();
+    //
+    // createNode({
+    //     tagName: "div",
+    //     children: state1.as(() => {
+    //         const state2Copy = state2.as(...);
+    //         return [state2Copy];
+    //     }),
+    // });
+    //
+    // Every time state1 changes a new copy of state2 is produced, the
+    // previous one is not reachable anymore, but it's still kept updated
+    // by the subscriber.
+    //
+    // To prevent this we keep track of the parent State and the
+    // subscriberd function, and unsubscribe it when the parent
+    // State changes (see: clearStateTree)
+    //
+    // However this spawns a new problem, as we have no way of telling apart
+    // States that are created nested or only used nested:
+    //
+    // const state1 = new State();
+    // const state2 = new State();
+    // const state2Copy = state2.as(...);
+    //
+    // createNode({
+    //     tagName: "div",
+    //     children: state1.as(() => {
+    //         return [state2Copy];
+    //     }),
+    // });
+    //
+    // In the above example, state2Copy will be unsubscribed, but never
+    // re-instantiated.
+    // To circumvent this we can use:
+    //
+    // const state2Copy = state2.as(...).persist();
+    //
+    // Which will remove the parent and subscriber tracking information,
+    // effectively making the State persistent.
+    //
+    // Hopefully we can find a better way in the future, as state.persistent
+    // is quite dangerous, an error by the user could cause a State to unsubscribe
+    // or worse, an infinite list of unreachable States
+    //
     as(f) {
         const child = new State(f(this._value));
         child._parent = this;
