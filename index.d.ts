@@ -4,18 +4,21 @@ type StaticGroup<T extends StateGroup> = State<{
     [K in keyof T]: T[K] extends State<infer U> ? U : never;
 }>;
 
-type NotProvided = { NOT_PROVIDED: 0 };
-
 export type Sub<T> = (current: T, previous: T) => void | Promise<void>;
 
 export class State<T> {
+    static NoLoading: { NOT_PROVIDED: 0 }
     constructor(value: T);
     value: T;
     static use<T extends StateGroup>(states: T): StaticGroup<T>;
     persist(): State<T>;
     set(f: (current: T) => T): void;
     as<C>(f: (value: T) => C): State<C>;
-    asyncAs<C, I, L = NotProvided>(f: ((value: T) => Promise<C>), init: I, loading?: L): (L extends NotProvided ? State<I | C> : State<C | I | L>);
+    asyncAs<C, I, L = typeof State.NoLoading>(
+        init: I,
+        loading: L,
+        f: ((value: T) => Promise<C>)
+    ): (L extends typeof State.NoLoading ? State<I | C> : State<C | I | L>);
     sub<F extends Sub<T>>(f: F): F;
     unsub<F extends Sub<T>>(f: F): void;
 }

@@ -1,5 +1,3 @@
-const NOT_PROVIDED = {};
-
 export function createNode(D_props) {
     const tree = stateTree();
     const node = _createNode(D_props, tree);
@@ -53,13 +51,6 @@ export function clearStateTree(tree, root) {
     if (root !== undefined && tree.state) {
         tree.subs.forEach((sub) => tree.state.unsub(sub));
         tree.subs = [];
-        // NOTE: Special cases for derived States (see State.use and State.as)
-        if (tree.state._parent) {
-            tree.state._parent.unsub(tree.state._parentF);
-        }
-        if (tree.state._cleanUp) {
-            tree.state._cleanUp.forEach(f => f());
-        }
     }
     tree.children.forEach(clearStateTree);
     tree.children = [];
@@ -86,59 +77,6 @@ function stateTree(state, parent) {
 }
 
 /**
- * @param {State} state
- * @param {Leaf} tree
- * @returns {State}
- */
-function cloneAsNeeded(state, tree) {
-    // NOTE: Derived states, the ones created from State.to, need to be unsubscribed
-    // when the upper state changes. However they may also be used at higher levels than
-    // the above one. The solution is to clone instances that appear in lower levels
-    // e.g.
-    // {
-    //    state: SomeState1,
-    //    children: [
-    //        { state: DerivedStateOriginal },
-    //                 ^^^^^^^^^^^^ Original, first and higher level occurrence of the
-    //                              derived state
-    //        { state: DerivedStateOriginal },
-    //                 ^^^^^^^^^^^^ The original can be re-used on the same level
-    //        {
-    //            state: SomeState2,
-    //            children: [
-    //                { state: DerivedStateClone1 },
-    //                         ^^^^^^^^^^^^ The derived state is cloned, only the clone
-    //                                      is unsubscribed when SomeState2 changes
-    //                { state: DerivedStateClone1 },
-    //                         ^^^^^^^^^^^^ The same clone can be re-used on the same level
-    //            ]
-    //        },
-    //    ]
-    // }
-    if (!state._parent) {
-        return state;
-    }
-    for (let i = 0; i < tree.children.length; i++) {
-        const sib = tree.children[i].state;
-        // NOTE: Derived State already cloned previously for the current level
-        if (sib._parent === state._parent && sib._parentT === state._parentT) {
-            return sib;
-        }
-    }
-    let leaf = tree;
-    while ((leaf = leaf.parent)) {
-        for (let i = 0; i < leaf.children.length; i++) {
-            const sib = leaf.children[i];
-            // NOTE: Clone derived state from upper level
-            if (sib !== tree && sib.state === state) {
-                return state._parent.as(state._parentT);
-            }
-        }
-    }
-    return state;
-}
-
-/**
  * @param {Leaf} tree
  * @returns {Node}
  */
@@ -148,13 +86,13 @@ function _createNode(D_props, tree) {
     // let leaf;
     // const x = D_x instanceof State
     //           ^^^ D_ stands for Dynamic
-    //     ? tree.children.push(leaf = stateTree(D_x = cloneAsNeeded(D_x, tree), tree))
-    //                     ^^^^^^^^^^^           ^^^^^ D_x is replaced with a clone if needed
+    //     ? tree.children.push(leaf = stateTree(D_x, tree))
+    //                     ^^^^^^^^^^^
     //                     Only create and add leaf to the tree if D_x is a State
     //     && leaf.subs.push(
     //             ^^^^ Connect below subscriber
-    //          D_x.sub((curr) => { /* handle D_x change */ })
-    //              ^^^ Add subscriber to handle D_x change
+    //          D_x.sub((curr) => {...})
+    //                             ^^^ Handle D_x change
     //     )
     //     && D_x.value
     //            ^^^^^ Access the static value
@@ -162,7 +100,7 @@ function _createNode(D_props, tree) {
     //       ^^^ D_x was already static
     let leaf;
     const props = D_props instanceof State
-        ? tree.children.push(leaf = stateTree(D_props = cloneAsNeeded(D_props, tree), tree))
+        ? tree.children.push(leaf = stateTree(D_props, tree))
         && leaf.subs.push(
             D_props.sub(curr => {
                 clearStateTree(leaf);
@@ -195,7 +133,7 @@ function _createNode(D_props, tree) {
 function copyObject(on, D_from, tree) {
     let leaf;
     const from = D_from instanceof State
-        ? tree.children.push(leaf = stateTree(D_from = cloneAsNeeded(D_from, tree), tree))
+        ? tree.children.push(leaf = stateTree(D_from, tree))
         && leaf.subs.push(
             D_from.sub((curr, prev) => {
                 for (const key in prev) {
@@ -236,7 +174,7 @@ function setNodeList(parent, D_children, tree) {
     parent.append(
         ...createNodeList(
             D_children instanceof State
-                ? (tree.children.push(leaf = stateTree(D_children = cloneAsNeeded(D_children, tree), tree)))
+                ? (tree.children.push(leaf = stateTree(D_children, tree)))
                 && leaf.subs.push(
                     D_children.sub(current => {
                         clearStateTree(leaf);
@@ -271,7 +209,7 @@ function setPrimitive(on, key, from, tree) {
     let D_value = from && from[key];
     let leaf;
     const value = D_value instanceof State
-        ? tree.children.push(leaf = stateTree(D_value = cloneAsNeeded(D_value, tree), tree))
+        ? tree.children.push(leaf = stateTree(D_value, tree))
         && leaf.subs.push(
             D_value.sub(curr => { setPrimitive(on, key, { [key]: curr }) })
         )
@@ -298,33 +236,31 @@ function setPrimitive(on, key, from, tree) {
 }
 
 export class State {
+    static AsStack = [];
+    static NoLoading = {};
     _value;
     _subs;
     constructor(value) {
         this._value = value;
         this._subs = [];
     }
-    // NOTE: State.use it is used to group States together, it is
-    // useful when a block needs to receive updates from multiple State
-    //
-    // {
-    //     tagName: "div",
-    //     children: State.use({ page, user }).as(({ page, user }) => [
-    //         ...
-    //     ]),
-    // }
-    //
-    // See State.as for issues and limitations
     static use(states) {
         const group = new State({});
-        group._cleanUp = [];
+
         for (const key in states) {
-            group.value[key] = states[key].value;
-            const f = states[key].sub(current =>
+            const state = states[key];
+
+            group.value[key] = state.value;
+
+            const f = state.sub(current =>
                 group.value = Object.assign(group.value, { [key]: current })
             );
-            group._cleanUp.push(() => states[key].unsub(f));
+
+            if (State.AsStack.length > 0) {
+                State.AsStack.push({ state, f });
+            }
         }
+
         return group;
     }
     get value() {
@@ -350,96 +286,64 @@ export class State {
     set(f) {
         this.value = f(this._value);
     }
-    // NOTE: State.as creates a child State with its value mutated by f,
-    // it is used to format State values:
-    //
-    // const ms = new State(3000);
-    // const seconds = ms.as((ms) => ms / 1000);
-    //
-    // seconds.value // 3
-    //
-    // ms.value = 5000;
-    // seconds.value // 5
-    //
-    // When this is used inside a nested State can create some issues:
-    // (the same issues and solutions apply for State.use as well)
-    //
-    // const state1 = new State();
-    // const state2 = new State();
-    //
-    // createNode({
-    //     tagName: "div",
-    //     children: state1.as(() => {
-    //         const state2Copy = state2.as(...);
-    //         return [state2Copy];
-    //     }),
-    // });
-    //
-    // Every time state1 changes a new copy of state2 is produced, the
-    // previous one is not reachable anymore, but it's still kept updated
-    // by the subscriber.
-    //
-    // To prevent this we keep track of the parent State and the
-    // subscriberd function, and unsubscribe it when the parent
-    // State changes (see: clearStateTree)
-    //
-    // However this spawns a new problem, as we have no way of telling apart
-    // States that are created nested or only used nested:
-    //
-    // const state1 = new State();
-    // const state2 = new State();
-    // const state2Copy = state2.as(...);
-    //
-    // createNode({
-    //     tagName: "div",
-    //     children: state1.as(() => {
-    //         return [state2Copy];
-    //     }),
-    // });
-    //
-    // In the above example, state2Copy will be unsubscribed, but never
-    // re-instantiated.
-    // To circumvent this we can use:
-    //
-    // const state2Copy = state2.as(...).persist();
-    //
-    // Which will remove the parent and subscriber tracking information,
-    // effectively making the State persistent.
-    //
-    // Hopefully we can find a better way in the future, as state.persistent
-    // is quite dangerous, an error by the user could cause a State to unsubscribe
-    // or worse, an infinite list of unreachable States
-    //
+    clearChildren() {
+        while (this._children.length) {
+            const _as = this._children.pop();
+            if (_as.state._children) {
+                _as.state.clearChildren();
+            }
+            _as.state.unsub(_as.f);
+        }
+    }
+    collectChildren(_as) {
+        if (State.AsStack.at(-1) !== _as) {
+            let pop;
+            while ((pop = State.AsStack.pop()) !== _as) {
+                this._children.push(pop);
+            }
+        } else if (State.AsStack.length === 1) {
+            State.AsStack.pop();
+        }
+    }
     as(f) {
-        const child = new State(f(this._value));
-        child._parent = this;
-        child._parentT = f;
-        child._parentF = this.sub(curr => { child.value = f(curr) });
-        child._cleanUp = this._cleanUp;
+        this._children = [];
+        const _as = { state: this, f: null };
+
+        State.AsStack.push(_as);
+        const value = f(this._value);
+        this.collectChildren(_as);
+
+        const child = new State(value);
+
+        _as.f = this.sub(curr => {
+            this.clearChildren();
+            State.AsStack.push(_as);
+            const value = f(curr);
+            this.collectChildren(_as);
+            child.value = value;
+        });
+
         return child;
     }
-    asyncAs(f, init, loading = NOT_PROVIDED) {
+    asyncAs(init, loading = State.NoLoading, f) {
         const child = new State(init);
+
         f(this._value).then((value) => child.value = value);
-        child._parent = this;
-        child._parentT = f;
-        child._parentF = this.sub(curr => {
+
+        const sub = this.sub(curr => {
             // NOTE: Loading is not a necessary state, if not provided
             // the previous value is kept until the new value is available
-            if (loading !== NOT_PROVIDED) {
+            if (loading !== State.NoLoading) {
                 child.value = loading;
             }
             f(curr).then((value) => child.value = value);
         });
-        child._cleanUp = this._cleanUp;
+
+        if (State.AsStack.length > 0) {
+            State.AsStack.push({ state: this, f: sub });
+        }
+
         return child;
-    }
-    persist() {
-        delete this._parent;
-        delete this._parentT;
-        delete this._parentF;
-        delete this._cleanUp;
-        return this;
     }
     sub(f) {
         this._subs.push(f);
