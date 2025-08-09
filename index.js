@@ -6,40 +6,32 @@ export function createNode(D_props) {
     return node;
 }
 
-// NOTE: Every property of the createNode props can be a State,
-// also states can contain other states, for example:
+// NOTE: Every property of the createNode props can be a state,
+// also, states can contain other states, for example:
 //
 // const color = new State("red");
-//
 // const style = new State({ color: color });
-//
 // createNode({ tagName: "div", style: style });
 //
-// createNode will use State subscribers to modify the DOM when
-// a State changes. However these need to be unsubscribed when
-// the parent State changes:
+// createNode will subscribe callbacks to modify the DOM when a
+// state changes. However these need to be unsubscribed when
+// the parent state is modified:
 //
 // style.value = { backgroundColor: color };
 //
-// In this case color subscriber modifying the style.color
-// property needs to be removed, and a new subscriber for the
-// style.backgroundColor property created.
+// In this case the callback for style.color property needs to
+// be removed, and a new one for the style.backgroundColor
+// property subscribed.
 //
-// In order to do so we need to keep track of States and their
-// relations in a State tree:
+// In order to do so we have to keep track of states and their
+// relations in a state tree:
 //
-//                    [node]
-//                  [children]
-//                       ^
-//                       |
-//                    [parent]
-//                    [state]
-//      [subs] The subscribers that need to be
-//           removed when parent changes
-//           [children] dependant States
-//                       |
-//                      ...
-//
+// Node {
+//     parent: Node;
+//     state: State;
+//     subs: F[];
+//     children: Node[];
+// }
 export function clearStateTree(tree, root) {
     if (root !== undefined && tree.state) {
         tree.subs.forEach((sub) => tree.state.unsub(sub));
@@ -271,6 +263,11 @@ export class State {
             State.AsStack.pop();
         }
     }
+    // NOTE: When called a reference is pushed into a global
+    // stack and it is only removed when the callback (f)
+    // produced the derived value. All the refs that were
+    // added during the callback (f) execution are collected as
+    // children and unsubscribed when the state changes
     as(f) {
         this._children = [];
         const _as = { state: this, f: null };
