@@ -1,7 +1,7 @@
 export function createNode(D_props) {
     const tree = stateTree();
     const node = _createNode(D_props, tree);
-    // NOTE: The entire State tree is exposed to the user
+    // NOTE: The State tree root is exposed to the user
     node.tree = tree;
     return node;
 }
@@ -19,30 +19,27 @@ export function createNode(D_props) {
 // a State changes. However these need to be unsubscribed when
 // the parent State changes:
 //
-// style.value = { backgroundColor: color, color: "black" };
+// style.value = { backgroundColor: color };
 //
-// In this case color subscriber modifying the style.color property
-// needs to be removed, and a new subscriber for the style.backgroundColor
-// property created.
+// In this case color subscriber modifying the style.color
+// property needs to be removed, and a new subscriber for the
+// style.backgroundColor property created.
 //
-// In order to do so we need to keep track of States and their relations
-// in a State tree:
+// In order to do so we need to keep track of States and their
+// relations in a State tree:
 //
-//                   state;subs
-//                    children
+//                    [node]
+//                  [children]
 //                       ^
 //                       |
-//      parent: The state on which it depends
-//
-//              state: The node State
-//
-//      subs: The subscribers that need to be
+//                    [parent]
+//                    [state]
+//      [subs] The subscribers that need to be
 //           removed when parent changes
-//
-//           children: dependant States
+//           [children] dependant States
 //                       |
 //                      ...
-
+//
 export function clearStateTree(tree, root) {
     if (root !== undefined && tree.state) {
         tree.subs.forEach((sub) => tree.state.unsub(sub));
@@ -63,15 +60,15 @@ function stateTree(state, parent) {
 
 function _createNode(D_props, tree) {
     let node;
-    // NOTE: Common pattern for accessing and handling state inline:
+    // NOTE: Common pattern to access and handle state inline:
     // let leaf;
     // const x = D_x instanceof State
     //           ^^^ D_ stands for Dynamic
     //     ? tree.children.push(leaf = stateTree(D_x, tree))
     //                     ^^^^^^^^^^^
-    //                     Only create and add leaf to the tree if D_x is a State
+    //                     Only create and add leaf for states
     //     && leaf.subs.push(
-    //             ^^^^ Connect below subscriber
+    //             ^^^^^^^^^ Connect below subscriber
     //          D_x.sub((curr) => {...})
     //                             ^^^ Handle D_x change
     //     )
@@ -84,11 +81,11 @@ function _createNode(D_props, tree) {
         ? tree.children.push(leaf = stateTree(D_props, tree))
         && leaf.subs.push(
             D_props.sub(curr => {
-                clearStateTree(leaf);
                 if (node instanceof window.Text
                     && (typeof curr === 'string' || typeof curr === 'number')) {
                     return node.textContent = curr;
                 }
+                clearStateTree(leaf);
                 node.replaceWith(node = _createNode(curr, leaf));
             })
         )
@@ -185,8 +182,8 @@ function setPrimitive(on, key, from, tree) {
         && D_value.value
         : D_value;
     try {
-        // NOTE: SVG and MathML elements require properties
-        // to be set via the setAttribute api
+        // NOTE: SVG and MathML elements require properties to
+        // be set via the setAttribute api
         on instanceof window.Node
             && on.namespaceURI !== 'http://www.w3.org/1999/xhtml'
             && (typeof value === 'string'
@@ -300,8 +297,9 @@ export class State {
         f(this._value).then((value) => child.value = value);
 
         const sub = this.sub(curr => {
-            // NOTE: Loading is not a necessary state, if not provided
-            // the previous value is kept until the new value is available
+            // NOTE: Loading is not a necessary state, the
+            // previous value can be kept until the new value
+            // is available
             if (loading !== State.NoLoading) {
                 child.value = loading;
             }
