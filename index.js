@@ -194,8 +194,8 @@ function setPrimitive(on, key, from, tree) {
 }
 
 export class State {
-    static AsStack = [];
     static NoLoading = {};
+    static _ChildrenStack = [];
     _value;
     _subs;
     constructor(value) {
@@ -214,8 +214,8 @@ export class State {
                 group.value = Object.assign(group.value, { [key]: current })
             );
 
-            if (State.AsStack.length > 0) {
-                State.AsStack.push({ state, f });
+            if (State._ChildrenStack.length > 0) {
+                State._ChildrenStack.push({ state, f });
             }
         }
 
@@ -244,7 +244,7 @@ export class State {
     set(f) {
         this.value = f(this._value);
     }
-    clearChildren() {
+    _clearChildren() {
         while (this._children.length) {
             const _as = this._children.pop();
             if (_as.state._children) {
@@ -253,14 +253,14 @@ export class State {
             _as.state.unsub(_as.f);
         }
     }
-    collectChildren(_as) {
-        if (State.AsStack.at(-1) !== _as) {
+    _collectChildren(_as) {
+        if (State._ChildrenStack.at(-1) !== _as) {
             let pop;
-            while ((pop = State.AsStack.pop()) !== _as) {
+            while ((pop = State._ChildrenStack.pop()) !== _as) {
                 this._children.push(pop);
             }
-        } else if (State.AsStack.length === 1) {
-            State.AsStack.pop();
+        } else if (State._ChildrenStack.length === 1) {
+            State._ChildrenStack.pop();
         }
     }
     // NOTE: When called a reference is pushed into a global
@@ -272,17 +272,17 @@ export class State {
         this._children = [];
         const _as = { state: this, f: null };
 
-        State.AsStack.push(_as);
+        State._ChildrenStack.push(_as);
         const value = f(this._value);
-        this.collectChildren(_as);
+        this._collectChildren(_as);
 
         const child = new State(value);
 
         _as.f = this.sub(curr => {
-            this.clearChildren();
-            State.AsStack.push(_as);
+            this._clearChildren();
+            State._ChildrenStack.push(_as);
             const value = f(curr);
-            this.collectChildren(_as);
+            this._collectChildren(_as);
             child.value = value;
         });
 
@@ -303,8 +303,8 @@ export class State {
             f(curr).then((value) => child.value = value);
         });
 
-        if (State.AsStack.length > 0) {
-            State.AsStack.push({ state: this, f: sub });
+        if (State._ChildrenStack.length > 0) {
+            State._ChildrenStack.push({ state: this, f: sub });
         }
 
         return child;
