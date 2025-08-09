@@ -6,6 +6,7 @@
         "target": "ES2015",
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
+        "strictNullChecks": true,
         "noErrorTruncation": true,
         "noEmit": true,
         "jsx": "react-jsx",

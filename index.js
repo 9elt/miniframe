@@ -43,10 +43,6 @@ export function createNode(D_props) {
 //                       |
 //                      ...
 
-/**
- * @param {Leaf} tree
- * @param {number | undefined} root
- */
 export function clearStateTree(tree, root) {
     if (root !== undefined && tree.state) {
         tree.subs.forEach((sub) => tree.state.unsub(sub));
@@ -56,17 +52,6 @@ export function clearStateTree(tree, root) {
     tree.children = [];
 }
 
-/**
- * @typedef {{
- *     state: State;
- *     subs: Function[];
- *     parent: Leaf;
- *     children: Leaf[];
- * }} Leaf
- * @param {State} state
- * @param {Leaf} parent
- * @returns {Leaf}
- */
 function stateTree(state, parent) {
     return {
         state,
@@ -76,10 +61,6 @@ function stateTree(state, parent) {
     };
 }
 
-/**
- * @param {Leaf} tree
- * @returns {Node}
- */
 function _createNode(D_props, tree) {
     let node;
     // NOTE: Common pattern for accessing and handling state inline:
@@ -127,9 +108,6 @@ function _createNode(D_props, tree) {
     ));
 }
 
-/**
- * @param {Leaf} tree
- */
 function copyObject(on, D_from, tree) {
     let leaf;
     const from = D_from instanceof State
@@ -166,9 +144,6 @@ function copyObject(on, D_from, tree) {
     return on;
 }
 
-/**
- * @param {Leaf} tree
- */
 function setNodeList(parent, D_children, tree) {
     let leaf;
     parent.append(
@@ -188,9 +163,6 @@ function setNodeList(parent, D_children, tree) {
     );
 }
 
-/**
- * @param {Leaf} tree
- */
 function createNodeList(props, tree) {
     if (props !== undefined && !Array.isArray(props)) {
         props = [props];
@@ -202,9 +174,6 @@ function createNodeList(props, tree) {
     return list;
 }
 
-/**
- * @param {Leaf} tree
- */
 function setPrimitive(on, key, from, tree) {
     let D_value = from && from[key];
     let leaf;
