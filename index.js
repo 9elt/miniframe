@@ -174,10 +174,9 @@ function setPrimitive(on, key, from, tree) {
         && D_value.value
         : D_value;
     try {
-        // NOTE: SVG and MathML elements require properties to
-        // be set via the setAttribute api
-        on instanceof window.Node
-            && on.namespaceURI !== 'http://www.w3.org/1999/xhtml'
+        // NOTE: SVG elements require properties to be set via
+        // the setAttribute api
+        on.namespaceURI === 'http://www.w3.org/2000/svg'
             && (typeof value === 'string'
                 || typeof value === 'number'
                 || typeof value === 'undefined')
@@ -185,7 +184,7 @@ function setPrimitive(on, key, from, tree) {
                 ? on.removeAttribute(key === 'className' ? 'class' : key)
                 : on.setAttribute(key === 'className' ? 'class' : key, value)
 
-            // NOTE: Assignment for html elements
+            // NOTE: Assignment for HTML and MathMl elements
             : on[key] = value;
     }
     catch (err) {
