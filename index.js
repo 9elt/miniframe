@@ -140,9 +140,9 @@ function setNodeList(parent, D_children, tree) {
             D_children instanceof State
                 ? (tree.children.push(leaf = stateTree(D_children, tree)))
                 && leaf.subs.push(
-                    D_children.sub(current => {
+                    D_children.sub(curr => {
                         clearStateTree(leaf);
-                        parent.replaceChildren(...createNodeList(current, leaf));
+                        parent.replaceChildren(...createNodeList(curr, leaf));
                     })
                 )
                 && D_children.value
@@ -206,13 +206,12 @@ export class State {
 
         for (const key in states) {
             const state = states[key];
-
             group.value[key] = state.value;
-
-            const f = state.sub(current =>
-                group.value = Object.assign(group.value, { [key]: current })
+            const f = state.sub(curr =>
+                group.value = Object.assign(group.value, { [key]: curr })
             );
-
+            // NOTE: Only collect references if there is a
+            // parent, see State.as for how the stack works
             if (State._ChildrenStack.length > 0) {
                 State._ChildrenStack.push({ state, f });
             }
