@@ -247,7 +247,7 @@ export class State {
         while (this._children.length) {
             const _as = this._children.pop();
             if (_as.state._children) {
-                _as.state.clearChildren();
+                _as.state._clearChildren();
             }
             _as.state.unsub(_as.f);
         }
