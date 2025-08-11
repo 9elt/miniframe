@@ -90,10 +90,14 @@ function _createNode(D_props, tree) {
                 ? window.document.createTextNode('')
                 : props instanceof window.Node
                     ? props
-                    : copyObject(node = window.document.createElementNS(
-                        props.namespaceURI || 'http://www.w3.org/1999/xhtml',
-                        props.tagName
-                    ), props, leaf || tree)
+                    : copyObject(
+                        window.document.createElementNS(
+                            props.namespaceURI || 'http://www.w3.org/1999/xhtml',
+                            props.tagName
+                        ),
+                        props,
+                        leaf || tree
+                    )
     ));
 }
 
