@@ -135,30 +135,26 @@ function copyObject(on, D_from, tree) {
 
 function setNodeList(parent, D_children, tree) {
     let leaf;
-    parent.append(
-        ...createNodeList(
-            D_children instanceof State
-                ? (tree.children.push(leaf = stateTree(D_children, tree)))
-                && leaf.subs.push(
-                    D_children.sub(curr => {
-                        clearStateTree(leaf);
-                        parent.replaceChildren(...createNodeList(curr, leaf));
-                    })
-                )
-                && D_children.value
-                : D_children,
-            leaf || tree
+    const children = D_children instanceof State
+        ? (tree.children.push(leaf = stateTree(D_children, tree)))
+        && leaf.subs.push(
+            D_children.sub(curr => {
+                clearStateTree(leaf);
+                parent.replaceChildren(...createNodeList(curr, leaf));
+            })
         )
-    );
+        && D_children.value
+        : D_children;
+    parent.append(...createNodeList(children, leaf || tree));
 }
 
-function createNodeList(props, tree) {
-    if (props !== undefined && !Array.isArray(props)) {
-        props = [props];
+function createNodeList(children, tree) {
+    if (children !== undefined && !Array.isArray(children)) {
+        children = [children];
     }
-    const list = new Array(props && props.length || 0);
+    const list = new Array(children && children.length || 0);
     for (let i = 0; i < list.length; i++) {
-        list[i] = _createNode(props[i], tree);
+        list[i] = _createNode(children[i], tree);
     }
     return list;
 }
