@@ -72,7 +72,7 @@ function _createNode(D_props, tree) {
     const props = D_props instanceof State
         ? tree.children.push(leaf = stateTree(D_props, tree))
         && leaf.subs.push(
-            D_props.sub(curr => {
+            D_props.sub((curr) => {
                 if (node instanceof window.Text
                     && (typeof curr === 'string' || typeof curr === 'number')) {
                     return node.textContent = curr;
@@ -138,7 +138,7 @@ function setNodeList(parent, D_children, tree) {
     const children = D_children instanceof State
         ? (tree.children.push(leaf = stateTree(D_children, tree)))
         && leaf.subs.push(
-            D_children.sub(curr => {
+            D_children.sub((curr) => {
                 clearStateTree(leaf);
                 parent.replaceChildren(...createNodeList(curr, leaf));
             })
@@ -165,7 +165,7 @@ function setPrimitive(on, key, from, tree) {
     const value = D_value instanceof State
         ? tree.children.push(leaf = stateTree(D_value, tree))
         && leaf.subs.push(
-            D_value.sub(curr => { setPrimitive(on, key, { [key]: curr }) })
+            D_value.sub((curr) => setPrimitive(on, key, { [key]: curr }))
         )
         && D_value.value
         : D_value;
@@ -203,7 +203,7 @@ export class State {
         for (const key in states) {
             const state = states[key];
             group.value[key] = state.value;
-            const f = state.sub(curr =>
+            const f = state.sub((curr) =>
                 group.value = Object.assign(group.value, { [key]: curr })
             );
             // NOTE: Only collect references if there is a
@@ -273,7 +273,7 @@ export class State {
 
         const child = new State(value);
 
-        _ref.f = this.sub(curr => {
+        _ref.f = this.sub((curr) => {
             this._clearChildren();
             State._ChildrenStack.push(_ref);
             const value = f(curr);
@@ -288,7 +288,7 @@ export class State {
 
         f(this._value).then((value) => child.value = value);
 
-        const sub = this.sub(curr => {
+        const sub = this.sub((curr) => {
             // NOTE: Loading is not a necessary state, the
             // previous value can be kept until the new value
             // is available
