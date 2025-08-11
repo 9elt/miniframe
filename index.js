@@ -245,43 +245,44 @@ export class State {
     }
     _clearChildren() {
         while (this._children.length) {
-            const _as = this._children.pop();
-            if (_as.state._children) {
-                _as.state._clearChildren();
+            const _ref = this._children.pop();
+            if (_ref.state._children) {
+                _ref.state._clearChildren();
             }
-            _as.state.unsub(_as.f);
+            _ref.state.unsub(_ref.f);
         }
     }
-    _collectChildren(_as) {
-        if (State._ChildrenStack.at(-1) !== _as) {
+    _collectChildren(_ref) {
+        if (State._ChildrenStack.at(-1) !== _ref) {
             let pop;
-            while ((pop = State._ChildrenStack.pop()) !== _as) {
+            while ((pop = State._ChildrenStack.pop()) !== _ref) {
                 this._children.push(pop);
             }
         } else if (State._ChildrenStack.length === 1) {
             State._ChildrenStack.pop();
         }
     }
-    // NOTE: When called a reference is pushed into a global
-    // stack and it is only removed when the callback (f)
-    // produced the derived value. All the refs that were
-    // added during the callback (f) execution are collected as
-    // children and unsubscribed when the state changes
+    // NOTE: When State.as is called, a reference (_ref) is
+    // pushed onto a global stack and the (f) callback is
+    // exectuted, then all references that are present in the
+    // stack after the initial reference (_ref) are collected
+    // as children. Children are then cleared and recollected
+    // every time the state changes.
     as(f) {
         this._children = [];
-        const _as = { state: this, f: null };
+        const _ref = { state: this, f: null };
 
-        State._ChildrenStack.push(_as);
+        State._ChildrenStack.push(_ref);
         const value = f(this._value);
-        this._collectChildren(_as);
+        this._collectChildren(_ref);
 
         const child = new State(value);
 
-        _as.f = this.sub(curr => {
+        _ref.f = this.sub(curr => {
             this._clearChildren();
-            State._ChildrenStack.push(_as);
+            State._ChildrenStack.push(_ref);
             const value = f(curr);
-            this._collectChildren(_as);
+            this._collectChildren(_ref);
             child.value = value;
         });
 
@@ -302,6 +303,12 @@ export class State {
             f(curr).then((value) => child.value = value);
         });
 
+        // NOTE: The stack approach we use to collect children
+        // is not compatible with async code, so State.asyncAs
+        // can be nested but does not support nesting.
+        // Unfortunately we don't have a way to tell if nesting
+        // happend inside a State.asyncAs call yet, and we rely
+        // on the user not to make mistakes
         if (State._ChildrenStack.length > 0) {
             State._ChildrenStack.push({ state: this, f: sub });
         }
