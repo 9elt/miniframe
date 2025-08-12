@@ -43,9 +43,9 @@ export function clearStateTree(tree, root) {
 
 function stateTree(state, parent) {
     return {
+        parent,
         state,
         subs: [],
-        parent,
         children: [],
     };
 }
@@ -121,7 +121,7 @@ function copyObject(on, D_from, tree) {
             continue;
         }
         else if (key === 'children') {
-            setNodeList(on, from[key], leaf || tree);
+            setChildren(on, from[key], leaf || tree);
         }
         else if (
             typeof (
@@ -137,19 +137,32 @@ function copyObject(on, D_from, tree) {
     return on;
 }
 
-function setNodeList(parent, D_children, tree) {
+function setChildren(parent, D_children, tree) {
     let leaf;
     const children = D_children instanceof State
         ? (tree.children.push(leaf = stateTree(D_children, tree)))
         && leaf.subs.push(
             D_children.sub((curr) => {
                 clearStateTree(leaf);
-                parent.replaceChildren(...createNodeList(curr, leaf));
+                replaceNodes(
+                    Array.from(parent.childNodes),
+                    createNodeList(curr, leaf)
+                );
             })
         )
         && D_children.value
         : D_children;
-    parent.append(...createNodeList(children, leaf || tree));
+    appendNodeList(parent, createNodeList(children, leaf || tree));
+}
+
+// NOTE: We never flat our children list, this makes handling
+// state easier, but we enter the magical world of recursion
+function appendNodeList(parent, nodeList) {
+    for (const child of nodeList) {
+        Array.isArray(child)
+            ? appendNodeList(parent, child)
+            : parent.append(child);
+    }
 }
 
 function createNodeList(children, tree) {
@@ -157,10 +170,82 @@ function createNodeList(children, tree) {
         children = [children];
     }
     const list = new Array(children && children.length || 0);
+    // NOTE: If there are no children we push an invisible text
+    // node, so we can assume lists are never empty and there's
+    // always at least one node to replace.
+    if (list.length === 0) {
+        list.push(null);
+    }
     for (let i = 0; i < list.length; i++) {
-        list[i] = _createNode(children[i], tree);
+        const D_child = children[i];
+
+        let leaf;
+        const child = D_child instanceof State
+            ? tree.children.push(leaf = stateTree(D_child, tree))
+            && leaf.subs.push(
+                D_child.sub((curr) => {
+                    clearStateTree(leaf);
+                    list[i] = replaceNodes(
+                        list[i],
+                        Array.isArray(curr)
+                            ? createNodeList(curr, leaf)
+                            : _createNode(curr, leaf)
+                    );
+                })
+            )
+            && D_child.value
+            : D_child;
+
+        list[i] = Array.isArray(child)
+            ? createNodeList(child, leaf || tree)
+            : _createNode(child, leaf || tree);
     }
     return list;
+}
+
+function replaceNodes(prev, update) {
+    const isPrevArray = Array.isArray(prev);
+    const isUpdateArray = Array.isArray(update);
+    if (!isPrevArray && !isUpdateArray) {
+        prev.replaceWith(update);
+        return update;
+    }
+    if (!isPrevArray) {
+        prev = [prev];
+    }
+    if (!isUpdateArray) {
+        update = [update];
+    }
+    const min = prev.length < update.length ? prev : update;
+    const max = min === prev ? update : prev;
+    for (let i = 0; i < min.length; i++) {
+        replaceNodes(prev[i], update[i]);
+    }
+    for (let i = min.length; i < max.length; i++) {
+        max === prev
+            ? removeNode(prev[i])
+            : appendNodeAfter(update[i - 1], update[i]);
+    }
+    return update;
+}
+
+function removeNode(prev) {
+    Array.isArray(prev) ? prev.forEach(removeNode) : prev.remove();
+}
+
+function appendNodeAfter(sibiling, node) {
+    if (Array.isArray(sibiling)) {
+        appendNodeAfter(sibiling.at(-1), node);
+    }
+    else if (Array.isArray(node)) {
+        let last = sibiling;
+        for (const _node of node) {
+            appendNodeAfter(last, last = _node);
+        }
+    }
+    else {
+        sibiling.after(node);
+    }
 }
 
 function setPrimitive(on, key, from, tree) {
