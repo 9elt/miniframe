@@ -1,8 +1,9 @@
 export function createNode(D_props) {
     const tree = stateTree();
     const node = _createNode(D_props, tree);
-    // NOTE: The State tree root is exposed to the user
-    node.tree = tree;
+    node.clearStateTree = () => clearStateTree(tree, 0);
+    // NOTE: We expose the tree for debug purposes
+    node._stateTree = tree;
     return node;
 }
 
@@ -32,7 +33,7 @@ export function createNode(D_props) {
 //     subs: F[];
 //     children: Node[];
 // }
-export function clearStateTree(tree, root) {
+function clearStateTree(tree, root) {
     if (root !== undefined && tree.state) {
         tree.subs.forEach((sub) => tree.state.unsub(sub));
         tree.subs = [];
