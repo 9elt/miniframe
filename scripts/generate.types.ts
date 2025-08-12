@@ -359,8 +359,6 @@ type StaticGroup<T extends StateGroup> = State<{
     [K in keyof T]: T[K] extends State<infer U> ? U : never;
 }>;
 
-type NotProvided = { NOT_PROVIDED: 0 };
-
 export type Sub<T> = (current: T, previous: T) => void | Promise<void>;
 
 export class State<T> {
@@ -380,7 +378,7 @@ export class State<T> {
     unsub<F extends Sub<T>>(f: F): void;
 }
 
-export function createNode<P>(props: P): DOMNode<P>;
+export function createNode<P>(props: P): DOMNode<P> & { clearStateTree: () => void };
 
 ${DOMNode}
 
