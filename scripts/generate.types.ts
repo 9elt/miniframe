@@ -160,8 +160,7 @@ function rename(iName: string) {
     return map[iName] ? ("Mini." + iName) : iName;
 }
 
-let ns_Mini = "";
-let ns_MiniX = "";
+let Mini = "";
 
 const tagNameMap = {};
 
@@ -185,8 +184,7 @@ for (const iName of allInterfaces) {
         ? `\n    interface ${iName} extends ${interfaceExtends.join(", ")} {`
         : `\n    interface ${iName} {`;
 
-    ns_Mini += startOfLine;
-    ns_MiniX += startOfLine;
+    Mini += startOfLine;
 
     let namespaceURI = "";
     const tagNames: string[] = [];
@@ -264,17 +262,12 @@ for (const iName of allInterfaces) {
     }
 
     if (isElement) {
-        ns_Mini += _tagName;
+        Mini += _tagName;
         if (_namespaceURI) {
-            ns_Mini += _namespaceURI;
+            Mini += _namespaceURI;
         }
-        ns_Mini += `\n    children?: MiniChildren;`;
-        ns_Mini += `\n    dataset?: MiniDataset;`;
-
-        if (_namespaceURI) {
-            ns_MiniX += _namespaceURI;
-        }
-        ns_MiniX += `\n    children?: MiniNode | MiniChildren;`;
+        Mini += `\n    children?: MiniChildren;`;
+        Mini += `\n    dataset?: MiniDataset;`;
     }
 
     for (const key in interf.value) {
@@ -284,22 +277,19 @@ for (const iName of allInterfaces) {
         const value = interf.value[key].join(" | ");
 
         const _line = `\n    ${key}?: ${value} | State<${value}>;`;
-        ns_Mini += _line;
-        ns_MiniX += _line;
+        Mini += _line;
     }
 
     if (
-        iName.includes("SVG")
-        || iName.includes("MathML")
+        iName === "SVGElement"
+        // iName.includes("SVG")
+        // || iName.includes("MathML")
     ) {
         // NOTE: fix for SVG and MathML
-        ns_MiniX += `\n    [key: string]: any;`;
+        Mini += `\n    [key: string]: any;`;
     }
 
-    ns_Mini += ns_Mini.charAt(ns_Mini.length - 1) === "{"
-        ? " }\n" : "\n    }\n";
-
-    ns_MiniX += ns_MiniX.charAt(ns_MiniX.length - 1) === "{"
+    Mini += Mini.charAt(Mini.length - 1) === "{"
         ? " }\n" : "\n    }\n";
 }
 
@@ -321,7 +311,7 @@ let IntrinsicElements = "export interface IntrinsicElements {";
 for (const tagName in tagNameMap) {
     const values = tagNameMap[tagName];
 
-    IntrinsicElements += `\n    ${tagName}: ${values.join(" | ")};`;
+    IntrinsicElements += `\n    ${tagName}: ${values.map((T: string) => `IntrinsicElement<${T}>`).join(" | ")};`;
 
     for (const value of values) {
         if (
@@ -353,19 +343,15 @@ DOMNode += `
 IntrinsicElements += "\n}";
 
 console.log(`\
-type StateGroup = Record<string, State<any>>;
-
-type StaticGroup<T extends StateGroup> = State<{
-    [K in keyof T]: T[K] extends State<infer U> ? U : never;
-}>;
-
 export type Sub<T> = (current: T, previous: T) => void | Promise<void>;
 
 export class State<T> {
-    static NoLoading: { NOT_PROVIDED: 0 }
+    static NoLoading: { NOT_PROVIDED: 0 };
     constructor(value: T);
     value: T;
-    static use<T extends StateGroup>(states: T): StaticGroup<T>;
+    static use<T extends { [key: string]: State<any> }>(states: T): State<{
+        [K in keyof T]: T[K] extends State<infer U> ? U : never;
+    }>;
     persist(): State<T>;
     set(f: (current: T) => T): void;
     as<C>(f: (value: T) => C): State<C>;
@@ -378,7 +364,9 @@ export class State<T> {
     unsub<F extends Sub<T>>(f: F): void;
 }
 
-export function createNode<P>(props: P): DOMNode<P> & { clearStateTree: () => void };
+export function createNode<P>(props: P): DOMNode<P> & {
+    clearStateTree: () => void;
+};
 
 ${DOMNode}
 
@@ -393,11 +381,11 @@ export type MiniDataset = {
 }>;
 
 export declare namespace Mini {
-${ns_Mini.trim()}
-}
+    type IntrinsicElement<T> = T extends SVGElement
+        ? Omit<T, "tagName"> & { [key: string]: any; }
+        : Omit<T, "tagName">;
 
-export declare namespace MiniX {
 ${IntrinsicElements}
 
-${ns_MiniX.trim()}
+${Mini.trim()}
 }`);
