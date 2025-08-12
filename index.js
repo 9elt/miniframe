@@ -103,10 +103,10 @@ function copyObject(on, D_from, tree) {
         ? tree.children.push(leaf = stateTree(D_from, tree))
         && leaf.subs.push(
             D_from.sub((curr, prev) => {
+                clearStateTree(leaf);
                 for (const key in prev) {
                     setPrimitive(on, key, null);
                 }
-                clearStateTree(leaf);
                 copyObject(on, curr, leaf);
             })
         )
