@@ -1,5 +1,5 @@
 import { State, createNode, type Mini } from '../index';
-import { assert, done, use } from './util';
+import { expect, done, use } from './util';
 
 
 const miniframeSvg = {
@@ -45,7 +45,7 @@ const htmlSvg3: SVGSVGElement = createNode(miniframeSvg3);
 
 use(htmlSvg);
 
-assert(`<svg class="0" viewBox="0 0 64 64">\
+expect.html(`<svg class="0" viewBox="0 0 64 64">\
 <path d="M0,0Z"></path>\
 <rect x="0" y="0" width="64" height="64"></rect>\
 </svg>`);

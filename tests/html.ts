@@ -1,5 +1,5 @@
 import { Mini, State, createNode } from '../index';
-import { assert, done, use } from './util';
+import { expect, done, use } from './util';
 
 type Assert<A, B extends A> = true;
 
@@ -78,7 +78,7 @@ type test6_ = Assert<Element, typeof test6>;
 
 use(test1);
 
-assert(`<div \
+expect.html(`<div \
 class="0" \
 style="color: rgb(255, 255, 255);" \
 data-test="0">\

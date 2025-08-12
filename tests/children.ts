@@ -1,5 +1,5 @@
 import { State, createNode } from '../index';
-import { done, assert, use } from './util';
+import { done, expect, use } from './util';
 
 {
     const root = createNode({
@@ -18,7 +18,7 @@ import { done, assert, use } from './util';
 
     use(root);
 
-    assert("<div>We don't have any limit <span>to</span> how many arrays can be nested</div>");
+    expect.html("<div>We don't have any limit <span>to</span> how many arrays can be nested</div>");
 }
 {
     const state0 = new State<string | number>(0);
@@ -63,25 +63,25 @@ import { done, assert, use } from './util';
 
     use(root);
 
-    assert("<div>State-0 is: 0; State-1 is: 1; State-2 is: 2; State-3 is: 3; State-4 is: 4; State-5 is: 5!!!;</div>");
+    expect.html("<div>State-0 is: 0; State-1 is: 1; State-2 is: 2; State-3 is: 3; State-4 is: 4; State-5 is: 5!!!;</div>");
 
     state2.value = "TWO";
-    assert("<div>State-0 is: 0; State-1 is: 1; State-2 is: TWO; State-3 is: 3; State-4 is: 4; State-5 is: 5!!!;</div>");
+    expect.html("<div>State-0 is: 0; State-1 is: 1; State-2 is: TWO; State-3 is: 3; State-4 is: 4; State-5 is: 5!!!;</div>");
 
     state1.value = "ONE";
-    assert("<div>State-0 is: 0; State-1 is: ONE; State-2 is: TWO; State-3 is: 3; State-4 is: 4; State-5 is: 5!!!;</div>");
+    expect.html("<div>State-0 is: 0; State-1 is: ONE; State-2 is: TWO; State-3 is: 3; State-4 is: 4; State-5 is: 5!!!;</div>");
 
     state0.value = "ZERO";
-    assert("<div>State-0 is: ZERO; State-1 is: ONE; State-2 is: TWO; State-3 is: 3; State-4 is: 4; State-5 is: 5!!!;</div>");
+    expect.html("<div>State-0 is: ZERO; State-1 is: ONE; State-2 is: TWO; State-3 is: 3; State-4 is: 4; State-5 is: 5!!!;</div>");
 
     state3.value = "THREE";
-    assert("<div>State-0 is: ZERO; State-1 is: ONE; State-2 is: TWO; State-3 is: THREE; State-4 is: 4; State-5 is: 5!!!;</div>");
+    expect.html("<div>State-0 is: ZERO; State-1 is: ONE; State-2 is: TWO; State-3 is: THREE; State-4 is: 4; State-5 is: 5!!!;</div>");
 
     state4.value = "FOUR";
-    assert("<div>State-0 is: ZERO; State-1 is: ONE; State-2 is: TWO; State-3 is: THREE; State-4 is: FOUR!!!; State-5 is: 5!!!;</div>");
+    expect.html("<div>State-0 is: ZERO; State-1 is: ONE; State-2 is: TWO; State-3 is: THREE; State-4 is: FOUR!!!; State-5 is: 5!!!;</div>");
 
     state5.value = "FIVE";
-    assert("<div>State-0 is: ZERO; State-1 is: ONE; State-2 is: TWO; State-3 is: THREE; State-4 is: FOUR!!!; State-5 is: FIVE;</div>");
+    expect.html("<div>State-0 is: ZERO; State-1 is: ONE; State-2 is: TWO; State-3 is: THREE; State-4 is: FOUR!!!; State-5 is: FIVE;</div>");
 }
 
 done();

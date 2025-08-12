@@ -1,50 +1,80 @@
-// // @ts-ignore
-// import { State } from '../index';
-// // @ts-ignore
-// // import { STATE_AS_STACK } from '../index';
-//
-// // @ts-ignore
-// State.prototype.toString = function () {
-//     return `State<${this.name || this.value}, subs: ${this._subs.length}>`;
-// };
-// // @ts-ignore
-// State.prototype.toJSON = function () {
-//     return this.toString();
-// };
-//
-// const state1 = new State(1);
-// // @ts-ignore
-// state1.name = "S-1";
-//
-// const state2 = new State(2);
-// // @ts-ignore
-// state2.name = "S-2";
-//
-// state1.as(() => {
-//     const state2Copy = state2.as((v) => v);
-//     const state2Group = State.use({ state2 });
-// });
-//
-// state1.value = 3;
-// state1.value = 4;
-// state1.value = 5;
-// state1.value = 1;
-//
-// console.log(state1.toString(), state2.toString());
-//
-// const page = new State(1);
-//
-// const data = page.asyncAs(0, State.NoLoading, async () => {
-//     const res = await fetch("https://example.com/not-existent-page?page=" + page);
-//     if (res.ok) {
-//         return res.text();
-//     }
-//     return res.statusText;
-// });
-//
-// console.log(page.toString(), data.toString());
-//
-// // @ts-ignore
-// await Bun.sleep(1000);
-//
-// console.log(page.toString(), data.toString());
+import { State } from '../index';
+import { done, expect, describe } from './util';
+
+const state0 = new State(0);
+const state1 = new State(1);
+const state1Group = State.use({ state1 });
+
+{
+    let ran = 0;
+
+    state0.as((c) => {
+        const state1Copy = state1.as((v) => v);
+        const state1Group = State.use({ state1 }).as((v) => v);
+        const state1AsyncCopy = state1.asyncAs(0, 0, async (v) => await asyncData(v));
+        ran++;
+    });
+
+    state0.value = 1;
+    state0.value = 2;
+    state0.value = 3;
+    state0.value = 4;
+    state0.value = 5;
+
+    describe("State as ran times");
+    expect.eq(ran, 6);
+
+    describe("State subscribers");
+    expect.subs({ state0, state1 }, {
+        state0: 1,
+        state1: 4,
+    });
+}
+{
+    const data = state0.asyncAs("INIT", State.NoLoading, async (v) => await asyncData(v, 100));
+
+    describe("Async initial value");
+    expect.eq(data.value, "INIT");
+
+    // @ts-ignore
+    await Bun.sleep(100);
+
+    describe("Async value");
+    expect.eq(data.value, 5);
+
+    state0.value = 1;
+
+    describe("Async value on change no loading");
+    expect.eq(data.value, 5);
+
+    // @ts-ignore
+    await Bun.sleep(100);
+
+    describe("Async value");
+    expect.eq(data.value, 1);
+}
+{
+    const data = state0.asyncAs("INIT", "LOADING", async (v) => await asyncData(v, 100));
+
+    // @ts-ignore
+    await Bun.sleep(100);
+
+    state0.value = 1;
+
+    describe("Async value on change loading");
+    expect.eq(data.value, "LOADING");
+
+    // @ts-ignore
+    await Bun.sleep(100);
+
+    describe("Async value");
+    expect.eq(data.value, 1);
+}
+
+done();
+
+async function asyncData<T>(data: T, ms = 1) {
+    // @ts-ignore
+    await Bun.sleep(ms);
+    return data;
+}
