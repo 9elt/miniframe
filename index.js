@@ -151,15 +151,9 @@ function setChildren(parent, D_children, tree) {
     appendNodeList(parent, createNodeList(children, leaf || tree));
 }
 
-// NOTE: We never flat our children list, this makes handling
-// state easier, but we enter the magical world of recursion
-function appendNodeList(parent, nodeList) {
-    for (const child of nodeList) {
-        Array.isArray(child)
-            ? appendNodeList(parent, child)
-            : parent.append(child);
-    }
-}
+// NOTE: To make state handling easier (possible?) we don't
+// flatten children lists. However, this means that everything
+// needs to be done using recursion
 
 function createNodeList(children, tree) {
     if (children !== undefined && !Array.isArray(children)) {
@@ -184,6 +178,7 @@ function createNodeList(children, tree) {
                     list[i] = replaceNodes(
                         list[i],
                         Array.isArray(curr)
+                            // NOTE: Recursion
                             ? createNodeList(curr, leaf)
                             : _createNode(curr, leaf)
                     );
@@ -193,10 +188,20 @@ function createNodeList(children, tree) {
             : D_child;
 
         list[i] = Array.isArray(child)
+            // NOTE: Recursion
             ? createNodeList(child, leaf || tree)
             : _createNode(child, leaf || tree);
     }
     return list;
+}
+
+function appendNodeList(parent, nodeList) {
+    for (const child of nodeList) {
+        Array.isArray(child)
+            // NOTE: Recursion
+            ? appendNodeList(parent, child)
+            : parent.append(child);
+    }
 }
 
 function replaceNodes(prev, update) {
@@ -215,6 +220,7 @@ function replaceNodes(prev, update) {
     const min = prev.length < update.length ? prev : update;
     const max = min === prev ? update : prev;
     for (let i = 0; i < min.length; i++) {
+        // NOTE: Recursion
         replaceNodes(prev[i], update[i]);
     }
     for (let i = min.length; i < max.length; i++) {
@@ -226,16 +232,19 @@ function replaceNodes(prev, update) {
 }
 
 function removeNode(prev) {
+    // NOTE:              Recursion
     Array.isArray(prev) ? prev.forEach(removeNode) : prev.remove();
 }
 
 function appendNodeAfter(sibiling, node) {
     if (Array.isArray(sibiling)) {
+        // NOTE: Recursion
         appendNodeAfter(sibiling.at(-1), node);
     }
     else if (Array.isArray(node)) {
         let last = sibiling;
         for (const _node of node) {
+            // NOTE: Recursion
             appendNodeAfter(last, last = _node);
         }
     }
