@@ -73,10 +73,6 @@ function _createNode(D_props, tree) {
         ? tree.children.push(leaf = stateTree(D_props, tree))
         && leaf.subs.push(
             D_props.sub((curr) => {
-                if (node instanceof window.Text
-                    && (typeof curr === 'string' || typeof curr === 'number')) {
-                    return node.textContent = curr;
-                }
                 clearStateTree(leaf);
                 node.replaceWith(node = _createNode(curr, leaf));
             })
