@@ -22,9 +22,7 @@ export class State<T> {
     unsub<F extends Sub<T>>(f: F): void;
 }
 
-export function createNode<P>(props: P): DOMNode<P> & {
-    clearStateTree: () => void;
-};
+export function createNode<P>(props: P): DOMNode<P> & { clear: () => void; };
 
 export type DOMNode<P> =
     P extends State<infer U> ? DOMNode<U> :

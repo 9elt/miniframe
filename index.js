@@ -1,7 +1,7 @@
 export function createNode(D_props) {
     const tree = stateTree();
     const node = _createNode(D_props, tree);
-    node.clearStateTree = () => clearStateTree(tree, 0);
+    node.clear = () => clearStateTree(tree, 0);
     // NOTE: We expose the tree for debug purposes
     node._stateTree = tree;
     return node;

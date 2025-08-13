@@ -183,7 +183,7 @@ expect.subs(states, {
     children: 1,
 });
 
-root.clearStateTree();
+root.clear();
 root.remove();
 
 expect.subs(states, {
