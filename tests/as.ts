@@ -3,14 +3,14 @@ import { done, expect, describe } from './util';
 
 const state0 = new State(0);
 const state1 = new State(1);
-const state1Group = State.use({ state1 });
+const state1Group = State.sync(state1);
 
 {
     let ran = 0;
 
     state0.as((c) => {
         const state1Copy = state1.as((v) => v);
-        const state1Group = State.use({ state1 }).as((v) => v);
+        const state1Group = State.sync(state1, (v) => v);
         const state1AsyncCopy = state1.asyncAs(0, 0, async (v) => await asyncData(v));
         ran++;
     });

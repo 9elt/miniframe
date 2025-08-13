@@ -583,13 +583,20 @@ IntrinsicElements += "\n}";
 console.log(`\
 export type Sub<T> = (current: T, previous: T) => void | Promise<void>;
 
+type Sync<S> = {
+    [K in keyof S]: S[K] extends State<infer U> ? U : never;
+};
+
 export class State<T> {
     constructor(value: T);
     value: T;
-    static use<T extends { [key: string]: State<any> }>(states: T): State<{
-        [K in keyof T]: T[K] extends State<infer U> ? U : never;
-    }>;
-    persist(): State<T>;
+    static sync<const S extends State<unknown>[]>(...states: [
+        ...S
+    ]): State<Sync<S>>;
+    static sync<const S extends State<unknown>[], C>(...states: [
+        ...S,
+        (...values: Sync<S>) => C
+    ]): State<C>;
     set(f: (current: T) => T): void;
     as<C>(f: (value: T) => C): State<C>;
     asyncAs<I, C>(

@@ -291,23 +291,24 @@ export class State {
         this._value = value;
         this._subs = [];
     }
-    static use(states) {
-        const group = new State({});
-
-        for (const key in states) {
-            const state = states[key];
-            group.value[key] = state.value;
-            const f = state.sub((curr) =>
-                group.value = Object.assign(group.value, { [key]: curr })
-            );
+    static sync(...states) {
+        const as = typeof states.at(-1) === "function" && states.pop();
+        const sync = new State(new Array(states.length));
+        for (let i = 0; i < states.length; i++) {
+            const state = states[i];
+            sync.value[i] = state.value;
+            // TODO: We may need to copy the array
+            const f = state.sub((curr) => {
+                sync.value[i] = curr;
+                sync.value = sync.value;
+            });
             // NOTE: Only collect references if there is a
             // parent, see State.as for how the stack works
             if (State._ChildrenStack.length > 0) {
                 State._ChildrenStack.push({ state, f });
             }
         }
-
-        return group;
+        return as ? sync.as((states) => as(...states)) : sync;
     }
     get value() {
         return this._value;
