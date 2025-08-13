@@ -22,7 +22,15 @@ export class State<T> {
     unsub<F extends Sub<T>>(f: F): void;
 }
 
-export function createNode<P>(props: P): DOMNode<P> & { clear: () => void; };
+export type ClearNode = { clear: () => void; };
+
+export function createNode<P>(props: P): DOMNode<P> & ClearNode;
+
+export type CreateNodeProps = Node | Mini.Element | string | number | false | null | undefined;
+
+export function createNode<N extends Node = Node>(
+    props: CreateNodeProps | State<CreateNodeProps>
+): N & ClearNode;
 
 export type DOMNode<P> =
     P extends State<infer U> ? DOMNode<U> :
@@ -180,9 +188,7 @@ export type MiniDataset = {
 }>;
 
 export declare namespace Mini {
-    type IntrinsicElement<T> = T extends SVGElement
-        ? Omit<T, "tagName"> & { [key: string]: any; }
-        : Omit<T, "tagName">;
+    type IntrinsicElement<T> = Omit<T, "tagName">;
 
     export interface IntrinsicElements {
         "a": IntrinsicElement<HTMLAnchorElement> | IntrinsicElement<SVGAElement>;
@@ -1213,7 +1219,7 @@ export declare namespace Mini {
         namespaceURI: "http://www.w3.org/2000/svg";
         children?: MiniChildren;
         dataset?: MiniDataset;
-        [key: string]: any;
+        [key: string]: unknown;
     }
 
     interface SVGAnimateElement extends SVGAnimationElement {

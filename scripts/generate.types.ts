@@ -280,13 +280,9 @@ for (const iName of allInterfaces) {
         Mini += _line;
     }
 
-    if (
-        iName === "SVGElement"
-        // iName.includes("SVG")
-        // || iName.includes("MathML")
-    ) {
+    if (iName === "SVGElement") {
         // NOTE: fix for SVG and MathML
-        Mini += `\n    [key: string]: any;`;
+        Mini += `\n    [key: string]: unknown;`;
     }
 
     Mini += Mini.charAt(Mini.length - 1) === "{"
@@ -367,7 +363,15 @@ export class State<T> {
     unsub<F extends Sub<T>>(f: F): void;
 }
 
-export function createNode<P>(props: P): DOMNode<P> & { clear: () => void; };
+export type ClearNode = { clear: () => void; };
+
+export function createNode<P>(props: P): DOMNode<P> & ClearNode;
+
+export type CreateNodeProps = Node | Mini.Element | string | number | false | null | undefined;
+
+export function createNode<N extends Node = Node>(
+    props: CreateNodeProps | State<CreateNodeProps>
+): N & ClearNode;
 
 ${DOMNode}
 
@@ -382,9 +386,7 @@ export type MiniDataset = {
 }>;
 
 export declare namespace Mini {
-    type IntrinsicElement<T> = T extends SVGElement
-        ? Omit<T, "tagName"> & { [key: string]: any; }
-        : Omit<T, "tagName">;
+    type IntrinsicElement<T> = Omit<T, "tagName">;
 
 ${IntrinsicElements}
 
