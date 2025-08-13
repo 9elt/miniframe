@@ -3,9 +3,7 @@
 A better version of `document.createElement` with support for JSX and minimal state
 management in 300 LOC
 
-> This is a beta, do not use in production!
-
-## Usage
+## JSX Support
 
 In your `tsconfig.json` add:
 
@@ -20,13 +18,15 @@ In your `tsconfig.json` add:
 
 ## Introduction
 
-Miniframe provides a simple API to create nodes, for example:
+Miniframe was created for people that like vanilla JS and enjoy rolling out their own code,
+but don't like how convoluted and inconvenient it is to create and manage html elements. It
+provides a `createNode` function with a simple API:
 
 ```tsx
 const p = createNode(<p>Hello, World!</p>);
 ```
 
-Is virtually equivalent to:
+It is virtually equivalent to:
 
 ```tsx
 const p = document.createElement("p");
@@ -47,7 +47,7 @@ name.value = "9elt";
 p.textContent; // "Hello, 9elt!"
 ```
 
-Also, there are components and global state is free!
+Components and global state are free!
 
 ```tsx
 const name = new State("World");
@@ -71,7 +71,7 @@ function Counter() {
     const color = counter.as(c => c < 10 ? "green" : "red");
 
     return (
-        <div id="root" style={{ textAlign: "center" }}>
+        <div className="counter" style={{ textAlign: "center" }}>
             <p>
                 Current count: <span style={{ color }}>{counter}</span>
             </p>
