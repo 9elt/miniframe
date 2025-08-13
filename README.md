@@ -63,29 +63,37 @@ const p = createNode(<Greeting />);
 
 A simple counter that stops at 10
 
-```js
+```tsx
 import { createNode, State } from "@9elt/miniframe";
 
-const counter = new State(0);
+function Counter() {
+    const counter = new State(0);
+    const color = counter.as(c => c < 10 ? "green" : "red");
 
-const div = createNode(
-    <div id="root" style={{ textAlign: "center" }}>
-        <p>current count: {counter}</p>
-        <p
-            style={{
-                color: counter.as((c) => (c < 10 ? "green" : "red")),
-            }}
-        >
-            {counter.as((c) => (c < 10 ? "keep going" : "stop!"))}
-        </p>
+    return (
+        <div id="root" style={{ textAlign: "center" }}>
+            <p>
+                Current count: <span style={{ color }}>{counter}</span>
+            </p>
+            <Button counter={counter} />
+        </div>
+    );
+}
+
+function Button({ counter }: { counter: State<number> }) {
+    return (
         <button
             onclick={() => counter.value++}
-            disabled={counter.as((c) => c === 10)}
+            disabled={counter.as(c => c === 10)}
         >
-            increment
+            INCREMENT
         </button>
-    </div>
-);
+    );
+}
 
-document.body.append(div);
+document.body.appendChild(
+    createNode(
+        <Counter />
+    )
+);
 ```
