@@ -330,9 +330,6 @@ export class State {
         }
         this._value = value;
     }
-    set(f) {
-        this.value = f(this._value);
-    }
     _clearChildren() {
         while (this._children.length) {
             const _ref = this._children.pop();

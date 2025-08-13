@@ -597,7 +597,6 @@ export class State<T> {
         ...S,
         (...values: Sync<S>) => C
     ]): State<C>;
-    set(f: (current: T) => T): void;
     as<C>(f: (value: T) => C): State<C>;
     asyncAs<I, C>(
         init: I,
