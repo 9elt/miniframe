@@ -1,7 +1,6 @@
 export type Sub<T> = (current: T, previous: T) => void | Promise<void>;
 
 export class State<T> {
-    static NoLoading: { NOT_PROVIDED: 0 };
     constructor(value: T);
     value: T;
     static use<T extends { [key: string]: State<any> }>(states: T): State<{
@@ -10,11 +9,15 @@ export class State<T> {
     persist(): State<T>;
     set(f: (current: T) => T): void;
     as<C>(f: (value: T) => C): State<C>;
-    asyncAs<C, I, L = typeof State.NoLoading>(
+    asyncAs<I, C>(
+        init: I,
+        f: ((value: T) => Promise<C>)
+    ): State<I | C>;
+    asyncAs<I, L, C>(
         init: I,
         loading: L,
         f: ((value: T) => Promise<C>)
-    ): (L extends typeof State.NoLoading ? State<I | C> : State<C | I | L>);
+    ): State<I | L | C>;
     sub<F extends Sub<T>>(f: F): F;
     unsub<F extends Sub<T>>(f: F): void;
 }

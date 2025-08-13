@@ -284,7 +284,6 @@ function setPrimitive(on, key, from, tree) {
 }
 
 export class State {
-    static NoLoading = {};
     static _ChildrenStack = [];
     _value;
     _subs;
@@ -378,7 +377,7 @@ export class State {
 
         return child;
     }
-    asyncAs(init, loading = State.NoLoading, f) {
+    asyncAs(init, loading, f = loading) {
         const child = new State(init);
 
         f(this._value).then((value) => child.value = value);
@@ -387,7 +386,7 @@ export class State {
             // NOTE: Loading is not a necessary state, the
             // previous value can be kept until the new value
             // is available
-            if (loading !== State.NoLoading) {
+            if (f !== loading) {
                 child.value = loading;
             }
             f(curr).then((value) => child.value = value);

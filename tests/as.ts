@@ -31,7 +31,7 @@ const state1Group = State.use({ state1 });
     });
 }
 {
-    const data = state0.asyncAs("INIT", State.NoLoading, async (v) => await asyncData(v, 100));
+    const data = state0.asyncAs("INIT", async (v) => await asyncData(v, 100));
 
     describe("Async initial value");
     expect.eq(data.value, "INIT");
