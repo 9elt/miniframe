@@ -291,7 +291,7 @@ export class State {
         this._value = value;
         this._subs = [];
     }
-    static sync(...states) {
+    static merge(...states) {
         const as = typeof states.at(-1) === "function" && states.pop();
         const sync = new State(new Array(states.length));
         for (let i = 0; i < states.length; i++) {
@@ -355,6 +355,10 @@ export class State {
     // stack after the initial reference (_ref) are collected
     // as children. Children are then cleared and recollected
     // every time the state changes.
+    // WARNING: This approach does not support nesting inside
+    // async callbacks. Unfortunately we don't have a way to
+    // tell if nesting actually happend inside an async call,
+    // and we have to rely on the user not to make mistakes.
     as(f) {
         this._children = [];
         const _ref = { state: this, f: null };
@@ -375,27 +379,27 @@ export class State {
 
         return child;
     }
-    asyncAs(init, loading, f = loading) {
+    // NOTE: Loading is not a necessary state, the
+    // previous value can be kept until the new value
+    // is available. To check if it wasn't provided we
+    // use a random private pointer, so the user can
+    // use any value, including undefined
+    await(init, loading = State._ChildrenStack) {
         const child = new State(init);
 
-        f(this._value).then((value) => child.value = value);
+        Promise.resolve(this._value)
+            .then((value) => child.value = value)
+            .catch(console.error);
 
         const sub = this.sub((curr) => {
-            // NOTE: Loading is not a necessary state, the
-            // previous value can be kept until the new value
-            // is available
-            if (f !== loading) {
+            if (loading !== State._ChildrenStack) {
                 child.value = loading;
             }
-            f(curr).then((value) => child.value = value);
+            Promise.resolve(curr)
+                .then((value) => child.value = value)
+                .catch(console.error);
         });
 
-        // NOTE: The stack approach we use to collect children
-        // is not compatible with async code, so State.asyncAs
-        // can be nested but does not support nesting.
-        // Unfortunately we don't have a way to tell if nesting
-        // happend inside a State.asyncAs call yet, and we rely
-        // on the user not to make mistakes
         if (State._ChildrenStack.length > 0) {
             State._ChildrenStack.push({ state: this, f: sub });
         }

@@ -3,15 +3,15 @@ import { done, expect, describe } from './util';
 
 const state0 = new State(0);
 const state1 = new State(1);
-const state1Group = State.sync(state1);
+const state1Group = State.merge(state1);
 
 {
     let ran = 0;
 
     state0.as((c) => {
         const state1Copy = state1.as((v) => v);
-        const state1Group = State.sync(state1, (v) => v);
-        const state1AsyncCopy = state1.asyncAs(0, 0, async (v) => await asyncData(v));
+        const state1Group = State.merge(state1, (v) => v);
+        const state1AsyncCopy = state1.as(async (v) => asyncData(v)).await(0, 0);
         ran++;
     });
 
@@ -31,7 +31,9 @@ const state1Group = State.sync(state1);
     });
 }
 {
-    const data = state0.asyncAs("INIT", async (v) => await asyncData(v, 100));
+    const data: State<"INIT" | number> = state0
+        .as(async (v) => asyncData(v, 100))
+        .await("INIT");
 
     describe("Async initial value");
     expect.eq(data.value, "INIT");
@@ -54,7 +56,9 @@ const state1Group = State.sync(state1);
     expect.eq(data.value, 1);
 }
 {
-    const data = state0.asyncAs("INIT", "LOADING", async (v) => await asyncData(v, 100));
+    const data: State<"INIT" | "LOADING" | number> = state0
+        .as(async (v) => asyncData(v, 100))
+        .await("INIT", "LOADING");
 
     // @ts-ignore
     await Bun.sleep(100);

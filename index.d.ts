@@ -1,29 +1,22 @@
 export type Sub<T> = (current: T, previous: T) => void | Promise<void>;
 
-type Sync<S> = {
+type Merge<S> = {
     [K in keyof S]: S[K] extends State<infer U> ? U : never;
 };
 
 export class State<T> {
     constructor(value: T);
     value: T;
-    static sync<const S extends State<unknown>[]>(...states: [
+    static merge<const S extends State<unknown>[]>(...states: [
         ...S
-    ]): State<Sync<S>>;
-    static sync<const S extends State<unknown>[], C>(...states: [
+    ]): State<Merge<S>>;
+    static merge<const S extends State<unknown>[], C>(...states: [
         ...S,
-        (...values: Sync<S>) => C
+        (...values: Merge<S>) => C
     ]): State<C>;
     as<C>(f: (value: T) => C): State<C>;
-    asyncAs<I, C>(
-        init: I,
-        f: ((value: T) => Promise<C>)
-    ): State<I | C>;
-    asyncAs<I, L, C>(
-        init: I,
-        loading: L,
-        f: ((value: T) => Promise<C>)
-    ): State<I | L | C>;
+    await<I>(init: I): State<I | Awaited<T>>;
+    await<I, L>(init: I, loading: L): State<I | L | Awaited<T>>;
     sub<F extends Sub<T>>(f: F): F;
     unsub<F extends Sub<T>>(f: F): void;
 }
