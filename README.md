@@ -1,6 +1,7 @@
 # Miniframe
 
-Everything you need to create nodes with states, in 300 LOC
+A better version of `document.createElement` with support for JSX and minimal state
+management in 300 LOC
 
 > This is a beta, do not use in production!
 
