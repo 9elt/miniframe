@@ -1,7 +1,7 @@
 {
     "name": "@9elt/miniframe",
     "version": "0.10.0",
-    "description": "Everything you need to create nodes with states, in 200 LOC",
+    "description": "Everything you need to create nodes with states, in 300 LOC",
     "main": "./dist/esm/index.js",
     "types": "./dist/esm/index.d.ts",
     "exports": {

@@ -1,10 +1,10 @@
 # Miniframe
 
-Everything you need to create nodes with states, in 200 LOC
+Everything you need to create nodes with states, in 300 LOC
 
 > This is a beta, do not use in production!
 
-## usage
+## Usage
 
 In your `tsconfig.json` add:
 
@@ -17,7 +17,36 @@ In your `tsconfig.json` add:
 }
 ```
 
-## example
+## Introduction
+
+Miniframe provides a simple API to create nodes, for example:
+
+```tsx
+const p = createNode(<p>Hello, World!</p>);
+```
+
+Is virtually equivalent to:
+
+```tsx
+const p = document.createElement("p");
+p.append("Hello, World!");
+```
+
+But `createNode` can do more!
+
+```tsx
+const name = new State("World");
+
+const p = createNode(<p>Hello, {name}!</p>);
+
+p.textContent; // "Hello, World!"
+
+name.value = "9elt";
+
+p.textContent; // "Hello, 9elt!"
+```
+
+## A simple counter
 
 A simple counter that stops at 10
 
