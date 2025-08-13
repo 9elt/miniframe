@@ -201,7 +201,7 @@ function appendNodeList(parent, nodeList) {
         Array.isArray(child)
             // NOTE: Recursion
             ? appendNodeList(parent, child)
-            : parent.append(child);
+            : parent.appendChild(child);
     }
 }
 
