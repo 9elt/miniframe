@@ -62,8 +62,8 @@ function _createNode(D_props, tree) {
     //                     Only create and add leaf for states
     //     && leaf.subs.push(
     //             ^^^^^^^^^ Connect below subscriber
-    //          D_x.sub((curr) => {...})
-    //                             ^^^ Handle D_x change
+    //          D_x._sub((curr) => {...})
+    //                              ^^^ Handle D_x change
     //     )
     //     && D_x.value
     //            ^^^^^ Access the static value
@@ -73,7 +73,7 @@ function _createNode(D_props, tree) {
     const props = D_props instanceof State
         ? tree.children.push(leaf = stateTree(D_props, tree))
         && leaf.subs.push(
-            D_props.sub((curr) => {
+            D_props._sub((curr) => {
                 clearStateTree(leaf);
                 node.replaceWith(node = _createNode(curr, leaf));
             })
@@ -103,7 +103,7 @@ function copyObject(on, D_from, tree) {
     const from = D_from instanceof State
         ? tree.children.push(leaf = stateTree(D_from, tree))
         && leaf.subs.push(
-            D_from.sub((curr, prev) => {
+            D_from._sub((curr, prev) => {
                 clearStateTree(leaf);
                 for (const key in prev) {
                     setPrimitive(on, key, null);
@@ -139,7 +139,7 @@ function setChildren(parent, D_children, tree) {
     const children = D_children instanceof State
         ? (tree.children.push(leaf = stateTree(D_children, tree)))
         && leaf.subs.push(
-            D_children.sub((curr) => {
+            D_children._sub((curr) => {
                 clearStateTree(leaf);
                 replaceNodes(
                     Array.from(parent.childNodes),
@@ -174,7 +174,7 @@ function createNodeList(children, tree) {
         const child = D_child instanceof State
             ? tree.children.push(leaf = stateTree(D_child, tree))
             && leaf.subs.push(
-                D_child.sub((curr) => {
+                D_child._sub((curr) => {
                     clearStateTree(leaf);
                     list[i] = replaceNodes(
                         list[i],
@@ -260,7 +260,7 @@ function setPrimitive(on, key, from, tree) {
     const value = D_value instanceof State
         ? tree.children.push(leaf = stateTree(D_value, tree))
         && leaf.subs.push(
-            D_value.sub((curr) => setPrimitive(on, key, { [key]: curr }))
+            D_value._sub((curr) => setPrimitive(on, key, { [key]: curr }))
         )
         && D_value.value
         : D_value;
@@ -295,18 +295,12 @@ export class State {
         const as = typeof states.at(-1) === "function" && states.pop();
         const sync = new State(new Array(states.length));
         for (let i = 0; i < states.length; i++) {
-            const state = states[i];
-            sync.value[i] = state.value;
+            sync.value[i] = states[i].value;
             // TODO: We may need to copy the array
-            const f = state.sub((curr) => {
+            states[i].sub((curr) => {
                 sync.value[i] = curr;
                 sync.value = sync.value;
             });
-            // NOTE: Only collect references if there is a
-            // parent, see State.as for how the stack works
-            if (State._ChildrenStack.length > 0) {
-                State._ChildrenStack.push({ state, f });
-            }
         }
         return as ? sync.as((states) => as(...states)) : sync;
     }
@@ -369,7 +363,7 @@ export class State {
 
         const child = new State(value);
 
-        _ref.f = this.sub((curr) => {
+        _ref.f = this._sub((curr) => {
             this._clearChildren();
             State._ChildrenStack.push(_ref);
             const value = f(curr);
@@ -391,7 +385,7 @@ export class State {
             .then((value) => child.value = value)
             .catch(console.error);
 
-        const sub = this.sub((curr) => {
+        this.sub((curr) => {
             if (loading !== State._ChildrenStack) {
                 child.value = loading;
             }
@@ -400,14 +394,18 @@ export class State {
                 .catch(console.error);
         });
 
-        if (State._ChildrenStack.length > 0) {
-            State._ChildrenStack.push({ state: this, f: sub });
-        }
-
         return child;
     }
+    _sub(f) {
+        this._subs.push(f);
+        return f;
+    }
+    // NOTE: Safe (and public) version of State._sub
     sub(f) {
         this._subs.push(f);
+        if (State._ChildrenStack.length > 0) {
+            State._ChildrenStack.push({ state: this, f });
+        }
         return f;
     }
     unsub(f) {
