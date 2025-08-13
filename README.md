@@ -46,6 +46,18 @@ name.value = "9elt";
 p.textContent; // "Hello, 9elt!"
 ```
 
+Also, there are components and global state is free!
+
+```tsx
+const name = new State("World");
+
+function Greeting() {
+    return (<p>Hello, {name}!</p>);
+}
+
+const p = createNode(<Greeting />);
+```
+
 ## A simple counter
 
 A simple counter that stops at 10
