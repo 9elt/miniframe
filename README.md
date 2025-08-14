@@ -1,7 +1,11 @@
 # Miniframe
 
 A better version of `document.createElement` with support for JSX and minimal state
-management in 300 LOC
+management in 300 LOC.
+
+```
+npm i @9elt/miniframe
+```
 
 ## JSX Support
 
@@ -47,7 +51,19 @@ name.value = "9elt";
 p.textContent; // "Hello, 9elt!"
 ```
 
-Components and global states are free!
+State can be transformed:
+
+```tsx
+const name = new State("World");
+
+const nameUpperCase = name.as(n => n.toUpperCase());
+nameUpperCase.value; // "WORLD"
+
+name.value = "9elt";
+nameUpperCase.value; // "9ELT"
+```
+
+Components and global states come for free!
 
 ```tsx
 const name = new State("World");
@@ -59,9 +75,23 @@ function Greeting() {
 const p = createNode(<Greeting />);
 ```
 
+Finally, `Promise` states can be awaited:
+
+```tsx
+const promise = fetch("https://example.com");
+
+const response = new State(promise).await(null); // State<Response | null>
+
+response.value; // null
+
+await promise;
+
+response.value; // Response { ... }
+```
+
 ## Example
 
-A simple counter that stops at 10
+A simple counter that stops at 10:
 
 ```tsx
 import { createNode, State } from "@9elt/miniframe";
@@ -98,48 +128,51 @@ document.body.appendChild(
 );
 ```
 
-## Async state
+## Async state limitations
 
-States with `Promise` values can be awaited:
+During async code execution it is impossible to track all state dependencies,
+meaning some may not be cleaned up when needed.
 
-```tsx
-async function get(url): Promise<string> { ... }
-
-const url = new State("https://example.com");
-
-const data = url
-    .as(async url => await get(url)) // State<Promise<string>>
-    .await("Loading...");            // State<string>
-
-data.value // "Loading..."
-
-await sleep(1000);
-
-data.value // <!DOCTYPE html><html...
-```
-
-### Async state limitations
-
-It is very important that when called with an
-`async` callback `State.as` never contains nested
-`State.as` calls:
+To avoid this, it is very important that `State.as`, when called with an `async`
+callback, never contains nested `State.as` calls.
 
 <table>
-<tr><td>Unsafe</td><td>Best practice</td></tr>
+<tr><td>✗ Unsafe</td><td>✓ Best practice</td></tr>
+<tr></tr>
+
+<tr>
+<td>
+
+Do NOT use components and states inside `State.as async`
+
+</td>
+<td>
+
+Have your logic in `State.as async`, then your components and states
+synchronously
+
+</td>
+</tr>
+
 <tr>
 <td>
 
 ```tsx
-state.as(async v => {
-    const data = await getData(v);
+state
+    .as(async v => {
+        const data = await getData(v);
 
-    // WARNING: This is unsafe,
-    // Component could be calling
-    // State.as internally
-    return (
-        <Component data={data} />
-    );
-}).await(init);
+        // WARNING: This state can't
+        // be tracked at all
+        const stray = state.as(...);
+
+        // WARNING: Component could be
+        // calling State.as internally
+        return (
+            <Component data={data} />
+        );
+    })
+    .await(init);
 ```
 
 </td>
@@ -147,11 +180,15 @@ state.as(async v => {
 
 ```tsx
 state
-    .as(async v => await getData(v))
+    .as(getData)
     .await(init)
-    .as(data => (
-        <Component data={data} />
-    ));
+    .as(data => {
+        const tracked = state.as(...);
+
+        return (
+            <Component data={data} />
+        );
+    });
 ```
 
 </td>
