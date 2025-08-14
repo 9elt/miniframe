@@ -1,31 +1,25 @@
-import type { Mini, MiniNode } from ".";
+import type { Mini, MiniNode, State } from ".";
 
-type TagNames = keyof Mini.IntrinsicElements;
-type Fn = ((props: any) => any);
+type TagName = keyof Mini.IntrinsicElements;
 
-export function jsx<T extends TagNames | Fn>(
-    key: T,
-    props: T extends TagNames ? Mini.IntrinsicElements[T] : T extends Fn ? Parameters<T>[0] : never
-): Mini.Element;
+type Fn = (props: unknown) => unknown;
 
-export function jsxs<T extends TagNames | Fn>(
-    key: T,
-    props: T extends TagNames ? Mini.IntrinsicElements[T] : T extends Fn ? Parameters<T>[0] : never
-): Mini.Element;
+type Props<K> = K extends TagName ? Mini.IntrinsicElements[K] :
+    K extends Fn ? Parameters<K>[0] :
+    never;
 
-export function jsxDEV<T extends TagNames | Fn>(
-    key: T,
-    props: T extends TagNames ? Mini.IntrinsicElements[T] : T extends Fn ? Parameters<T>[0] : never
-): Mini.Element;
+export function jsx<K extends TagName | Fn>(key: K, props: Props<K>): Mini.Element;
 
-export function Fragment(
-    props: Partial<Mini.Element> & { children?: MiniNode[] }
-): Mini.Element;
+export function jsxs<K extends TagName | Fn>(key: K, props: Props<K>): Mini.Element;
+
+export function jsxDEV<K extends TagName | Fn>(key: K, props: Props<K>): Mini.Element;
+
+export function Fragment(props: { children: MiniNode }): Mini.Element;
 
 export declare namespace JSX {
-    interface IntrinsicElements extends Mini.IntrinsicElements { }
-    interface Element extends Mini.Element { }
-    interface ElementChildrenAttribute {
+    type IntrinsicElements = Mini.IntrinsicElements;
+    type Element = State<Element extends Mini.Element ? Mini.Element : never> | Mini.Element;
+    type ElementChildrenAttribute = {
         children: any;
     }
 }
