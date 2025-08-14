@@ -30,7 +30,10 @@
     "license": "MIT",
     "keywords": [
         "state",
-        "createNode"
+        "state-management",
+        "createElement",
+        "createNode",
+        "jsx"
     ],
     "readme": "./README.md",
     "homepage": "https://github.com/9elt/miniframe#readme",
