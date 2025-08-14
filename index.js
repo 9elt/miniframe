@@ -380,7 +380,7 @@ export class State {
         const value = f(this._value);
         this._collectChildren(ref);
         if (value instanceof Promise) {
-            value.then(warningNestedStateAs);
+            value.then(warning);
         }
 
         const child = new State(value);
@@ -393,7 +393,7 @@ export class State {
             this._collectChildren(ref);
             child.value = value;
             if (value instanceof Promise) {
-                value.then(warningNestedStateAs);
+                value.then(warning);
             }
         });
 
@@ -445,16 +445,14 @@ export class State {
     }
 }
 
-function warningNestedStateAs(value, seen = new WeakSet()) {
-    Array.isArray(value) ? !seen.has(value) && seen.add(value) &&
-        value.forEach((v) => warningNestedStateAs(v, seen))
-        : value instanceof State ? !seen.has(value) && (seen.add(value) &&
-            value._parent
-            ? !seen.has(warningNestedStateAs) && seen.add(warningNestedStateAs) && console.error(
+function warning(value, seen = new WeakSet()) {
+    value instanceof State
+        ? !seen.has(value) && (seen.add(value) && value._parent
+            ? !seen.has(warning) && seen.add(warning) && console.error(
                 "Derived state detected, please never nest State.as inside async State.as, " +
                 "see: https://github.com/9elt/miniframe?tab=readme-ov-file#async-state-limitations"
             )
-            : warningNestedStateAs(value.value, seen))
-            : value && typeof value === "object" ? !seen.has(value) && seen.add(value) &&
-                Object.values(value).forEach((v) => warningNestedStateAs(v, seen)) : 0;
+            : warning(value.value, seen))
+        : value && typeof value === "object" ? !seen.has(value) && seen.add(value) &&
+            Object.values(value).forEach((v) => warning(v, seen)) : 0;
 }
