@@ -326,49 +326,75 @@ export class State {
     }
     _clearChildren() {
         while (this._children.length) {
-            const _ref = this._children.pop();
-            if (_ref.state._children) {
-                _ref.state._clearChildren();
+            const ref = this._children.pop();
+            if (ref.state._children) {
+                ref.state._clearChildren();
             }
-            _ref.state.unsub(_ref.f);
+            ref.state.unsub(ref.f);
         }
     }
-    _collectChildren(_ref) {
-        if (State._ChildrenStack.at(-1) !== _ref) {
+    _collectChildren(ref) {
+        if (State._ChildrenStack.at(-1) !== ref) {
             let pop;
-            while ((pop = State._ChildrenStack.pop()) !== _ref) {
+            while ((pop = State._ChildrenStack.pop()) !== ref) {
                 this._children.push(pop);
             }
         } else if (State._ChildrenStack.length === 1) {
             State._ChildrenStack.pop();
         }
     }
-    // NOTE: When State.as is called, a reference (_ref) is
+    // NOTE: When State.as is called, a reference (ref) is
     // pushed onto a global stack and the (f) callback is
     // exectuted, then all references that are present in the
-    // stack after the initial reference (_ref) are collected
-    // as children. Children are then cleared and recollected
+    // stack after the initial reference (ref) are collected as
+    // children. Children are then cleared and recollected
     // every time the state changes.
+    //
     // WARNING: This approach does not support nesting inside
-    // async callbacks. Unfortunately we don't have a way to
-    // tell if nesting actually happend inside an async call,
-    // and we have to rely on the user not to make mistakes.
+    // async callbacks:
+    //
+    // const derived = state.as(async () => {
+    //    const collectedChild = state.as(...);
+    //
+    //    await something();
+    //    ^^^^^ Children collection ends here
+    //
+    //    const strayChild = state.as(...);
+    //          ^ There is no way to know about this child
+    //
+    //    return state.as(...);
+    //           ^^^^^^^^ There is no way to know if State.as
+    //           was actually called here, or previously
+    //           assigned to a variable outside the scope.
+    //           However we can always log a warning, to let
+    //           the user know he's not following best
+    //           practices, this should cover almost all cases,
+    //           except when the user creates a derived state
+    //           without ever using it as above.
+    // });
     as(f) {
         this._children = [];
-        const _ref = { state: this, f: null };
+        const ref = { state: this, f: null };
 
-        State._ChildrenStack.push(_ref);
+        State._ChildrenStack.push(ref);
         const value = f(this._value);
-        this._collectChildren(_ref);
+        this._collectChildren(ref);
+        if (value instanceof Promise) {
+            value.then(warningNestedStateAs);
+        }
 
         const child = new State(value);
+        child._parent = this;
 
-        _ref.f = this._sub((curr) => {
+        ref.f = this._sub((curr) => {
             this._clearChildren();
-            State._ChildrenStack.push(_ref);
+            State._ChildrenStack.push(ref);
             const value = f(curr);
-            this._collectChildren(_ref);
+            this._collectChildren(ref);
             child.value = value;
+            if (value instanceof Promise) {
+                value.then(warningNestedStateAs);
+            }
         });
 
         return child;
@@ -417,4 +443,20 @@ export class State {
         }
         this._subs.length = length;
     }
+}
+
+function warningNestedStateAs(value, seen = new WeakSet()) {
+    Array.isArray(value) ? !seen.has(value) && seen.add(value) &&
+        value.forEach((v) => warningNestedStateAs(v, seen))
+        : value instanceof State ? !seen.has(value) && (seen.add(value) &&
+            value._parent
+            // TODO: Warning message can be improved, also
+            // LINK should point to some documentation
+            ? console.warn(
+                "Derived state detected, please never nest State.as inside async State.as, " +
+                "see: LINK"
+            )
+            : warningNestedStateAs(value.value, seen))
+            : value && typeof value === "object" ? !seen.has(value) && seen.add(value) &&
+                Object.values(value).forEach((v) => warningNestedStateAs(v, seen)) : 0;
 }
