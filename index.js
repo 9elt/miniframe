@@ -452,7 +452,7 @@ function warningNestedStateAs(value, seen = new WeakSet()) {
             value._parent
             // TODO: Warning message can be improved, also
             // LINK should point to some documentation
-            ? console.warn(
+            ? !seen.has(warningNestedStateAs) && seen.add(warningNestedStateAs) && console.error(
                 "Derived state detected, please never nest State.as inside async State.as, " +
                 "see: LINK"
             )
