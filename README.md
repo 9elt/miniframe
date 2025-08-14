@@ -47,7 +47,7 @@ name.value = "9elt";
 p.textContent; // "Hello, 9elt!"
 ```
 
-Components and global state are free!
+Components and global states are free!
 
 ```tsx
 const name = new State("World");
@@ -97,3 +97,65 @@ document.body.appendChild(
     )
 );
 ```
+
+## Handling async state
+
+States with `Promise` values can be awaited:
+
+```tsx
+async function get(url) { ... }
+
+const url = new State("https://example.com");
+
+const data = url
+    .as(async url => await get(url))
+    .await("Loading...");
+
+data.value // "Loading..."
+
+await sleep(1000);
+
+data.value // <!DOCTYPE html><html...
+```
+
+### Async state limitations
+
+It is very important that when called with an
+`async` callback `State.as` never contains nested
+`State.as` calls:
+
+<table>
+<tr><td>Unsafe</td><td>Best practice</td></tr>
+<tr>
+<td>
+
+```tsx
+state.as(async value => {
+    const data = await getData(value);
+
+    // WARNING: This is unsafe,
+    // Component could be calling
+    // State.as internally
+    return (
+        <Component data={data} />
+    );
+}).await(init);
+```
+
+</td>
+<td>
+
+```tsx
+state
+    .as(async value => 
+        await getData(value)
+    )
+    .await(init)
+    .as(data => (
+        <Component data={data} />
+    ));
+```
+
+</td>
+</tr>
+</table>
