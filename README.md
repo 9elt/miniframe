@@ -59,7 +59,7 @@ function Greeting() {
 const p = createNode(<Greeting />);
 ```
 
-## A simple counter
+## Example
 
 A simple counter that stops at 10
 
@@ -86,7 +86,7 @@ function Button({ counter }: { counter: State<number> }) {
             onclick={() => counter.value++}
             disabled={counter.as(c => c === 10)}
         >
-            INCREMENT
+            Increment
         </button>
     );
 }
@@ -98,18 +98,18 @@ document.body.appendChild(
 );
 ```
 
-## Handling async state
+## Async state
 
 States with `Promise` values can be awaited:
 
 ```tsx
-async function get(url) { ... }
+async function get(url): Promise<string> { ... }
 
 const url = new State("https://example.com");
 
 const data = url
-    .as(async url => await get(url))
-    .await("Loading...");
+    .as(async url => await get(url)) // State<Promise<string>>
+    .await("Loading...");            // State<string>
 
 data.value // "Loading..."
 
@@ -130,8 +130,8 @@ It is very important that when called with an
 <td>
 
 ```tsx
-state.as(async value => {
-    const data = await getData(value);
+state.as(async v => {
+    const data = await getData(v);
 
     // WARNING: This is unsafe,
     // Component could be calling
@@ -147,9 +147,7 @@ state.as(async value => {
 
 ```tsx
 state
-    .as(async value => 
-        await getData(value)
-    )
+    .as(async v => await getData(v))
     .await(init)
     .as(data => (
         <Component data={data} />
