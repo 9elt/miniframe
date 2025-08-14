@@ -450,11 +450,9 @@ function warningNestedStateAs(value, seen = new WeakSet()) {
         value.forEach((v) => warningNestedStateAs(v, seen))
         : value instanceof State ? !seen.has(value) && (seen.add(value) &&
             value._parent
-            // TODO: Warning message can be improved, also
-            // LINK should point to some documentation
             ? !seen.has(warningNestedStateAs) && seen.add(warningNestedStateAs) && console.error(
                 "Derived state detected, please never nest State.as inside async State.as, " +
-                "see: LINK"
+                "see: https://github.com/9elt/miniframe?tab=readme-ov-file#async-state-limitations"
             )
             : warningNestedStateAs(value.value, seen))
             : value && typeof value === "object" ? !seen.has(value) && seen.add(value) &&
