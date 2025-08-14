@@ -81,15 +81,15 @@ function _createNode(D_props, tree) {
         && D_props.value
         : D_props;
     return (node = (
-        typeof props === 'string' || typeof props === 'number'
+        typeof props === "string" || typeof props === "number"
             ? window.document.createTextNode(props)
             : !props
-                ? window.document.createTextNode('')
+                ? window.document.createTextNode("")
                 : props instanceof window.Node
                     ? props
                     : copyObject(
                         window.document.createElementNS(
-                            props.namespaceURI || 'http://www.w3.org/1999/xhtml',
+                            props.namespaceURI || "http://www.w3.org/1999/xhtml",
                             props.tagName
                         ),
                         props,
@@ -114,16 +114,16 @@ function copyObject(on, D_from, tree) {
         && D_from.value
         : D_from;
     for (const key in from) {
-        if (key === 'namespaceURI' || key === 'tagName') {
+        if (key === "namespaceURI" || key === "tagName") {
             continue;
         }
-        else if (key === 'children') {
+        else if (key === "children") {
             setChildren(on, from[key], leaf || tree);
         }
         else if (
             typeof (
                 from[key] instanceof State ? from[key].value : from[key]
-            ) === 'object'
+            ) === "object"
         ) {
             copyObject(on[key], from[key], leaf || tree);
         }
@@ -267,13 +267,13 @@ function setPrimitive(on, key, from, tree) {
     try {
         // NOTE: SVG elements require properties to be set via
         // the setAttribute api
-        on.namespaceURI === 'http://www.w3.org/2000/svg'
-            && (typeof value === 'string'
-                || typeof value === 'number'
-                || typeof value === 'undefined')
+        on.namespaceURI === "http://www.w3.org/2000/svg"
+            && (typeof value === "string"
+                || typeof value === "number"
+                || typeof value === "undefined")
             ? !value && value !== 0
-                ? on.removeAttribute(key === 'className' ? 'class' : key)
-                : on.setAttribute(key === 'className' ? 'class' : key, value)
+                ? on.removeAttribute(key === "className" ? "class" : key)
+                : on.setAttribute(key === "className" ? "class" : key, value)
 
             // NOTE: Assignment for HTML and MathMl elements
             : on[key] = value;
@@ -314,11 +314,11 @@ export class State {
             }
             catch (err) {
                 console.error(
-                    'Subscriber error:', err,
-                    'on:', this,
-                    'calling:', this._subs[i],
-                    'setting:', value,
-                    'over:', this._value
+                    "Subscriber error:", err,
+                    "on:", this,
+                    "calling:", this._subs[i],
+                    "setting:", value,
+                    "over:", this._value
                 );
             }
         }
