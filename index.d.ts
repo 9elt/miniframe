@@ -1,3 +1,5 @@
+// npm run generate:types
+
 export type Sub<T> = (current: T, previous: T) => void | Promise<void>;
 
 type Merge<S> = {
@@ -21,163 +23,30 @@ export class State<T> {
     unsub<F extends Sub<T>>(f: F): void;
 }
 
-export type ClearNode = { clear: () => void; };
-
-export function createNode<P>(props: P): DOMNode<P> & ClearNode;
-
-export type CreateNodeProps = Node | Mini.Element | string | number | false | null | undefined;
-
-export function createNode<N extends Node = Node>(
+export function createNode<T extends Node = Node>(
     props: CreateNodeProps | State<CreateNodeProps>
-): N & ClearNode;
+): T & { clear: () => void };
 
-export type DOMNode<P> =
-    P extends State<infer U> ? DOMNode<U> :
-    P extends Node ? P :
-    P extends Mini.HTMLAnchorElement ? HTMLAnchorElement :
-    P extends Mini.SVGAElement ? SVGAElement :
-    P extends Mini.HTMLAreaElement ? HTMLAreaElement :
-    P extends Mini.HTMLAudioElement ? HTMLAudioElement :
-    P extends Mini.HTMLBaseElement ? HTMLBaseElement :
-    P extends Mini.HTMLQuoteElement ? HTMLQuoteElement :
-    P extends Mini.HTMLBodyElement ? HTMLBodyElement :
-    P extends Mini.HTMLBRElement ? HTMLBRElement :
-    P extends Mini.HTMLButtonElement ? HTMLButtonElement :
-    P extends Mini.HTMLCanvasElement ? HTMLCanvasElement :
-    P extends Mini.HTMLTableCaptionElement ? HTMLTableCaptionElement :
-    P extends Mini.HTMLTableColElement ? HTMLTableColElement :
-    P extends Mini.HTMLDataElement ? HTMLDataElement :
-    P extends Mini.HTMLDataListElement ? HTMLDataListElement :
-    P extends Mini.HTMLModElement ? HTMLModElement :
-    P extends Mini.HTMLDetailsElement ? HTMLDetailsElement :
-    P extends Mini.HTMLDialogElement ? HTMLDialogElement :
-    P extends Mini.HTMLDivElement ? HTMLDivElement :
-    P extends Mini.HTMLDListElement ? HTMLDListElement :
-    P extends Mini.HTMLEmbedElement ? HTMLEmbedElement :
-    P extends Mini.HTMLFieldSetElement ? HTMLFieldSetElement :
-    P extends Mini.HTMLFormElement ? HTMLFormElement :
-    P extends Mini.HTMLHeadingElement ? HTMLHeadingElement :
-    P extends Mini.HTMLHeadElement ? HTMLHeadElement :
-    P extends Mini.HTMLHRElement ? HTMLHRElement :
-    P extends Mini.HTMLHtmlElement ? HTMLHtmlElement :
-    P extends Mini.HTMLIFrameElement ? HTMLIFrameElement :
-    P extends Mini.HTMLImageElement ? HTMLImageElement :
-    P extends Mini.HTMLInputElement ? HTMLInputElement :
-    P extends Mini.HTMLLabelElement ? HTMLLabelElement :
-    P extends Mini.HTMLLegendElement ? HTMLLegendElement :
-    P extends Mini.HTMLLIElement ? HTMLLIElement :
-    P extends Mini.HTMLLinkElement ? HTMLLinkElement :
-    P extends Mini.HTMLMapElement ? HTMLMapElement :
-    P extends Mini.HTMLMenuElement ? HTMLMenuElement :
-    P extends Mini.HTMLMetaElement ? HTMLMetaElement :
-    P extends Mini.HTMLMeterElement ? HTMLMeterElement :
-    P extends Mini.HTMLObjectElement ? HTMLObjectElement :
-    P extends Mini.HTMLOListElement ? HTMLOListElement :
-    P extends Mini.HTMLOptGroupElement ? HTMLOptGroupElement :
-    P extends Mini.HTMLOptionElement ? HTMLOptionElement :
-    P extends Mini.HTMLOutputElement ? HTMLOutputElement :
-    P extends Mini.HTMLParagraphElement ? HTMLParagraphElement :
-    P extends Mini.HTMLPictureElement ? HTMLPictureElement :
-    P extends Mini.HTMLPreElement ? HTMLPreElement :
-    P extends Mini.HTMLProgressElement ? HTMLProgressElement :
-    P extends Mini.HTMLScriptElement ? HTMLScriptElement :
-    P extends Mini.SVGScriptElement ? SVGScriptElement :
-    P extends Mini.HTMLSelectElement ? HTMLSelectElement :
-    P extends Mini.HTMLSlotElement ? HTMLSlotElement :
-    P extends Mini.HTMLSourceElement ? HTMLSourceElement :
-    P extends Mini.HTMLSpanElement ? HTMLSpanElement :
-    P extends Mini.HTMLStyleElement ? HTMLStyleElement :
-    P extends Mini.SVGStyleElement ? SVGStyleElement :
-    P extends Mini.HTMLTableElement ? HTMLTableElement :
-    P extends Mini.HTMLTableSectionElement ? HTMLTableSectionElement :
-    P extends Mini.HTMLTableCellElement ? HTMLTableCellElement :
-    P extends Mini.HTMLTemplateElement ? HTMLTemplateElement :
-    P extends Mini.HTMLTextAreaElement ? HTMLTextAreaElement :
-    P extends Mini.HTMLTimeElement ? HTMLTimeElement :
-    P extends Mini.HTMLTitleElement ? HTMLTitleElement :
-    P extends Mini.SVGTitleElement ? SVGTitleElement :
-    P extends Mini.HTMLTableRowElement ? HTMLTableRowElement :
-    P extends Mini.HTMLTrackElement ? HTMLTrackElement :
-    P extends Mini.HTMLUListElement ? HTMLUListElement :
-    P extends Mini.HTMLVideoElement ? HTMLVideoElement :
-    P extends Mini.SVGAnimateElement ? SVGAnimateElement :
-    P extends Mini.SVGAnimateMotionElement ? SVGAnimateMotionElement :
-    P extends Mini.SVGAnimateTransformElement ? SVGAnimateTransformElement :
-    P extends Mini.SVGCircleElement ? SVGCircleElement :
-    P extends Mini.SVGClipPathElement ? SVGClipPathElement :
-    P extends Mini.SVGDefsElement ? SVGDefsElement :
-    P extends Mini.SVGDescElement ? SVGDescElement :
-    P extends Mini.SVGEllipseElement ? SVGEllipseElement :
-    P extends Mini.SVGFEBlendElement ? SVGFEBlendElement :
-    P extends Mini.SVGFEColorMatrixElement ? SVGFEColorMatrixElement :
-    P extends Mini.SVGFEComponentTransferElement ? SVGFEComponentTransferElement :
-    P extends Mini.SVGFECompositeElement ? SVGFECompositeElement :
-    P extends Mini.SVGFEConvolveMatrixElement ? SVGFEConvolveMatrixElement :
-    P extends Mini.SVGFEDiffuseLightingElement ? SVGFEDiffuseLightingElement :
-    P extends Mini.SVGFEDisplacementMapElement ? SVGFEDisplacementMapElement :
-    P extends Mini.SVGFEDistantLightElement ? SVGFEDistantLightElement :
-    P extends Mini.SVGFEDropShadowElement ? SVGFEDropShadowElement :
-    P extends Mini.SVGFEFloodElement ? SVGFEFloodElement :
-    P extends Mini.SVGFEFuncAElement ? SVGFEFuncAElement :
-    P extends Mini.SVGFEFuncBElement ? SVGFEFuncBElement :
-    P extends Mini.SVGFEFuncGElement ? SVGFEFuncGElement :
-    P extends Mini.SVGFEFuncRElement ? SVGFEFuncRElement :
-    P extends Mini.SVGFEGaussianBlurElement ? SVGFEGaussianBlurElement :
-    P extends Mini.SVGFEImageElement ? SVGFEImageElement :
-    P extends Mini.SVGFEMergeElement ? SVGFEMergeElement :
-    P extends Mini.SVGFEMergeNodeElement ? SVGFEMergeNodeElement :
-    P extends Mini.SVGFEMorphologyElement ? SVGFEMorphologyElement :
-    P extends Mini.SVGFEOffsetElement ? SVGFEOffsetElement :
-    P extends Mini.SVGFEPointLightElement ? SVGFEPointLightElement :
-    P extends Mini.SVGFESpecularLightingElement ? SVGFESpecularLightingElement :
-    P extends Mini.SVGFESpotLightElement ? SVGFESpotLightElement :
-    P extends Mini.SVGFETileElement ? SVGFETileElement :
-    P extends Mini.SVGFETurbulenceElement ? SVGFETurbulenceElement :
-    P extends Mini.SVGFilterElement ? SVGFilterElement :
-    P extends Mini.SVGForeignObjectElement ? SVGForeignObjectElement :
-    P extends Mini.SVGGElement ? SVGGElement :
-    P extends Mini.SVGImageElement ? SVGImageElement :
-    P extends Mini.SVGLineElement ? SVGLineElement :
-    P extends Mini.SVGLinearGradientElement ? SVGLinearGradientElement :
-    P extends Mini.SVGMarkerElement ? SVGMarkerElement :
-    P extends Mini.SVGMaskElement ? SVGMaskElement :
-    P extends Mini.SVGMetadataElement ? SVGMetadataElement :
-    P extends Mini.SVGMPathElement ? SVGMPathElement :
-    P extends Mini.SVGPathElement ? SVGPathElement :
-    P extends Mini.SVGPatternElement ? SVGPatternElement :
-    P extends Mini.SVGPolygonElement ? SVGPolygonElement :
-    P extends Mini.SVGPolylineElement ? SVGPolylineElement :
-    P extends Mini.SVGRadialGradientElement ? SVGRadialGradientElement :
-    P extends Mini.SVGRectElement ? SVGRectElement :
-    P extends Mini.SVGSetElement ? SVGSetElement :
-    P extends Mini.SVGStopElement ? SVGStopElement :
-    P extends Mini.SVGSVGElement ? SVGSVGElement :
-    P extends Mini.SVGSwitchElement ? SVGSwitchElement :
-    P extends Mini.SVGSymbolElement ? SVGSymbolElement :
-    P extends Mini.SVGTextElement ? SVGTextElement :
-    P extends Mini.SVGTextPathElement ? SVGTextPathElement :
-    P extends Mini.SVGTSpanElement ? SVGTSpanElement :
-    P extends Mini.SVGUseElement ? SVGUseElement :
-    P extends Mini.SVGViewElement ? SVGViewElement :
-    P extends Mini.HTMLElement ? HTMLElement :
-    P extends Mini.SVGElement ? SVGElement :
-    P extends Mini.MathMLElement ? MathMLElement :
-    P extends Mini.Element ? Element :
-    P extends string | number | false | null | undefined ? Text :
-    Node;
+export type CreateNodeProps = Node | MiniElement | string | number | false | null | undefined;
 
-export type MiniChildren = MiniNode | State<MiniNode> | MiniNode[] | State<MiniNode[]>;
+export type TagName = keyof Mini.Elements;
 
-export type MiniNode =
-    | Mini.Element
-    | Mini.Element[]
+export type MiniElement = Mini.Elements[TagName];
+
+export type MiniNode = MiniChildren | State<MiniChildren> | MiniChildren[] | State<MiniChildren[]>;
+
+export type MiniChildren =
+    | MiniElement
+    | MiniElement[]
     | Node
     | string | number | false | null | undefined
+    | MiniChildren[]
     | State<
-        | Mini.Element
-        | Mini.Element[]
+        | MiniElement
+        | MiniElement[]
         | Node
         | string | number | false | null | undefined
+        | MiniChildren[]
     >;
 
 export type MiniDataset = {
@@ -187,216 +56,214 @@ export type MiniDataset = {
 }>;
 
 export declare namespace Mini {
-    type IntrinsicElement<T> = Omit<T, "tagName">;
-
-    export interface IntrinsicElements {
-        "a": IntrinsicElement<HTMLAnchorElement> | IntrinsicElement<SVGAElement>;
-        "abbr": IntrinsicElement<HTMLElement>;
-        "address": IntrinsicElement<HTMLElement>;
-        "article": IntrinsicElement<HTMLElement>;
-        "aside": IntrinsicElement<HTMLElement>;
-        "b": IntrinsicElement<HTMLElement>;
-        "bdi": IntrinsicElement<HTMLElement>;
-        "bdo": IntrinsicElement<HTMLElement>;
-        "cite": IntrinsicElement<HTMLElement>;
-        "code": IntrinsicElement<HTMLElement>;
-        "dd": IntrinsicElement<HTMLElement>;
-        "dfn": IntrinsicElement<HTMLElement>;
-        "dt": IntrinsicElement<HTMLElement>;
-        "em": IntrinsicElement<HTMLElement>;
-        "figcaption": IntrinsicElement<HTMLElement>;
-        "figure": IntrinsicElement<HTMLElement>;
-        "footer": IntrinsicElement<HTMLElement>;
-        "header": IntrinsicElement<HTMLElement>;
-        "hgroup": IntrinsicElement<HTMLElement>;
-        "i": IntrinsicElement<HTMLElement>;
-        "kbd": IntrinsicElement<HTMLElement>;
-        "main": IntrinsicElement<HTMLElement>;
-        "mark": IntrinsicElement<HTMLElement>;
-        "nav": IntrinsicElement<HTMLElement>;
-        "noscript": IntrinsicElement<HTMLElement>;
-        "rp": IntrinsicElement<HTMLElement>;
-        "rt": IntrinsicElement<HTMLElement>;
-        "ruby": IntrinsicElement<HTMLElement>;
-        "s": IntrinsicElement<HTMLElement>;
-        "samp": IntrinsicElement<HTMLElement>;
-        "search": IntrinsicElement<HTMLElement>;
-        "section": IntrinsicElement<HTMLElement>;
-        "small": IntrinsicElement<HTMLElement>;
-        "strong": IntrinsicElement<HTMLElement>;
-        "sub": IntrinsicElement<HTMLElement>;
-        "summary": IntrinsicElement<HTMLElement>;
-        "sup": IntrinsicElement<HTMLElement>;
-        "u": IntrinsicElement<HTMLElement>;
-        "var": IntrinsicElement<HTMLElement>;
-        "wbr": IntrinsicElement<HTMLElement>;
-        "area": IntrinsicElement<HTMLAreaElement>;
-        "audio": IntrinsicElement<HTMLAudioElement>;
-        "base": IntrinsicElement<HTMLBaseElement>;
-        "blockquote": IntrinsicElement<HTMLQuoteElement>;
-        "q": IntrinsicElement<HTMLQuoteElement>;
-        "body": IntrinsicElement<HTMLBodyElement>;
-        "br": IntrinsicElement<HTMLBRElement>;
-        "button": IntrinsicElement<HTMLButtonElement>;
-        "canvas": IntrinsicElement<HTMLCanvasElement>;
-        "caption": IntrinsicElement<HTMLTableCaptionElement>;
-        "col": IntrinsicElement<HTMLTableColElement>;
-        "colgroup": IntrinsicElement<HTMLTableColElement>;
-        "data": IntrinsicElement<HTMLDataElement>;
-        "datalist": IntrinsicElement<HTMLDataListElement>;
-        "del": IntrinsicElement<HTMLModElement>;
-        "ins": IntrinsicElement<HTMLModElement>;
-        "details": IntrinsicElement<HTMLDetailsElement>;
-        "dialog": IntrinsicElement<HTMLDialogElement>;
-        "div": IntrinsicElement<HTMLDivElement>;
-        "dl": IntrinsicElement<HTMLDListElement>;
-        "embed": IntrinsicElement<HTMLEmbedElement>;
-        "fieldset": IntrinsicElement<HTMLFieldSetElement>;
-        "form": IntrinsicElement<HTMLFormElement>;
-        "h1": IntrinsicElement<HTMLHeadingElement>;
-        "h2": IntrinsicElement<HTMLHeadingElement>;
-        "h3": IntrinsicElement<HTMLHeadingElement>;
-        "h4": IntrinsicElement<HTMLHeadingElement>;
-        "h5": IntrinsicElement<HTMLHeadingElement>;
-        "h6": IntrinsicElement<HTMLHeadingElement>;
-        "head": IntrinsicElement<HTMLHeadElement>;
-        "hr": IntrinsicElement<HTMLHRElement>;
-        "html": IntrinsicElement<HTMLHtmlElement>;
-        "iframe": IntrinsicElement<HTMLIFrameElement>;
-        "img": IntrinsicElement<HTMLImageElement>;
-        "input": IntrinsicElement<HTMLInputElement>;
-        "label": IntrinsicElement<HTMLLabelElement>;
-        "legend": IntrinsicElement<HTMLLegendElement>;
-        "li": IntrinsicElement<HTMLLIElement>;
-        "link": IntrinsicElement<HTMLLinkElement>;
-        "map": IntrinsicElement<HTMLMapElement>;
-        "menu": IntrinsicElement<HTMLMenuElement>;
-        "meta": IntrinsicElement<HTMLMetaElement>;
-        "meter": IntrinsicElement<HTMLMeterElement>;
-        "object": IntrinsicElement<HTMLObjectElement>;
-        "ol": IntrinsicElement<HTMLOListElement>;
-        "optgroup": IntrinsicElement<HTMLOptGroupElement>;
-        "option": IntrinsicElement<HTMLOptionElement>;
-        "output": IntrinsicElement<HTMLOutputElement>;
-        "p": IntrinsicElement<HTMLParagraphElement>;
-        "picture": IntrinsicElement<HTMLPictureElement>;
-        "pre": IntrinsicElement<HTMLPreElement>;
-        "progress": IntrinsicElement<HTMLProgressElement>;
-        "script": IntrinsicElement<HTMLScriptElement> | IntrinsicElement<SVGScriptElement>;
-        "select": IntrinsicElement<HTMLSelectElement>;
-        "slot": IntrinsicElement<HTMLSlotElement>;
-        "source": IntrinsicElement<HTMLSourceElement>;
-        "span": IntrinsicElement<HTMLSpanElement>;
-        "style": IntrinsicElement<HTMLStyleElement> | IntrinsicElement<SVGStyleElement>;
-        "table": IntrinsicElement<HTMLTableElement>;
-        "tbody": IntrinsicElement<HTMLTableSectionElement>;
-        "tfoot": IntrinsicElement<HTMLTableSectionElement>;
-        "thead": IntrinsicElement<HTMLTableSectionElement>;
-        "td": IntrinsicElement<HTMLTableCellElement>;
-        "th": IntrinsicElement<HTMLTableCellElement>;
-        "template": IntrinsicElement<HTMLTemplateElement>;
-        "textarea": IntrinsicElement<HTMLTextAreaElement>;
-        "time": IntrinsicElement<HTMLTimeElement>;
-        "title": IntrinsicElement<HTMLTitleElement> | IntrinsicElement<SVGTitleElement>;
-        "tr": IntrinsicElement<HTMLTableRowElement>;
-        "track": IntrinsicElement<HTMLTrackElement>;
-        "ul": IntrinsicElement<HTMLUListElement>;
-        "video": IntrinsicElement<HTMLVideoElement>;
-        "animate": IntrinsicElement<SVGAnimateElement>;
-        "animateMotion": IntrinsicElement<SVGAnimateMotionElement>;
-        "animateTransform": IntrinsicElement<SVGAnimateTransformElement>;
-        "circle": IntrinsicElement<SVGCircleElement>;
-        "clipPath": IntrinsicElement<SVGClipPathElement>;
-        "defs": IntrinsicElement<SVGDefsElement>;
-        "desc": IntrinsicElement<SVGDescElement>;
-        "ellipse": IntrinsicElement<SVGEllipseElement>;
-        "feBlend": IntrinsicElement<SVGFEBlendElement>;
-        "feColorMatrix": IntrinsicElement<SVGFEColorMatrixElement>;
-        "feComponentTransfer": IntrinsicElement<SVGFEComponentTransferElement>;
-        "feComposite": IntrinsicElement<SVGFECompositeElement>;
-        "feConvolveMatrix": IntrinsicElement<SVGFEConvolveMatrixElement>;
-        "feDiffuseLighting": IntrinsicElement<SVGFEDiffuseLightingElement>;
-        "feDisplacementMap": IntrinsicElement<SVGFEDisplacementMapElement>;
-        "feDistantLight": IntrinsicElement<SVGFEDistantLightElement>;
-        "feDropShadow": IntrinsicElement<SVGFEDropShadowElement>;
-        "feFlood": IntrinsicElement<SVGFEFloodElement>;
-        "feFuncA": IntrinsicElement<SVGFEFuncAElement>;
-        "feFuncB": IntrinsicElement<SVGFEFuncBElement>;
-        "feFuncG": IntrinsicElement<SVGFEFuncGElement>;
-        "feFuncR": IntrinsicElement<SVGFEFuncRElement>;
-        "feGaussianBlur": IntrinsicElement<SVGFEGaussianBlurElement>;
-        "feImage": IntrinsicElement<SVGFEImageElement>;
-        "feMerge": IntrinsicElement<SVGFEMergeElement>;
-        "feMergeNode": IntrinsicElement<SVGFEMergeNodeElement>;
-        "feMorphology": IntrinsicElement<SVGFEMorphologyElement>;
-        "feOffset": IntrinsicElement<SVGFEOffsetElement>;
-        "fePointLight": IntrinsicElement<SVGFEPointLightElement>;
-        "feSpecularLighting": IntrinsicElement<SVGFESpecularLightingElement>;
-        "feSpotLight": IntrinsicElement<SVGFESpotLightElement>;
-        "feTile": IntrinsicElement<SVGFETileElement>;
-        "feTurbulence": IntrinsicElement<SVGFETurbulenceElement>;
-        "filter": IntrinsicElement<SVGFilterElement>;
-        "foreignObject": IntrinsicElement<SVGForeignObjectElement>;
-        "g": IntrinsicElement<SVGGElement>;
-        "image": IntrinsicElement<SVGImageElement>;
-        "line": IntrinsicElement<SVGLineElement>;
-        "linearGradient": IntrinsicElement<SVGLinearGradientElement>;
-        "marker": IntrinsicElement<SVGMarkerElement>;
-        "mask": IntrinsicElement<SVGMaskElement>;
-        "metadata": IntrinsicElement<SVGMetadataElement>;
-        "mpath": IntrinsicElement<SVGMPathElement>;
-        "path": IntrinsicElement<SVGPathElement>;
-        "pattern": IntrinsicElement<SVGPatternElement>;
-        "polygon": IntrinsicElement<SVGPolygonElement>;
-        "polyline": IntrinsicElement<SVGPolylineElement>;
-        "radialGradient": IntrinsicElement<SVGRadialGradientElement>;
-        "rect": IntrinsicElement<SVGRectElement>;
-        "set": IntrinsicElement<SVGSetElement>;
-        "stop": IntrinsicElement<SVGStopElement>;
-        "svg": IntrinsicElement<SVGSVGElement>;
-        "switch": IntrinsicElement<SVGSwitchElement>;
-        "symbol": IntrinsicElement<SVGSymbolElement>;
-        "text": IntrinsicElement<SVGTextElement>;
-        "textPath": IntrinsicElement<SVGTextPathElement>;
-        "tspan": IntrinsicElement<SVGTSpanElement>;
-        "use": IntrinsicElement<SVGUseElement>;
-        "view": IntrinsicElement<SVGViewElement>;
-        "annotation": IntrinsicElement<MathMLElement>;
-        "annotation-xml": IntrinsicElement<MathMLElement>;
-        "maction": IntrinsicElement<MathMLElement>;
-        "math": IntrinsicElement<MathMLElement>;
-        "merror": IntrinsicElement<MathMLElement>;
-        "mfrac": IntrinsicElement<MathMLElement>;
-        "mi": IntrinsicElement<MathMLElement>;
-        "mmultiscripts": IntrinsicElement<MathMLElement>;
-        "mn": IntrinsicElement<MathMLElement>;
-        "mo": IntrinsicElement<MathMLElement>;
-        "mover": IntrinsicElement<MathMLElement>;
-        "mpadded": IntrinsicElement<MathMLElement>;
-        "mphantom": IntrinsicElement<MathMLElement>;
-        "mprescripts": IntrinsicElement<MathMLElement>;
-        "mroot": IntrinsicElement<MathMLElement>;
-        "mrow": IntrinsicElement<MathMLElement>;
-        "ms": IntrinsicElement<MathMLElement>;
-        "mspace": IntrinsicElement<MathMLElement>;
-        "msqrt": IntrinsicElement<MathMLElement>;
-        "mstyle": IntrinsicElement<MathMLElement>;
-        "msub": IntrinsicElement<MathMLElement>;
-        "msubsup": IntrinsicElement<MathMLElement>;
-        "msup": IntrinsicElement<MathMLElement>;
-        "mtable": IntrinsicElement<MathMLElement>;
-        "mtd": IntrinsicElement<MathMLElement>;
-        "mtext": IntrinsicElement<MathMLElement>;
-        "mtr": IntrinsicElement<MathMLElement>;
-        "munder": IntrinsicElement<MathMLElement>;
-        "munderover": IntrinsicElement<MathMLElement>;
-        "semantics": IntrinsicElement<MathMLElement>;
+    export interface Elements {
+        "a": HTMLAnchorElement | SVGAElement;
+        "abbr": HTMLElement;
+        "address": HTMLElement;
+        "area": HTMLAreaElement;
+        "article": HTMLElement;
+        "aside": HTMLElement;
+        "audio": HTMLAudioElement;
+        "b": HTMLElement;
+        "base": HTMLBaseElement;
+        "bdi": HTMLElement;
+        "bdo": HTMLElement;
+        "blockquote": HTMLQuoteElement;
+        "body": HTMLBodyElement;
+        "br": HTMLBRElement;
+        "button": HTMLButtonElement;
+        "canvas": HTMLCanvasElement;
+        "caption": HTMLTableCaptionElement;
+        "cite": HTMLElement;
+        "code": HTMLElement;
+        "col": HTMLTableColElement;
+        "colgroup": HTMLTableColElement;
+        "data": HTMLDataElement;
+        "datalist": HTMLDataListElement;
+        "dd": HTMLElement;
+        "del": HTMLModElement;
+        "details": HTMLDetailsElement;
+        "dfn": HTMLElement;
+        "dialog": HTMLDialogElement;
+        "div": HTMLDivElement;
+        "dl": HTMLDListElement;
+        "dt": HTMLElement;
+        "em": HTMLElement;
+        "embed": HTMLEmbedElement;
+        "fieldset": HTMLFieldSetElement;
+        "figcaption": HTMLElement;
+        "figure": HTMLElement;
+        "footer": HTMLElement;
+        "form": HTMLFormElement;
+        "h1": HTMLHeadingElement;
+        "h2": HTMLHeadingElement;
+        "h3": HTMLHeadingElement;
+        "h4": HTMLHeadingElement;
+        "h5": HTMLHeadingElement;
+        "h6": HTMLHeadingElement;
+        "head": HTMLHeadElement;
+        "header": HTMLElement;
+        "hgroup": HTMLElement;
+        "hr": HTMLHRElement;
+        "html": HTMLHtmlElement;
+        "i": HTMLElement;
+        "iframe": HTMLIFrameElement;
+        "img": HTMLImageElement;
+        "input": HTMLInputElement;
+        "ins": HTMLModElement;
+        "kbd": HTMLElement;
+        "label": HTMLLabelElement;
+        "legend": HTMLLegendElement;
+        "li": HTMLLIElement;
+        "link": HTMLLinkElement;
+        "main": HTMLElement;
+        "map": HTMLMapElement;
+        "mark": HTMLElement;
+        "menu": HTMLMenuElement;
+        "meta": HTMLMetaElement;
+        "meter": HTMLMeterElement;
+        "nav": HTMLElement;
+        "noscript": HTMLElement;
+        "object": HTMLObjectElement;
+        "ol": HTMLOListElement;
+        "optgroup": HTMLOptGroupElement;
+        "option": HTMLOptionElement;
+        "output": HTMLOutputElement;
+        "p": HTMLParagraphElement;
+        "picture": HTMLPictureElement;
+        "pre": HTMLPreElement;
+        "progress": HTMLProgressElement;
+        "q": HTMLQuoteElement;
+        "rp": HTMLElement;
+        "rt": HTMLElement;
+        "ruby": HTMLElement;
+        "s": HTMLElement;
+        "samp": HTMLElement;
+        "script": HTMLScriptElement | SVGScriptElement;
+        "search": HTMLElement;
+        "section": HTMLElement;
+        "select": HTMLSelectElement;
+        "slot": HTMLSlotElement;
+        "small": HTMLElement;
+        "source": HTMLSourceElement;
+        "span": HTMLSpanElement;
+        "strong": HTMLElement;
+        "style": HTMLStyleElement | SVGStyleElement;
+        "sub": HTMLElement;
+        "summary": HTMLElement;
+        "sup": HTMLElement;
+        "table": HTMLTableElement;
+        "tbody": HTMLTableSectionElement;
+        "td": HTMLTableCellElement;
+        "template": HTMLTemplateElement;
+        "textarea": HTMLTextAreaElement;
+        "tfoot": HTMLTableSectionElement;
+        "th": HTMLTableCellElement;
+        "thead": HTMLTableSectionElement;
+        "time": HTMLTimeElement;
+        "title": HTMLTitleElement | SVGTitleElement;
+        "tr": HTMLTableRowElement;
+        "track": HTMLTrackElement;
+        "u": HTMLElement;
+        "ul": HTMLUListElement;
+        "var": HTMLElement;
+        "video": HTMLVideoElement;
+        "wbr": HTMLElement;
+        "animate": SVGAnimateElement;
+        "animateMotion": SVGAnimateMotionElement;
+        "animateTransform": SVGAnimateTransformElement;
+        "circle": SVGCircleElement;
+        "clipPath": SVGClipPathElement;
+        "defs": SVGDefsElement;
+        "desc": SVGDescElement;
+        "ellipse": SVGEllipseElement;
+        "feBlend": SVGFEBlendElement;
+        "feColorMatrix": SVGFEColorMatrixElement;
+        "feComponentTransfer": SVGFEComponentTransferElement;
+        "feComposite": SVGFECompositeElement;
+        "feConvolveMatrix": SVGFEConvolveMatrixElement;
+        "feDiffuseLighting": SVGFEDiffuseLightingElement;
+        "feDisplacementMap": SVGFEDisplacementMapElement;
+        "feDistantLight": SVGFEDistantLightElement;
+        "feDropShadow": SVGFEDropShadowElement;
+        "feFlood": SVGFEFloodElement;
+        "feFuncA": SVGFEFuncAElement;
+        "feFuncB": SVGFEFuncBElement;
+        "feFuncG": SVGFEFuncGElement;
+        "feFuncR": SVGFEFuncRElement;
+        "feGaussianBlur": SVGFEGaussianBlurElement;
+        "feImage": SVGFEImageElement;
+        "feMerge": SVGFEMergeElement;
+        "feMergeNode": SVGFEMergeNodeElement;
+        "feMorphology": SVGFEMorphologyElement;
+        "feOffset": SVGFEOffsetElement;
+        "fePointLight": SVGFEPointLightElement;
+        "feSpecularLighting": SVGFESpecularLightingElement;
+        "feSpotLight": SVGFESpotLightElement;
+        "feTile": SVGFETileElement;
+        "feTurbulence": SVGFETurbulenceElement;
+        "filter": SVGFilterElement;
+        "foreignObject": SVGForeignObjectElement;
+        "g": SVGGElement;
+        "image": SVGImageElement;
+        "line": SVGLineElement;
+        "linearGradient": SVGLinearGradientElement;
+        "marker": SVGMarkerElement;
+        "mask": SVGMaskElement;
+        "metadata": SVGMetadataElement;
+        "mpath": SVGMPathElement;
+        "path": SVGPathElement;
+        "pattern": SVGPatternElement;
+        "polygon": SVGPolygonElement;
+        "polyline": SVGPolylineElement;
+        "radialGradient": SVGRadialGradientElement;
+        "rect": SVGRectElement;
+        "set": SVGSetElement;
+        "stop": SVGStopElement;
+        "svg": SVGSVGElement;
+        "switch": SVGSwitchElement;
+        "symbol": SVGSymbolElement;
+        "text": SVGTextElement;
+        "textPath": SVGTextPathElement;
+        "tspan": SVGTSpanElement;
+        "use": SVGUseElement;
+        "view": SVGViewElement;
+        "annotation": MathMLElement;
+        "annotation-xml": MathMLElement;
+        "maction": MathMLElement;
+        "math": MathMLElement;
+        "merror": MathMLElement;
+        "mfrac": MathMLElement;
+        "mi": MathMLElement;
+        "mmultiscripts": MathMLElement;
+        "mn": MathMLElement;
+        "mo": MathMLElement;
+        "mover": MathMLElement;
+        "mpadded": MathMLElement;
+        "mphantom": MathMLElement;
+        "mprescripts": MathMLElement;
+        "mroot": MathMLElement;
+        "mrow": MathMLElement;
+        "ms": MathMLElement;
+        "mspace": MathMLElement;
+        "msqrt": MathMLElement;
+        "mstyle": MathMLElement;
+        "msub": MathMLElement;
+        "msubsup": MathMLElement;
+        "msup": MathMLElement;
+        "mtable": MathMLElement;
+        "mtd": MathMLElement;
+        "mtext": MathMLElement;
+        "mtr": MathMLElement;
+        "munder": MathMLElement;
+        "munderover": MathMLElement;
+        "semantics": MathMLElement;
     }
 
     interface HTMLAnchorElement extends HTMLElement, HTMLHyperlinkElementUtils {
         tagName: "a";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         charset?: string | undefined | State<string | undefined>;
         coords?: string | undefined | State<string | undefined>;
@@ -416,7 +283,7 @@ export declare namespace Mini {
     interface HTMLElement extends Element, ElementCSSInlineStyle, ElementContentEditable, GlobalEventHandlers, HTMLOrSVGElement {
         tagName: "a" | "abbr" | "address" | "area" | "article" | "aside" | "audio" | "b" | "base" | "bdi" | "bdo" | "blockquote" | "body" | "br" | "button" | "canvas" | "caption" | "cite" | "code" | "col" | "colgroup" | "data" | "datalist" | "dd" | "del" | "details" | "dfn" | "dialog" | "div" | "dl" | "dt" | "em" | "embed" | "fieldset" | "figcaption" | "figure" | "footer" | "form" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "head" | "header" | "hgroup" | "hr" | "html" | "i" | "iframe" | "img" | "input" | "ins" | "kbd" | "label" | "legend" | "li" | "link" | "main" | "map" | "mark" | "menu" | "meta" | "meter" | "nav" | "noscript" | "object" | "ol" | "optgroup" | "option" | "output" | "p" | "picture" | "pre" | "progress" | "q" | "rp" | "rt" | "ruby" | "s" | "samp" | "script" | "search" | "section" | "select" | "slot" | "small" | "source" | "span" | "strong" | "style" | "sub" | "summary" | "sup" | "table" | "tbody" | "td" | "template" | "textarea" | "tfoot" | "th" | "thead" | "time" | "title" | "tr" | "track" | "u" | "ul" | "var" | "video" | "wbr";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         accessKey?: string | undefined | State<string | undefined>;
         autocapitalize?: string | undefined | State<string | undefined>;
@@ -442,7 +309,7 @@ export declare namespace Mini {
     interface HTMLAreaElement extends HTMLElement, HTMLHyperlinkElementUtils {
         tagName: "area";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         alt?: string | undefined | State<string | undefined>;
         coords?: string | undefined | State<string | undefined>;
@@ -458,7 +325,7 @@ export declare namespace Mini {
     interface HTMLAudioElement extends HTMLMediaElement {
         tagName: "audio";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
@@ -485,7 +352,7 @@ export declare namespace Mini {
     interface HTMLBaseElement extends HTMLElement {
         tagName: "base";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         href?: string | undefined | State<string | undefined>;
         target?: string | undefined | State<string | undefined>;
@@ -494,7 +361,7 @@ export declare namespace Mini {
     interface HTMLQuoteElement extends HTMLElement {
         tagName: "blockquote" | "q";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         cite?: string | undefined | State<string | undefined>;
     }
@@ -502,7 +369,7 @@ export declare namespace Mini {
     interface HTMLBodyElement extends HTMLElement, WindowEventHandlers {
         tagName: "body";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         aLink?: string | undefined | State<string | undefined>;
         background?: string | undefined | State<string | undefined>;
@@ -515,7 +382,7 @@ export declare namespace Mini {
     interface HTMLBRElement extends HTMLElement {
         tagName: "br";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         clear?: string | undefined | State<string | undefined>;
     }
@@ -523,7 +390,7 @@ export declare namespace Mini {
     interface HTMLButtonElement extends HTMLElement, PopoverInvokerElement {
         tagName: "button";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         disabled?: boolean | undefined | State<boolean | undefined>;
         formAction?: string | undefined | State<string | undefined>;
@@ -539,7 +406,7 @@ export declare namespace Mini {
     interface HTMLCanvasElement extends HTMLElement {
         tagName: "canvas";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         height?: number | undefined | State<number | undefined>;
         width?: number | undefined | State<number | undefined>;
@@ -548,7 +415,7 @@ export declare namespace Mini {
     interface HTMLTableCaptionElement extends HTMLElement {
         tagName: "caption";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
     }
@@ -556,7 +423,7 @@ export declare namespace Mini {
     interface HTMLTableColElement extends HTMLElement {
         tagName: "col" | "colgroup";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
         ch?: string | undefined | State<string | undefined>;
@@ -569,7 +436,7 @@ export declare namespace Mini {
     interface HTMLDataElement extends HTMLElement {
         tagName: "data";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         value?: string | undefined | State<string | undefined>;
     }
@@ -577,14 +444,14 @@ export declare namespace Mini {
     interface HTMLDataListElement extends HTMLElement {
         tagName: "datalist";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface HTMLModElement extends HTMLElement {
         tagName: "del" | "ins";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         cite?: string | undefined | State<string | undefined>;
         dateTime?: string | undefined | State<string | undefined>;
@@ -593,7 +460,7 @@ export declare namespace Mini {
     interface HTMLDetailsElement extends HTMLElement {
         tagName: "details";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         name?: string | undefined | State<string | undefined>;
         open?: boolean | undefined | State<boolean | undefined>;
@@ -602,7 +469,7 @@ export declare namespace Mini {
     interface HTMLDialogElement extends HTMLElement {
         tagName: "dialog";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         open?: boolean | undefined | State<boolean | undefined>;
         returnValue?: string | undefined | State<string | undefined>;
@@ -611,7 +478,7 @@ export declare namespace Mini {
     interface HTMLDivElement extends HTMLElement {
         tagName: "div";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
     }
@@ -619,7 +486,7 @@ export declare namespace Mini {
     interface HTMLDListElement extends HTMLElement {
         tagName: "dl";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         compact?: boolean | undefined | State<boolean | undefined>;
     }
@@ -627,7 +494,7 @@ export declare namespace Mini {
     interface HTMLEmbedElement extends HTMLElement {
         tagName: "embed";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
         height?: string | undefined | State<string | undefined>;
@@ -640,7 +507,7 @@ export declare namespace Mini {
     interface HTMLFieldSetElement extends HTMLElement {
         tagName: "fieldset";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         disabled?: boolean | undefined | State<boolean | undefined>;
         name?: string | undefined | State<string | undefined>;
@@ -649,7 +516,7 @@ export declare namespace Mini {
     interface HTMLFormElement extends HTMLElement {
         tagName: "form";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         acceptCharset?: string | undefined | State<string | undefined>;
         action?: string | undefined | State<string | undefined>;
@@ -666,7 +533,7 @@ export declare namespace Mini {
     interface HTMLHeadingElement extends HTMLElement {
         tagName: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
     }
@@ -674,14 +541,14 @@ export declare namespace Mini {
     interface HTMLHeadElement extends HTMLElement {
         tagName: "head";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface HTMLHRElement extends HTMLElement {
         tagName: "hr";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
         color?: string | undefined | State<string | undefined>;
@@ -693,7 +560,7 @@ export declare namespace Mini {
     interface HTMLHtmlElement extends HTMLElement {
         tagName: "html";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         version?: string | undefined | State<string | undefined>;
     }
@@ -701,7 +568,7 @@ export declare namespace Mini {
     interface HTMLIFrameElement extends HTMLElement {
         tagName: "iframe";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
         allow?: string | undefined | State<string | undefined>;
@@ -723,7 +590,7 @@ export declare namespace Mini {
     interface HTMLImageElement extends HTMLElement {
         tagName: "img";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
         alt?: string | undefined | State<string | undefined>;
@@ -750,7 +617,7 @@ export declare namespace Mini {
     interface HTMLInputElement extends HTMLElement, PopoverInvokerElement {
         tagName: "input";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         accept?: string | undefined | State<string | undefined>;
         align?: string | undefined | State<string | undefined>;
@@ -798,7 +665,7 @@ export declare namespace Mini {
     interface HTMLLabelElement extends HTMLElement {
         tagName: "label";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         htmlFor?: string | undefined | State<string | undefined>;
     }
@@ -806,7 +673,7 @@ export declare namespace Mini {
     interface HTMLLegendElement extends HTMLElement {
         tagName: "legend";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
     }
@@ -814,7 +681,7 @@ export declare namespace Mini {
     interface HTMLLIElement extends HTMLElement {
         tagName: "li";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         type?: string | undefined | State<string | undefined>;
         value?: number | undefined | State<number | undefined>;
@@ -823,7 +690,7 @@ export declare namespace Mini {
     interface HTMLLinkElement extends HTMLElement, LinkStyle {
         tagName: "link";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         as?: string | undefined | State<string | undefined>;
         charset?: string | undefined | State<string | undefined>;
@@ -846,7 +713,7 @@ export declare namespace Mini {
     interface HTMLMapElement extends HTMLElement {
         tagName: "map";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         name?: string | undefined | State<string | undefined>;
     }
@@ -854,7 +721,7 @@ export declare namespace Mini {
     interface HTMLMenuElement extends HTMLElement {
         tagName: "menu";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         compact?: boolean | undefined | State<boolean | undefined>;
     }
@@ -862,7 +729,7 @@ export declare namespace Mini {
     interface HTMLMetaElement extends HTMLElement {
         tagName: "meta";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         content?: string | undefined | State<string | undefined>;
         httpEquiv?: string | undefined | State<string | undefined>;
@@ -874,7 +741,7 @@ export declare namespace Mini {
     interface HTMLMeterElement extends HTMLElement {
         tagName: "meter";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         high?: number | undefined | State<number | undefined>;
         low?: number | undefined | State<number | undefined>;
@@ -887,7 +754,7 @@ export declare namespace Mini {
     interface HTMLObjectElement extends HTMLElement {
         tagName: "object";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
         archive?: string | undefined | State<string | undefined>;
@@ -910,7 +777,7 @@ export declare namespace Mini {
     interface HTMLOListElement extends HTMLElement {
         tagName: "ol";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         compact?: boolean | undefined | State<boolean | undefined>;
         reversed?: boolean | undefined | State<boolean | undefined>;
@@ -921,7 +788,7 @@ export declare namespace Mini {
     interface HTMLOptGroupElement extends HTMLElement {
         tagName: "optgroup";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         disabled?: boolean | undefined | State<boolean | undefined>;
         label?: string | undefined | State<string | undefined>;
@@ -930,7 +797,7 @@ export declare namespace Mini {
     interface HTMLOptionElement extends HTMLElement {
         tagName: "option";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         defaultSelected?: boolean | undefined | State<boolean | undefined>;
         disabled?: boolean | undefined | State<boolean | undefined>;
@@ -943,7 +810,7 @@ export declare namespace Mini {
     interface HTMLOutputElement extends HTMLElement {
         tagName: "output";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         defaultValue?: string | undefined | State<string | undefined>;
         name?: string | undefined | State<string | undefined>;
@@ -953,7 +820,7 @@ export declare namespace Mini {
     interface HTMLParagraphElement extends HTMLElement {
         tagName: "p";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
     }
@@ -961,14 +828,14 @@ export declare namespace Mini {
     interface HTMLPictureElement extends HTMLElement {
         tagName: "picture";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface HTMLPreElement extends HTMLElement {
         tagName: "pre";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         width?: number | undefined | State<number | undefined>;
     }
@@ -976,7 +843,7 @@ export declare namespace Mini {
     interface HTMLProgressElement extends HTMLElement {
         tagName: "progress";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         max?: number | undefined | State<number | undefined>;
         value?: number | undefined | State<number | undefined>;
@@ -985,7 +852,7 @@ export declare namespace Mini {
     interface HTMLScriptElement extends HTMLElement {
         tagName: "script";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         async?: boolean | undefined | State<boolean | undefined>;
         charset?: string | undefined | State<string | undefined>;
@@ -1005,7 +872,7 @@ export declare namespace Mini {
     interface HTMLSelectElement extends HTMLElement {
         tagName: "select";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         autocomplete?: AutoFill | undefined | State<AutoFill | undefined>;
         disabled?: boolean | undefined | State<boolean | undefined>;
@@ -1021,7 +888,7 @@ export declare namespace Mini {
     interface HTMLSlotElement extends HTMLElement {
         tagName: "slot";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         name?: string | undefined | State<string | undefined>;
     }
@@ -1029,7 +896,7 @@ export declare namespace Mini {
     interface HTMLSourceElement extends HTMLElement {
         tagName: "source";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         height?: number | undefined | State<number | undefined>;
         media?: string | undefined | State<string | undefined>;
@@ -1043,14 +910,14 @@ export declare namespace Mini {
     interface HTMLSpanElement extends HTMLElement {
         tagName: "span";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface HTMLStyleElement extends HTMLElement, LinkStyle {
         tagName: "style";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         disabled?: boolean | undefined | State<boolean | undefined>;
         media?: string | undefined | State<string | undefined>;
@@ -1060,7 +927,7 @@ export declare namespace Mini {
     interface HTMLTableElement extends HTMLElement {
         tagName: "table";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
         bgColor?: string | undefined | State<string | undefined>;
@@ -1079,7 +946,7 @@ export declare namespace Mini {
     interface HTMLTableSectionElement extends HTMLElement {
         tagName: "tbody" | "tfoot" | "thead";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
         ch?: string | undefined | State<string | undefined>;
@@ -1090,7 +957,7 @@ export declare namespace Mini {
     interface HTMLTableCellElement extends HTMLElement {
         tagName: "td" | "th";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         abbr?: string | undefined | State<string | undefined>;
         align?: string | undefined | State<string | undefined>;
@@ -1111,7 +978,7 @@ export declare namespace Mini {
     interface HTMLTemplateElement extends HTMLElement {
         tagName: "template";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         shadowRootMode?: string | undefined | State<string | undefined>;
     }
@@ -1119,7 +986,7 @@ export declare namespace Mini {
     interface HTMLTextAreaElement extends HTMLElement {
         tagName: "textarea";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         autocomplete?: AutoFill | undefined | State<AutoFill | undefined>;
         cols?: number | undefined | State<number | undefined>;
@@ -1143,7 +1010,7 @@ export declare namespace Mini {
     interface HTMLTimeElement extends HTMLElement {
         tagName: "time";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         dateTime?: string | undefined | State<string | undefined>;
     }
@@ -1151,7 +1018,7 @@ export declare namespace Mini {
     interface HTMLTitleElement extends HTMLElement {
         tagName: "title";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         text?: string | undefined | State<string | undefined>;
     }
@@ -1159,7 +1026,7 @@ export declare namespace Mini {
     interface HTMLTableRowElement extends HTMLElement {
         tagName: "tr";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         align?: string | undefined | State<string | undefined>;
         bgColor?: string | undefined | State<string | undefined>;
@@ -1171,7 +1038,7 @@ export declare namespace Mini {
     interface HTMLTrackElement extends HTMLElement {
         tagName: "track";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         default?: boolean | undefined | State<boolean | undefined>;
         kind?: string | undefined | State<string | undefined>;
@@ -1183,7 +1050,7 @@ export declare namespace Mini {
     interface HTMLUListElement extends HTMLElement {
         tagName: "ul";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         compact?: boolean | undefined | State<boolean | undefined>;
         type?: string | undefined | State<string | undefined>;
@@ -1192,7 +1059,7 @@ export declare namespace Mini {
     interface HTMLVideoElement extends HTMLMediaElement {
         tagName: "video";
         namespaceURI?: "http://www.w3.org/1999/xhtml";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         disablePictureInPicture?: boolean | undefined | State<boolean | undefined>;
         height?: number | undefined | State<number | undefined>;
@@ -1206,7 +1073,7 @@ export declare namespace Mini {
     interface SVGAElement extends SVGGraphicsElement, SVGURIReference {
         tagName: "a";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         rel?: string | undefined | State<string | undefined>;
     }
@@ -1216,8 +1083,9 @@ export declare namespace Mini {
     interface SVGElement extends Element, ElementCSSInlineStyle, GlobalEventHandlers, HTMLOrSVGElement {
         tagName: "a" | "animate" | "animateMotion" | "animateTransform" | "circle" | "clipPath" | "defs" | "desc" | "ellipse" | "feBlend" | "feColorMatrix" | "feComponentTransfer" | "feComposite" | "feConvolveMatrix" | "feDiffuseLighting" | "feDisplacementMap" | "feDistantLight" | "feDropShadow" | "feFlood" | "feFuncA" | "feFuncB" | "feFuncG" | "feFuncR" | "feGaussianBlur" | "feImage" | "feMerge" | "feMergeNode" | "feMorphology" | "feOffset" | "fePointLight" | "feSpecularLighting" | "feSpotLight" | "feTile" | "feTurbulence" | "filter" | "foreignObject" | "g" | "image" | "line" | "linearGradient" | "marker" | "mask" | "metadata" | "mpath" | "path" | "pattern" | "polygon" | "polyline" | "radialGradient" | "rect" | "script" | "set" | "stop" | "style" | "svg" | "switch" | "symbol" | "text" | "textPath" | "title" | "tspan" | "use" | "view";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
+        className?: any | undefined | State<any | undefined>;
         accumulate?: string | number | undefined | State<string | number | undefined>;
         additive?: string | number | undefined | State<string | number | undefined>;
         alignmentBaseline?: string | number | undefined | State<string | number | undefined>;
@@ -1464,7 +1332,7 @@ export declare namespace Mini {
     interface SVGAnimateElement extends SVGAnimationElement {
         tagName: "animate";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
@@ -1473,21 +1341,21 @@ export declare namespace Mini {
     interface SVGAnimateMotionElement extends SVGAnimationElement {
         tagName: "animateMotion";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGAnimateTransformElement extends SVGAnimationElement {
         tagName: "animateTransform";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGCircleElement extends SVGGeometryElement {
         tagName: "circle";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
@@ -1496,105 +1364,105 @@ export declare namespace Mini {
     interface SVGClipPathElement extends SVGElement {
         tagName: "clipPath";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGDefsElement extends SVGGraphicsElement {
         tagName: "defs";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGDescElement extends SVGElement {
         tagName: "desc";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGEllipseElement extends SVGGeometryElement {
         tagName: "ellipse";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEBlendElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feBlend";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEColorMatrixElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feColorMatrix";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEComponentTransferElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feComponentTransfer";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFECompositeElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feComposite";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEConvolveMatrixElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feConvolveMatrix";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEDiffuseLightingElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feDiffuseLighting";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEDisplacementMapElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feDisplacementMap";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEDistantLightElement extends SVGElement {
         tagName: "feDistantLight";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEDropShadowElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feDropShadow";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEFloodElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feFlood";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEFuncAElement extends SVGComponentTransferFunctionElement {
         tagName: "feFuncA";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
@@ -1603,126 +1471,126 @@ export declare namespace Mini {
     interface SVGFEFuncBElement extends SVGComponentTransferFunctionElement {
         tagName: "feFuncB";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEFuncGElement extends SVGComponentTransferFunctionElement {
         tagName: "feFuncG";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEFuncRElement extends SVGComponentTransferFunctionElement {
         tagName: "feFuncR";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEGaussianBlurElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feGaussianBlur";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEImageElement extends SVGElement, SVGFilterPrimitiveStandardAttributes, SVGURIReference {
         tagName: "feImage";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEMergeElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feMerge";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEMergeNodeElement extends SVGElement {
         tagName: "feMergeNode";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEMorphologyElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feMorphology";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEOffsetElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feOffset";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFEPointLightElement extends SVGElement {
         tagName: "fePointLight";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFESpecularLightingElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feSpecularLighting";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFESpotLightElement extends SVGElement {
         tagName: "feSpotLight";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFETileElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feTile";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFETurbulenceElement extends SVGElement, SVGFilterPrimitiveStandardAttributes {
         tagName: "feTurbulence";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGFilterElement extends SVGElement, SVGURIReference {
         tagName: "filter";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGForeignObjectElement extends SVGGraphicsElement {
         tagName: "foreignObject";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGGElement extends SVGGraphicsElement {
         tagName: "g";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGImageElement extends SVGGraphicsElement, SVGURIReference {
         tagName: "image";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         crossOrigin?: string | null | undefined | State<string | null | undefined>;
     }
@@ -1730,14 +1598,14 @@ export declare namespace Mini {
     interface SVGLineElement extends SVGGeometryElement {
         tagName: "line";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGLinearGradientElement extends SVGGradientElement {
         tagName: "linearGradient";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
@@ -1746,77 +1614,77 @@ export declare namespace Mini {
     interface SVGMarkerElement extends SVGElement, SVGFitToViewBox {
         tagName: "marker";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGMaskElement extends SVGElement {
         tagName: "mask";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGMetadataElement extends SVGElement {
         tagName: "metadata";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGMPathElement extends SVGElement, SVGURIReference {
         tagName: "mpath";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGPathElement extends SVGGeometryElement {
         tagName: "path";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGPatternElement extends SVGElement, SVGFitToViewBox, SVGURIReference {
         tagName: "pattern";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGPolygonElement extends SVGGeometryElement, SVGAnimatedPoints {
         tagName: "polygon";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGPolylineElement extends SVGGeometryElement, SVGAnimatedPoints {
         tagName: "polyline";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGRadialGradientElement extends SVGGradientElement {
         tagName: "radialGradient";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGRectElement extends SVGGeometryElement {
         tagName: "rect";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGScriptElement extends SVGElement, SVGURIReference {
         tagName: "script";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         type?: string | undefined | State<string | undefined>;
     }
@@ -1824,21 +1692,21 @@ export declare namespace Mini {
     interface SVGSetElement extends SVGAnimationElement {
         tagName: "set";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGStopElement extends SVGElement {
         tagName: "stop";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGStyleElement extends SVGElement, LinkStyle {
         tagName: "style";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         disabled?: boolean | undefined | State<boolean | undefined>;
         media?: string | undefined | State<string | undefined>;
@@ -1849,7 +1717,7 @@ export declare namespace Mini {
     interface SVGSVGElement extends SVGGraphicsElement, SVGFitToViewBox, WindowEventHandlers {
         tagName: "svg";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         currentScale?: number | undefined | State<number | undefined>;
     }
@@ -1857,21 +1725,21 @@ export declare namespace Mini {
     interface SVGSwitchElement extends SVGGraphicsElement {
         tagName: "switch";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGSymbolElement extends SVGElement, SVGFitToViewBox {
         tagName: "symbol";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGTextElement extends SVGTextPositioningElement {
         tagName: "text";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
@@ -1882,49 +1750,49 @@ export declare namespace Mini {
     interface SVGTextPathElement extends SVGTextContentElement, SVGURIReference {
         tagName: "textPath";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGTitleElement extends SVGElement {
         tagName: "title";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGTSpanElement extends SVGTextPositioningElement {
         tagName: "tspan";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGUseElement extends SVGGraphicsElement, SVGURIReference {
         tagName: "use";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface SVGViewElement extends SVGElement, SVGFitToViewBox {
         tagName: "view";
         namespaceURI: "http://www.w3.org/2000/svg";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface MathMLElement extends Element, ElementCSSInlineStyle, GlobalEventHandlers, HTMLOrSVGElement {
         tagName: "annotation" | "annotation-xml" | "maction" | "math" | "merror" | "mfrac" | "mi" | "mmultiscripts" | "mn" | "mo" | "mover" | "mpadded" | "mphantom" | "mprescripts" | "mroot" | "mrow" | "ms" | "mspace" | "msqrt" | "mstyle" | "msub" | "msubsup" | "msup" | "mtable" | "mtd" | "mtext" | "mtr" | "munder" | "munderover" | "semantics";
         namespaceURI: "http://www.w3.org/1998/Math/MathML";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
     }
 
     interface Element extends Node, ARIAMixin, Animatable, ChildNode, InnerHTML, NonDocumentTypeChildNode, ParentNode, Slottable {
         tagName: "a" | "abbr" | "address" | "area" | "article" | "aside" | "audio" | "b" | "base" | "bdi" | "bdo" | "blockquote" | "body" | "br" | "button" | "canvas" | "caption" | "cite" | "code" | "col" | "colgroup" | "data" | "datalist" | "dd" | "del" | "details" | "dfn" | "dialog" | "div" | "dl" | "dt" | "em" | "embed" | "fieldset" | "figcaption" | "figure" | "footer" | "form" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "head" | "header" | "hgroup" | "hr" | "html" | "i" | "iframe" | "img" | "input" | "ins" | "kbd" | "label" | "legend" | "li" | "link" | "main" | "map" | "mark" | "menu" | "meta" | "meter" | "nav" | "noscript" | "object" | "ol" | "optgroup" | "option" | "output" | "p" | "picture" | "pre" | "progress" | "q" | "rp" | "rt" | "ruby" | "s" | "samp" | "script" | "search" | "section" | "select" | "slot" | "small" | "source" | "span" | "strong" | "style" | "sub" | "summary" | "sup" | "table" | "tbody" | "td" | "template" | "textarea" | "tfoot" | "th" | "thead" | "time" | "title" | "tr" | "track" | "u" | "ul" | "var" | "video" | "wbr" | "animate" | "animateMotion" | "animateTransform" | "circle" | "clipPath" | "defs" | "desc" | "ellipse" | "feBlend" | "feColorMatrix" | "feComponentTransfer" | "feComposite" | "feConvolveMatrix" | "feDiffuseLighting" | "feDisplacementMap" | "feDistantLight" | "feDropShadow" | "feFlood" | "feFuncA" | "feFuncB" | "feFuncG" | "feFuncR" | "feGaussianBlur" | "feImage" | "feMerge" | "feMergeNode" | "feMorphology" | "feOffset" | "fePointLight" | "feSpecularLighting" | "feSpotLight" | "feTile" | "feTurbulence" | "filter" | "foreignObject" | "g" | "image" | "line" | "linearGradient" | "marker" | "mask" | "metadata" | "mpath" | "path" | "pattern" | "polygon" | "polyline" | "radialGradient" | "rect" | "set" | "stop" | "svg" | "switch" | "symbol" | "text" | "textPath" | "tspan" | "use" | "view" | "annotation" | "annotation-xml" | "maction" | "math" | "merror" | "mfrac" | "mi" | "mmultiscripts" | "mn" | "mo" | "mover" | "mpadded" | "mphantom" | "mprescripts" | "mroot" | "mrow" | "ms" | "mspace" | "msqrt" | "mstyle" | "msub" | "msubsup" | "msup" | "mtable" | "mtd" | "mtext" | "mtr" | "munder" | "munderover" | "semantics";
         namespaceURI?: "http://www.w3.org/1999/xhtml" | "http://www.w3.org/2000/svg" | "http://www.w3.org/1998/Math/MathML";
-        children?: MiniChildren;
+        children?: MiniNode;
         dataset?: MiniDataset;
         className?: string | undefined | State<string | undefined>;
         id?: string | undefined | State<string | undefined>;

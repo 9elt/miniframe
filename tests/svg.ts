@@ -30,10 +30,6 @@ const miniframeSvg = {
 
 const htmlSvg: SVGSVGElement = createNode(miniframeSvg);
 
-const miniframeSvg1: Mini.Element = preventInference<Mini.Element>(miniframeSvg);
-
-const htmlSvg1: Element = createNode(miniframeSvg1);
-
 const miniframeSvg2: Mini.SVGSVGElement = miniframeSvg;
 
 const htmlSvg2: SVGSVGElement = createNode(miniframeSvg2);
@@ -51,6 +47,3 @@ expect.html(`<svg class="0" viewBox="0 0 64 64">\
 </svg>`);
 
 done();
-
-
-function preventInference<T>(v: T) { return v; }

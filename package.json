@@ -26,7 +26,7 @@
         "test:ts": "tsc",
         "test": "npm run test:js && npm run test:ts",
         "build": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json && echo '{\"type\":\"module\"}'>dist/esm/package.json",
-        "generate:types": "bun scripts/generate.types.ts >index.d.ts",
+        "generate:types": "bun scripts/generate.types.ts",
         "pub": "npm run build && npm run test && npm publish"
     },
     "author": "Lorenzo Cicuttin",

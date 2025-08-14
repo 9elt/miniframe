@@ -4,7 +4,7 @@ import { expect, done, use } from './util';
 
 const counter = new State(0);
 
-const root = createNode({
+const root = createNode<HTMLDivElement>({
     tagName: "div",
     id: "root",
     style: { textAlign: "center" },

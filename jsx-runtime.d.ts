@@ -1,25 +1,21 @@
-import type { Mini, MiniNode, State } from ".";
+import type { Mini, MiniElement, State, TagName } from ".";
 
-type TagName = keyof Mini.IntrinsicElements;
+type Intrinsic<T> = Omit<T, "tagName">;
 
-type Fn = (props: unknown) => unknown;
+export function jsx(key: string | Function, props: Object): MiniElement;
 
-type Props<K> = K extends TagName ? Mini.IntrinsicElements[K] :
-    K extends Fn ? Parameters<K>[0] :
-    never;
+export function jsxs(key: string | Function, props: Object): MiniElement;
 
-export function jsx<K extends TagName | Fn>(key: K, props: Props<K>): Mini.Element;
+export function jsxDEV(key: string | Function, props: Object): MiniElement;
 
-export function jsxs<K extends TagName | Fn>(key: K, props: Props<K>): Mini.Element;
-
-export function jsxDEV<K extends TagName | Fn>(key: K, props: Props<K>): Mini.Element;
-
-export function Fragment(props: { children: MiniNode }): Mini.Element;
+export function Fragment(props: Object): MiniElement;
 
 export declare namespace JSX {
-    type IntrinsicElements = Mini.IntrinsicElements;
-    type Element = State<Element extends Mini.Element ? Mini.Element : never> | Mini.Element;
+    type IntrinsicElements = {
+        [T in TagName]: Intrinsic<Mini.Elements[T]>;
+    };
+    type Element = State<any> | MiniElement;
     type ElementChildrenAttribute = {
         children: any;
-    }
+    };
 }

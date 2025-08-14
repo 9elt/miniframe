@@ -1,5 +1,5 @@
-import { Mini, State, createNode } from '../index';
-import { expect, done, use } from './util';
+import { MiniElement, State, createNode } from '../index';
+import { done, expect, use } from './util';
 
 
 const id: State<'0' | '1'> = new State('0');
@@ -10,13 +10,13 @@ const style: State<{ color: State<'#000' | '#fff'> } | { background: 'none' }> =
 
 const textNode: State<'B' | 'A'> = new State('B');
 
-const element: State<Mini.Element> = new State({ tagName: 'span', children: '0' });
+const element: State<MiniElement> = new State({ tagName: 'span', children: '0' });
 
-const children: State<(State<string> | State<Mini.Element>)[]> = new State([textNode, element]);
+const children: State<(State<string> | State<MiniElement>)[]> = new State([textNode, element]);
 
 const states = { id, color, style, textNode, element, children };
 
-const root = createNode({ tagName: 'div' as const, id, style, children });
+const root = createNode<HTMLDivElement>({ tagName: 'div' as const, id, style, children });
 
 
 use(root);
