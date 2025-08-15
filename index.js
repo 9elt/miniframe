@@ -206,16 +206,14 @@ function appendNodeList(parent, nodeList) {
 }
 
 function replaceNodes(prev, update) {
-    const isPrevArray = Array.isArray(prev);
-    const isUpdateArray = Array.isArray(update);
-    if (!isPrevArray && !isUpdateArray) {
+    if (!Array.isArray(prev) && !Array.isArray(update)) {
         prev.replaceWith(update);
         return update;
     }
-    if (!isPrevArray) {
+    if (!Array.isArray(prev)) {
         prev = [prev];
     }
-    if (!isUpdateArray) {
+    else if (!Array.isArray(update)) {
         update = [update];
     }
     const min = prev.length < update.length ? prev : update;
