@@ -134,7 +134,7 @@ During async code execution it is impossible to track all state dependencies,
 meaning some may not be cleaned up when needed.
 
 To avoid this, it is very important that `State.as`, when called with an `async`
-callback, never contains nested `State.as` calls.
+callback, never contains `State.as`, `State.merge` or `State.sub` calls.
 
 <table>
 <tr><td>✗ Unsafe</td><td>✓ Best practice</td></tr>

@@ -353,18 +353,20 @@ export class State {
     //    await something();
     //    ^^^^^ Children collection ends here
     //
+    //    state.sub(...);
+    //    State.merge(...);
     //    const strayChild = state.as(...);
-    //          ^ There is no way to know about this child
+    //    ^ None of these can be tracked
     //
     //    return state.as(...);
     //           ^^^^^^^^ There is no way to know if State.as
     //           was actually called here, or previously
     //           assigned to a variable outside the scope.
-    //           However we can always log a warning, to let
-    //           the user know he's not following best
-    //           practices, this should cover almost all cases,
-    //           except when the user creates a derived state
-    //           without ever using it as above.
+    //           However we can log a warning when there is a
+    //           state in the return value, to let the user
+    //           know he's not following best practices. This
+    //           should cover almost all cases, except for subs
+    //           and unused states.
     // });
     as(f) {
         this._children = [];
@@ -440,13 +442,12 @@ export class State {
 }
 
 function warning(value, seen = new WeakSet()) {
-    value instanceof State
-        ? !seen.has(value) && (seen.add(value) && value._parent
-            ? !seen.has(warning) && seen.add(warning) && console.error(
-                "Derived state detected, please never nest State.as inside async State.as, " +
-                "see: https://github.com/9elt/miniframe?tab=readme-ov-file#async-state-limitations"
-            )
-            : warning(value.value, seen))
-        : value && typeof value === "object" ? !seen.has(value) && seen.add(value) &&
-            Object.values(value).forEach((v) => warning(v, seen)) : 0;
+    !seen.has(warning) && (value instanceof State
+        ? seen.add(warning) && console.error(
+            "State detected, please never use states inside async State.as, see: " +
+            "https://github.com/9elt/miniframe?tab=readme-ov-file#async-state-limitations")
+        : value && typeof value === "object" &&
+        !seen.has(value) && seen.add(value) &&
+        Object.values(value).forEach((v) => warning(v, seen))
+    );
 }
