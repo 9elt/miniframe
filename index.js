@@ -380,7 +380,6 @@ export class State {
         }
 
         const child = new State(value);
-        child._parent = this;
 
         ref.f = this._sub((curr) => {
             this._clearChildren();
