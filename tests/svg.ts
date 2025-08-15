@@ -9,10 +9,10 @@ const miniframeSvg = {
     // `namespaceURI` needs to be explicit
     // for SVG and MathML elements
     namespaceURI: 'http://www.w3.org/2000/svg' as const,
-    className: new State("0"),
+    class: new State("0"),
     viewBox: "0 0 64 64",
-    strokeWidth: "1",
-    strokeColor: "blue",
+    "stroke-width": "1",
+    "stroke-color": "blue",
     children: [
         {
             tagName: 'path' as const,
@@ -43,7 +43,7 @@ const htmlSvg3: SVGSVGElement = createNode(miniframeSvg3);
 
 use(htmlSvg);
 
-expect.html(`<svg class="0" viewBox="0 0 64 64" strokeWidth="1" strokeColor="blue">\
+expect.html(`<svg class="0" viewBox="0 0 64 64" stroke-width="1" stroke-color="blue">\
 <path d="M0,0Z"></path>\
 <rect x="0" y="0" width="64" height="64"></rect>\
 </svg>`);

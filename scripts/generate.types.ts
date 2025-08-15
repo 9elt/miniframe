@@ -109,8 +109,13 @@ const mini_d_ts: string = await Bun.file("types/mini.d.ts").text();
 
 function parse_svg_d_ts() {
     let lines: string[] = [];
+    let collect = false;
     for (const line of svg_d_ts.split("\n")) {
         if (line === "") { }
+        else if (line === "*/") {
+            collect = true;
+        }
+        else if (!collect) { }
         else if (line.startsWith("import")) { }
         else if (line.startsWith("interface SVGElement {")) { }
         else if (line.startsWith("}")) { }
@@ -222,8 +227,7 @@ function parse_lib_dom_d_ts() {
                 && !name.startsWith("[")
                 // NOTE: No readonly properties except for style and className
                 && (!name.startsWith("readonly ")
-                    || name === "readonly style"
-                    || name === "readonly className")) {
+                    || name === "readonly style")) {
 
                 name = remove(name, "readonly ").trim();
                 value = remove(value, ";").trim();

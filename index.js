@@ -263,13 +263,12 @@ function setPrimitive(on, key, from, tree) {
         && D_value.value
         : D_value;
     try {
-        // NOTE: SVGs are weird...
+        // NOTE: SVG elements require the setAttribute API
         on.namespaceURI === "http://www.w3.org/2000/svg"
-            ? typeof on[key] === "object" && "baseVal" in on[key]
-                ? on[key].baseVal = value
-                : !value && value !== 0
-                    ? on.removeAttribute(key)
-                    : on.setAttribute(key, value)
+            ? !value && value !== 0
+                ? on.removeAttribute(key)
+                : on.setAttribute(key, value)
+
             // NOTE: Assignment for HTML and MathMl elements
             : on[key] = value;
     }
