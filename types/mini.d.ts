@@ -18,13 +18,7 @@ export type MiniChildren =
     | Node
     | string | number | false | null | undefined
     | MiniChildren[]
-    | State<
-        | MiniElement
-        | MiniElement[]
-        | Node
-        | string | number | false | null | undefined
-        | MiniChildren[]
-    >;
+    | State<any>;
 
 export type MiniDataset = {
     [key: string]: string | number | undefined | State<string | number | undefined>;
