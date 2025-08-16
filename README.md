@@ -7,6 +7,12 @@ management in 300 LOC.
 npm i @9elt/miniframe
 ```
 
+Try it now:
+
+```
+npx @9elt/miniframe-template jsx-bun --name my-miniframe-project
+```
+
 ## JSX Support
 
 In your `tsconfig.json` add:

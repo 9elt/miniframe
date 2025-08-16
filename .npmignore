@@ -7,4 +7,5 @@ types
 tsconfig*
 tests
 scripts
+templates
 !dist/**/*

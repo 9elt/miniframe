@@ -1,0 +1,19 @@
+{
+    "include": [
+        "./**/*.tsx"
+    ],
+    "exclude": [
+        "./dist"
+    ],
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "strictNullChecks": true,
+        "noErrorTruncation": true,
+        "allowJs": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "jsxImportSource": "@9elt/miniframe"
+    }
+}
