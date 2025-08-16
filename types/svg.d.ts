@@ -1,17 +1,18 @@
 /*
-    className?: never;
+// Use "class" on SVG elements
+className?: never;
 
-    // @ https://www.w3.org/TR/SVG/attindex.html
-    Array.from(new Set(Array.from(document.querySelectorAll(".attr-name")).map(el => el.textContent)))
-        .filter(key => !["id", "media", "style", "rel", "role", "title", "type"].includes(key) && !key.startsWith("on"))
-        .map(key => (/^[a-z0-9]+$/i.test(key) ? key : JSON.stringify(key)) + "?: string | number | undefined | State<string | number | undefined>;")
-        .join("\n");
+// Visit: https://www.w3.org/TR/SVG/attindex.html
+Array.from(new Set(Array.from(document.querySelectorAll(".attr-name")).map(el => el.textContent)))
+    .filter(key => !["id", "media", "style", "rel", "role", "title", "type"].includes(key) && !key.startsWith("on"))
+    .map(key => (/^[a-z0-9]+$/i.test(key) ? key : JSON.stringify(key)) + "?: string | number | undefined | State<string | number | undefined>;")
+    .join("\n");
 
-    // @ https://www.w3.org/TR/SVG/styling.html#TermPresentationAttribute
-    Array.from(new Set(Array.from(document.querySelectorAll(".property")).map(el => el.textContent)))
-        .filter(key => !["id", "media", "style", "rel", "role", "title", "type"].includes(key) && !key.startsWith("on"))
-        .map(key => (/^[a-z0-9]+$/i.test(key) ? key : JSON.stringify(key)) + "?: string | number | undefined | State<string | number | undefined>;")
-        .join("\n");
+// Visit: https://www.w3.org/TR/SVG/styling.html
+Array.from(new Set(Array.from(document.querySelectorAll(".property")).map(el => el.textContent)))
+    .filter(key => !["id", "media", "style", "rel", "role", "title", "type"].includes(key) && !key.startsWith("on"))
+    .map(key => (/^[a-z0-9]+$/i.test(key) ? key : JSON.stringify(key)) + "?: string | number | undefined | State<string | number | undefined>;")
+    .join("\n");
 */
 import { State } from "./state";
 
