@@ -302,21 +302,19 @@ export class State {
         return this._value;
     }
     set value(value) {
-        for (let i = 0; i < this._subs.length; i++) {
+        const prev = this._value;
+        this._value = value;
+        for (const sub of this._subs) {
             try {
-                this._subs[i](value, this._value);
+                sub(value, prev);
             }
             catch (err) {
                 console.error(
-                    "Subscriber error:", err,
-                    "on:", this,
-                    "calling:", this._subs[i],
-                    "setting:", value,
-                    "over:", this._value
+                    "Subscriber error:", err, "on:", this,
+                    "calling:", sub, "setting:", value, "over:", prev
                 );
             }
         }
-        this._value = value;
     }
     _clearChildren() {
         while (this._children.length) {
