@@ -22,9 +22,7 @@
         }
     },
     "scripts": {
-        "test:js": "for f in tests/*.ts; do bun \"$f\"; done",
-        "test:ts": "tsc",
-        "test": "npm run test:js && npm run test:ts",
+        "test": "bun test && tsc",
         "build": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json && echo '{\"type\":\"module\"}'>dist/esm/package.json",
         "generate:types": "bun scripts/generate.types.ts",
         "pub": "npm run build && npm run test && npm publish"
@@ -42,6 +40,8 @@
     "homepage": "https://github.com/9elt/miniframe#readme",
     "repository": "github:9elt/miniframe",
     "devDependencies": {
+        "@types/bun": "^1.2.20",
+        "@types/jsdom": "^21.1.7",
         "jsdom": "^22.1.0"
     }
 }

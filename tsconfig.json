@@ -1,6 +1,6 @@
 {
     "include": [
-        "./tests/**/*"
+        "./tests/*"
     ],
     "compilerOptions": {
         "target": "ES2015",
@@ -9,6 +9,7 @@
         "strictNullChecks": true,
         "noErrorTruncation": true,
         "noEmit": true,
+        "skipLibCheck": true,
         "jsx": "react-jsx",
         "jsxImportSource": "@9elt/miniframe"
     }
