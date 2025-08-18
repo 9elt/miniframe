@@ -1,4 +1,4 @@
-function jsx(key, props) {
+export function jsx(key, props) {
     if (typeof key === "function") {
         return key(props);
     }
@@ -6,8 +6,8 @@ function jsx(key, props) {
     return props;
 }
 
-function Fragment(props) {
+export function Fragment(props) {
     return props.children;
 }
 
-export { Fragment, jsx, jsx as jsxDEV, jsx as jsxs };
+export { jsx as jsxDEV, jsx as jsxs };
