@@ -11,7 +11,7 @@ const TEMPLATES = [
     "tsx-bun",
 ];
 
-const VERSION = "0.1.0";
+const VERSION = "0.1.4";
 
 const HELP = `npx @9elt/miniframe-template [template] [options]
 templates:
