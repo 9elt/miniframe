@@ -11,7 +11,7 @@ const TEMPLATES = [
     "tsx-bun",
 ];
 
-const VERSION = "0.1.5";
+const VERSION = "0.1.6";
 
 const HELP = `npx @9elt/miniframe-template [template] [options]
 templates:
@@ -33,7 +33,7 @@ let git = false;
 
 for (const arg of process.argv.slice(2)) {
     if (name === true) {
-        name = arg;
+        name = arg.trim();
     }
     else if (TEMPLATES.includes(arg)) {
         template = arg;
@@ -106,9 +106,9 @@ if (template.includes("bun")) {
     if (bun_version.error) {
         console.log("Bun not found, installing...");
 
-        const npm_i = spawnSync("npm", ["i", "bun"], cwd);
+        const npm_i_bun = spawnSync("npm", ["i", "bun"], cwd);
 
-        if (npm_i.error) {
+        if (npm_i_bun.error) {
             console.error(
                 "Please install bun, see: " +
                 "https://bun.com/docs/installation"
@@ -125,11 +125,22 @@ if (template.includes("bun")) {
 
 console.log("Installing miniframe...");
 
-const npm_i = spawnSync("npm", ["i", "@9elt/miniframe"], cwd);
+const npm_i_miniframe = spawnSync("npm", ["i", "@9elt/miniframe"], cwd);
 
-if (npm_i.error) {
-    console.error(npm_i.error);
+if (npm_i_miniframe.error) {
+    console.error(npm_i_miniframe.error);
     process.exit(1);
+}
+
+if (template.includes("tsx")) {
+    console.log("Installing typescript...");
+
+    const npm_i_typescript = spawnSync("npm", ["i", "-D", "typescript"], cwd);
+
+    if (npm_i_typescript.error) {
+        console.error(npm_i_typescript.error);
+        process.exit(1);
+    }
 }
 
 console.log("Building...");
