@@ -270,7 +270,7 @@ function setPrimitive(on, key, from, tree) {
                 : on.setAttribute(key, value)
 
             // NOTE: Assignment for HTML and MathMl elements
-            : on[key] = value;
+            : (on[key] = value) || (value === 0 || delete on[key])
     }
     catch (err) {
         console.warn(`Failed ${on}.${key} = ${D_value}`, err);
