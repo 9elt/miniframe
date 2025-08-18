@@ -11,7 +11,7 @@ const TEMPLATES = [
     "tsx-bun",
 ];
 
-const VERSION = "0.1.4";
+const VERSION = "0.1.5";
 
 const HELP = `npx @9elt/miniframe-template [template] [options]
 templates:
@@ -98,19 +98,32 @@ cpSync(
     { recursive: true }
 );
 
+const cwd = { cwd: name };
+
 if (template.includes("bun")) {
     const bun_version = spawnSync("bun", ["--version"]);
 
     if (bun_version.error) {
-        console.error(
-            "Please install bun, see: " +
+        console.log("Bun not found, installing...");
+
+        const npm_i = spawnSync("npm", ["i", "bun"], cwd);
+
+        if (npm_i.error) {
+            console.error(
+                "Please install bun, see: " +
+                "https://bun.com/docs/installation"
+            );
+            process.exit(1);
+        }
+
+        console.log(
+            "Bun installed locally, please consider installing it globally: " +
             "https://bun.com/docs/installation"
         );
-        process.exit(1);
     }
 }
 
-const cwd = { cwd: name };
+console.log("Installing miniframe...");
 
 const npm_i = spawnSync("npm", ["i", "@9elt/miniframe"], cwd);
 
@@ -118,6 +131,8 @@ if (npm_i.error) {
     console.error(npm_i.error);
     process.exit(1);
 }
+
+console.log("Building...");
 
 const npm_run_build = spawnSync("npm", ["run", "build"], cwd);
 
@@ -127,6 +142,8 @@ if (npm_run_build.error) {
 }
 
 if (git) {
+    console.log("Initializing git...");
+
     const git_init = spawnSync("git", ["init", "-b", "main"], cwd);
 
     if (git_init.error) {
