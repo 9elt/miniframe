@@ -1,6 +1,6 @@
 {
     "name": "@9elt/miniframe-template",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "@9elt/miniframe templates",
     "type": "module",
     "bin": {

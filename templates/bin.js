@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
-import { spawnSync } from "child_process";
-import fs from "fs";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
+import { spawnSync } from "node:child_process";
+import { cpSync, existsSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
+import { createInterface } from "node:readline";
+import { fileURLToPath } from "node:url";
 
 const TEMPLATES = [
     "jsx-bun",
@@ -57,22 +58,41 @@ for (const arg of process.argv.slice(2)) {
     }
 }
 
-if (!name) {
-    console.error("Please provide a name for the project");
-    console.log(HELP);
-    process.exit(1);
-}
-
 if (!template) {
     console.error("Please provide a template");
     console.log(HELP);
     process.exit(1);
 }
 
+if (!name) {
+    const readline = createInterface({
+        input: process.stdin,
+        output: process.stdout,
+    });
+
+    name = await new Promise((resolve) =>
+        readline.question("Enter a name for the project: ", (name) => {
+            readline.close();
+            resolve(name.trim());
+        })
+    );
+}
+
+if (!name) {
+    console.error("Please provide a name for the project");
+    console.log(HELP);
+    process.exit(1);
+}
+
+if (existsSync(name)) {
+    console.error(name + " already exists");
+    process.exit(1);
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-fs.cpSync(
+cpSync(
     __dirname + "/" + template,
     name,
     { recursive: true }
@@ -114,9 +134,11 @@ if (git) {
         process.exit(1);
     }
 
-    fs.writeFileSync(cwd.cwd + "/.gitignore", `\
+    writeFileSync(name + "/.gitignore", `\
 dist
 node_modules
 package-lock.json
 `);
 }
+
+console.log(template, "created at", name);
