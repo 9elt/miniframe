@@ -474,7 +474,7 @@ export class State {
 function warning(value, seen = new WeakSet()) {
     !seen.has(warning) && (value instanceof State
         ? seen.add(warning) && console.error(
-            "State detected, please never use states inside async State.as, see: " +
+            "State detected, please never use states inside async State.as/State.sub, see: " +
             "https://github.com/9elt/miniframe?tab=readme-ov-file#async-state-limitations")
         : value && typeof value === "object" &&
         !seen.has(value) && seen.add(value) &&
