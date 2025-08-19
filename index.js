@@ -342,17 +342,12 @@ export class State {
     //    state.as(...);
     //    state.sub(...);
     //    State.merge(...);
-    //    ^ None of these can be tracked
+    //    ^ These can't be tracked
     //
-    //    return state.as(...);
-    //           ^^^^^^^^ There is no way to know if State.as
-    //           was actually called here, or previously
-    //           assigned to a variable outside the scope.
-    //           However we can log a warning when there is a
-    //           state in the return value, to let the user
-    //           know he's not following best practices. This
-    //           covers many cases, except for subs and unused
-    //           states.
+    //    return ...;
+    //           ^^^ We can check the return value for states
+    //           and, in case, log a warning to let the user
+    //           know he's not following best practices.
     // });
     _track(ref, f, curr, prev = State._Stack /* random pointer */) {
         this._children ||= [];
