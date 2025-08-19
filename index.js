@@ -355,18 +355,12 @@ export class State {
         State._Header ||= ref;
         State._Stack.push(ref);
         const value = prev === State._Stack ? f(curr) : f(curr, prev);
-        if (State._Stack.at(-1) !== ref) {
-            let pop;
-            while ((pop = State._Stack.pop()) !== ref) {
-                pop.pid = ref.id;
-                this._children.push(pop);
-            }
-            delete pop.pid;
-            State._Header === ref
-                ? State._Header = null
-                : State._Stack.push(pop);
+        while (State._Stack.at(-1) !== ref) {
+            const child = State._Stack.pop();
+            child.pid = ref.id;
+            this._children.push(child);
         }
-        else if (State._Header === ref) {
+        if (State._Header === ref) {
             State._Stack.pop();
             State._Header = null;
         }
