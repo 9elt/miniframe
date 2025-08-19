@@ -10,6 +10,21 @@ export function subs(state: State<unknown>) {
     return state._subs.length;
 }
 
+export function children(state: State<unknown>) {
+    // @ts-ignore
+    return state._children?.length;
+}
+
+export function StateStack() {
+    // @ts-ignore
+    return State._Stack.length;
+}
+
+export function StateHeader() {
+    // @ts-ignore
+    return State._Header;
+}
+
 type Wait = (<T>(data: T, ms?: number) => Promise<T>) & {
     last?: Promise<void>
 };

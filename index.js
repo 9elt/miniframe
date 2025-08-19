@@ -278,7 +278,8 @@ function setPrimitive(on, key, from, tree) {
 }
 
 export class State {
-    static _ChildrenStack = [];
+    static _Stack = [];
+    static _Header = null;
     _value;
     _subs;
     constructor(value) {
@@ -291,10 +292,13 @@ export class State {
         for (let i = 0; i < states.length; i++) {
             sync.value[i] = states[i].value;
             // TODO: We may need to copy the array
-            states[i].sub((curr) => {
+            const f = states[i]._sub((curr) => {
                 sync.value[i] = curr;
                 sync.value = sync.value;
             });
+            if (State._Header) {
+                State._Stack.push({ state: states[i], f });
+            }
         }
         return as ? sync.as((states) => as(...states)) : sync;
     }
@@ -316,44 +320,28 @@ export class State {
             }
         }
     }
-    _clearChildren() {
-        while (this._children.length) {
-            const ref = this._children.pop();
-            if (ref.state._children) {
-                ref.state._clearChildren();
-            }
-            ref.state.unsub(ref.f);
-        }
-    }
-    _collectChildren(ref) {
-        if (State._ChildrenStack.at(-1) !== ref) {
-            let pop;
-            while ((pop = State._ChildrenStack.pop()) !== ref) {
-                this._children.push(pop);
-            }
-        } else if (State._ChildrenStack.length === 1) {
-            State._ChildrenStack.pop();
-        }
-    }
-    // NOTE: When State.as is called, a reference (ref) is
-    // pushed onto a global stack and the (f) callback is
-    // exectuted, then all references that are present in the
-    // stack after the initial reference (ref) are collected as
-    // children. Children are then cleared and recollected
-    // every time the state changes.
+    // NOTE: When State.as and State.sub are called, a
+    // reference (ref) is pushed onto a global stack and the
+    // (f) callback is exectuted, then all references that are
+    // present in the stack after the initial reference (ref)
+    // are collected as children. Children are then cleared and
+    // recollected every time the state changes.
     //
     // WARNING: This approach does not support nesting inside
     // async callbacks:
     //
     // const derived = state.as(async () => {
-    //    const collectedChild = state.as(...);
+    //    state.as(...);
+    //    state.sub(...);
+    //    State.merge(...);
+    //    ^ These can be tracked
     //
     //    await something();
     //    ^^^^^ Children collection ends here
     //
+    //    state.as(...);
     //    state.sub(...);
     //    State.merge(...);
-    //    const strayChild = state.as(...);
     //    ^ None of these can be tracked
     //
     //    return state.as(...);
@@ -363,33 +351,56 @@ export class State {
     //           However we can log a warning when there is a
     //           state in the return value, to let the user
     //           know he's not following best practices. This
-    //           should cover almost all cases, except for subs
-    //           and unused states.
+    //           covers many cases, except for subs and unused
+    //           states.
     // });
-    as(f) {
-        this._children = [];
-        const ref = { state: this, f: null };
-
-        State._ChildrenStack.push(ref);
-        const value = f(this._value);
-        this._collectChildren(ref);
+    _track(ref, f, curr, prev = State._Stack) {
+        this._children ||= [];
+        this._clear(ref.id);
+        State._Header ||= ref;
+        State._Stack.push(ref);
+        const value = prev === State._Stack ? f(curr) : f(curr, prev);
+        if (State._Stack.at(-1) !== ref) {
+            let pop;
+            while ((pop = State._Stack.pop()) !== ref) {
+                pop.pid = ref.id;
+                this._children.push(pop);
+            }
+            delete pop.pid;
+            State._Header === ref
+                ? State._Header = null
+                : State._Stack.push(pop);
+        }
+        else if (State._Header === ref) {
+            State._Stack.pop();
+            State._Header = null;
+        }
         if (value instanceof Promise) {
             value.then(warning);
         }
-
-        const child = new State(value);
-
-        ref.f = this._sub((curr) => {
-            this._clearChildren();
-            State._ChildrenStack.push(ref);
-            const value = f(curr);
-            this._collectChildren(ref);
-            child.value = value;
-            if (value instanceof Promise) {
-                value.then(warning);
+        return value;
+    }
+    _clear(id) {
+        let length = 0;
+        for (const ref of this._children) {
+            if (ref.pid === id) {
+                if (ref.state._children) {
+                    ref.state._clear(ref.id);
+                }
+                ref.state.unsub(ref.f);
             }
-        });
-
+            else {
+                this._children[length++] = ref;
+            }
+        }
+        this._children.length = length;
+    }
+    as(f) {
+        const ref = { id: f, state: this, f: null };
+        const child = new State(this._track(ref, f, this._value));
+        ref.f = this._sub(
+            (curr) => child.value = this._track(ref, f, curr)
+        );
         return child;
     }
     // NOTE: Loading is not a necessary state, the
@@ -397,21 +408,24 @@ export class State {
     // is available. To check if it wasn't provided we
     // use a random private pointer, so the user can
     // use any value, including undefined
-    await(init, loading = State._ChildrenStack) {
+    await(init, loading = State._Stack) {
         const child = new State(init);
 
         Promise.resolve(this._value)
             .then((value) => child.value = value)
             .catch(console.error);
 
-        this.sub((curr) => {
-            if (loading !== State._ChildrenStack) {
+        const f = this._sub((curr) => {
+            if (loading !== State._Stack) {
                 child.value = loading;
             }
             Promise.resolve(curr)
                 .then((value) => child.value = value)
                 .catch(console.error);
         });
+        if (State._Header) {
+            State._Stack.push({ state: this, f });
+        }
 
         return child;
     }
@@ -419,19 +433,20 @@ export class State {
         this._subs.push(f);
         return f;
     }
-    // NOTE: Safe (and public) version of State._sub
     sub(f) {
-        this._subs.push(f);
-        if (State._ChildrenStack.length > 0) {
-            State._ChildrenStack.push({ state: this, f });
+        const ref = { id: f, state: this, f: null };
+        if (State._Header) {
+            State._Stack.push(ref);
         }
-        return f;
+        return ref.f = this._sub(
+            (curr, prev) => this._track(ref, f, curr, prev)
+        );
     }
     unsub(f) {
         let length = 0;
-        for (let i = 0; i < this._subs.length; i++) {
-            if (this._subs[i] !== f) {
-                this._subs[length++] = this._subs[i];
+        for (const sub of this._subs) {
+            if (sub !== f) {
+                this._subs[length++] = sub;
             }
         }
         this._subs.length = length;

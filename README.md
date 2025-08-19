@@ -139,8 +139,9 @@ document.body.appendChild(
 During async code execution it is impossible to track all state dependencies,
 meaning some may not be cleaned up when needed.
 
-To avoid this, it is very important that `State.as`, when called with an `async`
-callback, never contains `State.as`, `State.merge` or `State.sub` calls.
+To avoid this, it is very important that `State.as` and `State.sub`, when called
+with an `async` callback, never contain nested `State.as`, `State.sub` or `State.merge`
+calls.
 
 <table>
 <tr><td>✗ Unsafe</td><td>✓ Best practice</td></tr>
@@ -149,7 +150,7 @@ callback, never contains `State.as`, `State.merge` or `State.sub` calls.
 <tr>
 <td>
 
-Do NOT use components and states inside `State.as async`
+Do NOT use components and states inside `State.as async` or `State.sub async`
 
 </td>
 <td>
@@ -168,12 +169,15 @@ state
     .as(async v => {
         const data = await getData(v);
 
-        // WARNING: This state can't
-        // be tracked at all
-        const stray = state.as(...);
+        // WARNING: These dependencies
+        // can't be tracked
+        state.as(...);
+        state.sub(...);
+        State.merge(state);
 
         // WARNING: Component could be
-        // calling State.as internally
+        // calling State.as, State.sub
+        // or State.merge internally
         return (
             <Component data={data} />
         );
@@ -189,11 +193,43 @@ state
     .as(getData)
     .await(init)
     .as(data => {
-        const tracked = state.as(...);
+        state.as(...);
+        state.sub(...);
+        State.merge(state);
 
         return (
             <Component data={data} />
         );
+    });
+```
+
+</td>
+</tr>
+
+<tr></tr>
+
+<tr>
+<td>
+
+```tsx
+state.sub(async v => {
+    const data = await getData(v);
+
+    // WARNING: This dependency can't
+    // be tracked
+    state.sub(...);
+});
+```
+
+</td>
+<td>
+
+```tsx
+state
+    .as(getData)
+    .await(init)
+    .sub(data => {
+        state.sub(...);
     });
 ```
 
