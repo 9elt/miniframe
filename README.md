@@ -136,7 +136,7 @@ document.body.appendChild(
 
 ## Async state limitations
 
-During async code execution it is impossible to track all state dependencies,
+During async code execution it is impossible to track all state dependents,
 meaning some may not be cleaned up when needed.
 
 To avoid this, it is very important that `State.as` and `State.sub`, when called
@@ -169,7 +169,7 @@ state
     .as(async v => {
         const data = await getData(v);
 
-        // WARNING: These dependencies
+        // WARNING: These dependents
         // can't be tracked
         state.as(...);
         state.sub(...);
@@ -215,7 +215,7 @@ state
 state.sub(async v => {
     const data = await getData(v);
 
-    // WARNING: This dependency can't
+    // WARNING: This dependent can't
     // be tracked
     state.sub(...);
 });
