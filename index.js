@@ -80,6 +80,7 @@ function _createNode(D_props, tree) {
         )
         && D_props.value
         : D_props;
+
     return (node = (
         typeof props === "string" || typeof props === "number"
             ? window.document.createTextNode(props)
@@ -113,6 +114,7 @@ function copyObject(on, D_from, tree) {
         )
         && D_from.value
         : D_from;
+
     for (const key in from) {
         if (key === "namespaceURI" || key === "tagName") {
             continue;
@@ -131,6 +133,7 @@ function copyObject(on, D_from, tree) {
             setPrimitive(on, key, from, leaf || tree);
         }
     }
+
     return on;
 }
 
@@ -149,6 +152,7 @@ function setChildren(parent, D_children, tree) {
         )
         && D_children.value
         : D_children;
+
     appendNodeList(parent, createNodeList(children, leaf || tree));
 }
 
@@ -210,14 +214,17 @@ function replaceNodes(prev, update) {
         prev.replaceWith(update);
         return update;
     }
+
     if (!Array.isArray(prev)) {
         prev = [prev];
     }
     else if (!Array.isArray(update)) {
         update = [update];
     }
+
     const min = prev.length < update.length ? prev : update;
     const max = min === prev ? update : prev;
+
     for (let i = 0; i < min.length; i++) {
         // NOTE: Recursion
         replaceNodes(prev[i], update[i]);
@@ -227,6 +234,7 @@ function replaceNodes(prev, update) {
             ? removeNode(prev[i])
             : appendNodeAfter(update[i - 1], update[i]);
     }
+
     return update;
 }
 
@@ -254,6 +262,7 @@ function appendNodeAfter(sibiling, node) {
 
 function setPrimitive(on, key, from, tree) {
     let D_value = from && from[key];
+
     let leaf;
     const value = D_value instanceof State
         ? tree.children.push(leaf = stateTree(D_value, tree))
@@ -262,6 +271,7 @@ function setPrimitive(on, key, from, tree) {
         )
         && D_value.value
         : D_value;
+
     try {
         // NOTE: SVG elements require the setAttribute API
         on.namespaceURI === "http://www.w3.org/2000/svg"
@@ -289,17 +299,23 @@ export class State {
     static merge(...states) {
         const as = typeof states.at(-1) === "function" && states.pop();
         const sync = new State(new Array(states.length));
+
         for (let i = 0; i < states.length; i++) {
-            sync.value[i] = states[i].value;
+            const state = states[i];
+
+            sync.value[i] = state.value;
+
             // TODO: We may need to copy the array
-            const f = states[i]._sub((curr) => {
+            const f = state._sub((curr) => {
                 sync.value[i] = curr;
                 sync.value = sync.value;
             });
+
             if (State._Header) {
-                State._Stack.push({ state: states[i], f });
+                State._Stack.push({ state, f });
             }
         }
+
         return as ? sync.as((states) => as(...states)) : sync;
     }
     get value() {
@@ -307,7 +323,9 @@ export class State {
     }
     set value(value) {
         const prev = this._value;
+
         this._value = value;
+
         for (const sub of this._subs) {
             try {
                 sub(value, prev);
@@ -352,21 +370,27 @@ export class State {
     _track(ref, f, curr, prev = State._Stack /* random pointer */) {
         this._children ||= [];
         this._clear(ref.id);
+
         State._Header ||= ref;
         State._Stack.push(ref);
+
         const value = prev === State._Stack ? f(curr) : f(curr, prev);
+
         while (State._Stack.at(-1) !== ref) {
             const child = State._Stack.pop();
             child.pid = ref.id;
             this._children.push(child);
         }
+
         if (State._Header === ref) {
             State._Stack.pop();
             State._Header = null;
         }
+
         if (value instanceof Promise) {
             value.then(warning);
         }
+
         return value;
     }
     _clear(id) {
@@ -387,9 +411,11 @@ export class State {
     as(f) {
         const ref = { id: f, state: this, f: null };
         const child = new State(this._track(ref, f, this._value));
+
         ref.f = this._sub(
             (curr) => child.value = this._track(ref, f, curr)
         );
+
         return child;
     }
     // NOTE: Loading is not a necessary state, the
@@ -412,6 +438,7 @@ export class State {
                 .then((value) => child.value = value)
                 .catch(console.error);
         });
+
         if (State._Header) {
             State._Stack.push({ state: this, f });
         }
@@ -424,9 +451,11 @@ export class State {
     }
     sub(f) {
         const ref = { id: f, state: this, f: null };
+
         if (State._Header) {
             State._Stack.push(ref);
         }
+
         return ref.f = this._sub(
             (curr, prev) => this._track(ref, f, curr, prev)
         );
