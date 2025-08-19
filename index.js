@@ -354,7 +354,7 @@ export class State {
     //           covers many cases, except for subs and unused
     //           states.
     // });
-    _track(ref, f, curr, prev = State._Stack) {
+    _track(ref, f, curr, prev = State._Stack /* random pointer */) {
         this._children ||= [];
         this._clear(ref.id);
         State._Header ||= ref;
@@ -408,7 +408,7 @@ export class State {
     // is available. To check if it wasn't provided we
     // use a random private pointer, so the user can
     // use any value, including undefined
-    await(init, loading = State._Stack) {
+    await(init, loading = State._Stack /* random pointer */) {
         const child = new State(init);
 
         Promise.resolve(this._value)
