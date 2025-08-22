@@ -345,14 +345,15 @@ export class State {
     //           and, in case, log a warning to let the user
     //           know he's not following best practices.
     // });
-    _track(ref, f, curr, prev = State._Stack /* random pointer */) {
+    _track(ref, f, curr, prev = State._Stack/*random pointer*/) {
         this._dependents ||= [];
         this._clear(ref.id);
 
         State._Header ||= ref;
         State._Stack.push(ref);
 
-        const value = prev === State._Stack ? f(curr) : f(curr, prev);
+        const value = prev === State._Stack/*random pointer*/
+            ? f(curr) : f(curr, prev);
 
         while (State._Stack.at(-1) !== ref) {
             const child = State._Stack.pop();
@@ -401,7 +402,7 @@ export class State {
     // is available. To check if it wasn't provided we
     // use a random private pointer, so the user can
     // use any value, including undefined
-    await(init, loading = State._Stack /* random pointer */) {
+    await(init, loading = State._Stack/*random pointer*/) {
         const child = new State(init);
 
         Promise.resolve(this._value)
@@ -409,7 +410,7 @@ export class State {
             .catch(console.error);
 
         const f = this._sub((curr) => {
-            if (loading !== State._Stack) {
+            if (loading !== State._Stack/*random pointer*/) {
                 child.value = loading;
             }
             Promise.resolve(curr)
