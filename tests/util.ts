@@ -10,9 +10,9 @@ export function subs(state: State<unknown>) {
     return state._subs.length;
 }
 
-export function children(state: State<unknown>) {
+export function dependents(state: State<unknown>) {
     // @ts-ignore
-    return state._children?.length;
+    return state._dependents?.length;
 }
 
 export function StateStack() {

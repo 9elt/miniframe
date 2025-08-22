@@ -1,6 +1,6 @@
 import { expect, mock, test } from "bun:test";
 import { State } from "../index";
-import { StateHeader, StateStack, children, subs, wait } from "./util";
+import { StateHeader, StateStack, dependents, subs, wait } from "./util";
 
 test("State.as transforms the state value", () => {
     const state = new State(1);
@@ -48,33 +48,33 @@ test("State.as clears dependencies at every update", () => {
     expect(StateStack()).toEqual(0);
 
     expect(subs(inner)).toEqual(7);
-    expect(children(inner)).toEqual(1);
+    expect(dependents(inner)).toEqual(1);
     expect(subs(state)).toEqual(2);
-    expect(children(state)).toEqual(6);
+    expect(dependents(state)).toEqual(6);
 
     state.value = 1;
     expect(subs(inner)).toEqual(1);
-    expect(children(inner)).toEqual(0);
+    expect(dependents(inner)).toEqual(0);
     expect(subs(state)).toEqual(2);
-    expect(children(state)).toEqual(0);
+    expect(dependents(state)).toEqual(0);
 
     state.value = 3;
     expect(subs(inner)).toEqual(3);
-    expect(children(inner)).toEqual(1);
+    expect(dependents(inner)).toEqual(1);
     expect(subs(state)).toEqual(2);
-    expect(children(state)).toEqual(1);
+    expect(dependents(state)).toEqual(1);
 
     state.value = 5;
     expect(subs(inner)).toEqual(5);
-    expect(children(inner)).toEqual(0);
+    expect(dependents(inner)).toEqual(0);
     expect(subs(state)).toEqual(2);
-    expect(children(state)).toEqual(5);
+    expect(dependents(state)).toEqual(5);
 
     state.value = 15;
     expect(subs(inner)).toEqual(7);
-    expect(children(inner)).toEqual(1);
+    expect(dependents(inner)).toEqual(1);
     expect(subs(state)).toEqual(2);
-    expect(children(state)).toEqual(6);
+    expect(dependents(state)).toEqual(6);
 
     expect(as3).toHaveBeenCalledTimes(5);
     expect(as5).toHaveBeenCalledTimes(5);

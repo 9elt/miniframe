@@ -1,7 +1,7 @@
 export function createNode(D_props) {
-    const tree = stateTree();
+    const tree = { children: [] };
     const node = _createNode(D_props, tree);
-    node.clear = () => clearStateTree(tree, 0);
+    node.clear = () => clearStateTree(tree);
     // NOTE: We expose the tree for debug purposes
     node._stateTree = tree;
     return node;
@@ -28,27 +28,26 @@ export function createNode(D_props) {
 // relations in a state tree:
 //
 // Node {
-//     parent: Node;
 //     state: State;
-//     subs: F[];
+//     sub: F;
 //     children: Node[];
 // }
-function clearStateTree(tree, root) {
-    if (root !== undefined && tree.state) {
-        tree.subs.forEach((sub) => tree.state.unsub(sub));
-        tree.subs = [];
+function clearStateTree(tree, root = -1) {
+    if (root !== -1) {
+        tree.state.unsub(tree.sub);
     }
     tree.children.forEach(clearStateTree);
     tree.children = [];
 }
 
-function stateTree(state, parent) {
-    return {
-        parent,
+function stateTree(parent, state, f) {
+    const leaf = {
         state,
-        subs: [],
+        sub: state._sub(f),
         children: [],
     };
+    parent.children.push(leaf);
+    return leaf;
 }
 
 function _createNode(D_props, tree) {
@@ -57,31 +56,22 @@ function _createNode(D_props, tree) {
     // let leaf;
     // const x = D_x instanceof State
     //           ^^^ D_ stands for Dynamic
-    //     ? tree.children.push(leaf = stateTree(D_x, tree))
-    //                     ^^^^^^^^^^^
-    //                     Only create and add leaf for states
-    //     && leaf.subs.push(
-    //             ^^^^^^^^^ Connect below subscriber
-    //          D_x._sub((curr) => {...})
-    //                              ^^^ Handle D_x change
-    //     )
-    //     && D_x.value
-    //            ^^^^^ Access the static value
+    //     ? (leaf = stateTree(tree, D_x, (curr) => {
+    //        ...
+    //        ^^^ Handle D_x change
+    //     })).state.value
+    //               ^^^^^ Access the static value
     //     : D_x
     //       ^^^ D_x was already static
     let leaf;
     const props = D_props instanceof State
-        ? tree.children.push(leaf = stateTree(D_props, tree))
-        && leaf.subs.push(
-            D_props._sub((curr) => {
-                clearStateTree(leaf);
-                node.replaceWith(node = _createNode(curr, leaf));
-            })
-        )
-        && D_props.value
+        ? (leaf = stateTree(tree, D_props, (curr) => {
+            clearStateTree(leaf);
+            node.replaceWith(node = _createNode(curr, leaf));
+        })).state.value
         : D_props;
 
-    return (node = (
+    return node = (
         typeof props === "string" || typeof props === "number"
             ? window.document.createTextNode(props)
             : !props
@@ -96,23 +86,19 @@ function _createNode(D_props, tree) {
                         props,
                         leaf || tree
                     )
-    ));
+    );
 }
 
 function copyObject(on, D_from, tree) {
     let leaf;
     const from = D_from instanceof State
-        ? tree.children.push(leaf = stateTree(D_from, tree))
-        && leaf.subs.push(
-            D_from._sub((curr, prev) => {
-                clearStateTree(leaf);
-                for (const key in prev) {
-                    setPrimitive(on, key, null);
-                }
-                copyObject(on, curr, leaf);
-            })
-        )
-        && D_from.value
+        ? (leaf = stateTree(tree, D_from, (curr, prev) => {
+            clearStateTree(leaf);
+            for (const key in prev) {
+                setPrimitive(on, key, null);
+            }
+            copyObject(on, curr, leaf);
+        })).state.value
         : D_from;
 
     for (const key in from) {
@@ -140,17 +126,13 @@ function copyObject(on, D_from, tree) {
 function setChildren(parent, D_children, tree) {
     let leaf;
     const children = D_children instanceof State
-        ? (tree.children.push(leaf = stateTree(D_children, tree)))
-        && leaf.subs.push(
-            D_children._sub((curr) => {
-                clearStateTree(leaf);
-                replaceNodes(
-                    Array.from(parent.childNodes),
-                    createNodeList(curr, leaf)
-                );
-            })
-        )
-        && D_children.value
+        ? (leaf = stateTree(tree, D_children, (curr) => {
+            clearStateTree(leaf);
+            replaceNodes(
+                Array.from(parent.childNodes),
+                createNodeList(curr, leaf)
+            );
+        })).state.value
         : D_children;
 
     appendNodeList(parent, createNodeList(children, leaf || tree));
@@ -164,6 +146,7 @@ function createNodeList(children, tree) {
     if (children !== undefined && !Array.isArray(children)) {
         children = [children];
     }
+
     const list = new Array(children && children.length || 0);
     // NOTE: If there are no children we push an invisible text
     // node, so we can assume lists are never empty and there's
@@ -171,25 +154,22 @@ function createNodeList(children, tree) {
     if (list.length === 0) {
         list.push(null);
     }
+
     for (let i = 0; i < list.length; i++) {
         const D_child = children[i];
 
         let leaf;
         const child = D_child instanceof State
-            ? tree.children.push(leaf = stateTree(D_child, tree))
-            && leaf.subs.push(
-                D_child._sub((curr) => {
-                    clearStateTree(leaf);
-                    list[i] = replaceNodes(
-                        list[i],
-                        Array.isArray(curr)
-                            // NOTE: Recursion
-                            ? createNodeList(curr, leaf)
-                            : _createNode(curr, leaf)
-                    );
-                })
-            )
-            && D_child.value
+            ? (leaf = stateTree(tree, D_child, (curr) => {
+                clearStateTree(leaf);
+                list[i] = replaceNodes(
+                    list[i],
+                    Array.isArray(curr)
+                        // NOTE: Recursion
+                        ? createNodeList(curr, leaf)
+                        : _createNode(curr, leaf)
+                );
+            })).state.value
             : D_child;
 
         list[i] = Array.isArray(child)
@@ -197,6 +177,7 @@ function createNodeList(children, tree) {
             ? createNodeList(child, leaf || tree)
             : _createNode(child, leaf || tree);
     }
+
     return list;
 }
 
@@ -265,11 +246,9 @@ function setPrimitive(on, key, from, tree) {
 
     let leaf;
     const value = D_value instanceof State
-        ? tree.children.push(leaf = stateTree(D_value, tree))
-        && leaf.subs.push(
-            D_value._sub((curr) => setPrimitive(on, key, { [key]: curr }))
-        )
-        && D_value.value
+        ? (leaf = stateTree(tree, D_value, (curr) =>
+            setPrimitive(on, key, { [key]: curr })
+        )).state.value
         : D_value;
 
     try {
@@ -342,9 +321,8 @@ export class State {
     // reference (ref) is pushed onto a global stack and the
     // (f) callback is exectuted, then all references that are
     // present in the stack after the initial reference (ref)
-    // are collected as children. Children are then cleared and
-    // recollected every time the state changes.
-    //
+    // are collected as dependents. Dependents are then cleared
+    // and recollected every time the state changes.
     // WARNING: This approach does not support nesting inside
     // async callbacks:
     //
@@ -355,7 +333,7 @@ export class State {
     //    ^ These can be tracked
     //
     //    await something();
-    //    ^^^^^ Children collection ends here
+    //    ^^^^^ Dependents collection ends here
     //
     //    state.as(...);
     //    state.sub(...);
@@ -368,7 +346,7 @@ export class State {
     //           know he's not following best practices.
     // });
     _track(ref, f, curr, prev = State._Stack /* random pointer */) {
-        this._children ||= [];
+        this._dependents ||= [];
         this._clear(ref.id);
 
         State._Header ||= ref;
@@ -379,7 +357,7 @@ export class State {
         while (State._Stack.at(-1) !== ref) {
             const child = State._Stack.pop();
             child.pid = ref.id;
-            this._children.push(child);
+            this._dependents.push(child);
         }
 
         if (State._Header === ref) {
@@ -395,18 +373,18 @@ export class State {
     }
     _clear(id) {
         let length = 0;
-        for (const ref of this._children) {
+        for (const ref of this._dependents) {
             if (ref.pid === id) {
-                if (ref.state._children) {
+                if (ref.state._dependents) {
                     ref.state._clear(ref.id);
                 }
                 ref.state.unsub(ref.f);
             }
             else {
-                this._children[length++] = ref;
+                this._dependents[length++] = ref;
             }
         }
-        this._children.length = length;
+        this._dependents.length = length;
     }
     as(f) {
         const ref = { id: f, state: this, f: null };
