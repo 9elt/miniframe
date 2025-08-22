@@ -262,7 +262,7 @@ function setPrimitive(on, key, from, tree) {
             : (on[key] = value) || (value === 0 || delete on[key])
     }
     catch (err) {
-        console.warn(`Failed ${on}.${key} = ${D_value}`, err);
+        console.warn("Error", key, "=", D_value, err);
     }
 }
 
@@ -311,8 +311,8 @@ export class State {
             }
             catch (err) {
                 console.error(
-                    "Subscriber error:", err, "on:", this,
-                    "calling:", sub, "setting:", value, "over:", prev
+                    "Error", err, "on", this, "calling", sub,
+                    "setting", value, "over", prev
                 );
             }
         }
