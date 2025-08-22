@@ -3,7 +3,7 @@ export function createNode(D_props) {
     const node = _createNode(D_props, tree);
     node.clear = () => clearStateTree(tree);
     // NOTE: We expose the tree for debug purposes
-    node._stateTree = tree;
+    node._tree = tree;
     return node;
 }
 
@@ -59,8 +59,8 @@ function _createNode(D_props, tree) {
     //     ? (leaf = stateTree(tree, D_x, (curr) => {
     //        ...
     //        ^^^ Handle D_x change
-    //     })).state.value
-    //               ^^^^^ Access the static value
+    //     })).state._value
+    //               ^^^^^^ Access the static value
     //     : D_x
     //       ^^^ D_x was already static
     let leaf;
@@ -68,7 +68,7 @@ function _createNode(D_props, tree) {
         ? (leaf = stateTree(tree, D_props, (curr) => {
             clearStateTree(leaf);
             node.replaceWith(node = _createNode(curr, leaf));
-        })).state.value
+        })).state._value
         : D_props;
 
     return node = (
@@ -98,7 +98,7 @@ function copyObject(on, D_from, tree) {
                 setPrimitive(on, key, null);
             }
             copyObject(on, curr, leaf);
-        })).state.value
+        })).state._value
         : D_from;
 
     for (const key in from) {
@@ -110,7 +110,7 @@ function copyObject(on, D_from, tree) {
         }
         else if (
             typeof (
-                from[key] instanceof State ? from[key].value : from[key]
+                from[key] instanceof State ? from[key]._value : from[key]
             ) === "object"
         ) {
             copyObject(on[key], from[key], leaf || tree);
@@ -132,7 +132,7 @@ function setChildren(parent, D_children, tree) {
                 Array.from(parent.childNodes),
                 createNodeList(curr, leaf)
             );
-        })).state.value
+        })).state._value
         : D_children;
 
     appendNodeList(parent, createNodeList(children, leaf || tree));
@@ -169,7 +169,7 @@ function createNodeList(children, tree) {
                         ? createNodeList(curr, leaf)
                         : _createNode(curr, leaf)
                 );
-            })).state.value
+            })).state._value
             : D_child;
 
         list[i] = Array.isArray(child)
@@ -248,7 +248,7 @@ function setPrimitive(on, key, from, tree) {
     const value = D_value instanceof State
         ? (leaf = stateTree(tree, D_value, (curr) =>
             setPrimitive(on, key, { [key]: curr })
-        )).state.value
+        )).state._value
         : D_value;
 
     try {
@@ -282,12 +282,12 @@ export class State {
         for (let i = 0; i < states.length; i++) {
             const state = states[i];
 
-            sync.value[i] = state.value;
+            sync._value[i] = state._value;
 
             // TODO: We may need to copy the array
             const f = state._sub((curr) => {
-                sync.value[i] = curr;
-                sync.value = sync.value;
+                sync._value[i] = curr;
+                sync.value = sync._value;
             });
 
             if (State._Header) {
@@ -356,7 +356,7 @@ export class State {
 
         while (State._Stack.at(-1) !== ref) {
             const child = State._Stack.pop();
-            child.pid = ref.id;
+            child.parent = ref.id;
             this._dependents.push(child);
         }
 
@@ -374,7 +374,7 @@ export class State {
     _clear(id) {
         let length = 0;
         for (const ref of this._dependents) {
-            if (ref.pid === id) {
+            if (ref.parent === id) {
                 if (ref.state._dependents) {
                     ref.state._clear(ref.id);
                 }
@@ -452,7 +452,7 @@ export class State {
 function warning(value, seen = new WeakSet()) {
     !seen.has(warning) && (value instanceof State
         ? seen.add(warning) && console.error(
-            "State detected, please never use states inside async State.as/State.sub, see: " +
+            "Never use states inside async State.as/sub, see: " +
             "https://github.com/9elt/miniframe?tab=readme-ov-file#async-state-limitations")
         : value && typeof value === "object" &&
         !seen.has(value) && seen.add(value) &&
