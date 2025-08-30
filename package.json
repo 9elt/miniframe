@@ -1,9 +1,13 @@
 {
     "name": "@9elt/miniframe",
-    "version": "0.13.0",
+    "version": "0.14.0",
     "description": "A better version of document.createElement with support for JSX and minimal state management in 300 LOC",
     "main": "./dist/esm/index.js",
     "types": "./index.d.ts",
+    "type": "module",
+    "bin": {
+        "@9elt/miniframe": "./templates/bin.js"
+    },
     "exports": {
         ".": {
             "import": "./dist/esm/index.js",
@@ -28,7 +32,7 @@
     },
     "scripts": {
         "test": "bun test && tsc",
-        "build": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json && echo '{\"type\":\"module\"}'>dist/esm/package.json",
+        "build": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json && echo '{\"type\":\"commonjs\"}'>dist/cjs/package.json",
         "generate:types": "bun scripts/generate.types.ts",
         "pub": "npm run build && npm run test && npm publish"
     },

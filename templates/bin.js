@@ -1,35 +1,35 @@
 #!/usr/bin/env node
 
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import { createInterface } from "node:readline";
 import { fileURLToPath } from "node:url";
 
-const TEMPLATES = [
-    "jsx-bun",
-    "tsx-bun",
-];
+const TEMPLATES = ["bun"];
 
-const VERSION = "0.1.6";
+const VERSION = "0.1.0";
 
-const HELP = `npx @9elt/miniframe-template [template] [options]
+const HELP = `npx @9elt/miniframe [template] [options]
 templates:
     ${TEMPLATES.join(", ")}
 options:
     --version, -V    print version
     --help, -h       print help
+    --ts             use typescript
     --name           name for the project
-    --git            initialize git
+    --git            initialize git\
 `;
 
 /** @type {string} */
-let template;
+let template = "bun";
 
 /** @type {string} */
 let name;
 
 let git = false;
+
+let ts = false;
 
 for (const arg of process.argv.slice(2)) {
     if (name === true) {
@@ -43,6 +43,9 @@ for (const arg of process.argv.slice(2)) {
     }
     else if (arg === "--git") {
         git = true;
+    }
+    else if (arg === "--ts") {
+        ts = true;
     }
     else if (arg === "--help" || arg === "-h") {
         console.log(HELP);
@@ -65,17 +68,9 @@ if (!template) {
 }
 
 if (!name) {
-    const readline = createInterface({
-        input: process.stdin,
-        output: process.stdout,
-    });
-
-    name = await new Promise((resolve) =>
-        readline.question("Enter a name for the project: ", (name) => {
-            readline.close();
-            resolve(name.trim());
-        })
-    );
+    name = (
+        await ask("Enter a name for the project: ")
+    ).trim();
 }
 
 if (!name) {
@@ -89,14 +84,83 @@ if (existsSync(name)) {
     process.exit(1);
 }
 
+if (!ts) {
+    ts = !/n/i.test(
+        await ask("Do you want to use typescript? [Y/n]: ")
+    );
+}
+
+if (!git) {
+    git = !/n/i.test(
+        await ask("Do you want to use git? [Y/n]: ")
+    );
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-cpSync(
-    __dirname + "/" + template,
-    name,
-    { recursive: true }
+const ext = ts ? "tsx" : "jsx";
+
+const package_json = {
+    "name": name.toLowerCase()
+        .replace(/[^a-z0-9_-]+/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-+|-+$/g, ""),
+    "scripts": {
+        "build": `NODE_ENV=production bun build ./src/index.${ext} --outdir dist`,
+        "build:dev": `NODE_ENV=production bun build ./src/index.${ext} --outdir dist --watch`,
+        "serve:dev": "bun --port 3000 ./dist/index.html",
+        "dev": "run-p build:dev serve:dev",
+    },
+};
+
+const tsconfig_json = {
+    "include": [
+        "./src/**/*",
+    ],
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "strictNullChecks": true,
+        "noErrorTruncation": true,
+        "allowJs": ts ? undefined : true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "jsxImportSource": "@9elt/miniframe",
+    },
+};
+
+mkdirSync(name + "/dist", { recursive: true });
+
+mkdirSync(name + "/src", { recursive: true });
+
+writeFileSync(
+    name + "/tsconfig.json",
+    JSON.stringify(tsconfig_json, null, 4)
 );
+
+writeFileSync(
+    name + "/package.json",
+    JSON.stringify(package_json, null, 4)
+);
+
+cpSync(
+    __dirname + "/index.html",
+    name + "/dist/index.html",
+);
+
+cpSync(
+    __dirname + "/index." + ext,
+    name + "/src/index." + ext,
+);
+
+if (git) {
+    writeFileSync(
+        name + "/.gitignore",
+        "dist\nnode_modules\npackage-lock.json"
+    );
+}
 
 const cwd = { cwd: name };
 
@@ -132,15 +196,17 @@ if (npm_i_miniframe.error) {
     process.exit(1);
 }
 
-if (template.includes("tsx")) {
-    console.log("Installing typescript...");
+console.log("Installing dev dependencies...");
 
-    const npm_i_typescript = spawnSync("npm", ["i", "-D", "typescript"], cwd);
+const npm_i_dev = spawnSync(
+    "npm",
+    ["i", "-D", "npm-run-all", ts && "typescript"].filter(Boolean),
+    cwd
+);
 
-    if (npm_i_typescript.error) {
-        console.error(npm_i_typescript.error);
-        process.exit(1);
-    }
+if (npm_i_dev.error) {
+    console.error(npm_i_dev.error);
+    process.exit(1);
 }
 
 console.log("Building...");
@@ -161,12 +227,19 @@ if (git) {
         console.error(git_init.error);
         process.exit(1);
     }
-
-    writeFileSync(name + "/.gitignore", `\
-dist
-node_modules
-package-lock.json
-`);
 }
 
-console.log(template, "created at", name);
+console.log("Template created at", name);
+
+async function ask(question) {
+    const readline = createInterface({
+        input: process.stdin,
+        output: process.stdout,
+    });
+    return await new Promise((resolve) =>
+        readline.question(question, (answer) => {
+            readline.close();
+            resolve(answer);
+        })
+    );
+}

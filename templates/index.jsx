@@ -30,3 +30,4 @@ document.body.appendChild(
         <Counter />
     )
 );
+

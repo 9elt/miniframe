@@ -6,7 +6,7 @@
     ],
     "compilerOptions": {
         "target": "ES2021",
-        "module": "NodeNext",
+        "module": "commonjs",
         "outDir": "./dist/cjs",
         "allowJs": true,
         "skipLibCheck": true,
