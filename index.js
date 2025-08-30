@@ -1,10 +1,8 @@
 const cleanupMap = new WeakMap();
 
-const cleanup = new FinalizationRegistry((cleanupItem) => {
-    for (const f of cleanupItem) {
-        f();
-    }
-});
+const cleanup = new FinalizationRegistry(
+    (cleanupItem) => cleanupItem.forEach((f) => f())
+);
 
 function onGC(target, f, id) {
     const cleanupItem = cleanupMap.get(target) || [];
@@ -427,14 +425,14 @@ export class State {
     //           and, in case, log a warning to let the user
     //           know he's not following best practices.
     // });
-    _track(ref, f, curr, prev = State._Stack/*random pointer*/) {
+    _track(ref, f, curr, prev = warning/*random pointer*/) {
         this._dependents ||= [];
         this._clear(ref.id);
 
         State._Header ||= ref;
         State._Stack.push(ref);
 
-        const value = prev === State._Stack/*random pointer*/
+        const value = prev === warning/*random pointer*/
             ? f(curr) : f(curr, prev);
 
         while (State._Stack.at(-1) !== ref) {
@@ -496,7 +494,7 @@ export class State {
     // is available. To check if it wasn't provided we
     // use a random private pointer, so the user can
     // use any value, including undefined
-    await(init, loading = State._Stack/*random pointer*/) {
+    await(init, loading = weaken/*random pointer*/) {
         const child = new State(init);
 
         Promise.resolve(this._value)
@@ -508,7 +506,7 @@ export class State {
         const f = this._sub((curr) => {
             const child = childRef.deref();
             if (child) {
-                if (loading !== State._Stack/*random pointer*/) {
+                if (loading !== weaken/*random pointer*/) {
                     child.value = loading;
                 }
                 Promise.resolve(curr)
