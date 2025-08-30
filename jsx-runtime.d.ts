@@ -1,4 +1,4 @@
-import type { Mini, MiniElement, State, TagName } from ".";
+import type { Mini, MiniElement, MiniJSXElement, TagName } from ".";
 
 type Intrinsic<T> = Omit<T, "tagName">;
 
@@ -14,7 +14,7 @@ export declare namespace JSX {
     type IntrinsicElements = {
         [T in TagName]: Intrinsic<Mini.Elements[T]>;
     };
-    type Element = State<any> | MiniElement;
+    type Element = MiniJSXElement;
     type ElementChildrenAttribute = {
         children: any;
     };

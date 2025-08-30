@@ -1,7 +1,20 @@
+const cleanupMap = new WeakMap();
+const cleanup = new FinalizationRegistry((cleanupItem) => {
+    for (const f of cleanupItem) {
+        f();
+    }
+});
+
+function onGC(target, f, id) {
+    const cleanupItem = cleanupMap.get(target) || [];
+    cleanupItem.push(f);
+    cleanupMap.set(target, cleanupItem);
+    cleanup.register(target, cleanupItem, id);
+}
+
 export function createNode(D_props) {
     const tree = { children: [] };
     const node = _createNode(D_props, tree);
-    node.clear = () => clearStateTree(tree);
     // NOTE: We expose the tree for debug purposes
     node._tree = tree;
     return node;
@@ -35,43 +48,57 @@ export function createNode(D_props) {
 function clearStateTree(tree, root = -1) {
     if (root !== -1) {
         tree.state.unsub(tree.sub);
+        cleanup.unregister(tree.sub);
     }
     tree.children.forEach(clearStateTree);
     tree.children = [];
 }
 
-function stateTree(parent, state, f) {
+function stateTree(parent, state, ref, f) {
     const leaf = {
         state,
         sub: state._sub(f),
         children: [],
     };
+
     parent.children.push(leaf);
+
+    onGC(ref.deref(), () => clearStateTree(leaf, 0), leaf.sub);
+
     return leaf;
 }
 
 function _createNode(D_props, tree) {
-    let node;
+    const node = { $: null };
     // NOTE: Common pattern to access and handle state inline:
+    // let ref;
     // let leaf;
     // const x = D_x instanceof State
     //           ^^^ D_ stands for Dynamic
-    //     ? (leaf = stateTree(tree, D_x, (curr) => {
-    //        ...
-    //        ^^^ Handle D_x change
+    //     ? (leaf = stateTree(tree, D_x, ref = new WeakRef(target), (curr) => {
+    //        const target = ref.deref();
+    //        if (target) {
+    //            ^^^^^^ Handle D_x change, but only if target
+    //                   survived, i.e. was not GC'd
+    //        }
     //     })).state._value
     //               ^^^^^^ Access the static value
     //     : D_x
     //       ^^^ D_x was already static
+    let ref;
     let leaf;
     const props = D_props instanceof State
-        ? (leaf = stateTree(tree, D_props, (curr) => {
+        ? (leaf = stateTree(tree, D_props, ref = new WeakRef(node), (curr) => {
             clearStateTree(leaf);
-            node.replaceWith(node = _createNode(curr, leaf));
+            const node = ref.deref();
+            if (node) {
+                node.$.replaceWith(node.$ = _createNode(curr, leaf));
+                node.$._keepalive = node;
+            }
         })).state._value
         : D_props;
 
-    return node = (
+    node.$ = (
         typeof props === "string" || typeof props === "number"
             ? window.document.createTextNode(props)
             : !props
@@ -87,17 +114,25 @@ function _createNode(D_props, tree) {
                         leaf || tree
                     )
     );
+
+    node.$._keepalive = node;
+
+    return node.$;
 }
 
 function copyObject(on, D_from, tree) {
+    let ref;
     let leaf;
     const from = D_from instanceof State
-        ? (leaf = stateTree(tree, D_from, (curr, prev) => {
+        ? (leaf = stateTree(tree, D_from, ref = new WeakRef(on), (curr, prev) => {
             clearStateTree(leaf);
-            for (const key in prev) {
-                setPrimitive(on, key, null);
+            const on = ref.deref();
+            if (on) {
+                for (const key in prev) {
+                    setPrimitive(on, key, null);
+                }
+                copyObject(on, curr, leaf);
             }
-            copyObject(on, curr, leaf);
         })).state._value
         : D_from;
 
@@ -124,25 +159,29 @@ function copyObject(on, D_from, tree) {
 }
 
 function setChildren(parent, D_children, tree) {
+    const ref = new WeakRef(parent);
     let leaf;
     const children = D_children instanceof State
-        ? (leaf = stateTree(tree, D_children, (curr) => {
+        ? (leaf = stateTree(tree, D_children, ref, (curr) => {
             clearStateTree(leaf);
-            replaceNodes(
-                Array.from(parent.childNodes),
-                createNodeList(curr, leaf)
-            );
+            const parent = ref.deref();
+            if (parent) {
+                replaceNodes(
+                    Array.from(parent.childNodes),
+                    createNodeList(curr, leaf, ref)
+                );
+            }
         })).state._value
         : D_children;
 
-    appendNodeList(parent, createNodeList(children, leaf || tree));
+    appendNodeList(parent, createNodeList(children, leaf || tree, ref));
 }
 
 // NOTE: To make state handling easier (possible?) we don't
 // flatten children lists. However, this means that everything
 // needs to be done using recursion
 
-function createNodeList(children, tree) {
+function createNodeList(children, tree, ref) {
     if (children !== undefined && !Array.isArray(children)) {
         children = [children];
     }
@@ -160,39 +199,58 @@ function createNodeList(children, tree) {
 
         let leaf;
         const child = D_child instanceof State
-            ? (leaf = stateTree(tree, D_child, (curr) => {
+            ? (leaf = stateTree(tree, D_child, ref, (curr) => {
                 clearStateTree(leaf);
-                list[i] = replaceNodes(
-                    list[i],
-                    Array.isArray(curr)
-                        // NOTE: Recursion
-                        ? createNodeList(curr, leaf)
-                        : _createNode(curr, leaf)
-                );
+                if (ref.deref()) {
+                    let n;
+                    list[i] = replaceNodes(
+                        list[i],
+                        Array.isArray(curr)
+                            // NOTE: Recursion
+                            ? createNodeList(curr, leaf, ref)
+                            : ((n = _createNode(curr, leaf)),
+                                (n._weaken = () => {
+                                    list[i] = new WeakRef(n);
+                                    delete n._weaken;
+                                    n = null;
+                                }), n));
+                }
             })).state._value
             : D_child;
 
+        let n;
         list[i] = Array.isArray(child)
             // NOTE: Recursion
-            ? createNodeList(child, leaf || tree)
-            : _createNode(child, leaf || tree);
+            ? createNodeList(child, leaf || tree, ref)
+            : ((n = _createNode(child, leaf || tree)),
+                // NOTE: Once the node is appended its reference
+                // in the list is replaced with a WeakRef
+                (n._weaken = () => {
+                    list[i] = new WeakRef(n);
+                    delete n._weaken;
+                    n = null;
+                }), n);
     }
 
     return list;
 }
 
 function appendNodeList(parent, nodeList) {
-    for (const child of nodeList) {
+    for (let i = 0; i < nodeList.length; i++) {
+        const child = nodeList[i];
         Array.isArray(child)
             // NOTE: Recursion
             ? appendNodeList(parent, child)
-            : parent.appendChild(child);
+            : (parent.appendChild(child), child._weaken());
     }
 }
 
 function replaceNodes(prev, update) {
+    prev = (prev instanceof WeakRef ? prev.deref() : prev);
+
     if (!Array.isArray(prev) && !Array.isArray(update)) {
         prev.replaceWith(update);
+        update._weaken();
         return update;
     }
 
@@ -220,11 +278,14 @@ function replaceNodes(prev, update) {
 }
 
 function removeNode(prev) {
-    // NOTE:              Recursion
+    prev = (prev instanceof WeakRef ? prev.deref() : prev);
+    // NOTE:                           Recursion
     Array.isArray(prev) ? prev.forEach(removeNode) : prev.remove();
 }
 
 function appendNodeAfter(sibiling, node) {
+    sibiling = (sibiling instanceof WeakRef ? sibiling.deref() : sibiling);
+
     if (Array.isArray(sibiling)) {
         // NOTE: Recursion
         appendNodeAfter(sibiling.at(-1), node);
@@ -238,17 +299,22 @@ function appendNodeAfter(sibiling, node) {
     }
     else {
         sibiling.after(node);
+        node._weaken();
     }
 }
 
 function setPrimitive(on, key, from, tree) {
     let D_value = from && from[key];
 
+    let ref;
     let leaf;
     const value = D_value instanceof State
-        ? (leaf = stateTree(tree, D_value, (curr) =>
-            setPrimitive(on, key, { [key]: curr })
-        )).state._value
+        ? (leaf = stateTree(tree, D_value, ref = new WeakRef(on), (curr) => {
+            const on = ref.deref();
+            if (on) {
+                setPrimitive(on, key, { [key]: curr });
+            }
+        }).state._value)
         : D_value;
 
     try {
@@ -277,25 +343,32 @@ export class State {
     }
     static merge(...states) {
         const as = typeof states.at(-1) === "function" && states.pop();
-        const sync = new State(new Array(states.length));
+
+        const merged = new State(new Array(states.length));
+        const mergedRef = new WeakRef(merged);
 
         for (let i = 0; i < states.length; i++) {
             const state = states[i];
 
-            sync._value[i] = state._value;
+            merged._value[i] = state._value;
 
             // TODO: We may need to copy the array
             const f = state._sub((curr) => {
-                sync._value[i] = curr;
-                sync.value = sync._value;
+                const merged = mergedRef.deref();
+                if (merged) {
+                    merged._value[i] = curr;
+                    merged.value = merged._value;
+                }
             });
+
+            onGC(merged, () => state.unsub(f));
 
             if (State._Header) {
                 State._Stack.push({ state, f });
             }
         }
 
-        return as ? sync.as((states) => as(...states)) : sync;
+        return as ? merged.as((states) => as(...states)) : merged;
     }
     get value() {
         return this._value;
@@ -389,11 +462,23 @@ export class State {
     }
     as(f) {
         const ref = { id: f, state: this, f: null };
+
         const child = new State(this._track(ref, f, this._value));
+        const childRef = new WeakRef(child);
 
         ref.f = this._sub(
-            (curr) => child.value = this._track(ref, f, curr)
+            (curr) => {
+                const child = childRef.deref();
+                if (child) {
+                    child.value = this._track(ref, f, curr);
+                }
+            }
         );
+
+        onGC(child, () => {
+            this.unsub(ref.f);
+            this._clear(ref.id);
+        });
 
         return child;
     }
@@ -409,14 +494,21 @@ export class State {
             .then((value) => child.value = value)
             .catch(console.error);
 
+        const childRef = new WeakRef(child);
+
         const f = this._sub((curr) => {
-            if (loading !== State._Stack/*random pointer*/) {
-                child.value = loading;
+            const child = childRef.deref();
+            if (child) {
+                if (loading !== State._Stack/*random pointer*/) {
+                    child.value = loading;
+                }
+                Promise.resolve(curr)
+                    .then((value) => child.value = value)
+                    .catch(console.error);
             }
-            Promise.resolve(curr)
-                .then((value) => child.value = value)
-                .catch(console.error);
         });
+
+        onGC(child, () => this.unsub(f));
 
         if (State._Header) {
             State._Stack.push({ state: this, f });

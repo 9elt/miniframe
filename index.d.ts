@@ -24,8 +24,10 @@ export class State<T> {
 }
 
 export function createNode<T extends Node = Node>(
-    props: CreateNodeProps | State<CreateNodeProps>
-): T & { clear: () => void };
+    props: CreateNodeProps | State<CreateNodeProps> | MiniJSXElement | State<MiniJSXElement>
+): T;
+
+export type MiniJSXElement = State<any> | Mini.Element;
 
 export type CreateNodeProps = Node | MiniElement | string | number | false | null | undefined;
 
@@ -36,6 +38,7 @@ export type MiniElement = Mini.Elements[TagName];
 export type MiniNode = MiniChildren | State<MiniChildren> | MiniChildren[] | State<MiniChildren[]>;
 
 export type MiniChildren =
+    | MiniJSXElement
     | MiniElement
     | MiniElement[]
     | Node

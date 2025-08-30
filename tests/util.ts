@@ -12,7 +12,7 @@ export function subs(state: State<unknown>) {
 
 export function dependents(state: State<unknown>) {
     // @ts-ignore
-    return state._dependents?.length;
+    return state._dependents?.length ?? 0;
 }
 
 export function StateStack() {

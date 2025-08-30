@@ -1,7 +1,7 @@
 # Miniframe
 
 A better version of `document.createElement` with support for JSX and minimal state
-management in 300 LOC.
+management in 400 LOC.
 
 ```
 npm i @9elt/miniframe
