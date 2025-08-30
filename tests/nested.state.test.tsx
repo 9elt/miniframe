@@ -9,14 +9,14 @@ test("Nodes support nested states /children", () => {
 
     const text = new State<typeof c | string>(c);
 
-    const textNode = createNode<Text>(<div>{text}</div>);
+    const div = createNode<HTMLDivElement>(<div>{text}</div>);
 
     expect(subs(a)).toEqual(1);
     expect(subs(b)).toEqual(0);
     expect(subs(c)).toEqual(1);
     expect(subs(text)).toEqual(1);
 
-    expect(textNode.textContent).toEqual("a");
+    expect(div.textContent).toEqual("a");
 
     a.value = "A";
 
@@ -25,7 +25,7 @@ test("Nodes support nested states /children", () => {
     expect(subs(c)).toEqual(1);
     expect(subs(text)).toEqual(1);
 
-    expect(textNode.textContent).toEqual("A");
+    expect(div.textContent).toEqual("A");
 
     c.value = b;
 
@@ -34,7 +34,7 @@ test("Nodes support nested states /children", () => {
     expect(subs(c)).toEqual(1);
     expect(subs(text)).toEqual(1);
 
-    expect(textNode.textContent).toEqual("b");
+    expect(div.textContent).toEqual("b");
 
     b.value = "B";
 
@@ -43,7 +43,7 @@ test("Nodes support nested states /children", () => {
     expect(subs(c)).toEqual(1);
     expect(subs(text)).toEqual(1);
 
-    expect(textNode.textContent).toEqual("B");
+    expect(div.textContent).toEqual("B");
 
     c.value = "C";
 
@@ -52,7 +52,7 @@ test("Nodes support nested states /children", () => {
     expect(subs(c)).toEqual(1);
     expect(subs(text)).toEqual(1);
 
-    expect(textNode.textContent).toEqual("C");
+    expect(div.textContent).toEqual("C");
 
     c.value = a;
 
@@ -61,7 +61,7 @@ test("Nodes support nested states /children", () => {
     expect(subs(c)).toEqual(1);
     expect(subs(text)).toEqual(1);
 
-    expect(textNode.textContent).toEqual("A");
+    expect(div.textContent).toEqual("A");
 
     text.value = "T"
 
@@ -70,7 +70,78 @@ test("Nodes support nested states /children", () => {
     expect(subs(c)).toEqual(0);
     expect(subs(text)).toEqual(1);
 
-    expect(textNode.textContent).toEqual("T");
+    expect(div.textContent).toEqual("T");
+});
+
+test("Nodes support nested states /child", () => {
+    const a = new State("a");
+    const b = new State("b");
+    const c = new State<typeof a | string>(a);
+
+    const text = new State<typeof c | string>(c);
+
+    const div = createNode<HTMLDivElement>(<div>!{text}</div>);
+
+    expect(subs(a)).toEqual(1);
+    expect(subs(b)).toEqual(0);
+    expect(subs(c)).toEqual(1);
+    expect(subs(text)).toEqual(1);
+
+    expect(div.textContent).toEqual("!a");
+
+    a.value = "A";
+
+    expect(subs(a)).toEqual(1);
+    expect(subs(b)).toEqual(0);
+    expect(subs(c)).toEqual(1);
+    expect(subs(text)).toEqual(1);
+
+    expect(div.textContent).toEqual("!A");
+
+    c.value = b;
+
+    expect(subs(a)).toEqual(0);
+    expect(subs(b)).toEqual(1);
+    expect(subs(c)).toEqual(1);
+    expect(subs(text)).toEqual(1);
+
+    expect(div.textContent).toEqual("!b");
+
+    b.value = "B";
+
+    expect(subs(a)).toEqual(0);
+    expect(subs(b)).toEqual(1);
+    expect(subs(c)).toEqual(1);
+    expect(subs(text)).toEqual(1);
+
+    expect(div.textContent).toEqual("!B");
+
+    c.value = "C";
+
+    expect(subs(a)).toEqual(0);
+    expect(subs(b)).toEqual(0);
+    expect(subs(c)).toEqual(1);
+    expect(subs(text)).toEqual(1);
+
+    expect(div.textContent).toEqual("!C");
+
+    c.value = a;
+
+    expect(subs(a)).toEqual(1);
+    expect(subs(b)).toEqual(0);
+    expect(subs(c)).toEqual(1);
+    expect(subs(text)).toEqual(1);
+
+    expect(div.textContent).toEqual("!A");
+
+    text.value = "T"
+
+    expect(subs(a)).toEqual(0);
+    expect(subs(b)).toEqual(0);
+    expect(subs(c)).toEqual(0);
+    expect(subs(text)).toEqual(1);
+
+    expect(div.textContent).toEqual("!T");
 });
 
 test("Nodes support nested states /property", () => {
