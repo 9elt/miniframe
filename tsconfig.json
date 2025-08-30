@@ -4,8 +4,8 @@
     ],
     "compilerOptions": {
         "target": "ES2015",
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
+        "module": "EsNext",
+        "moduleResolution": "bundler",
         "strictNullChecks": true,
         "noErrorTruncation": true,
         "noEmit": true,
