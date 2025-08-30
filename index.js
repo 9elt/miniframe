@@ -1,4 +1,5 @@
 const cleanupMap = new WeakMap();
+
 const cleanup = new FinalizationRegistry((cleanupItem) => {
     for (const f of cleanupItem) {
         f();
@@ -202,37 +203,29 @@ function createNodeList(children, tree, ref) {
             ? (leaf = stateTree(tree, D_child, ref, (curr) => {
                 clearStateTree(leaf);
                 if (ref.deref()) {
-                    let n;
                     list[i] = replaceNodes(
                         list[i],
                         Array.isArray(curr)
                             // NOTE: Recursion
                             ? createNodeList(curr, leaf, ref)
-                            : ((n = _createNode(curr, leaf)),
-                                (n._weaken = () => {
-                                    list[i] = new WeakRef(n);
-                                    delete n._weaken;
-                                    n = null;
-                                }), n));
+                            : weaken(list, i, _createNode(curr, leaf))
+                    );
                 }
             })).state._value
             : D_child;
 
-        let n;
         list[i] = Array.isArray(child)
             // NOTE: Recursion
             ? createNodeList(child, leaf || tree, ref)
-            : ((n = _createNode(child, leaf || tree)),
-                // NOTE: Once the node is appended its reference
-                // in the list is replaced with a WeakRef
-                (n._weaken = () => {
-                    list[i] = new WeakRef(n);
-                    delete n._weaken;
-                    n = null;
-                }), n);
+            : weaken(list, i, _createNode(child, leaf || tree));
     }
 
     return list;
+}
+
+function weaken(list, i, node) {
+    node._weaken = () => list[i] = new WeakRef(node);
+    return node;
 }
 
 function appendNodeList(parent, nodeList) {
