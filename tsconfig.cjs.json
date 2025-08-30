@@ -1,8 +1,6 @@
 {
     "include": [
-        "./index.js",
-        "./jsx-runtime.js",
-        "./polyfill.js"
+        "./src/*.js"
     ],
     "compilerOptions": {
         "target": "ES2021",

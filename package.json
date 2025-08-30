@@ -1,33 +1,33 @@
 {
     "name": "@9elt/miniframe",
-    "version": "0.14.0",
+    "version": "0.14.1",
     "description": "A better version of document.createElement with support for JSX and minimal state management in 300 LOC",
     "main": "./dist/esm/index.js",
-    "types": "./index.d.ts",
+    "types": "./src/index.d.ts",
     "type": "module",
     "bin": {
-        "@9elt/miniframe": "./templates/bin.js"
+        "@9elt/miniframe": "./template/bin.js"
     },
     "exports": {
         ".": {
             "import": "./dist/esm/index.js",
             "require": "./dist/cjs/index.js",
-            "types": "./index.d.ts"
+            "types": "./src/index.d.ts"
         },
         "./jsx-runtime": {
             "import": "./dist/esm/jsx-runtime.js",
             "require": "./dist/cjs/jsx-runtime.js",
-            "types": "./jsx-runtime.d.ts"
+            "types": "./src/jsx-runtime.d.ts"
         },
         "./jsx-dev-runtime": {
             "import": "./dist/esm/jsx-runtime.js",
             "require": "./dist/cjs/jsx-runtime.js",
-            "types": "./jsx-runtime.d.ts"
+            "types": "./src/jsx-runtime.d.ts"
         },
         "./polyfill": {
             "import": "./dist/esm/polyfill.js",
             "require": "./dist/cjs/polyfill.js",
-            "types": "./polyfill.d.ts"
+            "types": "./src/polyfill.d.ts"
         }
     },
     "scripts": {
