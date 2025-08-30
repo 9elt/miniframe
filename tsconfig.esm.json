@@ -1,10 +1,11 @@
 {
     "include": [
         "./index.js",
-        "./jsx-runtime.js"
+        "./jsx-runtime.js",
+        "./polyfill.js"
     ],
     "compilerOptions": {
-        "target": "ES2015",
+        "target": "ES2021",
         "module": "ES6",
         "outDir": "./dist/esm",
         "allowJs": true,

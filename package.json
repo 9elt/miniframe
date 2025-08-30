@@ -1,6 +1,6 @@
 {
     "name": "@9elt/miniframe",
-    "version": "0.12.4",
+    "version": "0.13.0",
     "description": "A better version of document.createElement with support for JSX and minimal state management in 300 LOC",
     "main": "./dist/esm/index.js",
     "types": "./index.d.ts",
@@ -19,6 +19,11 @@
             "import": "./dist/esm/jsx-runtime.js",
             "require": "./dist/cjs/jsx-runtime.js",
             "types": "./jsx-runtime.d.ts"
+        },
+        "./polyfill": {
+            "import": "./dist/esm/polyfill.js",
+            "require": "./dist/cjs/polyfill.js",
+            "types": "./polyfill.d.ts"
         }
     },
     "scripts": {
