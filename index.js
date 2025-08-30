@@ -48,7 +48,7 @@ export function createNode(D_props) {
 // }
 function clearStateTree(tree, root = -1) {
     if (root !== -1) {
-        tree.state.unsub(tree.sub);
+        tree.state._unsubR(tree.sub);
         cleanup.unregister(tree.sub);
     }
     tree.children.forEach(clearStateTree);
@@ -58,7 +58,7 @@ function clearStateTree(tree, root = -1) {
 function stateTree(parent, state, ref, f) {
     const leaf = {
         state,
-        sub: state._sub(f),
+        sub: state._subR(f),
         children: [],
     };
 
@@ -71,32 +71,23 @@ function stateTree(parent, state, ref, f) {
 
 function _createNode(D_props, tree) {
     const node = { $: null };
-    // NOTE: Common pattern to access and handle state inline:
-    // let ref;
-    // let leaf;
-    // const x = D_x instanceof State
-    //           ^^^ D_ stands for Dynamic
-    //     ? (leaf = stateTree(tree, D_x, ref = new WeakRef(target), (curr) => {
-    //        const target = ref.deref();
-    //        if (target) {
-    //            ^^^^^^ Handle D_x change, but only if target
-    //                   survived, i.e. was not GC'd
-    //        }
-    //     })).state._value
-    //               ^^^^^^ Access the static value
-    //     : D_x
-    //       ^^^ D_x was already static
-    let ref;
-    let leaf;
+
+    let ref, leaf, sub;
     const props = D_props instanceof State
-        ? (leaf = stateTree(tree, D_props, ref = new WeakRef(node), (curr) => {
+        ? unwrap((leaf = stateTree(tree, D_props, ref = new WeakRef(node), sub = (curr, prev) => {
+            if (prev instanceof State) {
+                prev._unsubR(sub);
+            }
+            if (curr instanceof State) {
+                return curr._sub(sub)(curr._value);
+            }
             clearStateTree(leaf);
             const node = ref.deref();
             if (node) {
                 node.$.replaceWith(node.$ = _createNode(curr, leaf));
                 node.$._keepalive = node;
             }
-        })).state._value
+        })).state)
         : D_props;
 
     node.$ = (
@@ -122,19 +113,27 @@ function _createNode(D_props, tree) {
 }
 
 function copyObject(on, D_from, tree) {
-    let ref;
-    let leaf;
+    let ref, leaf, sub;
     const from = D_from instanceof State
-        ? (leaf = stateTree(tree, D_from, ref = new WeakRef(on), (curr, prev) => {
+        ? unwrap((leaf = stateTree(tree, D_from, ref = new WeakRef(on), sub = (curr, prev) => {
+            if (prev instanceof State) {
+                prev._unsubR(sub);
+            }
+            if (curr instanceof State) {
+                return curr._sub(sub)(
+                    curr instanceof State ? curr._value : curr,
+                    prev instanceof State ? prev._value : prev
+                );
+            }
             clearStateTree(leaf);
             const on = ref.deref();
             if (on) {
-                for (const key in prev) {
+                for (const key in unwrap(prev)) {
                     setPrimitive(on, key, null);
                 }
                 copyObject(on, curr, leaf);
             }
-        })).state._value
+        })).state)
         : D_from;
 
     for (const key in from) {
@@ -144,11 +143,7 @@ function copyObject(on, D_from, tree) {
         else if (key === "children") {
             setChildren(on, from[key], leaf || tree);
         }
-        else if (
-            typeof (
-                from[key] instanceof State ? from[key]._value : from[key]
-            ) === "object"
-        ) {
+        else if (typeof unwrap(from[key]) === "object") {
             copyObject(on[key], from[key], leaf || tree);
         }
         else {
@@ -161,9 +156,15 @@ function copyObject(on, D_from, tree) {
 
 function setChildren(parent, D_children, tree) {
     const ref = new WeakRef(parent);
-    let leaf;
+    let leaf, sub;
     const children = D_children instanceof State
-        ? (leaf = stateTree(tree, D_children, ref, (curr) => {
+        ? unwrap((leaf = stateTree(tree, D_children, ref, sub = (curr, prev) => {
+            if (prev instanceof State) {
+                prev._unsubR(sub);
+            }
+            if (curr instanceof State) {
+                return curr._sub(sub)(curr._value);
+            }
             clearStateTree(leaf);
             const parent = ref.deref();
             if (parent) {
@@ -172,7 +173,7 @@ function setChildren(parent, D_children, tree) {
                     createNodeList(curr, leaf, ref)
                 );
             }
-        })).state._value
+        })).state)
         : D_children;
 
     appendNodeList(parent, createNodeList(children, leaf || tree, ref));
@@ -198,9 +199,15 @@ function createNodeList(children, tree, ref) {
     for (let i = 0; i < list.length; i++) {
         const D_child = children[i];
 
-        let leaf;
+        let leaf, sub;
         const child = D_child instanceof State
-            ? (leaf = stateTree(tree, D_child, ref, (curr) => {
+            ? unwrap((leaf = stateTree(tree, D_child, ref, sub = (curr, prev) => {
+                if (prev instanceof State) {
+                    prev._unsubR(sub);
+                }
+                if (curr instanceof State) {
+                    return curr._sub(sub)(curr._value);
+                }
                 clearStateTree(leaf);
                 if (ref.deref()) {
                     list[i] = replaceNodes(
@@ -211,7 +218,7 @@ function createNodeList(children, tree, ref) {
                             : weaken(list, i, _createNode(curr, leaf))
                     );
                 }
-            })).state._value
+            })).state)
             : D_child;
 
         list[i] = Array.isArray(child)
@@ -299,15 +306,20 @@ function appendNodeAfter(sibiling, node) {
 function setPrimitive(on, key, from, tree) {
     let D_value = from && from[key];
 
-    let ref;
-    let leaf;
+    let ref, leaf, sub;
     const value = D_value instanceof State
-        ? (leaf = stateTree(tree, D_value, ref = new WeakRef(on), (curr) => {
+        ? unwrap((leaf = stateTree(tree, D_value, ref = new WeakRef(on), sub = (curr, prev) => {
+            if (prev instanceof State) {
+                prev._unsubR(sub);
+            }
+            if (curr instanceof State) {
+                return curr._sub(sub)(curr._value);
+            }
             const on = ref.deref();
             if (on) {
                 setPrimitive(on, key, { [key]: curr });
             }
-        }).state._value)
+        })).state)
         : D_value;
 
     try {
@@ -323,6 +335,10 @@ function setPrimitive(on, key, from, tree) {
     catch (err) {
         console.warn("Error", key, "=", D_value, err);
     }
+}
+
+function unwrap(arg) {
+    return arg instanceof State ? unwrap(arg._value) : arg;
 }
 
 export class State {
@@ -513,6 +529,13 @@ export class State {
         this._subs.push(f);
         return f;
     }
+    _subR(f) {
+        this._sub(f);
+        if (this._value instanceof State) {
+            this._value._subR(f);
+        }
+        return f;
+    }
     sub(f) {
         const ref = { id: f, state: this, f: null };
 
@@ -532,6 +555,12 @@ export class State {
             }
         }
         this._subs.length = length;
+    }
+    _unsubR(f) {
+        this.unsub(f);
+        if (this._value instanceof State) {
+            this._value._unsubR(f);
+        }
     }
 }
 
