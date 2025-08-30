@@ -1,5 +1,5 @@
 import { expect, mock, test } from "bun:test";
-import { State } from "../index";
+import { State } from "../lib";
 import { StateHeader, StateStack, dependents, subs, wait } from "./util";
 
 test("State.as transforms the state value", () => {

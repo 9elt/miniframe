@@ -5,5 +5,5 @@ types
 tsconfig*
 tests
 scripts
-src/*.js
+lib/*.js
 !dist/**/*

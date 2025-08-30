@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { State, createNode } from "../index";
+import { State, createNode } from "../lib";
 import { subs } from "./util";
 
 test("HTML elements are created", () => {
