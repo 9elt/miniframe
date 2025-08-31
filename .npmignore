@@ -9,3 +9,4 @@ tsconfig*
 tests
 scripts
 !dist/**/*
+docs

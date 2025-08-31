@@ -167,6 +167,22 @@ test("SVG elements support empty nodes", () => {
     expect(svg.outerHTML).toEqual("<svg>01234</svg>");
 });
 
+test("SVG elements support empty node", () => {
+    const _undefined = new State<undefined | 1>(undefined);
+
+    const svg = createNode<SVGSVGElement>(
+        <svg namespaceURI="http://www.w3.org/2000/svg">
+            {_undefined}
+        </svg>
+    );
+
+    expect(svg.outerHTML).toEqual("<svg></svg>");
+
+    _undefined.value = 1;
+
+    expect(svg.outerHTML).toEqual("<svg>1</svg>");
+});
+
 test("SVG elements require namespaceURI = http://www.w3.org/2000/svg", () => {
     // @ts-expect-error Property 'namespaceURI' is missing in type '{}'
     // but required in type 'Intrinsic<SVGSVGElement>'. [2741]

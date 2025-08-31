@@ -136,3 +136,19 @@ test("HTML elements support empty nodes", () => {
 
     expect(div.outerHTML).toEqual("<div>01234</div>");
 });
+
+test("HTML elements support empty node", () => {
+    const _undefined = new State<undefined | 1>(undefined);
+
+    const div = createNode<HTMLDivElement>(
+        <div>
+            {_undefined}
+        </div>
+    );
+
+    expect(div.outerHTML).toEqual("<div></div>");
+
+    _undefined.value = 1;
+
+    expect(div.outerHTML).toEqual("<div>1</div>");
+});

@@ -182,7 +182,10 @@ function setChildren(parent, D_children, tree) {
 // needs to be done using recursion
 
 function createNodeList(children, tree, ref) {
-    if (children !== undefined && !Array.isArray(children)) {
+    if (children === undefined) {
+        children = [];
+    }
+    else if (!Array.isArray(children)) {
         children = [children];
     }
 
