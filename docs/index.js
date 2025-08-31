@@ -367,10 +367,14 @@ function jsx(key, props) {
 var GETTING_STARTED = "getting-started";
 var DOCUMENTATION = "documentation";
 var EXAMPLES = "examples";
+var PAGES = [GETTING_STARTED, DOCUMENTATION, EXAMPLES];
 function pathname() {
-  return window.location.pathname.slice(1);
+  return window.location.pathname.split("/").pop();
 }
-var page = new State(pathname() || GETTING_STARTED);
+function fallback(pathname2) {
+  return PAGES.includes(pathname2) ? pathname2 : GETTING_STARTED;
+}
+var page = new State(fallback(pathname()));
 page.sub(() => {
   if (!window.location.hash) {
     window.scrollTo(0, 0);
@@ -382,7 +386,7 @@ page.sub(async (page2) => {
   }
 });
 window.onpopstate = () => {
-  page.value = pathname();
+  page.value = fallback(pathname());
 };
 var pageTitle = page.as((page2) => page2 === GETTING_STARTED ? "Getting started" : page2 === DOCUMENTATION ? "Documentation" : page2 === EXAMPLES ? "Examples" : null);
 document.querySelector("title")?.replaceWith(createNode(/* @__PURE__ */ jsx("title", {
