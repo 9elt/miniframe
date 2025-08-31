@@ -1,0 +1,12 @@
+// npm run generate:snippets
+import type { Mini } from "@9elt/miniframe";
+
+export function AsyncLimitationsSafeAsSnippet(props?: Partial<Mini.HTMLPreElement>) {
+    return (
+        <pre
+            className="snippet"
+            innerHTML={"state\n    <span class=\"token punctuation\">.</span><span class=\"token function\">as</span><span class=\"token punctuation\">(</span>getData<span class=\"token punctuation\">)</span>\n    <span class=\"token punctuation\">.</span><span class=\"token function\">await</span><span class=\"token punctuation\">(</span>init<span class=\"token punctuation\">)</span>\n    <span class=\"token punctuation\">.</span><span class=\"token function\">as</span><span class=\"token punctuation\">(</span>data <span class=\"token operator\">=></span> <span class=\"token punctuation\">{</span>\n        state<span class=\"token punctuation\">.</span><span class=\"token function\">as</span><span class=\"token punctuation\">(</span><span class=\"token operator\">...</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\n        state<span class=\"token punctuation\">.</span><span class=\"token function\">sub</span><span class=\"token punctuation\">(</span><span class=\"token operator\">...</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\n        State<span class=\"token punctuation\">.</span><span class=\"token function\">merge</span><span class=\"token punctuation\">(</span>state<span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\n\n        <span class=\"token keyword\">return</span> <span class=\"token punctuation\">(</span>\n            <span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span><span class=\"token class-name\">Component</span></span> <span class=\"token attr-name\">data</span><span class=\"token script language-javascript\"><span class=\"token script-punctuation punctuation\">=</span><span class=\"token punctuation\">{</span>data<span class=\"token punctuation\">}</span></span> <span class=\"token punctuation\">/></span></span>\n        <span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\n    <span class=\"token punctuation\">}</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\n"}
+            {...props}
+        />
+    );
+}

@@ -1,0 +1,15 @@
+{
+    "include": [
+        "./src/**/*"
+    ],
+    "compilerOptions": {
+        "target": "es2021",
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "strictNullChecks": true,
+        "noErrorTruncation": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "jsxImportSource": "@9elt/miniframe"
+    }
+}
