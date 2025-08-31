@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { State, createNode } from "../lib";
+import { State, createNode } from "../index";
 import "./util";
 
 test("Example counter works and stops at 10", () => {

@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom';
-import { State } from "../lib";
+import { State } from "../index";
 
 // @ts-ignore
 global.window = (new JSDOM("<!DOCTYPE html>")).window;

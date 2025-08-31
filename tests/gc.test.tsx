@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { State, createNode } from "../lib";
+import { State, createNode } from "../index";
 import { dependents, subs } from "./util";
 
 test("GC clears unused nodes and states", async () => {

@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { State } from "../lib";
+import { State } from "../index";
 import { subs } from "./util";
 
 test("State.merge", () => {

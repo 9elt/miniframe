@@ -1,5 +1,5 @@
 import { expect, mock, test } from "bun:test";
-import { State } from "../lib";
+import { State } from "../index";
 import { StateHeader, StateStack, dependents, subs } from "./util";
 
 test("State.sub clears dependencies at every update", () => {

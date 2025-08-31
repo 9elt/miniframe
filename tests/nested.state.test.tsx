@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { State, createNode } from "../lib";
+import { State, createNode } from "../index";
 import { subs } from "./util";
 
 test("Nodes support nested states /children", () => {

@@ -104,7 +104,7 @@ const mini_d_ts: string = await Bun.file("types/mini.d.ts").text();
         + "\n";
 
     // @ts-ignore
-    await Bun.write("lib/index.d.ts", index_d_ts);
+    await Bun.write("index.d.ts", index_d_ts);
 }
 
 function parse_svg_d_ts() {
