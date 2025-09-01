@@ -57,7 +57,14 @@ ol {
     margin: 0;
     border-left: 1px solid var(--lighter);
     padding: 24px 0 8px 30px;
-    position: relative;
+    position: sticky;
+    top: 0;
+}
+
+@media only screen and (max-width: 1160px) {
+    ol {
+        position: relative;
+    }
 }
 
 ol ol {
@@ -239,8 +246,38 @@ code {
 
 main,
 .main {
-    max-width: min(860px, 95%);
+    max-width: min(1160px, 95%);
     margin: 0 auto;
+}
+
+@media only screen and (max-width: 1160px) {
+    main,
+    .main {
+        max-width: min(860px, 95%);
+    }
+}
+
+.inner-page {
+    display: flex;
+    align-items: flex-start;
+}
+
+.inner-main {
+    max-width: min(860px, 95%);
+    margin-top: 8px;
+    margin-left: auto;
+    flex-grow: 1;
+}
+
+@media only screen and (max-width: 1160px) {
+    .inner-page {
+        display: block;
+    }
+    .inner-main {
+        max-width: auto;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
 }
 
 .section,

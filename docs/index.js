@@ -484,6 +484,76 @@ var TriangleIcon = /* @__PURE__ */ jsx("svg", {
   ]
 });
 
+// src/components/logos.tsx
+var NPMLogo = /* @__PURE__ */ jsx("svg", {
+  namespaceURI: "http://www.w3.org/2000/svg",
+  x: "0px",
+  y: "0px",
+  viewBox: "0 0 18 7",
+  height: "14",
+  children: [
+    /* @__PURE__ */ jsx("path", {
+      namespaceURI: "http://www.w3.org/2000/svg",
+      fill: "currentColor",
+      d: "M0,0h18v6H9v1H5V6H0V0z M1,5h2V2h1v3h1V1H1V5z M6,1v5h2V5h2V1H6z M8,2h1v2H8V2z M11,1v4h2V2h1v3h1V2h1v3h1V1H11z"
+    }),
+    /* @__PURE__ */ jsx("polygon", {
+      namespaceURI: "http://www.w3.org/2000/svg",
+      fill: "var(--body)",
+      points: "1,5 3,5 3,2 4,2 4,5 5,5 5,1 1,1 "
+    }),
+    /* @__PURE__ */ jsx("path", {
+      namespaceURI: "http://www.w3.org/2000/svg",
+      fill: "var(--body)",
+      d: "M6,1v5h2V5h2V1H6z M9,4H8V2h1V4z"
+    }),
+    /* @__PURE__ */ jsx("polygon", {
+      namespaceURI: "http://www.w3.org/2000/svg",
+      fill: "var(--body)",
+      points: "11,1 11,5 13,5 13,2 14,2 14,5 15,5 15,2 16,2 16,5 17,5 17,1 "
+    })
+  ]
+});
+var GitHubLogo = /* @__PURE__ */ jsx("svg", {
+  namespaceURI: "http://www.w3.org/2000/svg",
+  x: "0px",
+  y: "0px",
+  viewBox: "0 0 16 16",
+  height: "14",
+  fill: "none",
+  children: /* @__PURE__ */ jsx("path", {
+    namespaceURI: "http://www.w3.org/2000/svg",
+    "fill-rule": "evenodd",
+    "clip-rule": "evenodd",
+    fill: "currentColor",
+    d: "M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z"
+  })
+});
+
+// src/components/footer.tsx
+var Footer = /* @__PURE__ */ jsx("footer", {
+  children: [
+    /* @__PURE__ */ jsx("p", {
+      children: /* @__PURE__ */ jsx("small", {
+        children: "Copyright ©2025 Lorenzo Cicuttin, Licensed under MIT"
+      })
+    }),
+    /* @__PURE__ */ jsx("div", {
+      className: "links",
+      children: [
+        /* @__PURE__ */ jsx(Link, {
+          href: "https://github.com/9elt/miniframe",
+          children: GitHubLogo
+        }),
+        /* @__PURE__ */ jsx(Link, {
+          href: "https://www.npmjs.com/package/@9elt/miniframe",
+          children: NPMLogo
+        })
+      ]
+    })
+  ]
+});
+
 // src/components/section.tsx
 function Section({ id, title, children, warning: warning2 }) {
   return /* @__PURE__ */ jsx("div", {
@@ -746,6 +816,7 @@ function Spacer() {
 
 // src/components/documentation.tsx
 var Documentation = /* @__PURE__ */ jsx("div", {
+  className: "inner-page",
   children: [
     /* @__PURE__ */ jsx("ol", {
       children: [
@@ -789,7 +860,7 @@ var Documentation = /* @__PURE__ */ jsx("div", {
                   children: /* @__PURE__ */ jsx(Link, {
                     href: "#global-state-limitations",
                     warning: true,
-                    children: "Global State Limitations"
+                    children: "Limitations"
                   })
                 })
               ]
@@ -811,7 +882,7 @@ var Documentation = /* @__PURE__ */ jsx("div", {
                   children: /* @__PURE__ */ jsx(Link, {
                     href: "#async-state-limitations",
                     warning: true,
-                    children: "Async State Limitations"
+                    children: "Limitations"
                   })
                 })
               ]
@@ -820,233 +891,238 @@ var Documentation = /* @__PURE__ */ jsx("div", {
         })
       ]
     }),
-    /* @__PURE__ */ jsx(Spacer, {}),
-    /* @__PURE__ */ jsx(Section, {
-      id: "old-browsers-support",
-      title: "Old Browsers Support",
-      warning: true,
+    /* @__PURE__ */ jsx("div", {
+      className: "inner-main",
       children: [
-        /* @__PURE__ */ jsx("p", {
-          children: [
-            "Miniframe uses modern JS features such as",
-            " ",
-            /* @__PURE__ */ jsx(Link, {
-              href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakRef",
-              children: /* @__PURE__ */ jsx("code", {
-                children: "WeakRef"
-              })
-            }),
-            " ",
-            "and ",
-            /* @__PURE__ */ jsx(Link, {
-              href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry",
-              children: /* @__PURE__ */ jsx("code", {
-                children: "FinalizationRegistry"
-              })
-            }),
-            " ",
-            "that were implemented in Chrome 84 (July 2020) and Firefox 79 (July 2020)."
-          ]
-        }),
-        /* @__PURE__ */ jsx("p", {
-          children: "If you want to use Miniframe in older browsers a polyfill is available:"
-        }),
-        /* @__PURE__ */ jsx(PolyfillSnippet, {}),
-        /* @__PURE__ */ jsx("p", {
-          children: [
-            "This polyfill will introduce some limitations on",
-            " ",
-            /* @__PURE__ */ jsx(Link, {
-              href: "#global-state-limitations",
-              children: "global states usage"
-            }),
-            "."
-          ]
-        })
-      ]
-    }),
-    /* @__PURE__ */ jsx(Spacer, {}),
-    /* @__PURE__ */ jsx(Section, {
-      id: "components",
-      title: "Components",
-      children: [
-        /* @__PURE__ */ jsx("p", {
-          children: "Functions that take one object as an argument can be used as components:"
-        }),
-        /* @__PURE__ */ jsx(ComponentsSnippet, {})
-      ]
-    }),
-    /* @__PURE__ */ jsx(Spacer, {}),
-    /* @__PURE__ */ jsx(Section, {
-      id: "transforming-state",
-      title: "Transforming State",
-      children: [
-        /* @__PURE__ */ jsx("p", {
-          children: [
-            /* @__PURE__ */ jsx("code", {
-              children: "State"
-            }),
-            " can be transformed using the ",
-            /* @__PURE__ */ jsx("code", {
-              children: "State.as"
-            }),
-            " method"
-          ]
-        }),
-        /* @__PURE__ */ jsx(StateTransformSnippet, {})
-      ]
-    }),
-    /* @__PURE__ */ jsx(Section, {
-      id: "synchronizing-state",
-      title: "Synchronizing State",
-      children: [
-        /* @__PURE__ */ jsx("p", {
-          children: [
-            "Multiple states can be synchronized using ",
-            /* @__PURE__ */ jsx("code", {
-              children: "State.merge"
-            }),
-            " static method:"
-          ]
-        }),
-        /* @__PURE__ */ jsx(SyncStateSnippet, {})
-      ]
-    }),
-    /* @__PURE__ */ jsx(Section, {
-      id: "global-state",
-      title: "Global State",
-      children: [
-        /* @__PURE__ */ jsx("p", {
-          children: [
-            /* @__PURE__ */ jsx("code", {
-              children: "State"
-            }),
-            " can be used freely at any level:"
-          ]
-        }),
-        /* @__PURE__ */ jsx(GlobalStateSnippet, {}),
         /* @__PURE__ */ jsx(Section, {
-          id: "global-state-limitations",
-          title: "Global State Limitations",
+          id: "old-browsers-support",
+          title: "Old Browsers Support",
           warning: true,
           children: [
             /* @__PURE__ */ jsx("p", {
               children: [
-                "When using global state with ",
+                "Miniframe uses modern JS features such as",
+                " ",
                 /* @__PURE__ */ jsx(Link, {
-                  href: "#old-browsers-support",
-                  children: "this polyfill"
+                  href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakRef",
+                  children: /* @__PURE__ */ jsx("code", {
+                    children: "WeakRef"
+                  })
                 }),
-                ", on old browsers, Miniframe won't be able to properly cleanup unused nodes."
+                " ",
+                "and ",
+                /* @__PURE__ */ jsx(Link, {
+                  href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry",
+                  children: /* @__PURE__ */ jsx("code", {
+                    children: "FinalizationRegistry"
+                  })
+                }),
+                " ",
+                "that were implemented in Chrome 84 (July 2020) and Firefox 79 (July 2020)."
               ]
             }),
-            /* @__PURE__ */ jsx("div", {
-              className: "compare-snippets",
+            /* @__PURE__ */ jsx("p", {
+              children: "If you want to use Miniframe in older browsers a polyfill is available:"
+            }),
+            /* @__PURE__ */ jsx(PolyfillSnippet, {}),
+            /* @__PURE__ */ jsx("p", {
               children: [
-                /* @__PURE__ */ jsx("div", {
-                  children: [
-                    /* @__PURE__ */ jsx("small", {
-                      children: "UNSAFE"
-                    }),
-                    /* @__PURE__ */ jsx(GlobalStateLimitationsSnippet, {})
-                  ]
+                "This polyfill will introduce some limitations on",
+                " ",
+                /* @__PURE__ */ jsx(Link, {
+                  href: "#global-state-limitations",
+                  children: "global states usage"
                 }),
-                /* @__PURE__ */ jsx("div", {
-                  children: [
-                    /* @__PURE__ */ jsx("small", {
-                      children: "BEST PRACTICE"
-                    }),
-                    /* @__PURE__ */ jsx(GlobalStateLimitationsSafeSnippet, {})
-                  ]
-                })
+                "."
               ]
             })
           ]
-        })
-      ]
-    }),
-    /* @__PURE__ */ jsx(Section, {
-      id: "async-state",
-      title: "Async State",
-      children: [
-        /* @__PURE__ */ jsx("p", {
+        }),
+        /* @__PURE__ */ jsx(Spacer, {}),
+        /* @__PURE__ */ jsx(Section, {
+          id: "components",
+          title: "Components",
           children: [
-            /* @__PURE__ */ jsx("code", {
-              children: "Promise"
+            /* @__PURE__ */ jsx("p", {
+              children: "Functions that take one object as an argument can be used as components:"
             }),
-            " states can be awaited:"
+            /* @__PURE__ */ jsx(ComponentsSnippet, {})
           ]
         }),
-        /* @__PURE__ */ jsx(PromisesSnippet, {}),
-        /* @__PURE__ */ jsx("p", {
+        /* @__PURE__ */ jsx(Spacer, {}),
+        /* @__PURE__ */ jsx(Section, {
+          id: "transforming-state",
+          title: "Transforming State",
           children: [
-            "Check out the ",
-            /* @__PURE__ */ jsx(Link, {
-              href: "/examples#example-pokeapi",
-              children: "PokéAPI example"
+            /* @__PURE__ */ jsx("p", {
+              children: [
+                /* @__PURE__ */ jsx("code", {
+                  children: "State"
+                }),
+                " can be transformed using the ",
+                /* @__PURE__ */ jsx("code", {
+                  children: "State.as"
+                }),
+                " method"
+              ]
             }),
-            " ",
-            "that uses async state."
+            /* @__PURE__ */ jsx(StateTransformSnippet, {})
           ]
         }),
         /* @__PURE__ */ jsx(Section, {
-          id: "async-state-limitations",
-          title: "Async State Limitations",
-          warning: true,
+          id: "synchronizing-state",
+          title: "Synchronizing State",
           children: [
             /* @__PURE__ */ jsx("p", {
-              children: "During async code execution it is impossible to track all state dependents, meaning some may not be cleaned up when needed."
-            }),
-            /* @__PURE__ */ jsx("p", {
               children: [
-                "To avoid this, it is very important that ",
-                /* @__PURE__ */ jsx("code", {
-                  children: "State.as"
-                }),
-                " and",
-                " ",
-                /* @__PURE__ */ jsx("code", {
-                  children: "State.sub"
-                }),
-                ", when called with an async callback, never contain nested ",
-                /* @__PURE__ */ jsx("code", {
-                  children: "State.as"
-                }),
-                ", ",
-                /* @__PURE__ */ jsx("code", {
-                  children: "State.sub"
-                }),
-                " or",
-                " ",
+                "Multiple states can be synchronized using ",
                 /* @__PURE__ */ jsx("code", {
                   children: "State.merge"
                 }),
-                " calls."
+                " static method:"
               ]
             }),
-            /* @__PURE__ */ jsx("div", {
-              className: "compare-snippets",
+            /* @__PURE__ */ jsx(SyncStateSnippet, {})
+          ]
+        }),
+        /* @__PURE__ */ jsx(Section, {
+          id: "global-state",
+          title: "Global State",
+          children: [
+            /* @__PURE__ */ jsx("p", {
               children: [
-                /* @__PURE__ */ jsx("div", {
+                /* @__PURE__ */ jsx("code", {
+                  children: "State"
+                }),
+                " can be used freely at any level:"
+              ]
+            }),
+            /* @__PURE__ */ jsx(GlobalStateSnippet, {}),
+            /* @__PURE__ */ jsx(Section, {
+              id: "global-state-limitations",
+              title: "Global State Limitations",
+              warning: true,
+              children: [
+                /* @__PURE__ */ jsx("p", {
                   children: [
-                    /* @__PURE__ */ jsx("small", {
-                      children: "UNSAFE"
+                    "When using global state with ",
+                    /* @__PURE__ */ jsx(Link, {
+                      href: "#old-browsers-support",
+                      children: "this polyfill"
                     }),
-                    /* @__PURE__ */ jsx(AsyncLimitationsUnsafeAsSnippet, {})
+                    ", on old browsers, Miniframe won't be able to properly cleanup unused nodes."
                   ]
                 }),
                 /* @__PURE__ */ jsx("div", {
+                  className: "compare-snippets",
                   children: [
-                    /* @__PURE__ */ jsx("small", {
-                      children: "BEST PRACTICE"
+                    /* @__PURE__ */ jsx("div", {
+                      children: [
+                        /* @__PURE__ */ jsx("small", {
+                          children: "UNSAFE"
+                        }),
+                        /* @__PURE__ */ jsx(GlobalStateLimitationsSnippet, {})
+                      ]
                     }),
-                    /* @__PURE__ */ jsx(AsyncLimitationsSafeAsSnippet, {})
+                    /* @__PURE__ */ jsx("div", {
+                      children: [
+                        /* @__PURE__ */ jsx("small", {
+                          children: "BEST PRACTICE"
+                        }),
+                        /* @__PURE__ */ jsx(GlobalStateLimitationsSafeSnippet, {})
+                      ]
+                    })
                   ]
                 })
               ]
             })
           ]
-        })
+        }),
+        /* @__PURE__ */ jsx(Section, {
+          id: "async-state",
+          title: "Async State",
+          children: [
+            /* @__PURE__ */ jsx("p", {
+              children: [
+                /* @__PURE__ */ jsx("code", {
+                  children: "Promise"
+                }),
+                " states can be awaited:"
+              ]
+            }),
+            /* @__PURE__ */ jsx(PromisesSnippet, {}),
+            /* @__PURE__ */ jsx("p", {
+              children: [
+                "Check out the ",
+                /* @__PURE__ */ jsx(Link, {
+                  href: "/examples#example-pokeapi",
+                  children: "PokéAPI example"
+                }),
+                " ",
+                "that uses async state."
+              ]
+            }),
+            /* @__PURE__ */ jsx(Section, {
+              id: "async-state-limitations",
+              title: "Async State Limitations",
+              warning: true,
+              children: [
+                /* @__PURE__ */ jsx("p", {
+                  children: "During async code execution it is impossible to track all state dependents, meaning some may not be cleaned up when needed."
+                }),
+                /* @__PURE__ */ jsx("p", {
+                  children: [
+                    "To avoid this, it is very important that ",
+                    /* @__PURE__ */ jsx("code", {
+                      children: "State.as"
+                    }),
+                    " and",
+                    " ",
+                    /* @__PURE__ */ jsx("code", {
+                      children: "State.sub"
+                    }),
+                    ", when called with an async callback, never contain nested ",
+                    /* @__PURE__ */ jsx("code", {
+                      children: "State.as"
+                    }),
+                    ", ",
+                    /* @__PURE__ */ jsx("code", {
+                      children: "State.sub"
+                    }),
+                    " or",
+                    " ",
+                    /* @__PURE__ */ jsx("code", {
+                      children: "State.merge"
+                    }),
+                    " calls."
+                  ]
+                }),
+                /* @__PURE__ */ jsx("div", {
+                  className: "compare-snippets",
+                  children: [
+                    /* @__PURE__ */ jsx("div", {
+                      children: [
+                        /* @__PURE__ */ jsx("small", {
+                          children: "UNSAFE"
+                        }),
+                        /* @__PURE__ */ jsx(AsyncLimitationsUnsafeAsSnippet, {})
+                      ]
+                    }),
+                    /* @__PURE__ */ jsx("div", {
+                      children: [
+                        /* @__PURE__ */ jsx("small", {
+                          children: "BEST PRACTICE"
+                        }),
+                        /* @__PURE__ */ jsx(AsyncLimitationsSafeAsSnippet, {})
+                      ]
+                    })
+                  ]
+                })
+              ]
+            })
+          ]
+        }),
+        Footer
       ]
     })
   ]
@@ -1256,6 +1332,7 @@ document<span class="token punctuation">.</span>body<span class="token punctuati
 
 // src/components/examples.tsx
 var Examples = /* @__PURE__ */ jsx("div", {
+  className: "inner-page",
   children: [
     /* @__PURE__ */ jsx("ol", {
       children: [
@@ -1279,59 +1356,64 @@ var Examples = /* @__PURE__ */ jsx("div", {
         })
       ]
     }),
-    /* @__PURE__ */ jsx(Spacer, {}),
-    /* @__PURE__ */ jsx(Section, {
-      id: "example-counter",
-      title: "Counter",
+    /* @__PURE__ */ jsx("div", {
+      className: "inner-main",
       children: [
-        /* @__PURE__ */ jsx("p", {
-          children: "A simple counter that stops at 10"
-        }),
-        /* @__PURE__ */ jsx(ExampleCounterSnippet, {}),
-        /* @__PURE__ */ jsx("div", {
-          className: "hr"
-        }),
-        /* @__PURE__ */ jsx(RunSnippet, {
-          children: /* @__PURE__ */ jsx(Counter, {})
-        })
-      ]
-    }),
-    /* @__PURE__ */ jsx(Spacer, {}),
-    /* @__PURE__ */ jsx(Section, {
-      id: "example-pokeapi",
-      title: "PokéAPI",
-      children: [
-        /* @__PURE__ */ jsx("p", {
+        /* @__PURE__ */ jsx(Section, {
+          id: "example-counter",
+          title: "Counter",
           children: [
-            "Fetch pokemon information using ",
-            /* @__PURE__ */ jsx(Link, {
-              href: "https://pokeapi.co/docs/v2",
-              children: "PokéAPI"
+            /* @__PURE__ */ jsx("p", {
+              children: "A simple counter that stops at 10"
+            }),
+            /* @__PURE__ */ jsx(ExampleCounterSnippet, {}),
+            /* @__PURE__ */ jsx("div", {
+              className: "hr"
+            }),
+            /* @__PURE__ */ jsx(RunSnippet, {
+              children: /* @__PURE__ */ jsx(Counter, {})
             })
           ]
         }),
-        /* @__PURE__ */ jsx(ExamplePokeapiSnippet, {}),
-        /* @__PURE__ */ jsx("div", {
-          className: "hr"
+        /* @__PURE__ */ jsx(Spacer, {}),
+        /* @__PURE__ */ jsx(Section, {
+          id: "example-pokeapi",
+          title: "PokéAPI",
+          children: [
+            /* @__PURE__ */ jsx("p", {
+              children: [
+                "Fetch pokemon information using ",
+                /* @__PURE__ */ jsx(Link, {
+                  href: "https://pokeapi.co/docs/v2",
+                  children: "PokéAPI"
+                })
+              ]
+            }),
+            /* @__PURE__ */ jsx(ExamplePokeapiSnippet, {}),
+            /* @__PURE__ */ jsx("div", {
+              className: "hr"
+            }),
+            /* @__PURE__ */ jsx(RunSnippet, {
+              children: /* @__PURE__ */ jsx(Pokemon, {})
+            })
+          ]
         }),
-        /* @__PURE__ */ jsx(RunSnippet, {
-          children: /* @__PURE__ */ jsx(Pokemon, {})
-        })
-      ]
-    }),
-    /* @__PURE__ */ jsx(Spacer, {}),
-    /* @__PURE__ */ jsx(Section, {
-      id: "need-more",
-      title: "Need more?",
-      children: /* @__PURE__ */ jsx("p", {
-        children: [
-          "This very documentation was written using miniframe. Check it out on ",
-          /* @__PURE__ */ jsx(Link, {
-            href: "https://github.com/9elt/miniframe/tree/main/docs",
-            children: "GitHub"
+        /* @__PURE__ */ jsx(Spacer, {}),
+        /* @__PURE__ */ jsx(Section, {
+          id: "need-more",
+          title: "Need more?",
+          children: /* @__PURE__ */ jsx("p", {
+            children: [
+              "This very documentation was written using miniframe. Check it out on ",
+              /* @__PURE__ */ jsx(Link, {
+                href: "https://github.com/9elt/miniframe/tree/main/docs",
+                children: "GitHub"
+              })
+            ]
           })
-        ]
-      })
+        }),
+        Footer
+      ]
     })
   ]
 });
@@ -1345,76 +1427,6 @@ function RunSnippet({ children }) {
   }) : children));
   return snippet;
 }
-
-// src/components/logos.tsx
-var NPMLogo = /* @__PURE__ */ jsx("svg", {
-  namespaceURI: "http://www.w3.org/2000/svg",
-  x: "0px",
-  y: "0px",
-  viewBox: "0 0 18 7",
-  height: "14",
-  children: [
-    /* @__PURE__ */ jsx("path", {
-      namespaceURI: "http://www.w3.org/2000/svg",
-      fill: "currentColor",
-      d: "M0,0h18v6H9v1H5V6H0V0z M1,5h2V2h1v3h1V1H1V5z M6,1v5h2V5h2V1H6z M8,2h1v2H8V2z M11,1v4h2V2h1v3h1V2h1v3h1V1H11z"
-    }),
-    /* @__PURE__ */ jsx("polygon", {
-      namespaceURI: "http://www.w3.org/2000/svg",
-      fill: "var(--body)",
-      points: "1,5 3,5 3,2 4,2 4,5 5,5 5,1 1,1 "
-    }),
-    /* @__PURE__ */ jsx("path", {
-      namespaceURI: "http://www.w3.org/2000/svg",
-      fill: "var(--body)",
-      d: "M6,1v5h2V5h2V1H6z M9,4H8V2h1V4z"
-    }),
-    /* @__PURE__ */ jsx("polygon", {
-      namespaceURI: "http://www.w3.org/2000/svg",
-      fill: "var(--body)",
-      points: "11,1 11,5 13,5 13,2 14,2 14,5 15,5 15,2 16,2 16,5 17,5 17,1 "
-    })
-  ]
-});
-var GitHubLogo = /* @__PURE__ */ jsx("svg", {
-  namespaceURI: "http://www.w3.org/2000/svg",
-  x: "0px",
-  y: "0px",
-  viewBox: "0 0 16 16",
-  height: "14",
-  fill: "none",
-  children: /* @__PURE__ */ jsx("path", {
-    namespaceURI: "http://www.w3.org/2000/svg",
-    "fill-rule": "evenodd",
-    "clip-rule": "evenodd",
-    fill: "currentColor",
-    d: "M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z"
-  })
-});
-
-// src/components/footer.tsx
-var Footer = /* @__PURE__ */ jsx("footer", {
-  children: [
-    /* @__PURE__ */ jsx("p", {
-      children: /* @__PURE__ */ jsx("small", {
-        children: "Copyright ©2025 Lorenzo Cicuttin, Licensed under MIT"
-      })
-    }),
-    /* @__PURE__ */ jsx("div", {
-      className: "links",
-      children: [
-        /* @__PURE__ */ jsx(Link, {
-          href: "https://github.com/9elt/miniframe",
-          children: GitHubLogo
-        }),
-        /* @__PURE__ */ jsx(Link, {
-          href: "https://www.npmjs.com/package/@9elt/miniframe",
-          children: NPMLogo
-        })
-      ]
-    })
-  ]
-});
 
 // src/components/snippets/create-element.tsx
 function CreateElementSnippet(props) {
@@ -1483,6 +1495,7 @@ var Arrow = /* @__PURE__ */ jsx("svg", {
   })
 });
 var GettingStarted = /* @__PURE__ */ jsx("div", {
+  className: "inner-page",
   children: [
     /* @__PURE__ */ jsx("ol", {
       children: [
@@ -1506,120 +1519,125 @@ var GettingStarted = /* @__PURE__ */ jsx("div", {
         })
       ]
     }),
-    /* @__PURE__ */ jsx(Spacer, {}),
-    /* @__PURE__ */ jsx(Section, {
-      id: "introduction",
-      title: "Introduction",
+    /* @__PURE__ */ jsx("div", {
+      className: "inner-main",
       children: [
-        /* @__PURE__ */ jsx("p", {
+        /* @__PURE__ */ jsx(Section, {
+          id: "introduction",
+          title: "Introduction",
           children: [
-            "Miniframe is a better version of ",
-            /* @__PURE__ */ jsx("code", {
-              children: "document.createElement"
-            }),
-            " with support for JSX and minimal state management in 400 lines of code. It was created for people that like vanilla JS and enjoy rolling out their own code, but don't like how convoluted and inconvenient it is to create and manage html elements."
-          ]
-        }),
-        /* @__PURE__ */ jsx("p", {
-          children: [
-            "It provides a ",
-            /* @__PURE__ */ jsx("code", {
-              children: "createNode"
-            }),
-            " function"
-          ]
-        }),
-        /* @__PURE__ */ jsx("div", {
-          className: "compare-snippets",
-          children: [
-            /* @__PURE__ */ jsx("div", {
+            /* @__PURE__ */ jsx("p", {
               children: [
-                /* @__PURE__ */ jsx("small", {
-                  children: "vanilla js"
+                "Miniframe is a better version of ",
+                /* @__PURE__ */ jsx("code", {
+                  children: "document.createElement"
                 }),
-                /* @__PURE__ */ jsx(CreateElementSnippet, {})
+                " with support for JSX and minimal state management in 400 lines of code. It was created for people that like vanilla JS and enjoy rolling out their own code, but don't like how convoluted and inconvenient it is to create and manage html elements."
+              ]
+            }),
+            /* @__PURE__ */ jsx("p", {
+              children: [
+                "It provides a ",
+                /* @__PURE__ */ jsx("code", {
+                  children: "createNode"
+                }),
+                " function"
               ]
             }),
             /* @__PURE__ */ jsx("div", {
+              className: "compare-snippets",
               children: [
-                /* @__PURE__ */ jsx("small", {
-                  children: "@9elt/miniframe"
+                /* @__PURE__ */ jsx("div", {
+                  children: [
+                    /* @__PURE__ */ jsx("small", {
+                      children: "vanilla js"
+                    }),
+                    /* @__PURE__ */ jsx(CreateElementSnippet, {})
+                  ]
                 }),
-                /* @__PURE__ */ jsx(CreateNodeSnippet, {})
+                /* @__PURE__ */ jsx("div", {
+                  children: [
+                    /* @__PURE__ */ jsx("small", {
+                      children: "@9elt/miniframe"
+                    }),
+                    /* @__PURE__ */ jsx(CreateNodeSnippet, {})
+                  ]
+                })
+              ]
+            }),
+            /* @__PURE__ */ jsx("p", {
+              children: [
+                "And a ",
+                /* @__PURE__ */ jsx("code", {
+                  children: "State"
+                }),
+                " class to easily control the nodes"
+              ]
+            }),
+            /* @__PURE__ */ jsx(StateSnippet, {}),
+            /* @__PURE__ */ jsx("div", {
+              className: "button-list",
+              children: [
+                /* @__PURE__ */ jsx(Link, {
+                  href: "/" + DOCUMENTATION,
+                  children: /* @__PURE__ */ jsx("button", {
+                    className: "btn",
+                    children: [
+                      "Documentation ",
+                      Arrow
+                    ]
+                  })
+                }),
+                /* @__PURE__ */ jsx(Link, {
+                  href: "/" + EXAMPLES,
+                  children: /* @__PURE__ */ jsx("button", {
+                    className: "btn",
+                    children: [
+                      "Examples ",
+                      Arrow
+                    ]
+                  })
+                })
               ]
             })
           ]
         }),
-        /* @__PURE__ */ jsx("p", {
+        /* @__PURE__ */ jsx(Section, {
+          id: "quick-start",
+          title: "Quick start",
           children: [
-            "And a ",
-            /* @__PURE__ */ jsx("code", {
-              children: "State"
+            /* @__PURE__ */ jsx("p", {
+              children: "Quickly start a project with"
             }),
-            " class to easily control the nodes"
-          ]
-        }),
-        /* @__PURE__ */ jsx(StateSnippet, {}),
-        /* @__PURE__ */ jsx("div", {
-          className: "button-list",
-          children: [
-            /* @__PURE__ */ jsx(Link, {
-              href: "/" + DOCUMENTATION,
-              children: /* @__PURE__ */ jsx("button", {
-                className: "btn",
-                children: [
-                  "Documentation ",
-                  Arrow
-                ]
-              })
-            }),
-            /* @__PURE__ */ jsx(Link, {
-              href: "/" + EXAMPLES,
-              children: /* @__PURE__ */ jsx("button", {
-                className: "btn",
-                children: [
-                  "Examples ",
-                  Arrow
-                ]
-              })
-            })
-          ]
-        })
-      ]
-    }),
-    /* @__PURE__ */ jsx(Section, {
-      id: "quick-start",
-      title: "Quick start",
-      children: [
-        /* @__PURE__ */ jsx("p", {
-          children: "Quickly start a project with"
-        }),
-        /* @__PURE__ */ jsx("pre", {
-          className: "snippet",
-          children: "npx @9elt/miniframe"
-        })
-      ]
-    }),
-    /* @__PURE__ */ jsx(Section, {
-      id: "manual-installation",
-      title: "Manual installation",
-      children: [
-        /* @__PURE__ */ jsx("p", {
-          children: "Install the latest version form npm"
-        }),
-        /* @__PURE__ */ jsx("pre", {
-          className: "snippet",
-          children: "npm i @9elt/miniframe"
-        }),
-        /* @__PURE__ */ jsx("p", {
-          children: [
-            "To enable JSX support add to your ",
-            /* @__PURE__ */ jsx("code", {
-              children: "tsconfig.json"
+            /* @__PURE__ */ jsx("pre", {
+              className: "snippet",
+              children: "npx @9elt/miniframe"
             })
           ]
         }),
-        /* @__PURE__ */ jsx(TsconfigExampleSnippet, {})
+        /* @__PURE__ */ jsx(Section, {
+          id: "manual-installation",
+          title: "Manual installation",
+          children: [
+            /* @__PURE__ */ jsx("p", {
+              children: "Install the latest version form npm"
+            }),
+            /* @__PURE__ */ jsx("pre", {
+              className: "snippet",
+              children: "npm i @9elt/miniframe"
+            }),
+            /* @__PURE__ */ jsx("p", {
+              children: [
+                "To enable JSX support add to your ",
+                /* @__PURE__ */ jsx("code", {
+                  children: "tsconfig.json"
+                })
+              ]
+            }),
+            /* @__PURE__ */ jsx(TsconfigExampleSnippet, {})
+          ]
+        }),
+        Footer
       ]
     })
   ]
@@ -1714,8 +1732,7 @@ var Root = /* @__PURE__ */ jsx("div", {
     Header,
     /* @__PURE__ */ jsx("main", {
       children: page.as((page2) => page2 === GETTING_STARTED ? GettingStarted : page2 === DOCUMENTATION ? Documentation : page2 === EXAMPLES ? Examples : null)
-    }),
-    Footer
+    })
   ]
 });
 

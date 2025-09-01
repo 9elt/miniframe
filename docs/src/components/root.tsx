@@ -1,10 +1,8 @@
 import { DOCUMENTATION, EXAMPLES, GETTING_STARTED, page } from "../global/page";
 import { Documentation } from "./documentation";
 import { Examples } from "./examples";
-import { Footer } from "./footer";
 import { GettingStarted } from "./getting.started";
 import { Header } from "./header";
-import { Spacer } from "./spacer";
 
 export const Root = (
     <div className="root">
@@ -17,6 +15,5 @@ export const Root = (
                             null
             )}
         </main>
-        {Footer}
     </div>
 );
