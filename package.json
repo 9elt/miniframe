@@ -1,7 +1,7 @@
 {
     "name": "@9elt/miniframe",
-    "version": "0.14.3",
-    "description": "A better version of document.createElement with support for JSX and minimal state management in 300 LOC",
+    "version": "0.15.0",
+    "description": "A better version of document.createElement with support for JSX and minimal state management in 400 LOC",
     "main": "./dist/esm/index.js",
     "types": "./index.d.ts",
     "type": "module",
@@ -46,7 +46,7 @@
         "jsx"
     ],
     "readme": "./README.md",
-    "homepage": "https://github.com/9elt/miniframe#readme",
+    "homepage": "https://9elt.github.io/miniframe",
     "repository": "github:9elt/miniframe",
     "devDependencies": {
         "@types/bun": "^1.2.20",

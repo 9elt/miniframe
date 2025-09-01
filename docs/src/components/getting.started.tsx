@@ -39,7 +39,7 @@ export const GettingStarted = (
         <Section id="introduction" title="Introduction">
             <p>
                 Miniframe is a better version of <code>document.createElement</code> with
-                support for JSX and minimal state management in 300 lines of code.
+                support for JSX and minimal state management in 400 lines of code.
                 It was created for people that like vanilla JS and enjoy rolling out their
                 own code, but don't like how convoluted and inconvenient it is to create
                 and manage html elements.
@@ -58,7 +58,7 @@ export const GettingStarted = (
                 </div>
             </div>
             <p>
-                A <code>State</code> class to easily control the nodes
+                And a <code>State</code> class to easily control the nodes
             </p>
             <StateSnippet />
             <div className="button-list">
@@ -76,7 +76,7 @@ export const GettingStarted = (
         </Section >
         <Section id="quick-start" title="Quick start">
             <p>
-                Quickly create a template project with
+                Quickly start a project with
             </p>
             <pre className="snippet">
                 npx @9elt/miniframe

@@ -569,7 +569,7 @@ function warning(value, seen = new WeakSet()) {
     !seen.has(warning) && (value instanceof State
         ? seen.add(warning) && console.error(
             "Never use states inside async State.as/sub, see: " +
-            "https://github.com/9elt/miniframe?tab=readme-ov-file#async-state-limitations")
+            "https://9elt.github.io/miniframe/documentation#async-state-limitations")
         : value && typeof value === "object" &&
         !seen.has(value) && seen.add(value) &&
         Object.values(value).forEach((v) => warning(v, seen))
