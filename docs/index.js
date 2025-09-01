@@ -1517,7 +1517,7 @@ var GettingStarted = /* @__PURE__ */ jsx("div", {
             /* @__PURE__ */ jsx("code", {
               children: "document.createElement"
             }),
-            " with support for JSX and minimal state management in 300 lines of code. It was created for people that like vanilla JS and enjoy rolling out their own code, but don't like how convoluted and inconvenient it is to create and manage html elements."
+            " with support for JSX and minimal state management in 400 lines of code. It was created for people that like vanilla JS and enjoy rolling out their own code, but don't like how convoluted and inconvenient it is to create and manage html elements."
           ]
         }),
         /* @__PURE__ */ jsx("p", {
@@ -1552,7 +1552,7 @@ var GettingStarted = /* @__PURE__ */ jsx("div", {
         }),
         /* @__PURE__ */ jsx("p", {
           children: [
-            "A ",
+            "And a ",
             /* @__PURE__ */ jsx("code", {
               children: "State"
             }),
@@ -1592,7 +1592,7 @@ var GettingStarted = /* @__PURE__ */ jsx("div", {
       title: "Quick start",
       children: [
         /* @__PURE__ */ jsx("p", {
-          children: "Quickly create a template project with"
+          children: "Quickly start a project with"
         }),
         /* @__PURE__ */ jsx("pre", {
           className: "snippet",
@@ -1626,7 +1626,7 @@ var GettingStarted = /* @__PURE__ */ jsx("div", {
 });
 
 // src/version.ts
-var VERSION = "0.14.3";
+var VERSION = "0.15.0";
 
 // src/components/header.tsx
 var mouse = new State({ x: 0, y: 0, yR: 1 });
