@@ -703,9 +703,10 @@ function GlobalStateLimitationsSnippet(props) {
     innerHTML: `<span class="token keyword">const</span> name <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">State</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token keyword">function</span> <span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment">// WARNING: On old browsers p will never be cleaned up,</span>
-    <span class="token comment">// avoid using createNode with global state when nodes</span>
-    <span class="token comment">// may not be persistent</span>
+    <span class="token comment">// WARNING: On old browsers p will never</span>
+    <span class="token comment">// be cleaned up, avoid using createNode</span>
+    <span class="token comment">// with global state when nodes may not</span>
+    <span class="token comment">// be persistent</span>
     <span class="token keyword">const</span> p <span class="token operator">=</span> <span class="token function">createNode</span><span class="token punctuation">(</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span><span class="token plain-text">Hello, </span><span class="token punctuation">{</span>name<span class="token punctuation">}</span><span class="token plain-text">!</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token keyword">return</span> <span class="token punctuation">(</span>
@@ -714,8 +715,8 @@ function GlobalStateLimitationsSnippet(props) {
 <span class="token punctuation">}</span>
 
 <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment">// WARNING: 1000 nodes have been created, and will </span>
-    <span class="token comment">// presist on old browsers</span>
+    <span class="token comment">// WARNING: 1000 nodes have been created,</span>
+    <span class="token comment">// and will presist on old browsers</span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Component</span></span> <span class="token punctuation">/></span></span>
 <span class="token punctuation">}</span>
 `,
