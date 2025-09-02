@@ -90,7 +90,7 @@ export const GettingStarted = (
                     npm i @9elt/miniframe
                 </pre>
                 <p>
-                    To enable JSX support add to your <code>tsconfig.json</code>
+                    To enable JSX add to your <code>tsconfig.json</code>
                 </p>
                 <TsconfigExampleSnippet />
             </Section>

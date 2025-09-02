@@ -1,1 +1,5 @@
-const p = createNode(<p>Hello, World!</p>);
+const div = createNode(
+    <div>
+        <p>Hello, World!</p>
+    </div>
+);

@@ -808,6 +808,47 @@ abc<span class="token punctuation">.</span>value<span class="token punctuation">
   });
 }
 
+// src/components/snippets/with.jsx.tsx
+function WithJsxSnippet(props) {
+  return /* @__PURE__ */ jsx("pre", {
+    className: "snippet",
+    innerHTML: `<span class="token keyword">const</span> miniElement <span class="token operator">=</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span><span class="token plain-text">Hello, World!</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+miniElement<span class="token punctuation">.</span>tagName<span class="token punctuation">;</span> <span class="token comment">// "div"</span>
+miniElement<span class="token punctuation">.</span>children<span class="token punctuation">;</span> <span class="token comment">// { tagName: "p" ... }</span>
+
+<span class="token keyword">const</span> htmlElement <span class="token operator">=</span> <span class="token function">createNode</span><span class="token punctuation">(</span>miniElement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+htmlElement<span class="token punctuation">.</span>outerHTML <span class="token comment">// &lt;div>&lt;p>Hello, W...</span>
+`,
+    ...props
+  });
+}
+
+// src/components/snippets/without.jsx.tsx
+function WithoutJsxSnippet(props) {
+  return /* @__PURE__ */ jsx("pre", {
+    className: "snippet",
+    innerHTML: `<span class="token keyword">const</span> miniElement <span class="token operator">=</span> <span class="token punctuation">{</span>
+    tagName<span class="token operator">:</span> <span class="token string">"div"</span><span class="token punctuation">,</span>
+    children<span class="token operator">:</span> <span class="token punctuation">{</span>
+        tagName<span class="token operator">:</span> <span class="token string">"p"</span><span class="token punctuation">,</span>
+        chilren<span class="token operator">:</span> <span class="token string">"Hello, World!"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> htmlElement <span class="token operator">=</span> <span class="token function">createNode</span><span class="token punctuation">(</span>miniElement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+htmlElement<span class="token punctuation">.</span>outerHTML <span class="token comment">// &lt;div>&lt;p>Hello, W...</span>
+`,
+    ...props
+  });
+}
+
 // src/components/spacer.tsx
 function Spacer() {
   return /* @__PURE__ */ jsx("div", {
@@ -826,6 +867,12 @@ var Documentation = /* @__PURE__ */ jsx("div", {
             href: "#old-browsers-support",
             warning: true,
             children: "Old Browsers Support"
+          })
+        }),
+        /* @__PURE__ */ jsx("li", {
+          children: /* @__PURE__ */ jsx(Link, {
+            href: "#jsx",
+            children: "JSX"
           })
         }),
         /* @__PURE__ */ jsx("li", {
@@ -940,6 +987,46 @@ var Documentation = /* @__PURE__ */ jsx("div", {
           ]
         }),
         /* @__PURE__ */ jsx(Spacer, {}),
+        /* @__PURE__ */ jsx(Section, {
+          id: "jsx",
+          title: "JSX",
+          children: [
+            /* @__PURE__ */ jsx("p", {
+              children: "Unlike React, JSX is simply transipiled to an object. The following snippets are equivalent:"
+            }),
+            /* @__PURE__ */ jsx("div", {
+              className: "compare-snippets",
+              children: [
+                /* @__PURE__ */ jsx("div", {
+                  children: [
+                    /* @__PURE__ */ jsx("small", {
+                      children: "without JSX"
+                    }),
+                    /* @__PURE__ */ jsx(WithoutJsxSnippet, {})
+                  ]
+                }),
+                /* @__PURE__ */ jsx("div", {
+                  children: [
+                    /* @__PURE__ */ jsx("small", {
+                      children: "with JSX"
+                    }),
+                    /* @__PURE__ */ jsx(WithJsxSnippet, {})
+                  ]
+                })
+              ]
+            }),
+            /* @__PURE__ */ jsx("p", {
+              children: [
+                "See ",
+                /* @__PURE__ */ jsx(Link, {
+                  href: "/getting-started#manual-installation",
+                  children: "manual installation"
+                }),
+                " for how to enable JSX."
+              ]
+            })
+          ]
+        }),
         /* @__PURE__ */ jsx(Section, {
           id: "components",
           title: "Components",
@@ -1435,6 +1522,8 @@ function CreateElementSnippet(props) {
     className: "snippet",
     innerHTML: `<span class="token keyword">const</span> p <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">"p"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 p<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"Hello, World!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> div <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">"div"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+div<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
 `,
     ...props
   });
@@ -1444,7 +1533,11 @@ p<span class="token punctuation">.</span><span class="token function">append</sp
 function CreateNodeSnippet(props) {
   return /* @__PURE__ */ jsx("pre", {
     className: "snippet",
-    innerHTML: `<span class="token keyword">const</span> p <span class="token operator">=</span> <span class="token function">createNode</span><span class="token punctuation">(</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span><span class="token plain-text">Hello, World!</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    innerHTML: `<span class="token keyword">const</span> div <span class="token operator">=</span> <span class="token function">createNode</span><span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span><span class="token plain-text">Hello, World!</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 `,
     ...props
   });
@@ -1458,11 +1551,11 @@ function StateSnippet(props) {
 
 <span class="token keyword">const</span> p <span class="token operator">=</span> <span class="token function">createNode</span><span class="token punctuation">(</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span><span class="token plain-text">Hello, </span><span class="token punctuation">{</span>name<span class="token punctuation">}</span><span class="token plain-text">!</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-p<span class="token punctuation">.</span>textContent<span class="token punctuation">;</span> <span class="token comment">// "Hello, World!"</span>
+p<span class="token punctuation">.</span>innerHTML<span class="token punctuation">;</span> <span class="token comment">// "Hello, World!"</span>
 
 name<span class="token punctuation">.</span>value <span class="token operator">=</span> <span class="token string">"Miniframe"</span><span class="token punctuation">;</span>
 
-p<span class="token punctuation">.</span>textContent<span class="token punctuation">;</span> <span class="token comment">// "Hello, Miniframe!"</span>
+p<span class="token punctuation">.</span>innerHTML<span class="token punctuation">;</span> <span class="token comment">// "Hello, Miniframe!"</span>
 `,
     ...props
   });
@@ -1629,7 +1722,7 @@ var GettingStarted = /* @__PURE__ */ jsx("div", {
             }),
             /* @__PURE__ */ jsx("p", {
               children: [
-                "To enable JSX support add to your ",
+                "To enable JSX add to your ",
                 /* @__PURE__ */ jsx("code", {
                   children: "tsconfig.json"
                 })

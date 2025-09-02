@@ -11,6 +11,8 @@ import { PolyfillSnippet } from "./snippets/polyfill";
 import { PromisesSnippet } from "./snippets/promises";
 import { StateTransformSnippet } from "./snippets/state.transform";
 import { SyncStateSnippet } from "./snippets/sync.state";
+import { WithJsxSnippet } from "./snippets/with.jsx";
+import { WithoutJsxSnippet } from "./snippets/without.jsx";
 import { Spacer } from "./spacer";
 
 export const Documentation = (
@@ -18,6 +20,9 @@ export const Documentation = (
         <ol>
             <li>
                 <Link href="#old-browsers-support" warning>Old Browsers Support</Link>
+            </li>
+            <li>
+                <Link href="#jsx">JSX</Link>
             </li>
             <li>
                 <Link href="#components">Components</Link>
@@ -69,6 +74,25 @@ export const Documentation = (
                 </p>
             </Section>
             <Spacer />
+            <Section id="jsx" title="JSX">
+                <p>
+                    Unlike React, JSX is simply transipiled to an object. The following snippets
+                    are equivalent:
+                </p>
+                <div className="compare-snippets">
+                    <div>
+                        <small>without JSX</small>
+                        <WithoutJsxSnippet />
+                    </div>
+                    <div>
+                        <small>with JSX</small>
+                        <WithJsxSnippet />
+                    </div>
+                </div>
+                <p>
+                    See <Link href="/getting-started#manual-installation">manual installation</Link> for how to enable JSX.
+                </p>
+            </Section>
             <Section id="components" title="Components">
                 <p>Functions that take one object as an argument can be used as components:</p>
                 <ComponentsSnippet />
