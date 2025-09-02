@@ -1,13 +1,14 @@
-const cleanupMap = new WeakMap();
+let cleanup;
 
-const cleanup = new FinalizationRegistry(
-    (cleanupItem) => cleanupItem.forEach((f) => f())
-);
+const cleanupMap = new WeakMap();
 
 function onGC(target, f, id) {
     const cleanupItem = cleanupMap.get(target) || [];
     cleanupItem.push(f);
     cleanupMap.set(target, cleanupItem);
+    cleanup ||= new FinalizationRegistry(
+        (cleanupItem) => cleanupItem.forEach((f) => f())
+    );
     cleanup.register(target, cleanupItem, id);
 }
 

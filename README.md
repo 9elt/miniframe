@@ -18,11 +18,11 @@ const name = new State("World");
 
 const p = createNode(<p>Hello, {name}!</p>);
 
-p.textContent; // "Hello, World!"
+p.innerHTML; // "Hello, World!"
 
 name.value = "9elt";
 
-p.textContent; // "Hello, 9elt!"
+p.innerHTML; // "Hello, 9elt!"
 ```
 
 ## Quick start
