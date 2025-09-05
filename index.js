@@ -1,20 +1,23 @@
 let cleanup;
-
-const cleanupMap = new WeakMap();
+let cleanupMap;
 
 function onGC(target, f, id) {
-    const cleanupItem = cleanupMap.get(target) || [];
-    cleanupItem.push(f);
-    cleanupMap.set(target, cleanupItem);
+    cleanupMap ||= new WeakMap();
     cleanup ||= new FinalizationRegistry(
         (cleanupItem) => cleanupItem.forEach((f) => f())
     );
+    const cleanupItem = cleanupMap.get(target) || [];
+    cleanupItem.push(f);
+    cleanupMap.set(target, cleanupItem);
     cleanup.register(target, cleanupItem, id);
 }
 
-export function createNode(D_props) {
+export function createNode(props) {
+    if (props instanceof State || Array.isArray(props)) {
+        props = { tagName: "div", children: [props] };
+    }
     const tree = { children: [] };
-    const node = _createNode(D_props, tree);
+    const node = _createNode(props, tree);
     // NOTE: We expose the tree for debug purposes
     node._tree = tree;
     return node;
@@ -68,28 +71,8 @@ function stateTree(parent, state, ref, f) {
     return leaf;
 }
 
-function _createNode(D_props, tree) {
-    const node = { $: null };
-
-    let ref, leaf, sub;
-    const props = D_props instanceof State
-        ? unwrap((leaf = stateTree(tree, D_props, ref = new WeakRef(node), sub = (curr, prev) => {
-            if (prev instanceof State) {
-                prev._unsubR(sub);
-            }
-            if (curr instanceof State) {
-                return curr._sub(sub)(curr._value);
-            }
-            clearStateTree(leaf);
-            const node = ref.deref();
-            if (node) {
-                node.$.replaceWith(node.$ = _createNode(curr, leaf));
-                node.$._keepalive = node;
-            }
-        })).state)
-        : D_props;
-
-    node.$ = (
+function _createNode(props, tree) {
+    return (
         typeof props === "string" || typeof props === "number"
             ? window.document.createTextNode(props)
             : !props
@@ -102,13 +85,9 @@ function _createNode(D_props, tree) {
                             props.tagName
                         ),
                         props,
-                        leaf || tree
+                        tree
                     )
     );
-
-    node.$._keepalive = node;
-
-    return node.$;
 }
 
 function copyObject(on, D_from, tree) {
@@ -233,13 +212,19 @@ function createNodeList(children, tree, ref) {
 }
 
 function weaken(list, i, node) {
-    node._weaken = () => list[i] = new WeakRef(node);
+    if (node._weaken) {
+        return weaken(list, i, _createNode(null));
+    }
+    node._weaken = () => {
+        list[i] = new WeakRef(node);
+        delete node._weaken;
+    };
     return node;
 }
 
 function appendNodeList(parent, nodeList) {
     for (let i = 0; i < nodeList.length; i++) {
-        const child = nodeList[i];
+        let child = nodeList[i];
         Array.isArray(child)
             // NOTE: Recursion
             ? appendNodeList(parent, child)
@@ -248,7 +233,9 @@ function appendNodeList(parent, nodeList) {
 }
 
 function replaceNodes(prev, update) {
-    prev = (prev instanceof WeakRef ? prev.deref() : prev);
+    if (prev instanceof WeakRef) {
+        prev = prev.deref();
+    }
 
     if (!Array.isArray(prev) && !Array.isArray(update)) {
         prev.replaceWith(update);
@@ -280,21 +267,24 @@ function replaceNodes(prev, update) {
 }
 
 function removeNode(prev) {
-    prev = (prev instanceof WeakRef ? prev.deref() : prev);
+    if (prev instanceof WeakRef) {
+        prev = prev.deref();
+    }
     // NOTE:                           Recursion
     Array.isArray(prev) ? prev.forEach(removeNode) : prev.remove();
 }
 
 function appendNodeAfter(sibiling, node) {
-    sibiling = (sibiling instanceof WeakRef ? sibiling.deref() : sibiling);
-
+    if (sibiling instanceof WeakRef) {
+        sibiling = sibiling.deref();
+    }
     if (Array.isArray(sibiling)) {
         // NOTE: Recursion
         appendNodeAfter(sibiling[sibiling.length - 1], node);
     }
     else if (Array.isArray(node)) {
         let last = sibiling;
-        for (const _node of node) {
+        for (let _node of node) {
             // NOTE: Recursion
             appendNodeAfter(last, last = _node);
         }

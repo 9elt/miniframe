@@ -1,6 +1,6 @@
 {
     "name": "@9elt/miniframe",
-    "version": "0.15.0",
+    "version": "0.16.0",
     "description": "A better version of document.createElement with support for JSX and minimal state management in 400 LOC",
     "main": "./dist/esm/index.js",
     "types": "./index.d.ts",

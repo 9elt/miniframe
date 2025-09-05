@@ -2,7 +2,7 @@
 
 export type Sub<T> = (current: T, previous: T) => void | Promise<void>;
 
-type Merge<S> = {
+export type Merge<S> = {
     [K in keyof S]: S[K] extends State<infer U> ? U : never;
 };
 
@@ -23,30 +23,24 @@ export class State<T> {
     unsub<F extends Sub<T>>(f: F): void;
 }
 
-export function createNode<T extends Node = Node>(
-    props: CreateNodeProps | State<CreateNodeProps> | MiniJSXElement | State<MiniJSXElement>
-): T;
+export function createNode<T extends Node = Node>(props: MiniNode): T;
 
-export type MiniJSXElement = State<any> | Mini.Element;
-
-export type CreateNodeProps = Node | MiniElement | string | number | false | null | undefined;
-
-export type TagName = keyof Mini.Elements;
-
-export type MiniElement = Mini.Elements[TagName];
-
-export type MiniNode = MiniChildren | State<MiniChildren> | MiniChildren[] | State<MiniChildren[]>;
-
-export type MiniChildren =
-    | MiniJSXElement
+export type MiniNode =
     | MiniElement
-    | MiniElement[]
     | Node
-    | string | number | false | null | undefined
-    | MiniChildren[]
-    | State<any>;
+    | string
+    | number
+    | false
+    | null
+    | undefined
+    | MiniNode[]
+    | State<MiniNode>;
 
-export type MiniDataset = {
+type TagName = keyof Mini.Elements;
+
+type MiniElement = Mini.Elements[TagName];
+
+type MiniDataset = {
     [key: string]: string | number | undefined | State<string | number | undefined>;
 } | State<{
     [key: string]: string | number | undefined | State<string | number | undefined>;

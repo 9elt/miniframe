@@ -105,6 +105,44 @@ test("HTML elements support element children", () => {
     expect(div.outerHTML).toEqual("<div><p></p><b></b></div>");
 });
 
+test("HTML elements repeated element children are only appended the first time", () => {
+    const p = document.createElement("p");
+
+    const children = new State(<>0{p}1{p}</>);
+
+    const div = createNode<HTMLDivElement>(
+        <div>
+            {children}
+        </div>
+    );
+
+    expect(div.innerHTML).toEqual("0<p></p>1");
+
+    children.value = (<>0<a />1<b /></>);
+
+    expect(div.innerHTML).toEqual("0<a></a>1<b></b>");
+
+    children.value = (<>0{p}1{p}</>);
+
+    expect(div.innerHTML).toEqual("0<p></p>1");
+
+    children.value = (<>0</>);
+
+    expect(div.innerHTML).toEqual("0");
+
+    children.value = (<>0{p}1{p}</>);
+
+    expect(div.innerHTML).toEqual("0<p></p>1");
+
+    children.value = (<>0<a />1<b />2<p /></>);
+
+    expect(div.innerHTML).toEqual("0<a></a>1<b></b>2<p></p>");
+
+    children.value = (<>0{p}1{p}2{p}3{p}4{p}5{p}</>);
+
+    expect(div.innerHTML).toEqual("0<p></p>12345");
+});
+
 test("HTML elements support empty nodes", () => {
     const _0 = new State<0 | 1>(0);
     const _null = new State<null | 2>(null);

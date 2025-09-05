@@ -1,6 +1,6 @@
 export type Sub<T> = (current: T, previous: T) => void | Promise<void>;
 
-type Merge<S> = {
+export type Merge<S> = {
     [K in keyof S]: S[K] extends State<infer U> ? U : never;
 };
 
