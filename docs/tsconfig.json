@@ -6,6 +6,7 @@
         "target": "es2021",
         "module": "esnext",
         "moduleResolution": "bundler",
+        "skipLibCheck": true,
         "strictNullChecks": true,
         "noErrorTruncation": true,
         "noEmit": true,

@@ -1,4 +1,4 @@
-import { createNode, type MiniChildren, State } from "@9elt/miniframe";
+import { createNode, type MiniNode, State } from "@9elt/miniframe";
 
 const POKEMON = ["bulbasaur", "ivysaur", "venusaur", "charmander", "charmeleon", "charizard"];
 
@@ -55,8 +55,8 @@ export function Pokemon() {
 }
 
 function Card({ title, img }: {
-    title?: MiniChildren;
-    img?: MiniChildren;
+    title?: MiniNode;
+    img?: MiniNode;
 }) {
     return (
         <div style={{ width: "180px", margin: "0 auto", border: "1px solid #0004" }}>

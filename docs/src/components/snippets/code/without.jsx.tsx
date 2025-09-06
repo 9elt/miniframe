@@ -6,6 +6,9 @@ const miniElement = {
     },
 };
 
+miniElement.tagName; // "div"
+miniElement.children; // { tagName: "p" ... }
+
 const htmlElement = createNode(miniElement);
 
 htmlElement.outerHTML // <div><p>Hello, W...

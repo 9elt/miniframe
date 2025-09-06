@@ -1,15 +1,20 @@
 // node_modules/@9elt/miniframe/dist/esm/index.js
-var cleanupMap = new WeakMap;
-var cleanup = new FinalizationRegistry((cleanupItem) => cleanupItem.forEach((f) => f()));
+var cleanup;
+var cleanupMap;
 function onGC(target, f, id) {
+  cleanupMap ||= new WeakMap;
+  cleanup ||= new FinalizationRegistry((cleanupItem2) => cleanupItem2.forEach((f2) => f2()));
   const cleanupItem = cleanupMap.get(target) || [];
   cleanupItem.push(f);
   cleanupMap.set(target, cleanupItem);
   cleanup.register(target, cleanupItem, id);
 }
-function createNode(D_props) {
+function createNode(props) {
+  if (props instanceof State || Array.isArray(props)) {
+    props = { tagName: "div", children: [props] };
+  }
   const tree = { children: [] };
-  const node = _createNode(D_props, tree);
+  const node = _createNode(props, tree);
   node._tree = tree;
   return node;
 }
@@ -31,26 +36,8 @@ function stateTree(parent, state, ref, f) {
   onGC(ref.deref(), () => clearStateTree(leaf, 0), leaf.sub);
   return leaf;
 }
-function _createNode(D_props, tree) {
-  const node = { $: null };
-  let ref, leaf, sub;
-  const props = D_props instanceof State ? unwrap((leaf = stateTree(tree, D_props, ref = new WeakRef(node), sub = (curr, prev) => {
-    if (prev instanceof State) {
-      prev._unsubR(sub);
-    }
-    if (curr instanceof State) {
-      return curr._sub(sub)(curr._value);
-    }
-    clearStateTree(leaf);
-    const node2 = ref.deref();
-    if (node2) {
-      node2.$.replaceWith(node2.$ = _createNode(curr, leaf));
-      node2.$._keepalive = node2;
-    }
-  })).state) : D_props;
-  node.$ = typeof props === "string" || typeof props === "number" ? window.document.createTextNode(props) : !props ? window.document.createTextNode("") : props instanceof window.Node ? props : copyObject(window.document.createElementNS(props.namespaceURI || "http://www.w3.org/1999/xhtml", props.tagName), props, leaf || tree);
-  node.$._keepalive = node;
-  return node.$;
+function _createNode(props, tree) {
+  return typeof props === "string" || typeof props === "number" ? window.document.createTextNode(props) : !props ? window.document.createTextNode("") : props instanceof window.Node ? (props._remove && props._remove(), props) : copyObject(window.document.createElementNS(props.namespaceURI || "http://www.w3.org/1999/xhtml", props.tagName), props, tree);
 }
 function copyObject(on, D_from, tree) {
   let ref, leaf, sub;
@@ -96,7 +83,8 @@ function setChildren(parent, D_children, tree) {
     clearStateTree(leaf);
     const parent2 = ref.deref();
     if (parent2) {
-      replaceNodes(Array.from(parent2.childNodes), createNodeList(curr, leaf, ref));
+      const nodeList = createNodeList(curr, leaf, ref);
+      replaceNodes(Array.from(parent2.childNodes), nodeList);
     }
   })).state) : D_children;
   appendNodeList(parent, createNodeList(children, leaf || tree, ref));
@@ -132,16 +120,19 @@ function createNodeList(children, tree, ref) {
 }
 function weaken(list, i, node) {
   node._weaken = () => list[i] = new WeakRef(node);
+  node._remove = () => node.replaceWith(list[i] = weaken(list, i, _createNode(null)));
   return node;
 }
 function appendNodeList(parent, nodeList) {
   for (let i = 0;i < nodeList.length; i++) {
-    const child = nodeList[i];
+    let child = nodeList[i];
     Array.isArray(child) ? appendNodeList(parent, child) : (parent.appendChild(child), child._weaken());
   }
 }
 function replaceNodes(prev, update) {
-  prev = prev instanceof WeakRef ? prev.deref() : prev;
+  if (prev instanceof WeakRef) {
+    prev = prev.deref();
+  }
   if (!Array.isArray(prev) && !Array.isArray(update)) {
     prev.replaceWith(update);
     update._weaken();
@@ -163,11 +154,15 @@ function replaceNodes(prev, update) {
   return update;
 }
 function removeNode(prev) {
-  prev = prev instanceof WeakRef ? prev.deref() : prev;
+  if (prev instanceof WeakRef) {
+    prev = prev.deref();
+  }
   Array.isArray(prev) ? prev.forEach(removeNode) : prev.remove();
 }
 function appendNodeAfter(sibiling, node) {
-  sibiling = sibiling instanceof WeakRef ? sibiling.deref() : sibiling;
+  if (sibiling instanceof WeakRef) {
+    sibiling = sibiling.deref();
+  }
   if (Array.isArray(sibiling)) {
     appendNodeAfter(sibiling[sibiling.length - 1], node);
   } else if (Array.isArray(node)) {
@@ -351,7 +346,7 @@ class State {
 State._Stack = [];
 State._Header = null;
 function warning(value, seen = new WeakSet) {
-  !seen.has(warning) && (value instanceof State ? seen.add(warning) && console.error("Never use states inside async State.as/sub, see: " + "https://github.com/9elt/miniframe?tab=readme-ov-file#async-state-limitations") : value && typeof value === "object" && !seen.has(value) && seen.add(value) && Object.values(value).forEach((v) => warning(v, seen)));
+  !seen.has(warning) && (value instanceof State ? seen.add(warning) && console.error("Never use states inside async State.as/sub, see: " + "https://9elt.github.io/miniframe/documentation#async-state-limitations") : value && typeof value === "object" && !seen.has(value) && seen.add(value) && Object.values(value).forEach((v) => warning(v, seen)));
 }
 
 // node_modules/@9elt/miniframe/dist/esm/jsx-runtime.js
@@ -840,6 +835,9 @@ function WithoutJsxSnippet(props) {
         chilren<span class="token operator">:</span> <span class="token string">"Hello, World!"</span><span class="token punctuation">,</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+miniElement<span class="token punctuation">.</span>tagName<span class="token punctuation">;</span> <span class="token comment">// "div"</span>
+miniElement<span class="token punctuation">.</span>children<span class="token punctuation">;</span> <span class="token comment">// { tagName: "p" ... }</span>
 
 <span class="token keyword">const</span> htmlElement <span class="token operator">=</span> <span class="token function">createNode</span><span class="token punctuation">(</span>miniElement<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -1341,7 +1339,7 @@ document<span class="token punctuation">.</span>body<span class="token punctuati
 function ExamplePokeapiSnippet(props) {
   return /* @__PURE__ */ jsx("pre", {
     className: "snippet",
-    innerHTML: `<span class="token keyword">import</span> <span class="token punctuation">{</span> createNode<span class="token punctuation">,</span> type MiniChildren<span class="token punctuation">,</span> State <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@9elt/miniframe"</span><span class="token punctuation">;</span>
+    innerHTML: `<span class="token keyword">import</span> <span class="token punctuation">{</span> createNode<span class="token punctuation">,</span> type MiniNode<span class="token punctuation">,</span> State <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@9elt/miniframe"</span><span class="token punctuation">;</span>
 
 <span class="token keyword">const</span> <span class="token constant">POKEMON</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"bulbasaur"</span><span class="token punctuation">,</span> <span class="token string">"ivysaur"</span><span class="token punctuation">,</span> <span class="token string">"venusaur"</span><span class="token punctuation">,</span> <span class="token string">"charmander"</span><span class="token punctuation">,</span> <span class="token string">"charmeleon"</span><span class="token punctuation">,</span> <span class="token string">"charizard"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 
@@ -1398,8 +1396,8 @@ function ExamplePokeapiSnippet(props) {
 <span class="token punctuation">}</span>
 
 <span class="token keyword">function</span> <span class="token function">Card</span><span class="token punctuation">(</span><span class="token punctuation">{</span> title<span class="token punctuation">,</span> img <span class="token punctuation">}</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    title<span class="token operator">?</span><span class="token operator">:</span> MiniChildren<span class="token punctuation">;</span>
-    img<span class="token operator">?</span><span class="token operator">:</span> MiniChildren<span class="token punctuation">;</span>
+    title<span class="token operator">?</span><span class="token operator">:</span> MiniNode<span class="token punctuation">;</span>
+    img<span class="token operator">?</span><span class="token operator">:</span> MiniNode<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">return</span> <span class="token punctuation">(</span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> width<span class="token operator">:</span> <span class="token string">"180px"</span><span class="token punctuation">,</span> margin<span class="token operator">:</span> <span class="token string">"0 auto"</span><span class="token punctuation">,</span> border<span class="token operator">:</span> <span class="token string">"1px solid #0004"</span> <span class="token punctuation">}</span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span><span class="token plain-text">
@@ -1626,7 +1624,7 @@ var GettingStarted = /* @__PURE__ */ jsx("div", {
                 /* @__PURE__ */ jsx("code", {
                   children: "document.createElement"
                 }),
-                " with support for JSX and minimal state management in 400 lines of code. It was created for people that like vanilla JS and enjoy rolling out their own code, but don't like how convoluted and inconvenient it is to create and manage html elements."
+                " with support for JSX and minimal state management in 500 lines of code. It was created for people that like vanilla JS and enjoy rolling out their own code, but don't like how convoluted and inconvenient it is to create and manage html elements."
               ]
             }),
             /* @__PURE__ */ jsx("p", {
@@ -1738,7 +1736,7 @@ var GettingStarted = /* @__PURE__ */ jsx("div", {
 });
 
 // src/version.ts
-var VERSION = "0.15.0";
+var VERSION = "0.16.0";
 
 // src/components/header.tsx
 var mouse = new State({ x: 0, y: 0, yR: 1 });

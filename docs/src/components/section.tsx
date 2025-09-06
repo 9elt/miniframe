@@ -1,10 +1,10 @@
-import type { MiniChildren } from "@9elt/miniframe";
+import type { MiniNode } from "@9elt/miniframe";
 import { Link } from "./link";
 
 export function Section({ id, title, children, warning }: {
     id: string;
-    title: string | MiniChildren;
-    children: MiniChildren;
+    title: string | MiniNode;
+    children: MiniNode;
     warning?: boolean;
 }) {
     return (

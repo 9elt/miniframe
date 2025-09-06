@@ -1,7 +1,7 @@
 # Miniframe
 
 Miniframe is a better version of `document.createElement` with support for JSX and minimal state
-management in 400 lines of code. It was created for people that like vanilla JS
+management in 500 lines of code. It was created for people that like vanilla JS
 and enjoy rolling out their own code, but don't like how convoluted and inconvenient
 it is to create and manage html elements.
 

@@ -146,9 +146,10 @@ function setChildren(parent, D_children, tree) {
             clearStateTree(leaf);
             const parent = ref.deref();
             if (parent) {
+                const nodeList = createNodeList(curr, leaf, ref);
                 replaceNodes(
                     Array.from(parent.childNodes),
-                    createNodeList(curr, leaf, ref)
+                    nodeList
                 );
             }
         })).state)
