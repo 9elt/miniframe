@@ -72,22 +72,20 @@ function stateTree(parent, state, ref, f) {
 }
 
 function _createNode(props, tree) {
-    return (
-        typeof props === "string" || typeof props === "number"
-            ? window.document.createTextNode(props)
-            : !props
-                ? window.document.createTextNode("")
-                : props instanceof window.Node
-                    ? (props._remove && props._remove(), props)
-                    : copyObject(
-                        window.document.createElementNS(
-                            props.namespaceURI || "http://www.w3.org/1999/xhtml",
-                            props.tagName
-                        ),
-                        props,
-                        tree
-                    )
-    );
+    return typeof props === "string" || typeof props === "number"
+        ? window.document.createTextNode(props)
+        : !props
+            ? window.document.createTextNode("")
+            : props instanceof window.Node
+                ? (props._remove && props._remove(), props)
+                : copyObject(
+                    window.document.createElementNS(
+                        props.namespaceURI || "http://www.w3.org/1999/xhtml",
+                        props.tagName
+                    ),
+                    props,
+                    tree
+                );
 }
 
 function copyObject(on, D_from, tree) {
@@ -146,16 +144,17 @@ function setChildren(parent, D_children, tree) {
             clearStateTree(leaf);
             const parent = ref.deref();
             if (parent) {
-                const nodeList = createNodeList(curr, leaf, ref);
                 replaceNodes(
-                    Array.from(parent.childNodes),
-                    nodeList
+                    nodeList,
+                    nodeList = createNodeList(curr, leaf, ref)
                 );
             }
         })).state)
         : D_children;
 
-    appendNodeList(parent, createNodeList(children, leaf || tree, ref));
+    let nodeList = createNodeList(children, leaf || tree, ref);
+
+    appendNodeList(parent, nodeList);
 }
 
 // NOTE: To make state handling easier (possible?) we don't
@@ -274,6 +273,7 @@ function appendNodeAfter(sibiling, node) {
     if (sibiling instanceof WeakRef) {
         sibiling = sibiling.deref();
     }
+
     if (Array.isArray(sibiling)) {
         // NOTE: Recursion
         appendNodeAfter(sibiling[sibiling.length - 1], node);
