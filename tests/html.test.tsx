@@ -105,7 +105,7 @@ test("HTML elements support element children", () => {
     expect(div.outerHTML).toEqual("<div><p></p><b></b></div>");
 });
 
-test("HTML elements repeated element children are only appended the first time", () => {
+test("HTML elements repeated element children are removed", () => {
     const p = document.createElement("p");
 
     const children = new State(<>0{p}1{p}</>);
@@ -116,7 +116,7 @@ test("HTML elements repeated element children are only appended the first time",
         </div>
     );
 
-    expect(div.innerHTML).toEqual("0<p></p>1");
+    expect(div.innerHTML).toEqual("01<p></p>");
 
     children.value = (<>0<a />1<b /></>);
 
@@ -124,7 +124,7 @@ test("HTML elements repeated element children are only appended the first time",
 
     children.value = (<>0{p}1{p}</>);
 
-    expect(div.innerHTML).toEqual("0<p></p>1");
+    expect(div.innerHTML).toEqual("01<p></p>");
 
     children.value = (<>0</>);
 
@@ -132,7 +132,7 @@ test("HTML elements repeated element children are only appended the first time",
 
     children.value = (<>0{p}1{p}</>);
 
-    expect(div.innerHTML).toEqual("0<p></p>1");
+    expect(div.innerHTML).toEqual("01<p></p>");
 
     children.value = (<>0<a />1<b />2<p /></>);
 
@@ -140,7 +140,24 @@ test("HTML elements repeated element children are only appended the first time",
 
     children.value = (<>0{p}1{p}2{p}3{p}4{p}5{p}</>);
 
-    expect(div.innerHTML).toEqual("0<p></p>12345");
+    expect(div.innerHTML).toEqual("012345<p></p>");
+
+    children.value = (<>0{p}1{p}2{p}3{p}4{p}</>);
+
+    expect(div.innerHTML).toEqual("01234<p></p>");
+
+    children.value = (<>0{p}1{p}</>);
+
+    expect(div.innerHTML).toEqual("01<p></p>");
+
+    const main = createNode<HTMLElement>(
+        <main>
+            {children}
+        </main>
+    );
+
+    expect(main.innerHTML).toEqual("01<p></p>");
+    expect(div.innerHTML).toEqual("01");
 });
 
 test("HTML elements support empty nodes", () => {

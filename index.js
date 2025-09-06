@@ -78,7 +78,7 @@ function _createNode(props, tree) {
             : !props
                 ? window.document.createTextNode("")
                 : props instanceof window.Node
-                    ? props
+                    ? (props._remove && props._remove(), props)
                     : copyObject(
                         window.document.createElementNS(
                             props.namespaceURI || "http://www.w3.org/1999/xhtml",
@@ -212,13 +212,8 @@ function createNodeList(children, tree, ref) {
 }
 
 function weaken(list, i, node) {
-    if (node._weaken) {
-        return weaken(list, i, _createNode(null));
-    }
-    node._weaken = () => {
-        list[i] = new WeakRef(node);
-        delete node._weaken;
-    };
+    node._weaken = () => list[i] = new WeakRef(node);
+    node._remove = () => node.replaceWith(list[i] = weaken(list, i, _createNode(null)));
     return node;
 }
 
@@ -284,7 +279,7 @@ function appendNodeAfter(sibiling, node) {
     }
     else if (Array.isArray(node)) {
         let last = sibiling;
-        for (let _node of node) {
+        for (const _node of node) {
             // NOTE: Recursion
             appendNodeAfter(last, last = _node);
         }
