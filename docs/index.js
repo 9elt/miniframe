@@ -83,11 +83,11 @@ function setChildren(parent, D_children, tree) {
     clearStateTree(leaf);
     const parent2 = ref.deref();
     if (parent2) {
-      const nodeList = createNodeList(curr, leaf, ref);
-      replaceNodes(Array.from(parent2.childNodes), nodeList);
+      replaceNodes(nodeList, nodeList = createNodeList(curr, leaf, ref));
     }
   })).state) : D_children;
-  appendNodeList(parent, createNodeList(children, leaf || tree, ref));
+  let nodeList = createNodeList(children, leaf || tree, ref);
+  appendNodeList(parent, nodeList);
 }
 function createNodeList(children, tree, ref) {
   if (children === undefined) {
@@ -1547,13 +1547,17 @@ function StateSnippet(props) {
     className: "snippet",
     innerHTML: `<span class="token keyword">const</span> name <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">State</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<span class="token keyword">const</span> p <span class="token operator">=</span> <span class="token function">createNode</span><span class="token punctuation">(</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span><span class="token plain-text">Hello, </span><span class="token punctuation">{</span>name<span class="token punctuation">}</span><span class="token plain-text">!</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> div <span class="token operator">=</span> <span class="token function">createNode</span><span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span><span class="token plain-text">Hello, </span><span class="token punctuation">{</span>name<span class="token punctuation">}</span><span class="token plain-text">!</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-p<span class="token punctuation">.</span>innerHTML<span class="token punctuation">;</span> <span class="token comment">// "Hello, World!"</span>
+div<span class="token punctuation">.</span>outerHTML<span class="token punctuation">;</span> <span class="token comment">// "&lt;div>&lt;p>Hello, World!&lt;/p>&lt;/div>"</span>
 
 name<span class="token punctuation">.</span>value <span class="token operator">=</span> <span class="token string">"Miniframe"</span><span class="token punctuation">;</span>
 
-p<span class="token punctuation">.</span>innerHTML<span class="token punctuation">;</span> <span class="token comment">// "Hello, Miniframe!"</span>
+div<span class="token punctuation">.</span>outerHTML<span class="token punctuation">;</span> <span class="token comment">// "&lt;div>&lt;p>Hello, Miniframe!&lt;/p>&lt;/div>"</span>
 `,
     ...props
   });
@@ -1736,7 +1740,7 @@ var GettingStarted = /* @__PURE__ */ jsx("div", {
 });
 
 // src/version.ts
-var VERSION = "0.16.0";
+var VERSION = "0.16.1";
 
 // src/components/header.tsx
 var mouse = new State({ x: 0, y: 0, yR: 1 });

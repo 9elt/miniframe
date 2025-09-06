@@ -9,7 +9,7 @@
         "generate": "run-p generate:snippets generate:version"
     },
     "dependencies": {
-        "@9elt/miniframe": "^0.16.0"
+        "@9elt/miniframe": "^0.16.1"
     },
     "devDependencies": {
         "@types/bun": "^1.2.20",

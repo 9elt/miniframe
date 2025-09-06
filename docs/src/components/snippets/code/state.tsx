@@ -1,9 +1,13 @@
 const name = new State("World");
 
-const p = createNode(<p>Hello, {name}!</p>);
+const div = createNode(
+    <div>
+        <p>Hello, {name}!</p>
+    </div>
+);
 
-p.innerHTML; // "Hello, World!"
+div.outerHTML; // "<div><p>Hello, World!</p></div>"
 
 name.value = "Miniframe";
 
-p.innerHTML; // "Hello, Miniframe!"
+div.outerHTML; // "<div><p>Hello, Miniframe!</p></div>"
