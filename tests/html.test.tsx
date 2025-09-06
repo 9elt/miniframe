@@ -207,3 +207,13 @@ test("HTML elements support empty node", () => {
 
     expect(div.outerHTML).toEqual("<div>1</div>");
 });
+
+test("createNode creates div wrapper around State and Array", () => {
+    const state = createNode<HTMLDivElement>(new State(<a />));
+
+    expect(state.outerHTML).toEqual(`<div><a></a></div>`);
+
+    const array = createNode<HTMLDivElement>(<><a /><b /></>);
+
+    expect(array.outerHTML).toEqual(`<div><a></a><b></b></div>`);
+});
